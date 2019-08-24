@@ -1,0 +1,296 @@
+HTML & CSS - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Web Design and Applications
+
+
+* HTML & CSS
+* JavaScript Web APIs
+* Graphics
+* Audio and Video
+* Accessibility
+* Internationalization
+* Mobile Web
+* Privacy
+* Math on the Web
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web&#xA0;Design&#xA0;and&#xA0;Applications » 
+* HTML & CSS
+
+
+
+
+HTML & CSS
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;html&#xA0;(and&#xA0;xhtml) &#x2022;
+* what&#xA0;is&#xA0;css &#x2022;
+* what&#xA0;is&#xA0;webfonts &#x2022;
+* examples &#x2022;
+* more&#xA0;info &#x2022;
+* recent&#xA0;press&#xA0;releases &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+HTML (the Hypertext Markup Language) and CSS (Cascading Style Sheets) are two of the core technologies for building Web pages. HTML provides the structure of the page, CSS the (visual and aural)
+layout, for a variety of devices. Along with graphics and scripting, HTML and CSS are the basis of building Web pages and Web Applications. Learn more below about:
+
+
+What is HTML?
+
+
+HTML is the language for describing the structure of Web pages. HTML gives authors the means to:
+
+* Publish online documents with headings, text, tables, lists, photos, etc.
+* Retrieve online information via hypertext links, at the click of a button.
+* Design forms for conducting transactions with remote services, for use in searching for information, making reservations, ordering products, etc.
+* Include spread-sheets, video clips, sound clips, and other applications directly in their documents.
+
+With HTML, authors describe the structure of pages using markup. The elements of the language label pieces of content such as &#x201C;paragraph,&#x201D; &#x201C;list,&#x201D; &#x201C;table,&#x201D;
+and so on.
+
+
+What is XHTML?
+
+
+XHTML is a variant of HTML that uses the syntax of XML, the Extensible Markup Language. XHTML has all the same elements (for paragraphs, etc.) as the HTML variant, but the syntax is slightly
+different. Because XHTML is an XML application, you can use other XML tools with it (such as XSLT, a language for transforming XML content).
+
+
+What is CSS?
+
+
+CSS is the language for describing the presentation of Web pages, including colors, layout, and fonts. It allows one to adapt the presentation to different types of devices, such as large screens,
+small screens, or printers. CSS is independent of HTML and can be used with any XML-based markup language. The separation of HTML from CSS makes it easier to maintain sites, share style sheets
+across pages, and tailor pages to different environments. This is referred to as the separation of structure (or: content) from presentation.
+
+
+What is WebFonts?
+
+
+WebFonts is a technology that enables people to use fonts on demand over the Web without requiring installation in the operating system. W3C has experience in downloadable fonts through HTML, CSS2,
+and SVG. Until recently, downloadable fonts have not been common on the Web due to the lack of an interoperable font format. The WebFonts effort plans to address that through the creation of an
+industry-supported, open font format for the Web (called "WOFF").
+
+
+Examples
+
+
+The following very simple example of a portion of an HTML document illustrates how to create a link within a paragraph. When rendered on the screen (or by a speech synthesizer), the link text will
+be &#x201C;final report&#x201D;; when somebody activates the link, the browser will retrieve the resource identified by &#x201C;http://www.example.com/report&#x201D;:
+
+
+<p class="moreinfo">For more information see the
+<a href="http://www.example.com/report">final report</a>.</p>
+
+
+The class attribute on the paragraph's start tag (&#x201C;<p>&#x201D;) can be used, among other thing, to add style. For instance, to italicize the text of all paragraphs with a class of
+&#x201C;moreinfo,&#x201D; one could write, in CSS:
+
+p.moreinfo { font-style: italic }
+
+By placing that rule in a separate file, the style may be shared by any number of HTML documents.
+
+
+More Information
+
+
+For more information about HTML and CSS, see tutorials for HTML and CSS.
+
+For advanced document transformations and layout beyond CSS, see XSLT & XSL-FO.
+
+
+
+Recent W3C Press Releases and Member Testimonials
+
+
+* HTML5 Definition Complete, W3C Moves to Interoperability Testing and Performance
+
+  17 December 2012
+
+
+
+
+
+Recent Press
+
+
+18 June
+Knight Blog
+        &#x201D;
+18 June
+ZDNet
+        &#x201D;
+17 June
+Redmond Magazine
+        &#x201D;
+13 June
+Laboratory Equipment
+        &#x201D;
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* HTML
+* CSS
+* Best Practices for Authoring HTML
+* Web Fonts
+* Digital Publishing
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Cascading Style Sheets (CSS) Working Group
+* HTML Working Group
+* Device APIs Working Group
+* Forms Working Group
+* Internationalization Working Group
+* Math Working Group
+* Protocols and Formats Working Group
+* RDFa Working Group
+* SVG Working Group
+* Technical Architecture Group
+* Web Applications Working Group
+* Web Content Accessibility Guidelines Working Group
+* WebFonts Working Group
+* XML Core Working Group
+* XSLT Working Group
+
+
+
+
+
+
+Current Status
+
+
+* HTML
+* CSS
+* Best Practices for Authoring HTML
+* Web Fonts
+* Digital Publishing
+
+
+
+
+Use It
+
+
+* Tutorials
+* CSS Software
+* XHTML 1.0 Strict cheat sheet
+* XHTML Basic 1.1 cheat sheet
+* W3C cheat sheet
+* Recommended Doctype Declarations
+
+
+
+
+Validators
+
+
+* Markup
+* CSS
+
+
+
+
+Logos
+
+
+* HTML
+* CSS
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® ( , , Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

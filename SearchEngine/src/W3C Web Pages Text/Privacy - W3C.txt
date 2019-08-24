@@ -1,0 +1,233 @@
+Privacy - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Web Design and Applications
+
+
+* HTML &amp; CSS
+* JavaScript Web APIs
+* Graphics
+* Audio and Video
+* Accessibility
+* Internationalization
+* Mobile Web
+* Privacy
+* Math on the Web
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web&#xA0;Design&#xA0;and&#xA0;Applications » 
+* Privacy
+
+
+
+
+Privacy
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;P3P &#x2022;
+* what&#xA0;is&#xA0;POWDER &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+As the Web provides many mechanisms to interlink data across systems, it is important that it keeps the possibility for users that want or need it, to keep their personal information private and
+fragmented.
+
+
+What is Do Not Track?
+
+
+Do Not Track is a technology that lets users express their preferences around online tracking while browsing the Web. Advertisers, analytics, publishers and other online services that respect the
+DNT signal will limit the behavioral tracking of their users. By creating a simple, persistent and technology-neutral preference, Do Not Track will enhance users' control of their browsing
+information and improve their online privacy.
+
+The HTTP/DOM mechanism for expressing a Do Not Track preference and policies for server-side compliance are both currently in the process of standardization in the Tracking Protection Working Group.
+
+
+What is P3P?
+
+
+The Platform for Privacy Preferences Project (P3P) enables Websites to express their privacy practices in a standard format that can be retrieved automatically and interpreted easily by user agents.
+P3P user agents will allow users to be informed of site practices (in both machine- and human-readable formats) and to automate decision-making based on these practices when appropriate. Thus users
+need not read the privacy policies at every site they visit. See the list of P3P software.
+
+P3P uses machine readable descriptions to describe the collection and use of data. Sites implementing such policies make their practices explicit and thus open them to public scrutiny. Browsers can
+help the user to understand those privacy practises with smart interfaces. Most importantly, Browsers can this way develop a predictable behavior when blocking content like cookies thus giving a
+real incentive to eCommerce sites to behave in a privacy friendly way. This avoids the current scattering of cookie-blocking behaviors based on individual heuristics imagined by the implementer of
+the blocking tool which will make the creation of "stateful" services on the web a pain because the state-retrieval will be unpredictable.
+
+
+What is POWDER?
+
+
+POWDER the Protocol for Web Description Resources provides a mechanism to describe and discover Web resources and helps the users to make a decision whether a given resource is of interest. There
+are a variety of use cases: from providing a better means to describing Web resources and creating trust marks to aiding content discovery, child protection and Semantic Web searches.
+
+
+
+Recent W3C Press Releases and Member Testimonials
+
+
+* W3C Announces Peter Swire as new Co-Chair for Do Not Track Standard
+
+  28 November 2012
+
+
+
+
+
+Recent Press
+
+
+16 June
+PCWorld.fr
+        &#x201D;
+21 May
+NYTimes.com | Bits
+        &#x201D;
+8 May
+Data Guidance
+        &#x201D;
+3 May
+Heise online
+        &#x201D;
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* POWDER
+* P3P
+* HTTP
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Evaluation and Repair Tools Working Group
+* Tracking Protection Working Group
+* Web Applications Working Group
+
+
+
+
+
+
+Current Status
+
+
+* POWDER
+* P3P
+* HTTP
+
+
+
+
+Use It
+
+
+* Tutorials
+* P3P Software
+* POWDER Software
+
+
+
+
+Validators
+
+
+* P3P
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

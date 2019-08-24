@@ -1,0 +1,1389 @@
+XMLHttpRequest Level 1
+
+
+
+
+
+
+XMLHttpRequest Level 1
+
+
+
+W3C Working Draft 30 January 2014
+
+
+This Version:
+        http://www.w3.org/TR/2014/WD-XMLHttpRequest-20140130/
+Latest Version:
+        http://www.w3.org/TR/XMLHttpRequest/
+Latest Editor Draft:
+        http://dvcs.w3.org/hg/xhr/raw-file/default/xhr-1/Overview.html
+Previous Versions:
+        http://www.w3.org/TR/2012/WD-XMLHttpRequest-20121206/
+        http://www.w3.org/TR/2012/WD-XMLHttpRequest-20120117/
+        http://www.w3.org/TR/2011/WD-XMLHttpRequest2-20110816/
+        http://www.w3.org/TR/2010/WD-XMLHttpRequest2-20100907/
+        http://www.w3.org/TR/2009/WD-XMLHttpRequest2-20090820/
+        http://www.w3.org/TR/2008/WD-XMLHttpRequest2-20080930/
+        http://www.w3.org/TR/2008/WD-XMLHttpRequest2-20080225/
+        http://www.w3.org/TR/2007/WD-XMLHttpRequest-20071026/
+        http://www.w3.org/TR/2007/WD-XMLHttpRequest-20070618/
+        http://www.w3.org/TR/2007/WD-XMLHttpRequest-20070227/
+        http://www.w3.org/TR/2006/WD-XMLHttpRequest-20060927/
+        http://www.w3.org/TR/2006/WD-XMLHttpRequest-20060619/
+        http://www.w3.org/TR/2006/WD-XMLHttpRequest-20060405/
+Editor:
+        Anne van Kesteren, Mozilla (Upstream WHATWG version)
+        Julian Aubourg, Creative Area
+        &#xc1a1;&#xc815;&#xae30; (Jungkee Song), Samsung Electronics
+        Hallvord R. M. Steen, Mozilla
+
+
+Copyright © 2014 W3CÆ (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+The XMLHttpRequest specification defines an API that provides scripted client functionality for transferring data between a client and a server.
+
+Status of this Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This document is published as a snapshot of the XMLHttpRequest Living Specification.
+
+If you wish to make comments regarding this document in a manner that is tracked by the W3C, please submit them via using our public bug database, or please send comments to public-webapps@w3.org
+(archived) with [XHR] at the start of the subject line.
+
+The W3C Web Applications Working Group is the W3C working group responsible for this specification's progress along the W3C Recommendation track. This specification is the 30 January 2014 Working
+Draft.
+
+Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+Work on this specification is also done at the WHATWG. The W3C Web Applications working group actively pursues convergence of XMLHttpRequest specification with the WHATWG.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the
+group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the
+information in accordance with section 6 of the W3C Patent Policy.
+
+
+
+Table of Contents
+
+
+1. Introduction
+   1. Specification history
+
+2. Conformance
+   1. Dependencies
+   2. Extensibility
+
+3. Terminology
+4. XMLHttpRequest
+   1. Task sources
+   2. Constructor
+   3. Garbage collection
+   4. Event handlers
+   5. States
+   6. Request
+      1. method
+      2. method
+      3. attribute
+      4. attribute
+      5. attribute
+      6. method
+      7. method
+      8. method
+
+   7. Response
+      1. attribute
+      2. attribute
+      3. method
+      4. method
+      5. Response entity body
+      6. method
+      7. attribute
+      8. attribute
+      9. attribute
+      10. attribute
+
+   8. Events summary
+
+5. FormData
+6. References
+7. Acknowledgments
+
+
+1 Introduction
+
+
+This section is non-normative.
+
+The XMLHttpRequest object is an API for fetching resources.
+
+The name of the object is XMLHttpRequest for compatibility with the Web, though each component of this name is potentially misleading. First, the object supports any text based format, including
+XML. Second, it can be used to make requests over both HTTP and HTTPS (some implementations support protocols in addition to HTTP and HTTPS, but that functionality is not covered by this
+specification). Finally, it supports "requests" in a broad sense of the term as it pertains to HTTP; namely all activity involved with HTTP requests or responses for the defined HTTP methods.
+
+
+Some simple code to do something with data from an XML document fetched over the network:
+
+function processData(data) {
+  // taking care of data
+}
+
+function handler() {
+  if(this.readyState == this.DONE) {
+    if(this.status == 200 &&
+       this.responseXML != null &&
+       this.responseXML.getElementById('test').textContent) {
+      // success!
+      processData(this.responseXML.getElementById('test').textContent);
+      return;
+    }
+    // something went wrong
+    processData(null);
+  }
+}
+
+var client = new XMLHttpRequest();
+client.onreadystatechange = handler;
+client.open("GET", "unicorn.xml");
+client.send();
+
+If you just want to log a message to the server:
+
+function log(message) {
+  var client = new XMLHttpRequest();
+  client.open("POST", "/log");
+  client.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+  client.send(message);
+}
+
+Or if you want to check the status of a document on the server:
+
+function fetchStatus(address) {
+  var client = new XMLHttpRequest();
+  client.onreadystatechange = function() {
+    // in case of network errors this might not give reliable results
+    if(this.readyState == this.DONE)
+      returnStatus(this.status);
+  }
+  client.open("HEAD", address);
+  client.send();
+}
+
+
+
+1.1 Specification history
+
+
+The XMLHttpRequest object was initially defined as part of the WHATWG's HTML effort. (Long after Microsoft shipped an implementation.) It moved to the W3C in 2006. Extensions (e.g. progress events
+and cross-origin requests) to XMLHttpRequest were developed in a separate draft (XMLHttpRequest Level 2) until end of 2011, at which point the two drafts were merged and XMLHttpRequest became a
+single entity again from a standards perspective. Since 2012, the development work required for getting the spec finalized has taken place both in the WHATWG and in the W3C Web Applications working
+group.
+
+XMLHttpRequest Level 1, the first stable Recommendation track specification for the XMLHttpRequest feature, standardizes all parts of XMLHttpRequest that are compatibly supported across major
+implementations. Implementors should be able to rely on this specification and the related test suite in order to create interoperable implementations.
+
+Some features included in the WHATWG specification are left out because they are not yet widely implemented or used. These features are:
+
+* Fetching URLs.
+* The URLSearchParams type in send() method.
+* The additional methods other than append() defined in the interface FormData.
+
+Historical discussion can be found in the following mailing list archives:
+* whatwg@whatwg.org
+* public-webapi@w3.org
+* public-appformats@w3.org
+* public-webapps@w3.org
+
+
+2 Conformance
+
+
+All diagrams, examples, and notes in this specification are non-normative, as are all sections explicitly marked non-normative. Everything else in this specification is normative.
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in the normative parts of this specification are to be interpreted as described in RFC2119.
+For readability, these words do not appear in all uppercase letters in this specification. [RFC2119]
+
+2.1 Dependencies
+
+
+This specification relies on several underlying specifications.
+
+Cross-Origin Resource Sharing
+
+        A conforming user agent must support the algorithms of the Cross-Origin Resource Sharing specification. [CORS]
+DOM4
+
+        A conforming user agent must support at least the subset of the functionality defined in DOM4 that this specification relies upon, such as various exceptions and EventTarget. [DOM]
+DOM Parsing and Serialization
+
+        A conforming user agent must support at least the serialize concept from DOM Parsing and Serialization. [DOMPS]
+Encoding Standard
+
+        A conforming user agent must support at least the subset of the functionality defined in Encoding Standard that this specification relies upon, such as the utf-8 encoding. [ENCODING]
+File API
+
+        A conforming user agent must support at least the subset of the functionality defined in File API that this specification relies upon, such as the Blob and File interfaces. [FILEAPI]
+
+HTML
+
+        A conforming user agent must support at least the subset of the functionality defined in HTML that this specification relies upon, such as the basics of the Window object and serializing a
+        Document object. [HTML]
+HTTP
+
+        A conforming user agent must support some version of the HTTP protocol. Requirements regarding HTTP are made throughout the specification. [HTTP]
+Progress Events
+
+        A conforming user agent must support the Progress Events specification. [PROGRESSEVENTS]
+Typed Array
+
+        A conforming user agent must support the ArrayBuffer and ArrayBufferView objects. [TYPEDARRAY]
+URL
+
+        A conforming user agent must support the URL parsing algorithm of the URL specification. [URL]
+Web IDL
+
+        A conforming user agent must also be a conforming implementation of the IDL fragments in this specification, as described in the Web IDL specification. [WEBIDL]
+XML
+
+        A conforming user agent must be a conforming XML processor that reports violations of namespace well-formedness. [XML] [XMLNS]
+
+It uses the typographic conventions from HTML. [HTML]
+
+
+2.2 Extensibility
+
+
+User agents, Working Groups, and other interested parties are strongly encouraged to discuss new features on a relevant public forum, preferably public-webapps@w3.org. If this is for some reason not
+possible prefix the extension in some way. E.g. if company Foo wants to add a proprietary method bar() it could be named fooBar() to prevent clashes with a potential non-proprietary method bar().
+
+
+3 Terminology
+
+
+The term user credentials for the purposes of this specification means cookies, HTTP authentication, and client-side SSL certificates. Specifically it does not refer to proxy authentication or the
+Origin header. [COOKIES]
+
+
+4 Interface XMLHttpRequest
+
+
+[NoInterfaceObject]
+interface XMLHttpRequestEventTarget : EventTarget {
+  // event handlers
+  attribute EventHandler onloadstart;
+  attribute EventHandler onprogress;
+  attribute EventHandler onabort;
+  attribute EventHandler onerror;
+  attribute EventHandler onload;
+  attribute EventHandler ontimeout;
+  attribute EventHandler onloadend;
+};
+
+interface XMLHttpRequestUpload : XMLHttpRequestEventTarget {
+
+};
+
+enum XMLHttpRequestResponseType {
+  "",
+  "arraybuffer",
+  "blob",
+  "document",
+  "json",
+  "text"
+};
+
+[Constructor]
+interface XMLHttpRequest : XMLHttpRequestEventTarget {
+  // event handler
+  attribute EventHandler onreadystatechange;
+
+  // states
+  const unsigned short UNSENT = 0;
+  const unsigned short OPENED = 1;
+  const unsigned short HEADERS_RECEIVED = 2;
+  const unsigned short LOADING = 3;
+  const unsigned short DONE = 4;
+  readonly attribute unsigned short readyState;
+
+  // request
+  void open(ByteString method, [EnsureUTF16] DOMString url);
+  void open(ByteString method, [EnsureUTF16] DOMString url, boolean async, optional [EnsureUTF16] DOMString? username = null, optional [EnsureUTF16] DOMString? password = null);
+  void setRequestHeader(ByteString header, ByteString value);
+           attribute unsigned long timeout;
+           attribute boolean withCredentials;
+  readonly attribute XMLHttpRequestUpload upload;
+  void send(optional (ArrayBufferView or Blob or Document or [EnsureUTF16] DOMString or FormData)? data = null);
+  void abort();
+
+  // response
+  readonly attribute unsigned short status;
+  readonly attribute ByteString statusText;
+  ByteString? getResponseHeader(ByteString header);
+  ByteString getAllResponseHeaders();
+  void overrideMimeType(DOMString mime);
+           attribute XMLHttpRequestResponseType responseType;
+  readonly attribute any response;
+  readonly attribute DOMString responseText;
+  readonly attribute Document? responseXML;
+};
+
+Each XMLHttpRequest object has a unique, associated XMLHttpRequestUpload object.
+
+If the JavaScript global environment is a worker environment, implementations must act as if Document and Document? in the above IDL were not exposed. I.e. send() is not overloaded with it and
+responseXML always returns null (as required by its definition, too).
+
+4.1 Task sources
+
+
+Each XMLHttpRequest object has its own task source. Namely, the XMLHttpRequest task source.
+
+4.2 Constructor
+
+
+The XMLHttpRequest object has an associated settings object.
+client = new XMLHttpRequest()
+        Returns a new XMLHttpRequest object.
+
+The XMLHttpRequest() constructor must run these steps:
+1. Let xhr be a new XMLHttpRequest object.
+2. Set xhr's settings object to the relevant settings object for the global object of xhr's interface object.
+3. Return xhr.
+
+
+4.3 Garbage collection
+
+
+An XMLHttpRequest object must not be garbage collected if its state is OPENED and the flag is set, its state is HEADERS_RECEIVED, or its state is LOADING, and one of the following is true:
+* It has one or more event listeners registered whose type is readystatechange, progress, abort, error, load, timeout, or loadend.
+* The upload complete flag is unset and the associated XMLHttpRequestUpload object has one or more event listeners registered whose type is progress, abort, error, load, timeout, or loadend.
+
+If an XMLHttpRequest object is garbage collected while its connection is still open, the user agent must terminate the request.
+
+
+4.4 Event handlers
+
+
+The following are the event handlers (and their corresponding event handler event types) that must be supported on objects implementing an interface that inherits from XMLHttpRequestEventTarget as
+attributes:
+
+event handler event handler event type
+onloadstart loadstart
+onprogress progress
+onabort abort
+onerror error
+onload load
+ontimeout timeout
+onloadend loadend
+
+The following is the event handler (and its corresponding event handler event type) that must be supported as attribute solely by the XMLHttpRequest object:
+
+event handler event handler event type
+onreadystatechange readystatechange
+
+
+4.5 States
+
+
+client . readyState
+
+        Returns the current state.
+
+The XMLHttpRequest object can be in several states. The readyState attribute must return the current state, which must be one of the following values:
+
+UNSENT (numeric value 0)
+
+        The object has been constructed.
+OPENED (numeric value 1)
+
+        The open() method has been successfully invoked. During this state request headers can be set using setRequestHeader() and the request can be made using the send() method.
+HEADERS_RECEIVED (numeric value 2)
+
+        All redirects (if any) have been followed and all HTTP headers of the final response have been received. Several response members of the object are now available.
+LOADING (numeric value 3)
+
+        The response entity body is being received.
+DONE (numeric value 4)
+
+        The data transfer has been completed or something went wrong during the transfer (e.g. infinite redirects).
+
+The send() flag indicates that the send() method has been invoked. It is initially unset and is used during the OPENED state.
+
+The error flag indicates some type of network error or fetch termination. It is initially unset.
+
+4.6 Request
+
+
+Each XMLHttpRequest object has the following request-associated concepts: request method, request URL, author request headers, request entity body, source origin, referrer source, synchronous flag,
+upload complete flag, and upload events flag.
+
+The author request headers is a list of HTTP header names and corresponding header values. Comparisons against the HTTP header names must be done in a case-insensitive manner. Initially it must be
+empty.
+
+The request entity body must initially be null.
+
+The synchronous flag, upload complete flag, and upload events flag must be initially unset.
+========================================================================================================================================================================================================
+
+To terminate the request run these steps:
+1. Set the error flag.
+2. Cancel any instance of the fetch algorithm opened by this object.
+3. If there are any tasks from the object's task source in one of the task queues, then remove them.
+
+
+4.6.1 The open() method
+
+
+client . open(method, url [, async = true [, username = null [, password = null]]])
+
+        Sets the request method, request URL, and synchronous flag.
+
+        Throws a JavaScript TypeError if either method is not a valid HTTP method or url cannot be parsed.
+
+        Throws a "SecurityError" exception if method is a case-insensitive match for CONNECT, TRACE or TRACK.
+
+        Throws an "InvalidAccessError" exception if async is false, the JavaScript global environment is a document environment, and either the timeout attribute is not zero, the withCredentials
+        attribute is true, or the responseType attribute is not the empty string.
+
+The open(method, url, async, username, password) method must run these steps:
+1. If settings object's responsible document is not fully active, throw an "InvalidStateError" exception.
+2. Set base to settings object's API base URL.
+3. Set source origin to settings object's origin.
+4. Set referrer source to the settings object's API referrer source's URL if settings object's API referrer source is a document, and settings object's API referrer source otherwise.
+5. If method does not match the Method token production, throw a JavaScript TypeError.
+6. If method is a case-insensitive match for CONNECT, DELETE, GET, HEAD, OPTIONS, POST, PUT, TRACE, or TRACK, subtract 0x20 from each byte in the range 0x61 (ASCII a) to 0x7A (ASCII z).
+
+   If it does not match any of the above, it is passed through literally, including in the final request.
+7. If method is a case-sensitive match for CONNECT, TRACE, or TRACK, throw a "SecurityError" exception.
+
+   Allowing these methods would pose a security risk. [HTTPVERBSEC]
+8. Let parsed URL be the result of parsing url with base.
+9. If parsed URL is failure, throw a JavaScript TypeError.
+10. If the async argument is omitted, set async to true, and set username and password to null.
+
+    Due to unfortunate legacy constraints, passing undefined for the async argument is treated differently from async being omitted.
+11. If parsed URL's relative flag is set, run these substeps:
+    1. If the username argument is not null, set parsed URL's username to username.
+    2. If the password argument is not null, set parsed URL's password to password.
+
+12. If async is false, the JavaScript global environment is a document environment, and either the timeout attribute value is not zero, the withCredentials attribute value is true, or the
+    responseType attribute value is not the empty string, throw an "InvalidAccessError" exception.
+13. Terminate the request.
+
+    After all, a request can be ongoing at this point.
+14. Set variables associated with the object as follows:
+
+    * Set request method to method.
+    * Set request URL to parsed URL.
+    * If async is false, set the synchronous flag.
+    * Set author request headers to the empty list.
+    * Unset the flag.
+    * Set response entity body to null.
+    * Set arraybuffer response entity body to null.
+    * Set blob response entity body to null.
+    * Set document response entity body to null.
+    * Set JSON response entity body to null.
+    * Set text response entity body to null.
+
+15. If the state is not OPENED, run these substeps:
+    1. Change the state to OPENED.
+    2. Fire an event named readystatechange.
+
+
+
+4.6.2 The setRequestHeader() method
+
+
+client . setRequestHeader(header, value)
+
+        Appends an header to the list of author request headers, or if header is already in the list of author request headers, combines its value with value.
+
+        Throws an "InvalidStateError" exception if the state is not OPENED or if the flag is set.
+
+        Throws a JavaScript TypeError if header is not a valid HTTP header field name or if value is not a valid HTTP header field value.
+
+As indicated in the algorithm below certain headers cannot be set and are left up to the user agent. In addition there are certain other headers the user agent will take control of if they are not
+set by the author as indicated at the end of the send() method section.
+
+For non same origin requests using the HTTP GET method a preflight request is made when headers other than Accept and Accept-Language are set.
+
+The setRequestHeader(header, value) method must run these steps:
+
+1. If the state is not OPENED, throw an "InvalidStateError" exception.
+2. If the flag is set, throw an "InvalidStateError" exception.
+3. If header does not match the field-name production, throw a JavaScript TypeError.
+4. If value does not match the field-value production, throw a JavaScript TypeError.
+
+   An empty string represents an empty header field value.
+5. Terminate these steps if header is a case-insensitive match for one of the following headers:
+
+   * Accept-Charset
+   * Accept-Encoding
+   * Access-Control-Request-Headers
+   * Access-Control-Request-Method
+   * Connection
+   * Content-Length
+   * Cookie
+   * Cookie2
+   * Date
+   * DNT
+   * Expect
+   * Host
+   * Keep-Alive
+   * Origin
+   * Referer
+   * TE
+   * Trailer
+   * Transfer-Encoding
+   * Upgrade
+   * User-Agent
+   * Via
+
+   &mldr; or if the start of header is a case-insensitive match for Proxy- or Sec- (including when header is just Proxy- or Sec-).
+
+   The above headers are controlled by the user agent to let it control those aspects of transport. This guarantees data integrity to some extent. Header names starting with Sec- are not allowed to
+   be set to allow new headers to be minted that are guaranteed not to come from XMLHttpRequest.
+
+6. If header is not in the author request headers list, append header with its associated value to the list and terminate these steps.
+7. If header is in the author request headers list, append ",", followed by U+0020, followed by value, to the value of the header matching header.
+
+   The XMLHttpRequest standard intentionally constraints the use of HTTP here in line with contemporary implementations.
+
+
+Some simple code demonstrating what happens when setting the same header twice:
+
+// The following script:
+var client = new XMLHttpRequest();
+client.open('GET', 'demo.cgi');
+client.setRequestHeader('X-Test', 'one');
+client.setRequestHeader('X-Test', 'two');
+client.send();
+
+// &mldr;results in the following header being sent:
+X-Test: one, two
+
+
+
+4.6.3 The timeout attribute
+
+
+client . timeout
+
+        Can be set to a time in milliseconds. When set to a non-zero value will cause fetching to terminate after the given time has passed. When the time has passed, the request has not yet
+        completed, and the synchronous flag is unset, a timeout event will then be dispatched, or a "TimeoutError" exception will be thrown otherwise (for the send() method).
+
+        When set: throws an "InvalidAccessError" exception if the synchronous flag is set and the JavaScript global environment is a document environment.
+
+The timeout attribute must return its value. Initially its value must be zero.
+
+Setting the timeout attribute must run these steps:
+1. If the JavaScript global environment is a document environment and the synchronous flag is set, throw an "InvalidAccessError" exception.
+2. Set its value to the new value.
+
+This implies that the timeout attribute can be set while fetching is in progress. If that occurs it will still be measured relative to the start of fetching.
+
+4.6.4 The withCredentials attribute
+
+
+client . withCredentials
+
+        True when user credentials are to be included in a cross-origin request. False when they are to be excluded in a cross-origin request and when cookies are to be ignored in its response.
+        Initially false.
+
+        When set: throws an "InvalidStateError" exception if the state is not UNSENT or OPENED, or if the flag is set.
+
+        When set: throws an "InvalidAccessError" exception if the synchronous flag is set and the JavaScript global environment is a document environment.
+
+The withCredentials attribute must return its value. Initially its value must be false.
+
+Setting the withCredentials attribute must run these steps:
+
+1. If the state is not UNSENT or OPENED, throw an "InvalidStateError" exception.
+2. If the flag is set, throw an "InvalidStateError" exception.
+3. If the JavaScript global environment is a document environment and the synchronous flag is set, throw an "InvalidAccessError" exception.
+4. Set the withCredentials attribute's value to the given value.
+
+The withCredentials attribute has no effect when fetching same-origin resources.
+
+
+4.6.5 The upload attribute
+
+
+client . upload
+
+        Returns the associated XMLHttpRequestUpload object. It can be used to gather transmission information when data is transferred to a server.
+
+The upload attribute must return the associated XMLHttpRequestUpload object.
+
+As indicated earlier, each XMLHttpRequest object has an associated XMLHttpRequestUpload object.
+
+4.6.6 The send() method
+
+
+client . send([data = null])
+
+        Initiates the request. The optional argument provides the request entity body. The argument is ignored if request method is GET or HEAD.
+
+        Throws an "InvalidStateError" exception if the state is not OPENED or if the flag is set.
+
+The send(data) method must run these steps:
+1. If the state is not OPENED, throw an "InvalidStateError" exception.
+2. If the flag is set, throw an "InvalidStateError" exception.
+3. If the request method is GET or HEAD, set data to null.
+4. If data is null, do not include a request entity body and go to the next step.
+
+   Otherwise, let encoding be null, mime type be null, and then follow these rules, depending on data:
+   ArrayBufferView
+
+           Let the request entity body be the raw data represented by data.
+   Blob
+
+           If the object's type attribute is not the empty string let mime type be its value.
+
+           Let the request entity body be the raw data represented by data.
+
+   document
+
+           Let encoding be "UTF-8".
+
+           If data is an HTML document, let mime type be "text/html", or let mime type be "application/xml" otherwise. Then append ";charset=UTF-8" to mime type.
+
+           Let the request entity body be data, serialized, converted to Unicode, and utf-8 encoded. Re-throw any exception serializing throws.
+
+           If data cannot be serialized, an "InvalidStateError" exception is thrown.
+   a string
+
+           Let encoding be "UTF-8".
+
+           Let mime type be "text/plain;charset=UTF-8".
+
+           Let the request entity body be data, utf-8 encoded.
+   FormData
+
+           Let the request entity body be the result of running the encoding algorithm with data as form data set and with utf-8 as the explicit character encoding.
+
+           Let mime type be the concatenation of "multipart/form-data;", a U+0020 SPACE character, "boundary=", and the boundary string generated by the encoding algorithm.
+
+   If a Content-Type header is in author request headers and its value is a valid MIME type that has a charset parameter whose value is not a case-insensitive match for encoding, and encoding is not
+   null, set all the charset parameters of that Content-Type header to encoding.
+
+   If no Content-Type header is in author request headers and mime type is not null, append a Content-Type header with value mime type to author request headers.
+5. If the synchronous flag is set, release the storage mutex.
+6. Unset the error flag, upload complete flag and upload events flag.
+7. If there is no request entity body or if it is empty, set the upload complete flag.
+8. If the synchronous flag is unset and one or more event listeners are registered on the XMLHttpRequestUpload object, set the upload events flag.
+9. If the synchronous flag is unset, run these substeps:
+
+   1. Set the flag.
+   2. Fire a progress event named loadstart.
+   3. If the upload complete flag is unset, fire a progress event named loadstart on the XMLHttpRequestUpload object.
+   4. Return the send() method call, but continue running the steps in this algorithm.
+
+10. 
+    If the source origin and the request URL are same origin
+
+            These are the same-origin request steps.
+
+            Fetch the request URL from origin source origin, using referrer source as override referrer source, with the synchronous flag set if the synchronous flag is set, using HTTP method
+            request method, taking into account the request entity body, list of author request headers, and the rules listed at the end of this section.
+
+    If the synchronous flag is set
+
+            While making the request also follow the same-origin request event rules.
+
+            The send() method call will now be returned by virtue of this algorithm ending.
+
+    If the synchronous flag is unset
+
+            Make upload progress notifications.
+
+            Make progress notifications.
+
+            While processing the request, as data becomes available and when the user interferes with the request, queue tasks to update the response entity body and follow the same-origin request
+            event rules.
+
+    Otherwise
+
+            These are the cross-origin request steps.
+
+            Make a cross-origin request, passing these as parameters:
+
+    request URL
+            The request URL.
+    request method
+            The request method.
+    author request headers
+            The list of author request headers.
+    request entity body
+            The request entity body.
+    source origin
+            The source origin.
+    referrer source
+            The referrer source.
+    omit credentials flag
+            Set if withCredentials attribute's value is false.
+    force preflight flag
+            Set if the upload events flag is set.
+    If the synchronous flag is set
+
+            While making the request also follow the cross-origin request event rules.
+
+            The send() method call will now be returned by virtue of this algorithm ending.
+
+    If the synchronous flag is unset
+
+            While processing the request, as data becomes available and when the end user interferes with the request, queue tasks to update the response entity body and follow the cross-origin
+            request event rules.
+
+
+========================================================================================================================================================================================================
+
+If the user agent allows the end user to configure a proxy it should modify the request appropriately; i.e., connect to the proxy host instead of the origin server, modify the Request-Line and send
+Proxy-Authorization headers as specified.
+
+========================================================================================================================================================================================================
+
+If the user agent supports HTTP Authentication and Authorization is not in the list of author request headers, it should consider requests originating from the XMLHttpRequest object to be part of
+the protection space that includes the accessed URIs and send Authorization headers and handle 401 Unauthorized requests appropriately.
+
+If authentication fails, source origin and the request URL are same origin, Authorization is not in the list of author request headers, request URL's username is the empty string and request URL's
+password is null, user agents should prompt the end user for their username and password.
+
+Otherwise, if authentication fails, user agents must not prompt the end user for their username and password. [HTTPAUTH]
+
+Unfortunately end users are prompted because of legacy content constraints. However, when possible this behavior is prohibited, as it is bad UI. E.g. that is why the same origin restriction is made
+above.
+========================================================================================================================================================================================================
+
+If the user agent supports HTTP State Management it should persist, discard and send cookies (as received in the Set-Cookie response header, and sent in the Cookie header) as applicable. [COOKIES]
+========================================================================================================================================================================================================
+
+If the user agent implements a HTTP cache it should respect Cache-Control headers in author request headers (e.g. Cache-Control: no-cache bypasses the cache). It must not send Cache-Control or
+Pragma request headers automatically unless the end user explicitly requests such behavior (e.g. by reloading the page).
+
+For 304 Not Modified responses that are a result of a user agent generated conditional request the user agent must act as if the server gave a 200 OK response with the appropriate content. The user
+agent must allow author request headers to override automatic cache validation (e.g. If-None-Match or If-Modified-Since), in which case 304 Not Modified responses must be passed through. [HTTP]
+========================================================================================================================================================================================================
+
+If the user agent implements server-driven content-negotiation it must follow these constraints for the Accept and Accept-Language request headers:
+
+* Both headers must not be modified if they are in author request headers.
+* If not in author request headers, Accept-Language with an appropriate value should be appended to it.
+* If not in author request headers, Accept with value */* must be appended to it.
+
+Responses must have the content-encodings automatically decoded. [HTTP]
+========================================================================================================================================================================================================
+
+Besides the author request headers, user agents should not include additional request headers other than those mentioned above or other than those authors are not allowed to set using
+setRequestHeader(). This ensures that authors have a predictable API.
+
+
+4.6.7 Infrastructure for the send() method
+
+
+The same-origin request event rules are as follows:
+
+If the error flag is set
+
+        Terminate these steps.
+If the response has an HTTP status code of 301, 302, 303, 307, or 308
+
+        If the redirect violates infinite loop precautions this is a network error.
+
+        Otherwise, run these steps:
+
+        1. Set the request URL to the URL conveyed by the Location header.
+        2. If the source origin and the origin of request URL are same origin transparently follow the redirect while observing the same-origin request event rules.
+        3. Otherwise, follow the cross-origin request steps and terminate the steps for this algorithm.
+
+        HTTP places requirements on the user agent regarding the preservation of the request method and request entity body during redirects, and also requires end users to be notified of certain
+        kinds of automatic redirections.
+
+If the end user cancels the request
+
+        This is an abort error.
+If there is a network error
+
+        In case of DNS errors, TLS negotiation failure, or other type of network errors, this is a network error. Do not request any kind of end user interaction.
+
+        This does not include HTTP responses that indicate some type of error, such as HTTP status code 410.
+
+If timeout is not 0 and since the request started the amount of milliseconds specified by timeout has passed
+
+        This is a timeout error.
+Once all HTTP headers have been received, the synchronous flag is unset, and the HTTP status code of the response is not one of 301, 302, 303, 307, and 308
+
+        Switch to the HEADERS_RECEIVED state.
+Once the first byte (or more) of the response entity body has been received and the synchronous flag is unset
+If there is no response entity body and the synchronous flag is unset
+
+        Switch to the LOADING state.
+Once the whole response entity body has been received
+If there is no response entity body and the state is LOADING
+If there is no response entity body and the synchronous flag is set
+
+        Switch to the DONE state.
+========================================================================================================================================================================================================
+
+The cross-origin request event rules are as follows:
+
+If the error flag is set
+
+        Terminate these steps.
+If the cross-origin request status is preflight complete and the synchronous flag is unset
+
+        Make upload progress notifications.
+If the cross-origin request status is network error
+
+        This is a network error.
+If the cross-origin request status is abort error
+
+        This is an abort error.
+If timeout is not 0 and since the request started the amount of milliseconds specified by timeout has passed
+
+        This is a timeout error.
+Once all HTTP headers have been received, the cross-origin request status is success, and the synchronous flag is unset
+
+        Switch to the HEADERS_RECEIVED state.
+
+        Make progress notifications.
+
+Once the first byte (or more) of the response entity body has been received, the cross-origin request status is success, and the synchronous flag is unset
+If there is no response entity body, the cross-origin request status is success, and the synchronous flag is unset
+
+        Switch to the LOADING state.
+Once the whole response entity body has been received and the cross-origin request status is success
+If there is no response entity body, the cross-origin request status is success, and the state is LOADING
+If there is no response entity body, the cross-origin request status is success, and the synchronous flag is set
+
+        Switch to the DONE state.
+========================================================================================================================================================================================================
+
+When something is said to be a network error run the request error steps for exception "NetworkError" and event error.
+
+When something is said to be an abort error run the request error steps for exception "AbortError" and event abort.
+
+When something is said to be a timeout error run the request error steps for exception "TimeoutError" and event timeout.
+
+When something is said to be a request error for exception exception and event event run these steps:
+
+1. Terminate the request.
+2. Change the state to DONE.
+3. If the synchronous flag is set, throw an exception exception.
+4. Fire an event named readystatechange.
+
+   At this point it is clear that the synchronous flag is unset.
+
+5. If the upload complete flag is unset, follow these substeps:
+
+   1. Set the upload complete flag.
+   2. Fire a progress event named progress on the XMLHttpRequestUpload object.
+   3. Fire a progress event named event on the XMLHttpRequestUpload object.
+   4. Fire a progress event named loadend on the XMLHttpRequestUpload object.
+
+6. Fire a progress event named progress.
+7. Fire a progress event named event.
+8. Fire a progress event named loadend.
+
+========================================================================================================================================================================================================
+
+When it is said to switch to the HEADERS_RECEIVED state run these steps:
+
+1. Change the state to HEADERS_RECEIVED.
+2. Fire an event named readystatechange.
+
+When it is said to switch to the LOADING state run these steps:
+
+1. Change the state to LOADING.
+2. Fire an event named readystatechange.
+
+When it is said to switch to the DONE state run these steps:
+
+1. If the synchronous flag is set, update the response entity body.
+2. Unset the synchronous flag.
+3. Change the state to DONE.
+4. Fire an event named readystatechange.
+5. Fire a progress event named progress.
+6. Fire a progress event named load.
+7. Fire a progress event named loadend.
+
+========================================================================================================================================================================================================
+
+When it is said to make progress notifications, while the download is progressing, queue a task to fire a progress event named progress about every 50ms or for every byte received, whichever is
+least frequent.
+
+========================================================================================================================================================================================================
+
+When it is said to make upload progress notifications run these steps:
+
+* While the request entity body is being transmitted and the upload complete flag is unset, queue a task to fire a progress event named progress on the XMLHttpRequestUpload object about every 50ms
+  or for every byte transmitted, whichever is least frequent.
+* If the request entity body has been fully transmitted (irrespective of whether the server has started transmitting a response or the status code of such a response) and the upload complete flag
+  is still unset, queue a task to run these substeps:
+  1. Set the upload complete flag.
+  2. Fire a progress event named progress on the XMLHttpRequestUpload object.
+  3. Fire a progress event named load on the XMLHttpRequestUpload object.
+  4. Fire a progress event named loadend on the XMLHttpRequestUpload object.
+
+
+
+4.6.8 The abort() method
+
+
+client . abort()
+        Cancels any network activity.
+
+The abort() method must run these steps:
+1. Terminate the request.
+2. If the state is UNSENT, OPENED with the flag being unset, or DONE go to the next step.
+
+   Otherwise, run these substeps:
+
+   1. Change the state to DONE.
+   2. Unset the flag.
+   3. Fire an event named readystatechange.
+   4. If the upload complete flag is false run these substeps:
+
+      1. Set the upload complete flag to true.
+      2. Fire a progress event named progress on the XMLHttpRequestUpload object.
+      3. Fire a progress event named abort on the XMLHttpRequestUpload object.
+      4. Fire a progress event named loadend on the XMLHttpRequestUpload object.
+
+   5. Fire a progress event named progress.
+   6. Fire a progress event named abort.
+   7. Fire a progress event named loadend.
+
+3. Change the state to UNSENT.
+
+   No readystatechange event is dispatched.
+
+
+
+4.7 Response
+
+
+A response header is a HTTP response header transmitted before the response entity body. [HTTP]
+
+This excludes trailer fields ("trailers").
+
+4.7.1 The status attribute
+
+
+client . status
+
+        Returns the HTTP status code.
+
+The status attribute must return the result of running these steps:
+
+1. If the state is UNSENT or OPENED, return 0.
+2. If the error flag is set, return 0.
+3. Return the HTTP status code.
+
+
+4.7.2 The statusText attribute
+
+
+client . statusText
+
+        Returns the HTTP status text.
+
+The statusText attribute must return the result of running these steps:
+1. If the state is UNSENT or OPENED, return the empty string.
+2. If the error flag is set, return the empty string.
+3. Return the HTTP status text.
+
+
+4.7.3 The getResponseHeader() method
+
+
+client . getResponseHeader(header)
+
+        Returns the header field value from the response of which the field name matches header, unless the field name is Set-Cookie or Set-Cookie2.
+
+The getResponseHeader(header) method must run these steps:
+1. If the state is UNSENT or OPENED, return null.
+2. If the error flag is set, return null.
+3. If header is a case-insensitive match for Set-Cookie or Set-Cookie2, return null.
+4. If header is a case-insensitive match for multiple response headers, return the values of these headers as a single concatenated string separated from each other by a U+002C COMMA U+0020 SPACE
+   character pair.
+5. If header is a case-insensitive match for a single response header, return the value of that header.
+6. Return null.
+
+The Cross-Origin Resource Sharing specification filters response headers exposed by getResponseHeader() for cross-origin requests. [CORS]
+
+For the following script:
+
+var client = new XMLHttpRequest();
+client.open("GET", "unicorns-are-teh-awesome.txt", true);
+client.send();
+client.onreadystatechange = function() {
+  if(this.readyState == 2) {
+    print(client.getResponseHeader("Content-Type"));
+  }
+}
+
+The print() function will get to process something like:
+
+text/plain; charset=UTF-8
+
+
+
+4.7.4 The getAllResponseHeaders() method
+
+
+client . getAllResponseHeaders()
+
+        Returns all headers from the response, with the exception of those whose field name is Set-Cookie or Set-Cookie2.
+
+The getAllResponseHeaders() method must run these steps:
+
+1. If the state is UNSENT or OPENED, return the empty string.
+2. If the error flag is set, return the empty string.
+3. Return all response headers, excluding headers that are a case-insensitive match for Set-Cookie or Set-Cookie2, as a single string, with each header line separated by a U+000D CR U+000A LF
+   pair, excluding the status line, and with each header name and header value separated by a U+003A COLON U+0020 SPACE pair.
+
+The Cross-Origin Resource Sharing specification filters response headers exposed by getAllResponseHeaders() for cross-origin requests. [CORS]
+
+For the following script:
+
+var client = new XMLHttpRequest();
+client.open("GET", "narwhals-too.txt", true);
+client.send();
+client.onreadystatechange = function() {
+  if(this.readyState == 2) {
+    print(this.getAllResponseHeaders());
+  }
+}
+
+The print() function will get to process something like:
+
+Date: Sun, 24 Oct 2004 04:58:38 GMT
+Server: Apache/1.3.31 (Unix)
+Keep-Alive: timeout=15, max=99
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: text/plain; charset=utf-8
+
+
+
+4.7.5 Response entity body
+
+
+The response MIME type is the MIME type the Content-Type header contains excluding any parameters and converted to ASCII lowercase, or null if the response header can not be parsed or was omitted.
+The override MIME type is initially null and can get a value if overrideMimeType() is invoked. Final MIME type is the override MIME type unless that is null in which case it is the response MIME
+type.
+
+The response charset is the value of the charset parameter of the Content-Type header or null if there was no charset parameter or the header could not be parsed or was omitted. The override charset
+is initially null and can get a value if overrideMimeType() is invoked. Final charset is the override charset unless that is null in which case it is the response charset.
+
+========================================================================================================================================================================================================
+
+The response entity body is the fragment of the entity body of the response received so far (LOADING) or the complete entity body of the response (DONE). If the response does not have an entity
+body, the response entity body is null.
+
+The response entity body is updated as part of the send() method and reset by the open() method.
+
+========================================================================================================================================================================================================
+
+The arraybuffer response entity body is either an ArrayBuffer representing the response entity body or null. If the arraybuffer response entity body is null, let it be the return value of the
+following algorithm:
+
+1. If the response entity body is null, return an empty ArrayBuffer object.
+2. Return an ArrayBuffer object representing the response entity body.
+
+The blob response entity body is either a Blob representing the response entity body or null. If the blob response entity body is null, set it to the return value of the following algorithm:
+
+1. If the response entity body is null, return an empty Blob object.
+2. Return a Blob object representing the response entity body.
+
+The document response entity body is either a document representing the response entity body or null. If the document response entity body is null, set it to the return value of the following
+algorithm:
+
+1. If the response entity body is null, return null.
+2. If the JavaScript global environment is a worker environment, return null.
+3. If final MIME type is not null, text/html, text/xml, application/xml, or does not end in +xml, return null.
+4. If responseType is the empty string and final MIME type is text/html, return null.
+
+   This is restricted to responseType being "document" in order to prevent breaking legacy content.
+5. If final MIME type is text/html, run these substeps:
+   1. Let charset be the final charset.
+   2. If charset is null, prescan the first 1024 bytes of the response entity body and if that does not terminate unsuccessfully then let charset be the return value.
+   3. If charset is null, set charset to utf-8.
+   4. Let document be a document that represents the result parsing response entity body following the rules set forth in the HTML Standard for an HTML parser with scripting disabled and a
+      known definite encoding charset. [HTML]
+   5. Flag document as an HTML document.
+
+6. Otherwise, let document be a document that represents the result of parsing the response entity body following the rules set forth in the XML specifications. If that fails (unsupported
+   character encoding, namespace well-formedness error, etc.), return null. [XML] [XMLNS]
+
+   Scripts in the resulting document tree will not be executed, resources referenced will not be loaded and no associated XSLT will be applied.
+
+7. If charset is null, set charset to utf-8.
+8. Set document's encoding to charset.
+9. Set document's content type to final MIME type.
+10. Set document's URL to request URL.
+11. Set document's origin to source origin.
+12. Return document.
+
+The JSON response entity body is either a JavaScript value representing the response entity body. If the JSON response entity body is null, set it to the return value of the following algorithm:
+
+1. Let JSON text be the result of running utf-8 decode on byte stream response entity body.
+2. Return the result of invoking the initial value of the parse property of the JSON object defined in JavaScript, with JSON text as its only argument, or null if that function throws an
+   exception. [ECMASCRIPT]
+
+The text response entity body is either a string representing the response entity body or null. If the text response entity body is null, set it to the return value of the following algorithm:
+
+1. If the response entity body is null, return the empty string.
+
+2. Let charset be the final charset.
+3. If responseType is the empty string, charset is null, and final MIME type is either null, text/xml, application/xml or ends in +xml, use the rules set forth in the XML specifications to
+   determine the encoding. Let charset be the determined encoding. [XML] [XMLNS]
+
+   This is restricted to responseType being the empty string to keep the non-legacy responseType value "text" simple.
+4. If charset is null, set charset to utf-8.
+5. Return the result of running decode on byte stream response entity body using fallback encoding charset.
+
+Authors are strongly encouraged to always encode their resources using utf-8.
+
+4.7.6 The overrideMimeType() method
+
+
+client . overrideMimeType(mime)
+
+        Sets the Content-Type header for the response to mime.
+
+        Throws an "InvalidStateError" exception if the state is LOADING or DONE.
+
+        Throws a JavaScript TypeError if mime is not a valid media type.
+
+The overrideMimeType(mime) method must run these steps:
+1. If the state is LOADING or DONE, throw an "InvalidStateError" exception.
+2. If parsing mime analogously to the value of the Content-Type header fails, throw a JavaScript TypeError.
+3. If mime is successfully parsed, set override MIME type to its MIME type, excluding any parameters, and converted to ASCII lowercase.
+4. If a charset parameter is successfully parsed, set override charset to its value.
+
+
+4.7.7 The responseType attribute
+
+
+client . responseType [ = value ]
+
+        Returns the response type.
+
+        Can be set to change the response type. Values are: the empty string (default), "arraybuffer", "blob", "document", "json", and "text".
+
+        When set: setting to "document" is ignored if the JavaScript global environment is a worker environment
+
+        When set: throws an "InvalidStateError" exception if the state is LOADING or DONE.
+
+        When set: throws an "InvalidAccessError" exception if the synchronous flag is set and the JavaScript global environment is a document environment.
+
+The responseType attribute must return its value. Initially its value must be the empty string.
+
+Setting the responseType attribute must run these steps:
+1. If the state is LOADING or DONE, throw an "InvalidStateError" exception.
+2. If the JavaScript global environment is a document environment and the synchronous flag is set, throw an "InvalidAccessError" exception.
+3. If the JavaScript global environment is a worker environment and the given value is "document", terminate these steps.
+4. Set the responseType attribute's value to the given value.
+
+
+4.7.8 The response attribute
+
+
+client . response
+
+        Returns the response entity body.
+
+The response attribute must return the result of running these steps:
+
+If responseType is the empty string or "text"
+
+        1. If the state is not LOADING or DONE, return the empty string.
+        2. If the error flag is set, return the empty string.
+        3. Return the text response entity body.
+
+Otherwise
+
+        1. If the state is not DONE, return null.
+        2. If the error flag is set, return null.
+        3. 
+   If responseType is "arraybuffer"
+
+           Return the arraybuffer response entity body.
+   If responseType is "blob"
+
+           Return the blob response entity body.
+   If responseType is "document"
+
+           Return the document response entity body.
+   If responseType is "json"
+
+           Return the JSON response entity body.
+
+
+4.7.9 The responseText attribute
+
+
+client . responseText
+
+        Returns the text response entity body.
+
+        Throws an "InvalidStateError" exception if responseType is not the empty string or "text".
+
+The responseText attribute must return the result of running these steps:
+
+1. If responseType is not the empty string or "text", throw an "InvalidStateError" exception.
+2. If the state is not LOADING or DONE, return the empty string.
+3. If the error flag is set, return the empty string.
+4. Return the text response entity body.
+
+
+4.7.10 The responseXML attribute
+
+
+client . responseXML
+
+        Returns the document response entity body.
+
+        Throws an "InvalidStateError" exception if responseType is not the empty string or "document".
+
+The responseXML attribute must return the result of running these steps:
+
+1. If responseType is not the empty string or "document", throw an "InvalidStateError" exception.
+2. If the state is not DONE, return null.
+3. If the error flag is set, return null.
+4. Return the document response entity body.
+
+The responseXML attribute has XML in its name for historical reasons. It also returns HTML resources as documents.
+
+
+4.8 Events summary
+
+
+This section is non-normative.
+
+The following events are dispatched on XMLHttpRequest and/or XMLHttpRequestUpload objects:
+
+Event name Interface Dispatched when&mldr;
+readystatechange Event The readyState attribute changes value, except when it changes to UNSENT.
+loadstart ProgressEvent The request starts.
+progress ProgressEvent Transmitting data.
+abort ProgressEvent The request has been aborted. For instance, by invoking the abort() method.
+error ProgressEvent The request has failed.
+load ProgressEvent The request has successfully completed.
+timeout ProgressEvent The author specified timeout has passed before the request completed.
+loadend ProgressEvent The request has completed (either in success or failure).
+
+
+5 Interface FormData
+
+
+[Constructor(optional HTMLFormElement form)]
+interface FormData {
+  void append([EnsureUTF16] DOMString name, Blob value, optional [EnsureUTF16] DOMString filename);
+  void append([EnsureUTF16] DOMString name, [EnsureUTF16] DOMString value);
+};
+
+If the JavaScript global environment is a worker environment, FormData must be exposed to JavaScript as if the constructor part of the IDL reads [Constructor] (i.e. has no arguments).
+
+The FormData object represents an ordered list of entries. Each entry consists of a name and a value.
+
+For the purposes of interaction with other algorithms, an entry's type is "string" if value is a string and "file" otherwise. If an entry's type is "file", its filename is the value of entry's
+value's name attribute.
+fd = new FormData([form])
+
+        Returns a new FormData object, optionally initialized with the entries from form (if given).
+fd . append(name, value [, filename])
+
+        Appends a new entry to the FormData object.
+
+The FormData(form) constructor must run these steps:
+1. Let fd be a new FormData object.
+2. If form is given, set fd's entries to the result of constructing the form data set for form.
+3. Return fd.
+
+The append(name, value, filename) method must run these steps:
+1. Let entry be a new entry.
+2. Set entry's name to name.
+3. If value is a Blob, set value to a new File object whose name attribute value is "blob".
+4. If value is a File and filename is given, set value's name attribute value to filename.
+5. Set entry's value to value.
+6. Append entry to FormData object's list of entries.
+
+
+References
+
+
+
+[COOKIES]
+        HTTP State Management Mechanism, Adam Barth. IETF.
+[CORS]
+        Cross-Origin Resource Sharing, Anne van Kesteren. W3C.
+[DOM]
+        DOM, Anne van Kesteren, Aryeh Gregor, Ms2ger et al.. W3C.
+[DOMPS]
+        DOM Parsing and Serialization, Travis Leithead and Ms2ger. W3C.
+[ECMASCRIPT]
+        ECMAScript Language Specification. ECMA.
+[ENCODING]
+        Encoding Standard, Anne van Kesteren. WHATWG.
+[FILEAPI]
+        File API, Arun Ranganathan and Jonas Sicking. W3C.
+[HTML]
+        HTML, Robin Berjon, Travis Leithead, Erika Doyle Navara et al.. W3C.
+[HTTP]
+        Hypertext Transfer Protocol -- HTTP/1.1, Roy Fielding, James Gettys, Jeffrey Mogul et al.. IETF.
+[HTTPAUTH]
+        HTTP Authentication: Basic and Digest Access Authentication, J. Franks, Phillip Hallam-Baker, J. Hostetler et al.. IETF.
+[HTTPVERBSEC]
+        Multiple vendors' web servers enable HTTP TRACE method by default. US-CERT.
+        Microsoft Internet Information Server (IIS) vulnerable to cross-site scripting via HTTP TRACK method. US-CERT.
+        HTTP proxy default configurations allow arbitrary TCP connections. US-CERT.
+[PROGRESSEVENTS]
+        Progress Events, Anne van Kesteren, Charles McCathieNevile and Jungkee Song. W3C.
+[RFC2119]
+        Key words for use in RFCs to Indicate Requirement Levels, Scott Bradner. IETF.
+[TYPEDARRAY]
+        Typed Array, David Herman and Kenneth Russell. Khronos.
+[URL]
+        URL Standard, Anne van Kesteren. WHATWG.
+[WEBIDL]
+        Web IDL, Cameron McCormack. W3C.
+[XML]
+        Extensible Markup Language, Tim Bray, Jean Paoli, C. M. Sperberg-McQueen et al.. W3C.
+[XMLNS]
+        Namespaces in XML, Tim Bray, Dave Hollander, Andrew Layman et al.. W3C.
+
+
+Acknowledgments
+
+
+The editor would like to thank Addison Phillips, Adrian Bateman, Ahmed Kamel, Alex Hopmann, Alex Vincent, Alexey Proskuryakov, Andrea Marchesini, Asbjÿrn Ulsberg, Boris Zbarsky, Bj÷rn H÷hrmann,
+Cameron McCormack, Chris Marrin, Christophe Jolif, Charles McCathieNevile, Dan Winship, David Andersson, David Flanagan, David H≈sƒther, David Levin, Dean Jackson, Denis Sureau, Dominik R÷ttsches,
+Doug Schepers, Douglas Livingstone, Elliott Sprehn, Elliotte Harold, Eric Lawrence, Eric Uhrhane, Erik Arvidsson Erik Dahlstr÷m, Feras Moussa, Geoffrey Sneddon, Gideon Cohn, Glenn Adams, Gorm Haug
+Eriksen, H≈kon Wium Lie, Hallvord R. M. Steen, Henri Sivonen, Huub Schaeks, Ian Davis, Ian Hickson, Ivan Herman, Jarred Nicholls, Jeff Walden, Jens Lindstr÷m, Jim Deegan, Jim Ley, Joe Farro, Jonas
+Sicking, Julian Reschke, &#xc1a1;&#xc815;&#xae30; (Jungkee Song), &#x5442;&#x5eb7;&#x8c6a; (Kang-Hao Lu), Karl Dubost, Lachlan Hunt, Maciej Stachowiak, Magnus Kristiansen, Marc Hadley, Marcos
+Caceres, Mark Baker, Mark Birbeck, Mark Nottingham, Mark S. Miller, Martin Hassman, Mohamed Zergaoui, Ms2ger, Odin Hÿrthe Omdal, Olli Pettay, Pawel Glowacki, Peter Michaux, Philip Taylor, Robin
+Berjon, Rune F. Halvorsen, Ruud Steltenpool, Sergiu Dumitriu, Sigbjÿrn Finne, Simon Pieters, Stewart Brodie, Sunava Dutta, Takeshi Yoshino, Thomas Roessler, Tom Magliery, Travis Leithead Yehuda
+Katz, and Zhenbin Xu for their contributions to this specification.
+
+Special thanks to the Microsoft employees who first implemented the XMLHttpRequest interface, which was first widely deployed by the Windows Internet Explorer browser.
+
+Special thanks also to the WHATWG for drafting an initial version of this specification in their Web Applications 1.0 document (now renamed to HTML). [HTML]
+
+Special thanks to Anne van Kesteren who has provided nearly all the contents until he stepped down as a W3C editor and is now in succession providing discussions and contents as the editor of the
+XMLHttpRequest Living Standard in WHATWG which this version of the specification pursues convergence.
+
+Thanks also to all those who have helped to improve this specification by sending suggestions and corrections. (Please, keep bugging us with your issues!)
+

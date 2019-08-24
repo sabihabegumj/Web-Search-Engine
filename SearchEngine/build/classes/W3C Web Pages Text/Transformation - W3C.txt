@@ -1,0 +1,281 @@
+Transformation - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+XML Technology
+
+
+* Publishing
+* Processing
+* Components
+* Query
+* Transformation
+* Security
+* Schema
+* XML Essentials
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* XML&#xA0;Technology » 
+* Transformation
+
+
+
+
+Transformation
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;XSLT &#x2022;
+* what&#xA0;is&#xA0;XSLT&#xA0;used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+This page gives a short overview of XSLT and XPath, and also explains the difference between XPath, XSLT, XQuery and XSL-FO. The specifications are developed by the XSL Working Group [Member-only
+admin page].
+
+XSLT and XSL-FO are W3C Recommendations for defining XML document transformation and presentation. Use XSLT to transform documents into XSL-FO for printing or viewing; you can also use XSLT as a
+general XML-aware programming and transformation language, and you can use XSL-FO directly without XSLT.
+
+A typical application might be taking groups of XML documents to PDF:
+
+
+XSL-FO is described further on the page on publishing.
+
+
+What is XSLT?
+
+
+XSL Transformations (XSLT 2.0) is a language for transforming XML documents into other XML documents, text documents or HTML documents. You might want to format a chapter of a book using XSL-FO, or
+you might want to take a database query and format it as HTML.
+
+With XSLT 2.0, processors can operate not only on XML but on anything that can be made to look like XML: relational database tables, geographical information systems, file systems, anything from
+which your XSLT processor can build an XDM instance. In some cases an XSLT 2.0 processor might also be able to work directly from a database of XDM instances. This ability to operate on multiple
+input files in multiple formats, and to treat them all as if they were XML files, is very powerful. It is shared with XQuery, and with anything else using XPath 2.0:
+
+
+
+Template-Driven Approach
+
+
+XSLT uses a template-driven approach to transformations: you write a template that shows what happens to any given input element. For example, if you were formatting a letter to produce HTML for the
+Web, you might have a template to match an underlined passage and make it come out in italics:
+
+
+<template match="underline">
+
+<i>
+
+<apply-templates/>
+</i>
+</template>
+
+
+Now suppose the input document contains the following fragment of XML:
+
+
+I <underline>really</underline> love XSLT!
+
+
+The template would match the underline element, and produce the following HTML fragment:
+
+
+I <i>really</i> love XSLT!
+
+
+
+Wildly Popular
+
+
+XSLT has become the language of choice for a very wide range of XML applications. It is of course still used to produce XSL-FO documents for printing, but it is also used to integrate back-end
+software for Web sites. You will find XSLT (version 1) inside most modern Web browsers, so that XML can be transformed on the fly without the user even noticing; you will find XSLT on the desktop,
+in servers, in network appliances, and forming a basic and dependable part of computer infrastructure almost everywhere you look.
+
+
+What is XSLT Used For?
+
+
+If you make a purchase on eBay, or buy a book at Amazon, chances are that pretty much everything you see on every Web page has been processed with XSLT. Use XSLT to process multiple XML documents
+and to produce any combination of text, HTML and XML output. XSLT support is shipped with all major computer operating systems today, as well as being built in to all major Web browsers.
+
+
+XSLT, XPath and XQuery
+
+
+XPath is a simple language for identifying parts of an XML document that are of interest. It is used by XSLT, and also by XLink; it is extended considerably by XQuery.
+
+XPath cannot be used stand-alone: it is always used in the context of a host language, whether that language is XSLT, Python, Perl, PHP, C#, JavaScript or some other language. XPath can be very
+powerful: for example, to find all div elements that have a class attribute of sock with a span child whose class attribute is equal to colour, one might write,
+
+
+div[@class = "sock"]/span[@class = "colour"]
+
+
+To find a repairProcedure element containing a step element that uses part number 1976, we might write,
+
+
+repairProcedure[step//partno = 1976]
+
+
+
+Examples
+
+
+[more coming]
+
+
+Learn More
+
+
+[more coming]
+
+
+
+
+
+Recent Press
+
+
+26 March
+Digital Journal
+        &#x201D;
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* XPath
+* XSLT
+* XSL-FO
+
+
+These W3C Groups are working on related specifications:
+
+
+* XML Query Working Group
+* XSLT Working Group
+* Internationalization Working Group
+* XML Core Working Group
+
+
+
+Contact
+
+
+Liam R. E. Quin <liam@w3.org>
+
+
+
+
+
+Current Status
+
+
+* XPath
+* XSLT
+* XSL-FO
+
+
+
+
+Use It
+
+
+* Tutorials
+* Software
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2010 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

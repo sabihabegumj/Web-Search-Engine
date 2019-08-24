@@ -1,0 +1,213 @@
+Meta Formats - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Web Architecture
+
+
+* Protocol and Meta Format Considerations
+* Meta Formats
+* Protocols
+* Identifiers
+* Architecture Principles
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web&#xA0;Architecture » 
+* Meta Formats
+
+
+
+
+Meta Formats
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;xml &#x2022;
+* what&#xA0;is&#xA0;rdf &#x2022;
+* what&#xA0;is&#xA0;json &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+
+Metaformats are generic formats that people can adopt when creating their own application-specific languages without having to reinvent syntax. The terms that people use to specialise a metaformat
+are often called vocabularies. Examples of metaformats are XML, RDF and JSON. Metaformats offer advantages over creating a custom syntax for a language because they can be processed by generic
+tools, and languages that use them can be understood by people who have learned about the metaformat.
+
+Metaformats usually have a schema language that can be used to define or describe a vocabulary that uses that metaformat, and query or transformation languages that can be used to access information
+within documents that use that metaformat.
+
+
+
+What is XML?
+
+
+XML provides a simple standardised way to serialize information representable as labelled trees with annotations and cross-references, allowing a free choice of markup vocabulary. This not only
+makes it well-suited for human-authored documents, particularly given its facility for mixed content (plain and marked-up text) and built-in support for Unicode, but also means it is a useful syntax
+for all kinds of machine-to-machine data transfer. XHTML, Docbook and DITA are examples of XML-based languages primarily intended for documents; machine-to-machine uses include Atom, UPnP (for
+networked device discovery) and AEMP (for construction equipment). There are several schema languages for XML, including XML Schema and RELAX NG, which enable XML-based languages to be validated.
+There are also generic methods for querying and transforming XML through XPath and XSLT, XQuery, and XML Processing pipelines.
+
+
+What is RDF?
+
+
+RDF is a language designed for the expression of arbitrary information about arbitrary things. It has variant surface syntaxes including Turtle and RDFa, the latter allowing embedding in HTML and
+thus promoting machine readability of information found in HTML documents. RDF is useful for expressing graph structured information in which each entity is linkable through a URL and is thus the
+core data model for the Semantic Web. Common RDF vocabularies, which can be used with any RDF syntax, are Dublin Core Terms, FOAF, SKOS, and schema.org.
+
+RDF vocabularies can be described by RDF Schemas or OWL Ontologies. These are primarily used for inference: to deduce new information from data expressed in RDF. More flexible reasoning for RDF can
+be described using RIF. Data stored within RDF stores, known as triplestores, can be queried and updated using SPARQL.
+
+
+What is JSON?
+
+
+JSON is a metaformat that is useful for expressing tree-based data structures. JSON's key benefit is that it tersely expresses the kinds of data structures commonly used in programming languages,
+particularly Javascript, which makes it very easy to create and consume.
+
+JSON is rarely used with a declarative schema and it is usually processed by being parsed into the native data structures used by a particular programming language. However, there are several query
+languages currently under development, including JSON Path, Jaql, and JSONiq.
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* XML
+* RDF
+* XHTML Modularization
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Government Linked Data Working Group
+* Linked Data Platform (LDP) Working Group
+* RDF Working Group
+* RDFa Working Group
+* Semantic Web Interest Group
+* Technical Architecture Group
+* XML Core Working Group
+* XML Processing Model Working Group
+
+
+
+
+
+
+Current Status
+
+
+* XML
+* RDF
+* XHTML Modularization
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+Validators
+
+
+* RDF
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

@@ -1,0 +1,601 @@
+Web Design and Applications - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Standards
+
+
+* Web Design and Applications
+* Web Architecture
+* Semantic Web
+* XML Technology
+* Web of Services
+* Web of Devices
+* Browsers and Authoring Tools
+* All Standards and Drafts
+* About W3C Standards
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web Design and Applications
+
+
+
+
+Web Design and Applications
+
+
+* On this page &#x2192;
+* technology&#xA0;topics &#x2022;
+* news &#x2022;
+* upcoming&#xA0;events&#xA0;and&#xA0;talks
+
+
+
+
+Web Design and Applications involve the standards for building and Rendering Web pages, including HTML, CSS, SVG, device APIs, and other technologies for Web Applications (&#x201C;WebApps&#x201D;).
+This section also includes information on how to make pages accessible to people with disabilities (WCAG), to internationalize them, and make them work on mobile devices.
+
+
+
+
+
+
+
+
+
+
+HTML and CSS are the fundamental technologies for building Web pages: HTML (html and xhtml) for structure, CSS for style and layout, including WebFonts. Find resources for good Web page design as
+well as helpful tools.
+
+
+
+
+
+
+
+Standard APIs for client-side Web Application development include those for Geolocation, XMLHttpRequest, and mobile widgets. W3C standards for document models (the &#x201C;DOM&#x201D;) and
+technologies such as XBL allow content providers to create interactive documents through scripting.
+
+
+
+
+
+
+
+W3C is the home of the widely deployed PNG raster format, SVG vector format, and the Canvas API. WebCGM is a more specialized format used, for example, in the fields of automotive engineering,
+aeronautics.
+
+
+
+
+
+
+
+
+
+Some of the W3C formats that enable authoring audio and video presentations include HTML, SVG, and SMIL (for synchronization). W3C is also working on a timed text format for captioning and other
+applications.
+
+
+
+
+
+
+
+W3C&#x2019;s Web Accessibility Initiative (WAI) has published Web Content Accessibility Guidelines (WCAG) to help authors create content that is accessible to people with disabilities. WAI-ARIA
+gives authors more tools to create accessible Web Applications by providing additional semantics about widgets and behaviors.
+
+
+
+
+
+
+
+W3C has a mission to design technology that works across cultures and languages. W3C standards such as HTML and XML are built on Unicode, for instance. In addition, W3C has published guidance for
+authors related to language tags bi-directional (bidi) text, and more.
+
+
+
+
+
+
+
+
+
+W3C promotes &#x201C;One Web&#x201D; that is available on any device. W3C&#x2019;s Mobile Web Best Practices help authors understand how to create content that provides a reasonable experience on a
+wide variety of devices, contexts, and locations.
+
+
+
+
+
+
+
+The Web is a powerful tool for communications and transactions of all sorts. It is important to consider privacy and security implications of the Web as part of technology design. Learn more about
+tracking and Web App security.
+
+
+
+
+
+
+
+Mathematics and formula are used on the Web for business reports, education materials and scientific research. W3C&#x2019;s MathML enables mathematics to be served, received, and processed on the
+World Wide Web, just as HTML has enabled this functionality for other types of content.
+
+
+
+
+
+
+
+News
+
+
+
+
+
+HTML5: On Our Way to Recommendation
+
+
+17 June 2014
+
+from W3C HTML Working Group
+
+
+
+In 2012, the HTML Working Group Chairs came up with a plan to progress HTML, aka &#x201C; Plan 2014&#x201C;. The plan has several objectives:
+
+* Produce a W3C Recommendation for HTML 5.0 before the end of 2014, as well as a W3C Recommendation for HTML 5.1 before the end of 2016;
+* Use the Candidate Recommendation of HTML5, which started in December 2012, to focus the testing effort where it is appropriate;
+* Use modularity to manage the size and complexity of the specifications.
+
+Over the past 2 years, we have continued to refine and improve the HTML 5.0 specification. The HTML Working Group receives and tracks proposals from a variety of people in the community, most
+prominently from the WHATWG. During the past 2 years, the HTML5 editors have worked with the community to exchange ideas and thus avoid divergence among specifications. The HTML Landscapelists the
+differences between various HTML specifications.
+
+The HTML Working Group today has 97,000 tests for HTML5. As part of satisfying the W3C process requirements for Candidate Recommendation, we have tracked implementations of HTML5 features, and test
+results today show that there are at least 2 implementations for 96.7% of the available tests. What about the other 3.3%? Those failures arise from how different browsers handle errors, and the
+Working Group has concluded that these failures do not reflect differences in implementations that will significantly affect interoperability of real-world running code. Following the test results,
+we removed several features from HTML 5.0due to their lack of implementations and stability, including the dialog element and scoped style sheet. Those features remain in the draft HTML 5.1
+specification for the time being.
+
+W3C would like to thank the community for helping to build this valuable test suite. The tests come from the Test the Web Forward community effort and the contributors to the web-platform-tests
+github repository, and we strongly encourage Web developers to continue to contribute to the testing effort and help make the Open Web Platform reliable. At the moment, the HTML Working Group is
+specifically looking for additional HTML 5.0 tests related to media elements and page navigation.
+
+As planned, given the substantive changes made to the document, we&#x2019;re returning HTML 5.0 to Last Call. The scope of the expected feedback at this point is limited to changes that have taken
+place during the Candidate Recommendation phase and the deadline is 15 July 2014. Once we have addressed the Last Call comments and finalize the test suite, we expect to move the document to
+Proposed Recommendation in the fall. A few features may be removed from HTML 5.0 but kept in HTML 5.1 if we can&#x2019;t get enough implementations: the DataCue interface, <input type=time>, drag
+and drop, and the new ruby model.
+
+Advancing HTML 5.0 towards Recommendation status is just one step in advancing the Open Web Platform, a full-fledged programming environment for rich, interactive, cross-platform applications, with
+HTML5 at its core. Several Groups are extending the HTML markup language, including for responsive design, performance, accessibility or additional security purposes. The HTML Working Group, the W3C
+Technical Architecture Group and the Web Applications Working Group, are looking to have an Extensible Web Summit in the middle of September where we will discuss the future of HTML. We expect a
+formal announcement in early July.
+
+
+
+
+
+
+Announcing The Unicode Standard, Version 7.0
+
+
+17 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebDesign
+
+
+
+
+
+
+
+Version 7.0 of the Unicode Standardis now available, adding 2,834 new characters. This latest version adds the new currency symbols for the Russian ruble and Azerbaijani manat, approximately 250
+emoji (pictographic symbols), many other symbols, and 23 new lesser-used and historic scripts, as well as character additions to many existing scripts. These additions extend support for written
+languages of North America, China, India, other Asian countries, and Africa. See the link above for full details.
+
+Most of the new emoji characters derive from characters in long-standing and widespread use in Wingdings and Webdings fonts.
+
+Major enhancements were made to the Indic script properties. New property values were added to enable a more algorithmic approach to rendering Indic scripts. These include properties for joining
+behavior, new classes for numbers, and a further division of the syllabic categories of viramas and rephas. With these enhancements, the default rendering for newly added Indic scripts can be
+significantly improved.
+
+Unicode character properties were extended to the new characters. The old characters have enhancements to Script and Alphabetic properties, and casing and line-breaking behavior. There were also
+nearly 3,000 new Cantonese pronunciation entries, as well as new or clarified stability policies for promoting interoperable implementations.
+
+Two other important Unicode specifications are maintained in synchrony with the Unicode Standard, and have updates for Version 7.0. These will be released at the same time:
+
+UTS #10, Unicode Collation Algorithm&#x2014; the standard for sorting Unicode text
+UTS #46, Unicode IDNA Compatibility Processing&#x2014; for processing of non-ASCII URLs (IDNs)
+
+
+
+
+
+
+Workshop report: Summary of the LD4LT group kickoff / LIDER roadmapping workshop
+
+
+11 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebDesign
+
+
+
+The LIDER project has published a report on the first Linked Data for Language Technology event, which was held 21st March in alignment with the European Data Forum in Athens. Read the report.
+
+Industry stakeholders from many areas (localization, publishing, language technology applications etc.) and key researchers from linked data and language technology discussed promises and challenges
+around linguistic linked data. The report summarizes all presentations and includes an initial list of use cases and requirements for linguistic linked data. This and the overall outcome of the
+event will feed into work of the LD4LT group (see especially the LD4LT latest draft version of use cases), and the field of multilingual linked data in general.
+
+The LD4LT group is part of the MultilingualWeb community &#x2013; learn more about related projects.
+
+
+
+
+
+
+Last Call draft published for Encoding spec
+
+
+06 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebDesign
+
+
+
+A Last Call Working Draft of Encodinghas been published.
+
+While encodings have been defined to some extent, implementations have not always implemented them in the same way, have not always used the same labels, and often differ in dealing with undefined
+and former proprietary areas of encodings. This specification attempts to fill those gaps so that new implementations do not have to reverse engineer encoding implementations of the market leaders
+and existing implementations can converge.
+
+The body of this spec is an exact copy of the WHATWG version as of the date of its publication, intended to provide a stable reference for other specifications. We are hoping for people to review
+the specification and send comments about any technical areas that need attention (see the Status section for details).
+
+Please send comments by 1 July 2014.
+
+
+
+
+
+
+Updates to two Working Group Notes published
+
+
+06 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebDesign
+
+
+
+Authoring HTML: Handling Right-to-left Scripts and Authoring HTML: Language declarationshave both been updated to a new format that lists do&#x2019;s and don&#x2019;ts, but points to existing or new
+articles for detailed information. This will significantly help in keeping the material up to date in the future as technology changes. The documents have also been thoroughly overhauled to reflect
+the latest changes and information on
+
+The first document provides advice to content authors using HTML markup and CSS style sheets about how to create pages for languages that use right-to-left scripts, such as Arabic, Hebrew, Persian,
+Thaana, Urdu, etc. It explains how to create content in right-to-left scripts that builds on but goes beyond the Unicode bidirectional algorithm, as well as how to prepare content for localization
+into right-to-left scripts.
+
+The second helps content authors specify the language of content, which is useful for a wide number of applications, from linguistically-sensitive searching to applying language-specific display
+properties. In some cases the potential applications for language information are still waiting for implementations to catch up, whereas in others it is a necessity today. Adding markup for language
+information to content is something that can and should be done now and as content is first developed. If not, it will be much more difficult to take advantage of any future developments.
+
+
+
+
+
+
+Last week: WebRTC, Net Neutrality, HTML5 advertising defeats Flash, etc.
+
+
+02 June 2014
+
+from W3C HTML Working Group
+
+
+
+This is the 26 May &#x2013; 2 June 2014edition of a &#x201C;weekly digest of W3C news and trends&#x201D; that I prepare for the W3C Membership and public-w3c-digest mailing list (publicly archived).
+This digest aggregates information about W3C and W3C technology from online media &#x2014;a snapshot of how W3C and its work is perceived in online media.
+
+
+W3C and HTML5 related Twitter trends
+
+
+[What was tweeted frequently, or caught my attention. Most recentfirst (popularity is flagged with a figure &#x2014;number of times the same URIs or tweet was quoted/RTed.)]
+
+* ( 23) First Public Working Drafts: W3C HTML Form HTTP Extensions, W3C HTML JSON Form Submission
+* ( 43) Upcoming: Web.br 2014. Confer&#xEA;ncia Web W3C Brasil
+* ( 65) HTML5: HTML5 Pok&#xE9;mon
+* ( 447) PureMarketing: La Publicidad HTML5 derrota a los tradicionales anuncios en Flash(HTML5 advertising defeats traditional ads in Flash)
+
+
+Open Web & net neutrality
+
+
+* Quartz: When net neutrality backfires: Chile just killed free access to Wikipedia and Facebook, 30 May
+* CNET: Bored by the Net neutrality debate? Check it as a rap battle, 26 May
+
+
+W3C in the Press (or blogs)
+
+
+7articles since the 26-May Digest; a selection follows. You may read all articles in our Press Clippingspage.
+
+* Light Reading(2 June), What WebRTC Means for Telcos
+* SD Times(30 May), SD Times 100: The Elements of Success
+* The Register(29 May), &#x2018;Hello? Hello? Yes, I&#x2019;m calling you on my WEB BROWSER&#x2019;
+* CIO(28 May), Can Digital Rights Management and the Open Web Coexist?
+
+
+
+
+
+
+One more week to FEISGILTT &#x2013; learn about and contribute to the future of Web and localization standards!
+
+
+28 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebDesign
+
+
+
+On 4 June and as part of the Localization World conference in Dublin, the FEISGILTT event will again provide an opportunity to discuss latest developments around localization and multilingual Web
+technologies. The event is sponsored by the LIDER project.
+
+Highlights include updates about ITS 2.0 and XLIFF 2.0, and a session about usage scenarios for linguistic linked data in localization. Speakers include Kevin O&#x2019;Donnell (Microsoft), Bryan
+Schnabel (Tektronix), Yves Savourel (Enlaso) and many more.
+
+Register nowto meet the key players around standards that will influence today&#x2019;s and future business.
+
+
+
+
+
+
+Last week: EmotionML is a Recommendation, Specifiction, TimBL at the Webbys, Web Cryptography, etc.
+
+
+28 May 2014
+
+from W3C HTML Working Group
+
+
+
+This is the 19-26 May 2014edition of a &#x201C;weekly digest of W3C news and trends&#x201D; that I prepare for the W3C Membership and public-w3c-digest mailing list (publicly archived). This digest
+aggregates information about W3C and W3C technology from online media &#x2014;a snapshot of how W3C and its work is perceived in online media.
+
+
+W3C and HTML5 related Twitter trends
+
+
+[What was tweeted frequently, or caught my attention. Most recentfirst (popularity is flagged with a figure &#x2014;number of times the same URIs or tweet was quoted/RTed.)]
+
+* ( 82) Specifiction: Experimenting with new ways of discussing standards with a Discourse instance[initiative of Robin Berjon]
+* ( 66) Spec: Emotion Markup Language (EmotionML) 1.0 is a W3C Recommendation
+* ( 616) TechCrunch: AppGyver Launches Composer, A Drag-And-Drop Tool For Building HTML5 Apps
+* ( 20) Glyn Moody: Upcoming Workshop on Web Cryptography Next Steps
+* ( 31) Web Cryptography API: Extractable keys[buzgilla]
+* ( 31) Yale: Creator of the World Wide Web @timberners_lee receives Honorary Doctor of Engineering &amp; Technology. #Yale2014 @w3c
+
+
+Open Web & net neutrality
+
+
+* Webby Awards 2014: Sir Tim Berners-Lee&#x2019;s remarks on the history and the future of the Web, including &#x201C; Up to us.&#x201D;, a plea for Net Neutrality (21 May 2014)
+
+
+W3C in the Press (or blogs)
+
+
+1article since the 19-May Digest. You may read all articles in our Press Clippingspage.
+
+* NYTimes.com | Bits(21 May), California Urges Websites to Disclose Online Tracking
+
+
+
+
+
+
+Last week: Mozilla implements EME, Draft charter of Web Payments Interest Group, W3C Advisory Board election, etc.
+
+
+19 May 2014
+
+from W3C HTML Working Group
+
+
+
+This is the 9-19 May 2014edition of a &#x201C;weekly digest of W3C news and trends&#x201D; that I prepare for the W3C Membership and public-w3c-digest mailing list (publicly archived). This digest
+aggregates information about W3C and W3C technology from online media &#x2014;a snapshot of how W3C and its work is perceived in online media.
+
+
+W3C and HTML5 related Twitter trends
+
+
+[What was tweeted frequently, or caught my attention. Most recentfirst (popularity is flagged with a figure &#x2014;number of times the same URIs or tweet was quoted/RTed.)]
+
+* ( 34) EME: Open Letter on European Commission about DRM in HTML5
+* ( 13) Web Payments: First draft of future web payments interest group charter published
+* ( 42) W3C AB: Boaz Sender running for the W3C Advisory Board
+* ( 4.7K) Event: Global Accessibility Awareness Day. More results on #GAAD
+* ( 928) EFF: Can This Web Be Saved? Mozilla Accepts DRM, and We All Lose
+* ( 906) Mozilla: Reconciling Mozilla&#x2019;s Mission and the W3C EME
+* ( 15) W3C Business Group: First Draft of Vehicle Data Interfaces published by Automotive and Web Platform Business Group
+* ( 66) CSS: Grid Layout Module Level 1, Generated Content for Paged Media Module Drafts published
+
+
+Open Web & net neutrality
+
+
+* The Verge: The real battle for net neutrality just began(15 May 2014), Adi Robertson
+* Gizmodo: So Long, Open Web: Mozilla Accepts Closed Source DRM and We All Lose(15 May 2014), Danny O&#x2019;Brien &#x2013; EFF
+* Boston Globe: FCC plan guts net neutrality; open Web needs protection(14 May 2014),
+
+
+W3C in the Press (or blogs)
+
+
+6articles since the previous Digest, all about Mozilla implementing EME. You may read them in our Press Clippingspage.
+
+
+
+
+
+
+Slides for the MultilingualWeb and LIDER workshops available
+
+
+15 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebDesign
+
+
+
+
+
+
+
+The slides from the MultilingualWeb workshop (including several posters) and the LIDER roadmapping workshopare now available for download. Additional material (videos of the presentations, a
+workshop report and more) will follow in the next weeks &#x2013; stay tuned.
+
+
+
+
+
+
+
+
+
+
+
+Talks and Appearances
+
+
+* 2014-09-25 (25 SEP)
+
+
+  Crafting User Experience for the Fastest Growing Web Demographic: Older Users
+
+  by Shawn Henry
+
+  WebVisions Chicago
+
+  Chicago, IL, USA
+
+
+
+See also the full list of W3C Talks and Appearances.
+
+
+
+
+
+
+
+
+
+* 2014-08-27 (27 AUG) &#x2013; 2014-08-30 (30 AUG)
+
+
+  The Graphical Web
+
+  Winchester, England
+
+
+  The conference has expanded this year to invite technical presentations about the implementation and usage of a number of technologies being developed at W3C, such as SVG, Canvas, CSS and HTML5
+  audio/video.
+
+
+
+
+See full list of W3C Events.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

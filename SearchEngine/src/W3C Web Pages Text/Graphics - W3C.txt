@@ -1,0 +1,289 @@
+Graphics - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Web Design and Applications
+
+
+* HTML &amp; CSS
+* JavaScript Web APIs
+* Graphics
+* Audio and Video
+* Accessibility
+* Internationalization
+* Mobile Web
+* Privacy
+* Math on the Web
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web&#xA0;Design&#xA0;and&#xA0;Applications » 
+* Graphics
+
+
+
+
+Graphics
+
+
+* On this page &#x2192;
+* what&#xA0;are&#xA0;Graphics &#x2022;
+* what&#xA0;are&#xA0;Graphics&#xA0;used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+The Web is about more than text and information, it is also a medium for expressing artistic creativity, data visualization, and optimizing the presentation of information for different audiences
+with different needs and expectations. The use of graphics on Web sites enhances the experience for users, and W3C has several different and complementary technologies that work together with HTML
+and scripting to provide the creators of Web pages and Web Applications with the tools they need to deliver the best possible representation of their content. Learn more below about:
+
+This intro text is boilerplate for the beta release of w3.org. Our intent is to invite the community to develop this template and help provide useful content and links. For a more complete example,
+see the page for HTML &amp; CSS.
+
+
+What are Graphics?
+
+
+Web graphics are visual representations used on a Web site to enhance or enable the representation of an idea or feeling, in order to reach the Web site user. Graphics may entertain, educate, or
+emotionally impact the user, and are crucial to strength of branding, clarity of illustration, and ease of use for interfaces.
+
+Examples of graphics include maps, photographs, designs and patterns, family trees, diagrams, architectural or engineering blueprints, bar charts and pie charts, typography, schematics, line art,
+flowcharts, and many other image forms.
+
+Graphic designers have many tools and technologies at their disposal for everything from print to Web development, and W3C provides many of the underlying formats that can be used for the creation
+of content on the open Web platform.
+
+
+What are Graphics Used For?
+
+
+Graphics are used for everything from enhancing the appearance of Web pages to serving as the presentation and user interaction layer for full-fledged Web Applications.
+
+Different use cases for graphics demand different solutions, thus there are several different technologies available. Photographs are best represented with PNG, while interactive line art, data
+visualization, and even user interfaces need the power of SVG and the Canvas API. CSS exists to enhance other formats like HTML or SVG. WebCGM meets the needs for technical illustration and
+documentation in many industries.
+
+
+What is PNG?
+
+
+Portable Network Graphics (PNG) is a static file format for the lossless, portable, well-compressed storage and exchange of raster images (bitmaps). It features rich color control, with
+indexed-color, grayscale, and truecolor support and alpha-channel transparency. PNG is designed for the Web, with streaming and progressive rendering capabilities. It is supported ubiquitously in
+Web browsers, graphical authoring tools, image toolkits, and other parts of the creative tool chain. PNG files have the file extension ".PNG" or ".png" and should be deployed using the Media Type
+"image/png". PNG images may be used with HTML, CSS, SVG, the Canvas API, and WebCGM.
+
+
+What is SVG?
+
+
+Scalable Vector Graphics (SVG) is like HTML for graphics. It is a markup language for describing all aspects of an image or Web application, from the geometry of shapes, to the styling of text and
+shapes, to animation, to multimedia presentations including video and audio. It is fully interactive, and includes a scriptable DOM as well as declarative animation (via the SMIL specification). It
+supports a wide range of visual features such as gradients, opacity, filters, clipping, and masking.
+
+The use of SVG allows fully scalable, smooth, reusable graphics, from simple graphics to enhance HTML pages, to fully interactive chart and data visualization, to games, to standalone high-quality
+static images. SVG is natively supported by most modern browsers (with plugins to allow its use on all browsers), and is widely available on mobile devices and set-top boxes. All major vector
+graphics drawing tools import and export SVG, and they can also be generated through client-side or server-side scripting languages.
+
+
+What is CSS?
+
+
+Cascading Style Sheets (CSS) is the language for describing the presentation of Web pages, including colors, layout, and font information. It may be used to enhance the graphical aspects of HTML and
+SVG. You can read more on the page for HTML &amp; CSS.
+
+
+What is the Canvas API?
+
+
+The Canvas API is a client-side scripting technology to allow for the rich creation or alteration of raster images (bitmaps) . It uses vector-based programmatic methods to create shapes, gradients,
+and other graphical effects, and because it has no DOM, it can perform very quickly. Dedicated scripters can develop games or even full-featured applications using the Canvas API, alone or
+integrated into HTML or SVG. It is supported natively in most modern browsers (with script libraries extending support to all major browsers), and even on some mobile devices.
+
+
+What is WebCGM?
+
+
+Web Computer Graphics Metafile (WebCGM) is the Web profile of CGM, the ISO standard for vector and composite vector/raster picture definition. CGM has a significant following in technical
+illustration, interactive electronic documentation, geophysical data visualization, amongst other application areas and is widely used in the fields of automotive engineering, aeronautics, and the
+defense industry. WebCGM has many of the same graphical features as SVG.
+
+
+Examples
+
+
+As a simple example of an SVG image file, here is a circle with a gradient to give it a 3D appearance:
+
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100">
+     
+  <defs>
+     <radialGradient id="rg" cx="100" cy="100" fx="80" fy="80" gradientUnits="userSpaceOnUse">
+       <stop offset="5%" stop-color="lightskyblue" />
+       <stop offset="100%" stop-color="darkblue" />
+     </radialGradient>
+  </defs>
+
+  <circle id="circle_1" cx="100" cy="100" r="95" fill="url(#rg)"/>
+  
+</svg>
+
+
+Learn More
+
+
+For more information about using open Web graphics, see W3C's graphics tutorials.
+
+
+
+
+
+Recent Press
+
+
+26 March
+Digital Journal
+        &#x201D;
+24 March
+InfoWorld
+        &#x201D;
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* SVG
+* PNG
+* WebCGM
+* Graphics
+
+
+These W3C Groups are working on the related specifications:
+
+
+* SVG Working Group
+* Cascading Style Sheets (CSS) Working Group
+* Internationalization Working Group
+* XSLT Working Group
+
+
+
+
+
+
+Current Status
+
+
+* SVG
+* PNG
+* WebCGM
+* Graphics
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+
+
+Logos
+
+
+* SVG
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

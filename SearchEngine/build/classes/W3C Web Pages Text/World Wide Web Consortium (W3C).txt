@@ -1,0 +1,532 @@
+World Wide Web Consortium (W3C)
+
+
+
+
+
+W3C
+
+
+
+W3C By Region All Australia Österreich (Austria) België (Belgium) Botswana Brasil (Brazil) &#x4E2D;&#x56FD; (China) Suomi (Finland) Deutschland (Germany) •»»¬´± (Greece) France Magyarország
+(Hungary) ->0$ (India) Éire (Ireland) ÙéèÐÜ (Israel) Italia (Italy) &#x306B;&#x307B;&#x3093; (Japan) &#xD55C;&#xAD6D; (Korea) Lesotho Lëtzebuerg (Luxembourg) 'DE:1( (Morocco) Namibia Nederland
+(Netherlands)  >AA8O (Russia) Sénégal España (Spain) South Africa Swatini (Swaziland) Sverige (Sweden) United Kingdom
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Standards
+
+
+* Web Design and Applications
+* Web Architecture
+* Semantic Web
+* XML Technology
+* Web of Services
+* Web of Devices
+* Browsers and Authoring Tools
+* &#x2026; or view all
+
+
+Web and Industry
+
+
+* Web of Data
+* Digital Publishing
+* Mobile Web
+* TV and Broadcasting
+
+
+Web for All
+
+
+* Accessibility
+* Internationalization
+* W3C A&#xA0;to&#xA0;Z
+
+
+Community and Business Groups
+
+
+* Current Groups
+* Proposed Groups
+
+
+Working Groups
+
+
+* Specifications by group
+* Participant guidebook
+
+
+Dev Resources
+
+
+* 
+* 
+* 
+* W3Conf
+* More ways to participate
+
+
+Member-only Home
+
+
+* Join a Group
+* Get Member Account
+
+
+
+
+
+Skip
+
+
+
+
+
+
+
+
+News
+
+
+
+
+
+
+
+W3C Announces Program, Opens Registration for 20th Anniversary Symposium
+
+
+18 June 2014 | Archive
+
+
+
+W3C today announced the program and opened registration for W3C20 Anniversary Symposium: The Future of the Web, which takes place 29 October in Santa Clara, California.
+
+Confirmed speakers are:
+
+* Tim Berners-Lee, Inventor of the Web and W3C Director
+* Vinton Cerf, Vice President and Chief Internet Evangelist at Google
+* Fadi Chehadé, Chief Executive Officer of ICANN
+* David-Michel Davies, Executive Director, The Webby Awards & the International Academy of Digital Arts & Sciences
+* Di-Ann Eisnor, Head of Platforms and Partnerships, Community Geographer at Waze
+* Sue Gardner, Executive Director of the Wikimedia Foundation
+* Alberto Ibargüen, President and CEO, Knight Foundation
+* Jun Murai, Dean and Professor at Keio University
+* Sandy Pentland, Professor of Media Arts and Sciences at MIT
+* Lee Rainie, Director of the Pew Research Center&#x2019;s Internet & American Life Project
+* Anders Wahlquist, CEO and Founding Partner of B-Reel
+
+Please join Tim Berners-Lee and other global strategists, business leaders and developers for an exciting afternoon of insights and discussion about how to keep the Web strong, followed by a gala
+dinner. W3C will also live stream the Symposium.
+
+W3C20 is made possible by the generosity of sponsors Intel (Platinum), ICANN (Silver), and the John S. and James L. Knight Foundation (Silver).
+
+Registration is open to the public for a limited number of seats. Read the full media advisory and follow us in social media with #W3C20.
+
+
+
+
+
+
+W3C Invites Implementations of Linked Data Platform 1.0
+
+
+19 June 2014 | Archive
+
+
+
+The Linked Data Platform (LDP) Working Group invites implementation of the Candidate Recommendation of Linked Data Platform 1.0. This document describes a set of best practices and simple approach
+for a read-write Linked Data architecture, based on HTTP access to web resources that describe their state using the RDF data model. Learn more about the Data Activity.
+
+
+
+
+
+
+Last Call: Vibration API, Ambient Light Events, HTML Media Capture
+
+
+19 June 2014 | Archive
+
+
+
+The Device APIs Working Group has published three Last Call Working Drafts today:
+
+* Vibration API. This specification defines an API that provides access to the vibration mechanism of the hosting device. Vibration is a form of tactile feedback.
+* Ambient Light Events. This specification defines a means to receive events that correspond to a light sensor detecting the presence of a light.
+* HTML Media Capture. The HTML Media Capture specification defines an HTML form extension that facilitates user access to a device&#x2019;s media capture mechanism, such as a camera, or
+  microphone, from within a file upload control.
+
+Comments on these three specifications are welcome through 24 July 2014. Learn more about the Ubiquitous Web Applications Activity.
+
+
+
+
+
+
+W3C Invites Implementations of DOM Parsing and Serialization
+
+
+17 June 2014 | Archive
+
+
+
+The Web Applications Working Group invites implementation of the Candidate Recommendation of DOM Parsing and Serialization. This specification defines various APIs for programmatic access to HTML
+and generic XML parsers by web applications for use in parsing and serializing DOM nodes.
+
+The group also published a Working Draft of Shadow DOM. This specification describes a method of combining multiple DOM trees into one hierarchy and how these trees interact with each other within a
+document, thus enabling better composition of the DOM.
+
+Learn more about the Rich Web Client Activity.
+
+
+
+
+
+
+Last Call: HTML5
+
+
+17 June 2014 | Archive
+
+
+
+The HTML Working Group has published a Last Call Working Draft of HTML5. This specification defines the 5th major revision of the core language of the World Wide Web: the Hypertext Markup Language
+(HTML). In this version, new features are introduced to help Web application authors, new elements are introduced based on research into prevailing authoring practices, and special attention has
+been given to defining clear conformance criteria for user agents in an effort to improve interoperability. Comments are welcome through 15 July 2014.
+
+The group also published a Working Draft of HTML 5.1. HTML was primarily designed as a language for semantically describing scientific documents, although its general design and adaptations over the
+years have enabled it to be used to describe a number of other types of documents. The main area that has not been adequately addressed by HTML is a vague subject referred to as Web Applications.
+This standard attempts to rectify this, while at the same time updating the HTML language to address issues raised in the past few years.
+
+Learn more about the HTML Activity.
+
+
+
+
+
+
+Core Accessibility API Mappings 1.1 (Core-AAM) First Public Working Draft and WAI-ARIA 1.1 updated Working Draft
+
+
+12 June 2014 | Archive
+
+
+
+The Protocols and Formats Working Group today published a First Public Working Draft of Core Accessibility API Mappings 1.1 (Core-AAM), which supports the updated Working Draft of Accessible Rich
+Internet Applications (WAI-ARIA) 1.1. WAI-ARIA provides an ontology of roles, states, and properties that define accessible user interface elements. WAI-ARIA is designed to improve the accessibility
+and interoperability of web content, particularly web applications. Core-AAM describes how user agents should expose semantics of content languages to accessibility APIs across multiple content
+technologies (including much of WAI-ARIA). Core-AAM serves as the basis for other specifications to extend the mappings to specific technologies. Learn more from the call for review e-mail and read
+about the Web Accessibility Initiative (WAI).
+
+
+
+
+
+
+Three Specifications Published by the Web Applications Working Group
+
+
+12 June 2014 | Archive
+
+
+
+The Web Applications Working Group has published three documents today:
+
+* A First Public Working Draft of DOM Level 3 KeyboardEvent key Values. This specification defines the values for the KeyboardEvent.key attribute, which is defined as part of the Document Object
+  Model (DOM) Level 3 Events Specification. The key attribute contains information about the character generated by the key event.
+* A First Public Working Draft of DOM Level 3 KeyboardEvent code Values. This specification defines the values for the KeyboardEvent.code attribute, which is defined as part of the Document Object
+  Model (DOM) Level 3 Events Specification. The code value contains information about the key event that can use used identify the physical key being pressed by the user.
+* A Working Draft of UI Events. This specification extends the events and features defined in DOM Events Level 3.
+
+Learn more about the Rich Web Client Activity.
+
+
+
+
+
+More news&#x2026;
+
+
+
+
+
+
+Talks and Appearances
+
+
+* 2014-06-28 (28 JUN)
+
+
+  Two futures
+
+  keynote by Charles McCathieNevile
+
+  Mobile Optimized Developers&amp;#039; Conference
+
+  Minsk, Belarus
+
+
+* 2014-08-20 (20 AUG)
+
+
+  Develop Multimodal Applications with Free and Open Source Tools
+
+  by Deborah Dahl
+
+  SpeechTEK 2014
+
+  New York, USA
+
+
+* 2014-09-04 (4 SEP)
+
+
+  Building the Web of Data
+
+  keynote by Phil Archer
+
+  SEMANTiCS
+
+  Leipzig, Germany
+
+
+* 2014-09-25 (25 SEP)
+
+
+  Crafting User Experience for the Fastest Growing Web Demographic: Older Users
+
+  by Shawn Henry
+
+  WebVisions Chicago
+
+  Chicago, IL, USA
+
+
+
+
+
+
+
+
+Events
+
+
+* 2014-06-25 (25 JUN) &#x2013; 2014-06-26 (26 JUN)
+
+
+  Workshop on the Web of Things
+
+  Berlin, Germany
+
+  Hosted by Siemens
+
+
+* 2014-06-30 (30 JUN) &#x2013; 2014-07-01 ( 1 JUL)
+
+
+  Uses of Open Data Within Government for Innovation and Efficiency
+
+  Samos, Greece
+
+  Co-located with the 5th Samos Summit on ICT-enabled Governance
+
+
+* 2014-08-17 (17 AUG) &#x2013; 2014-08-19 (19 AUG)
+
+
+  RuleML-2014
+
+  Prague, Czech Republic
+
+  Co-located with ECAI 2014
+
+
+* 2014-08-27 (27 AUG) &#x2013; 2014-08-30 (30 AUG)
+
+
+  The Graphical Web
+
+  Winchester, England
+
+
+* 2014-09-10 (10 SEP) &#x2013; 2014-09-11 (11 SEP)
+
+
+  Workshop on Web Cryptography Next Steps
+
+  Mountain View, USA
+
+  Hosted by Microsoft, sponsored by Google and Tyfone
+
+
+* 2014-10-27 (27 OCT) &#x2013; 2014-10-31 (31 OCT)
+
+
+  TPAC 2014
+
+  Santa Clara, California
+
+
+* 2014-10-29 (29 OCT)
+
+
+  W3C20
+
+  Santa Clara, CA
+
+
+
+
+
+
+
+
+
+
+The World Wide Web Consortium (W3C) is an international community that develops open standards to ensure the long-term growth of the Web. Read about the W3C mission.
+
+
+
+Privacy Policy Update Planned
+
+
+W3C plans to update its site privacy policy shortly after 14 April. No material changes are intended in the new privacy policy.
+
+
+
+
+
+
+
+* HTML5: On Our Way to Recommendation
+
+  17 June 2014 by Philippe le Hegaret
+
+* Last week: WebRTC, Net Neutrality, HTML5 advertising defeats Flash, etc.
+
+  2 June 2014 by Coralie Mercier
+
+* Last week: EmotionML is a Recommendation, Specifiction, TimBL at the Webbys, Web Cryptography, etc.
+
+  28 May 2014 by Coralie Mercier
+
+
+
+
+
+Validators, More Software
+
+
+
+
+* More validators: Unicorn, HTML, CSS
+* W3C cheatsheet
+* More Open Source Software
+
+
+
+
+Web and W3C Anniversaries
+
+
+
+
+W3C Director Tim Berners-Lee invented the Web 25 years ago. Learn about activities all year long, including W3C's 20th Anniversary Symposium.
+
+
+
+
+Thanks to Our Anniversary Sponsors
+
+
+
+
+Many thanks to Anniversary sponsors Intel (Platinum), ICANN (Silver), and the John S. and James L. Knight Foundation (Silver).
+
+
+
+
+W3C Member Testimonial
+
+
+
+
+
+
+Fujitsu Limited
+
+
+Fujitsu is a leading provider of IT-based business solutions for the global marketplace. Fujitsu is actively promoting standardization of XML, electronic businesses, Web Services, and Cloud
+computing related technologies. It supports many W3C specifications in its products and services.
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2014 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+// //<![CDATA[
+

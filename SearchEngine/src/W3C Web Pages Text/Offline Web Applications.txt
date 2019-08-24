@@ -1,0 +1,179 @@
+Offline Web Applications
+
+
+
+
+
+
+Offline Web Applications
+
+
+
+W3C Working Group Note 30 May 2008
+
+
+This Version:
+        http://www.w3.org/TR/2008/NOTE-offline-webapps-20080530/
+Latest Version:
+        http://www.w3.org/TR/offline-webapps/
+Editors:
+        Anne van Kesteren (Opera Software ASA) <annevk@opera.com>
+        Ian Hickson, Google, Inc.
+
+Copyright © 2008 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+
+========================================================================================================================================================================================================
+
+
+Abstract
+
+
+HTML 5 contains several features that address the challenge of building Web applications that work while offline. This document highlights these features (SQL, offline application caching APIs as
+well as online/offline events, status, and the localStorage API) from HTML 5 and provides brief tutorials on how these features might be used to create Web applications that work offline. [HTML5]
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+Offline Web Applications is a Working Group Note produced by the HTML Working Group, part of the HTML Activity. Comments are welcome on the public-html-comments@w3.org mailing list which is publicly
+archived.
+
+Publication as a Working Group Note does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. The group does not expect this document to become a W3C Recommendation. W3C maintains a public list of
+any patent disclosures made in connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which
+the individual believes contains Essential Claim(s) must disclose the information in accordance with section 6 of the W3C Patent Policy.
+
+Table of Contents
+
+
+* Introduction
+* SQL
+* Offline Application Caching APIs
+* Related APIs
+* References
+* Acknowledgments
+
+
+1. Introduction
+
+
+Users of typical online Web applications are only able to use the applications while they have a connection to the Internet. When they go offline, they can no longer check their e-mail, browse their
+calendar appointments, or prepare presentations with their online tools. Meanwhile, native applications provide those features: e-mail clients cache folders locally, calendars store their events
+locally, presentation packages store their data files locally.
+
+In addition, while offline, users are dependent on their HTTP cache to obtain the application at all, since they cannot contact the server to get the latest copy.
+
+The HTML 5 specification provides two solutions to this: a SQL-based database API for storing data locally, and an offline application HTTP cache for ensuring applications are available even when
+the user is not connected to their network.
+
+2. SQL
+
+
+The client-side SQL database in HTML 5 enables structured data storage. This can be used to store e-mails locally for an e-mail application or for a cart in an online shopping site. The API to
+interact with this database is asynchronous which ensures that the user interface doesn't lock up. Because database interaction can occur in multiple browser windows at the same time the API
+supports transactions.
+
+To create a database object you use the openDatabase() method on the Window object. It takes four arguments: a database name, a database version, a display name, and an estimated size, in bytes, of
+the data to be stored in the database. For instance:
+var db = openDatabase("notes", "", "The Example Notes App!", 1048576);
+
+Now on this database we can use the transaction() method. The transaction method takes one to three arguments: a transaction callback, an error callback, and a success callback. The transaction
+callback gets passed a SQL transaction object on which you can use the executeSQL() method. This method takes from one to four arguments: a SQL statement, arguments, a SQL statement callback, and a
+SQL statement error callback. The SQL statement callback gets passed the transaction object and a SQL statement result object which gives access to the rows, last inserted ID, et cetera.
+
+To complete the infrastructure for the notes application we'd add the following code:
+
+function renderNote(row) {
+  // renders the note somewhere
+}
+function reportError(source, message) {
+  // report error
+}
+
+function renderNotes() {
+  db.transaction(function(tx) {
+    tx.executeSql('CREATE TABLE IF NOT EXISTS Notes(title TEXT, body TEXT)', 
+      []);
+    tx.executeSql(â€˜SELECT * FROM Notesâ€™, [], function(tx, rs) {
+      for(var i = 0; i < rs.rows.length; i++) {
+        renderNote(rs.rows[i]);
+      }
+    });
+  });
+}
+
+function insertNote(title, text) {
+  db.transaction(function(tx) {
+    tx.executeSql('INSERT INTO Notes VALUES(?, ?)', [ title, text ],
+      function(tx, rs) {
+        // …
+      },
+      function(tx, error) {
+        reportError('sql', error.message);
+      });
+  });
+}
+
+
+3. Offline Application Caching APIs
+
+
+The mechanism for ensuring Web applications are available even when the user is not connected to their network is the manifest attribute on the html element.
+
+The attribute takes a URI to a manifest, which specifies which files are to be cached. The manifest has a text/cache-manifest MIME type. A typical file looks like this:
+CACHE MANIFEST
+index.html
+help.html
+style/default.css
+images/logo.png
+images/backgound.png
+
+NETWORK:
+server.cgi
+
+This file specifies several files to cache, and then specifies that server.cgi should never be cached, so that any attempt to access that file will bypass the cache.
+
+The manifest can then be linked to by declaring it in the (HTML) application, like this:
+<!DOCTYPE HTML>
+<html manifest="cache-manifest">
+...
+
+The server.cgi file would be white-listed (put in the NETWORK: section) so that it can be contacted to get updates from the server, as in:
+<event-source src="server.cgi">
+
+(The event-source element is a new feature in HTML 5 that allows servers to continuously stream updates to a Web page.)
+
+The application cache mechanism also supports a way to opportunistically cache (from the server) a group of files matching a common prefix, with the ability to have a fallback page for rendering
+those pages when offline. It also provides a way for scripts to add and remove entries from the cache dynamically, and a way for applications to atomically update their cache to new files,
+optionally presenting custom UI during the update.
+
+4. Related APIs
+
+
+In addition to those APIs HTML 5 also defines an onLine attribute on the Navigator object so you can determine whether you are currently online:
+var online = navigator.onLine;
+
+Changes to this attribute are indicated through the online and offline events that are both dispatched on the Window object.
+
+For simple synchronous storage access HTML 5 introduces the localStorage attribute on the Window object:
+localStorage["status"] = "Idling.";
+
+
+References
+
+
+[HTML5] (work in progress)
+        HTML&nbsp;5, I. Hickson, editor. WHATWG, 2008.
+        Web Forms 2.0, I. Hickson, editor. WHATWG, October 2006.
+        HTML&nbsp;5, I. Hickson, D. Hyatt, editors. W3C, 2008.
+        Web Forms 2.0, I. Hickson, editor. W3C, October 2006.
+
+Acknowledgments
+
+
+

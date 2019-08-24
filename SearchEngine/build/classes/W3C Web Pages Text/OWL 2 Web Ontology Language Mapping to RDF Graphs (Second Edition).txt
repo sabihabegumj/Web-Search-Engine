@@ -1,0 +1,1401 @@
+OWL 2 Web Ontology Language Mapping to RDF Graphs (Second Edition)
+
+
+
+
+OWL 2 Web Ontology Language
+Mapping to RDF Graphs (Second Edition)
+
+
+
+W3C Recommendation 11 December 2012
+
+
+This version:
+        http://www.w3.org/TR/2012/REC-owl2-mapping-to-rdf-20121211/
+Latest version (series 2):
+        http://www.w3.org/TR/owl2-mapping-to-rdf/
+Latest Recommendation:
+        http://www.w3.org/TR/owl-mapping-to-rdf
+Previous version:
+        http://www.w3.org/TR/2012/PER-owl2-mapping-to-rdf-20121018/
+Editors:
+        Peter F. Patel-Schneider, Nuance Communications
+        Boris Motik, University of Oxford
+Contributors: (in alphabetical order)
+        Bernardo Cuenca Grau, University of Oxford
+        Ian Horrocks, University of Oxford
+        Bijan Parsia, University of Manchester
+        Alan Ruttenberg, Science Commons (Creative Commons)
+        Michael Schneider, FZI Research Center for Information Technology
+
+Please refer to the errata for this document, which may include some normative corrections.
+
+A color-coded version of this document showing changes made since the previous version is also available.
+
+This document is also available in these non-normative formats: PDF version.
+
+See also translations.
+
+Copyright © 2012 W3CÆ (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+
+========================================================================================================================================================================================================
+
+
+Abstract
+
+
+
+
+The OWL 2 Web Ontology Language, informally OWL 2, is an ontology language for the Semantic Web with formally defined meaning. OWL 2 ontologies provide classes, properties, individuals, and data
+values and are stored as Semantic Web documents. OWL 2 ontologies can be used along with information written in RDF, and OWL 2 ontologies themselves are primarily exchanged as RDF documents. The OWL
+2 Document Overview describes the overall state of OWL 2, and should be read before other OWL 2 documents.
+
+This document defines the mapping of OWL 2 ontologies into RDF graphs, and vice versa.
+
+
+
+
+Status of this Document
+
+
+
+May Be Superseded
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+
+
+
+Summary of Changes
+
+
+There have been no substantive changes since the previous version. For details on the minor changes see the change log and color-coded diff.
+
+
+Please Send Comments
+
+
+Please send any comments to public-owl-comments@w3.org (public archive). Although work on this document by the OWL Working Group is complete, comments may be addressed in the errata or in future
+revisions. Open discussion among developers is welcome at public-owl-dev@w3.org (public archive).
+
+
+Endorsed By W3C
+
+
+This document has been reviewed by W3C Members, by software developers, and by other W3C groups and interested parties, and is endorsed by the Director as a W3C Recommendation. It is a stable
+document and may be used as reference material or cited from another document. W3C's role in making the Recommendation is to draw attention to the specification and to promote its widespread
+deployment. This enhances the functionality and interoperability of the Web.
+
+
+Patents
+
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the
+group; that page also includes instructions for disclosing a patent.
+
+========================================================================================================================================================================================================
+
+
+
+
+
+
+
+
+Table of Contents
+
+
+
+* Introduction and Preliminaries
+* Mapping from the Structural Specification to RDF Graphs
+  o Translation of Axioms without Annotations
+  o Translation of Annotations
+  o Translation of Axioms with Annotations
+    - Axioms that Generate a Main Triple
+    - Axioms that are Translated to Multiple Triples
+    - Axioms Represented by Blank Nodes
+
+
+* Mapping from RDF Graphs to the Structural Specification
+  o Extracting Declarations and the IRIs of the Directly Imported Ontology Documents
+    - Resolving Included RDF Graphs
+    - Parsing of the Ontology Header and Declarations
+
+  o Populating an Ontology
+    - Analyzing Declarations
+    - Parsing of Annotations
+    - Parsing of Ontology Annotations
+    - Parsing of Expressions
+    - Parsing of Axioms
+
+
+* Appendix: Change Log (Informative)
+  o Changes Since Recommendation
+  o Changes Since Proposed Recommendation
+  o Changes Since Candidate Recommendation
+  o Changes Since Last Call
+
+* Acknowledgments
+* References
+
+
+
+
+
+
+1 Introduction and Preliminaries
+
+
+This document defines two mappings between the structural specification of OWL 2 [OWL 2 Specification] and RDF graphs [RDF Concepts]. The mapping presented in Section 2 can be used to transform any
+OWL 2 ontology O into an RDF graph T(O). The mapping presented in Section 3 can be used to transform an RDF graph G satisfying certain restrictions into an OWL 2 DL ontology OG. These
+transformations do not incur any change in the formal meaning of the ontology. More precisely, for any OWL 2 DL ontology O, let G = T(O) be the RDF graph obtained by transforming O as specified in
+Section 2, and let OG be the OWL 2 DL ontology obtained by applying the reverse transformation from Section 3 to G; then, O and OG are logically equivalent ó that is, they have exactly the same set
+of models.
+
+The mappings presented in this document are backwards-compatible with that of OWL 1 DL: every OWL 1 DL ontology encoded as an RDF graph can be mapped into a valid OWL 2 DL ontology using the mapping
+from Section 3 such that the resulting OWL 2 DL ontology has exactly the same set of models as the original OWL 1 DL ontology.
+
+The syntax for triples used in this document is the one used in the RDF Semantics [RDF Semantics]. Full IRIs are abbreviated using the prefixes from the OWL 2 Specification [OWL 2 Specification].
+OWL 2 ontologies mentioned in this document should be understood as instances of the structural specification of OWL 2 [OWL 2 Specification]; when required, these are written in this document using
+the functional-style syntax.
+
+The following notation is used throughout this document for referring to parts of RDF graphs:
+
+* *:x denotes an IRI;
+* _:x denotes a blank node;
+* x denotes a blank node or an IRI;
+* lt denotes a literal; and
+* xlt denotes a blank node, an IRI, or a literal.
+
+The italicized keywords MUST, MUST NOT, SHOULD, SHOULD NOT, and MAY are used to specify normative features of OWL 2 documents and tools, and are interpreted as specified in RFC 2119 [RFC 2119].
+
+
+2 Mapping from the Structural Specification to RDF Graphs
+
+
+This section defines a mapping of an OWL 2 ontology O into an RDF graph T(O). The mapping is presented in three parts. Section 2.1 shows how to translate axioms that do not contain annotations,
+Section 2.2 shows how to translate annotations, and Section 2.3 shows how to translate axioms containing annotations.
+
+
+2.1 Translation of Axioms without Annotations
+
+
+Table 1 presents the operator T that maps an OWL 2 ontology O into an RDF graph T(O), provided that no axiom in O is annotated. The mapping is defined recursively; that is, the mapping of a
+construct often depends on the mappings of its subconstructs, but in a slightly unusual way: if the mapping of a construct refers to the mapping of a subconstruct, then the triples generated by the
+recursive invocation of the mapping on the subconstruct are added to the graph under construction, and the main node of the mapping of the subconstruct is used in place of the recursive invocation
+itself.
+
+The definition of the operator T uses the operator TANN in order to translate annotations. The operator TANN is defined in Section 2.2. It takes an annotation and an IRI or a blank node and produces
+the triples that attach the annotation to the supplied object.
+
+In the mapping, each generated blank node (i.e., each blank node that does not correspond to an anonymous individual) is fresh in each application of a mapping rule. Furthermore, possible conditions
+on the mapping rules are enclosed in curly braces '{ }'. Finally, the following conventions are used in this section to denote different parts of OWL 2 ontologies:
+
+* OP denotes an object property;
+* OPE denotes an object property expression;
+* DP denotes a data property;
+* DPE denotes a data property expression;
+* AP denotes an annotation property;
+* C denotes a class;
+* CE denotes a class expression;
+* DT denotes a datatype;
+* DR denotes a data range;
+* U denotes an IRI;
+* F denotes a constraining facet;
+* a denotes an individual (named or anonymous);
+* *:a denotes a named individual;
+* lt denotes a literal;
+* as denotes an annotation source; and
+* av denotes an annotation value.
+
+In this section, T(SEQ y1 ... yn) denotes the translation of a sequence of objects from the structural specification into an RDF list, as shown in Table 1.
+
+Table 1. Transformation to Triples
+Element E of the Structural Specification Triples Generated in an Invocation of T(E) Main Node of T(E)
+SEQ  rdf:nil
+SEQ y1 ... yn _:x rdf:first T(y1) .
+_:x rdf:rest T(SEQ y2 ... yn) . _:x
+Ontology( ontologyIRI [ versionIRI ]
+    Import( importedOntologyIRI1 )
+    ...
+    Import( importedOntologyIRIk )
+    annotation1
+    ...
+    annotationm
+    axiom1
+    ...
+    axiomn
+) ontologyIRI rdf:type owl:Ontology .
+[ ontologyIRI owl:versionIRI versionIRI ] .
+ontologyIRI owl:imports importedOntologyIRI1 .
+...
+ontologyIRI owl:imports importedOntologyIRIk .
+TANN(annotation1, ontologyIRI) .
+...
+TANN(annotationm, ontologyIRI) .
+T(axiom1) .
+...
+T(axiomn) . ontologyIRI
+Ontology(
+    Import( importedOntologyIRI1 )
+    ...
+    Import( importedOntologyIRIk )
+    annotation1
+    ...
+    annotationm
+    axiom1
+    ...
+    axiomn
+) _:x rdf:type owl:Ontology .
+_:x owl:imports importedOntologyIRI1 .
+...
+_:x owl:imports importedOntologyIRIk .
+TANN(annotation1, _:x) .
+...
+TANN(annotationm, _:x) .
+T(axiom1) .
+...
+T(axiomn) . _:x
+C  C
+DT  DT
+OP  OP
+DP  DP
+AP  AP
+U  U
+a  a
+"abc@"^^rdf:PlainLiteral  "abc"
+"abc@langTag"^^rdf:PlainLiteral  "abc"@langTag
+lt
+{ where lt is a literal of datatype
+  other than rdf:PlainLiteral }  lt
+Declaration( Datatype( DT ) ) T(DT) rdf:type rdfs:Datatype . 
+Declaration( Class( C ) ) T(C) rdf:type owl:Class . 
+Declaration( ObjectProperty( OP ) ) T(OP) rdf:type owl:ObjectProperty . 
+Declaration( DataProperty( DP ) ) T(DP) rdf:type owl:DatatypeProperty . 
+Declaration( AnnotationProperty( AP ) ) T(AP) rdf:type owl:AnnotationProperty . 
+Declaration( NamedIndividual( *:a ) ) T(*:a) rdf:type owl:NamedIndividual . 
+ObjectInverseOf( OP ) _:x owl:inverseOf T(OP) . _:x
+DataIntersectionOf( DR1 ... DRn ) _:x rdf:type rdfs:Datatype .
+_:x owl:intersectionOf T(SEQ DR1 ... DRn) . _:x
+DataUnionOf( DR1 ... DRn ) _:x rdf:type rdfs:Datatype .
+_:x owl:unionOf T(SEQ DR1 ... DRn) . _:x
+DataComplementOf( DR ) _:x rdf:type rdfs:Datatype .
+_:x owl:datatypeComplementOf T(DR) . _:x
+DataOneOf( lt1 ... ltn ) _:x rdf:type rdfs:Datatype .
+_:x owl:oneOf T(SEQ lt1 ... ltn) . _:x
+DatatypeRestriction( DT
+    F1 lt1
+    ...
+    Fn ltn
+) _:x rdf:type rdfs:Datatype .
+_:x owl:onDatatype T(DT) .
+_:x owl:withRestrictions T(SEQ _:y1 ... _:yn) .
+_:y1 F1 lt1 .
+...
+_:yn Fn ltn . _:x
+ObjectIntersectionOf( CE1 ... CEn ) _:x rdf:type owl:Class .
+_:x owl:intersectionOf T(SEQ CE1 ... CEn) . _:x
+ObjectUnionOf( CE1 ... CEn ) _:x rdf:type owl:Class .
+_:x owl:unionOf T(SEQ CE1 ... CEn) . _:x
+ObjectComplementOf( CE ) _:x rdf:type owl:Class .
+_:x owl:complementOf T(CE) . _:x
+ObjectOneOf( a1 ... an ) _:x rdf:type owl:Class .
+_:x owl:oneOf T(SEQ a1 ... an) . _:x
+ObjectSomeValuesFrom( OPE CE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:someValuesFrom T(CE) . _:x
+ObjectAllValuesFrom( OPE CE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:allValuesFrom T(CE) . _:x
+ObjectHasValue( OPE a ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:hasValue T(a) . _:x
+ObjectHasSelf( OPE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:hasSelf "true"^^xsd:boolean . _:x
+ObjectMinCardinality( n OPE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:minCardinality "n"^^xsd:nonNegativeInteger . _:x
+ObjectMinCardinality( n OPE CE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:minQualifiedCardinality "n"^^xsd:nonNegativeInteger .
+_:x owl:onClass T(CE) . _:x
+ObjectMaxCardinality( n OPE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:maxCardinality "n"^^xsd:nonNegativeInteger . _:x
+ObjectMaxCardinality( n OPE CE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:maxQualifiedCardinality "n"^^xsd:nonNegativeInteger .
+_:x owl:onClass T(CE) . _:x
+ObjectExactCardinality( n OPE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:cardinality "n"^^xsd:nonNegativeInteger . _:x
+ObjectExactCardinality( n OPE CE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(OPE) .
+_:x owl:qualifiedCardinality "n"^^xsd:nonNegativeInteger .
+_:x owl:onClass T(CE) . _:x
+DataSomeValuesFrom( DPE DR ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(DPE) .
+_:x owl:someValuesFrom T(DR) . _:x
+DataSomeValuesFrom( DPE1 ... DPEn DR ), n &ge; 2 _:x rdf:type owl:Restriction .
+_:x owl:onProperties T(SEQ DPE1 ... DPEn) .
+_:x owl:someValuesFrom T(DR) . _:x
+DataAllValuesFrom( DPE DR ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(DPE) .
+_:x owl:allValuesFrom T(DR) . _:x
+DataAllValuesFrom( DPE1 ... DPEn DR ), n &ge; 2 _:x rdf:type owl:Restriction .
+_:x owl:onProperties T(SEQ DPE1 ... DPEn) .
+_:x owl:allValuesFrom T(DR) . _:x
+DataHasValue( DPE lt ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(DPE) .
+_:x owl:hasValue T(lt) . _:x
+DataMinCardinality( n DPE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(DPE) .
+_:x owl:minCardinality "n"^^xsd:nonNegativeInteger . _:x
+DataMinCardinality( n DPE DR ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(DPE) .
+_:x owl:minQualifiedCardinality "n"^^xsd:nonNegativeInteger .
+_:x owl:onDataRange T(DR) . _:x
+DataMaxCardinality( n DPE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(DPE) .
+_:x owl:maxCardinality "n"^^xsd:nonNegativeInteger . _:x
+DataMaxCardinality( n DPE DR ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(DPE) .
+_:x owl:maxQualifiedCardinality "n"^^xsd:nonNegativeInteger .
+_:x owl:onDataRange T(DR) . _:x
+DataExactCardinality( n DPE ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(DPE) .
+_:x owl:cardinality "n"^^xsd:nonNegativeInteger . _:x
+DataExactCardinality( n DPE DR ) _:x rdf:type owl:Restriction .
+_:x owl:onProperty T(DPE) .
+_:x owl:qualifiedCardinality "n"^^xsd:nonNegativeInteger .
+_:x owl:onDataRange T(DR) . _:x
+SubClassOf( CE1 CE2 ) T(CE1) rdfs:subClassOf T(CE2) . 
+EquivalentClasses( CE1 ... CEn ) T(CE1) owl:equivalentClass T(CE2) .
+...
+T(CEn-1) owl:equivalentClass T(CEn) . 
+DisjointClasses( CE1 CE2 ) T(CE1) owl:disjointWith T(CE2) . 
+DisjointClasses( CE1 ... CEn ), n > 2 _:x rdf:type owl:AllDisjointClasses .
+_:x owl:members T(SEQ CE1 ... CEn) . 
+DisjointUnion( C CE1 ... CEn ) T(C) owl:disjointUnionOf T(SEQ CE1 ... CEn) . 
+SubObjectPropertyOf( OPE1 OPE2 ) T(OPE1) rdfs:subPropertyOf T(OPE2) . 
+SubObjectPropertyOf( ObjectPropertyChain( OPE1 ... OPEn ) OPE ) T(OPE) owl:propertyChainAxiom T(SEQ OPE1 ... OPEn) . 
+EquivalentObjectProperties( OPE1 ... OPEn ) T(OPE1) owl:equivalentProperty T(OPE2) .
+...
+T(OPEn-1) owl:equivalentProperty T(OPEn) . 
+DisjointObjectProperties( OPE1 OPE2 ) T(OPE1) owl:propertyDisjointWith T(OPE2) . 
+DisjointObjectProperties( OPE1 ... OPEn ), n > 2 _:x rdf:type owl:AllDisjointProperties .
+_:x owl:members T(SEQ OPE1 ... OPEn) . 
+ObjectPropertyDomain( OPE CE ) T(OPE) rdfs:domain T(CE) . 
+ObjectPropertyRange( OPE CE ) T(OPE) rdfs:range T(CE) . 
+InverseObjectProperties( OPE1 OPE2 ) T(OPE1) owl:inverseOf T(OPE2) . 
+FunctionalObjectProperty( OPE ) T(OPE) rdf:type owl:FunctionalProperty . 
+InverseFunctionalObjectProperty( OPE ) T(OPE) rdf:type owl:InverseFunctionalProperty . 
+ReflexiveObjectProperty( OPE ) T(OPE) rdf:type owl:ReflexiveProperty . 
+IrreflexiveObjectProperty( OPE ) T(OPE) rdf:type owl:IrreflexiveProperty . 
+SymmetricObjectProperty( OPE ) T(OPE) rdf:type owl:SymmetricProperty . 
+AsymmetricObjectProperty( OPE ) T(OPE) rdf:type owl:AsymmetricProperty . 
+TransitiveObjectProperty( OPE ) T(OPE) rdf:type owl:TransitiveProperty . 
+SubDataPropertyOf( DPE1 DPE2 ) T(DPE1) rdfs:subPropertyOf T(DPE2) . 
+EquivalentDataProperties( DPE1 ... DPEn ) T(DPE1) owl:equivalentProperty T(DPE2) .
+...
+T(DPEn-1) owl:equivalentProperty T(DPEn) . 
+DisjointDataProperties( DPE1 DPE2 ) T(DPE1) owl:propertyDisjointWith T(DPE2) . 
+DisjointDataProperties( DPE1 ... DPEn ), n > 2 _:x rdf:type owl:AllDisjointProperties .
+_:x owl:members T(SEQ DPE1 ... DPEn) . 
+DataPropertyDomain( DPE CE ) T(DPE) rdfs:domain T(CE) . 
+DataPropertyRange( DPE DR ) T(DPE) rdfs:range T(DR) . 
+FunctionalDataProperty( DPE ) T(DPE) rdf:type owl:FunctionalProperty . 
+DatatypeDefinition( DT DR ) T(DT) owl:equivalentClass T(DR) . 
+HasKey( CE ( OPE1 ... OPEm ) ( DPE1 ... DPEn ) ) T(CE) owl:hasKey T(SEQ OPE1 ... OPEm DPE1 ... DPEn ) . 
+SameIndividual( a1 ... an ) T(a1) owl:sameAs T(a2) .
+...
+T(an-1) owl:sameAs T(an) . 
+DifferentIndividuals( a1 a2 ) T(a1) owl:differentFrom T(a2) . 
+DifferentIndividuals( a1 ... an ), n > 2 _:x rdf:type owl:AllDifferent .
+_:x owl:members T(SEQ a1 ... an) . 
+ClassAssertion( CE a ) T(a) rdf:type T(CE) . 
+ObjectPropertyAssertion( OP a1 a2 ) T(a1) T(OP) T(a2) . 
+ObjectPropertyAssertion( ObjectInverseOf( OP ) a1 a2 ) T(a2) T(OP) T(a1) . 
+NegativeObjectPropertyAssertion( OPE a1 a2 ) _:x rdf:type owl:NegativePropertyAssertion .
+_:x owl:sourceIndividual T(a1) .
+_:x owl:assertionProperty T(OPE) .
+_:x owl:targetIndividual T(a2) . 
+DataPropertyAssertion( DPE a lt ) T(a) T(DPE) T(lt) . 
+NegativeDataPropertyAssertion( DPE a lt ) _:x rdf:type owl:NegativePropertyAssertion .
+_:x owl:sourceIndividual T(a) .
+_:x owl:assertionProperty T(DPE) .
+_:x owl:targetValue T(lt) . 
+AnnotationAssertion( AP as av ) T(as) T(AP) T(av) . 
+SubAnnotationPropertyOf( AP1 AP2 ) T(AP1) rdfs:subPropertyOf T(AP2) . 
+AnnotationPropertyDomain( AP U ) T(AP) rdfs:domain T(U) . 
+AnnotationPropertyRange( AP U ) T(AP) rdfs:range T(U) . 
+
+
+
+2.2 Translation of Annotations
+
+
+The operator TANN, which translates annotations and attaches them to an IRI or a blank node, is defined in Table 2.
+
+Table 2. Translation of Annotations
+Annotation ann Triples Generated in an Invocation of TANN(ann, y)
+Annotation( AP av ) T(y) T(AP) T(av) .
+Annotation(
+    annotation1
+    ...
+    annotationn
+    AP av
+) T(y) T(AP) T(av) .
+_:x rdf:type owl:Annotation .
+_:x owl:annotatedSource T(y) .
+_:x owl:annotatedProperty T(AP) .
+_:x owl:annotatedTarget T(av) .
+TANN(annotation1, _:x)
+...
+TANN(annotationn, _:x)
+
+
+
+Let ann be the following annotation.
+
+
+Annotation( rdfs:label "Peter Griffin" )
+
+
+An invocation of TANN(ann, a:Peter) then produces the following triples.
+
+
+a:Peter rdfs:label "Peter Griffin" .
+
+
+
+
+Let ann be the following annotation, which is itself annotated.
+
+
+Annotation( Annotation( a:author a:Seth_MacFarlane )
+    rdfs:label "Peter Griffin" )
+
+
+An invocation of TANN(ann, a:Peter) then produces the following triples:
+
+
+a:Peter rdfs:label "Peter Griffin" .
+_:x rdf:type owl:Annotation .
+_:x owl:annotatedSource a:Peter .
+_:x owl:annotatedProperty rdfs:label .
+_:x owl:annotatedTarget "Peter Griffin" .
+_:x a:author a:Seth_MacFarlane .
+
+
+
+
+2.3 Translation of Axioms with Annotations
+
+
+If an axiom ax contains embedded annotations annotation1 ... annotationm, its serialization into RDF depends on the type of the axiom. Let ax' be the axiom that is obtained from ax by removing all
+axiom annotations.
+
+
+2.3.1 Axioms that Generate a Main Triple
+
+
+If the row of Table 1 corresponding to the type of ax' contains a single main triple s p xlt ., then the axiom ax is translated into the following triples:
+
+
+s p xlt .
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource s .
+_:x owl:annotatedProperty p .
+_:x owl:annotatedTarget xlt .
+TANN(annotation1, _:x)
+...
+TANN(annotationm, _:x)
+
+
+This is the case if ax' is of type SubClassOf, DisjointClasses with two classes, SubObjectPropertyOf without a property chain as the subproperty expression, SubDataPropertyOf, ObjectPropertyDomain,
+DataPropertyDomain, ObjectPropertyRange, DataPropertyRange, InverseObjectProperties, FunctionalObjectProperty, FunctionalDataProperty, InverseFunctionalObjectProperty, ReflexiveObjectProperty,
+IrreflexiveObjectProperty, SymmetricObjectProperty, AsymmetricObjectProperty, TransitiveObjectProperty, DisjointObjectProperties with two properties, DisjointDataProperties with two properties,
+ClassAssertion, ObjectPropertyAssertion, DataPropertyAssertion, Declaration, DifferentIndividuals with two individuals, or AnnotationAssertion.
+
+
+Consider the following subclass axiom:
+
+
+SubClassOf( Annotation( rdfs:comment "Children are people." ) a:Child a:Person )
+
+
+Without the annotation, the axiom would be translated into the following triple:
+
+
+a:Child rdfs:subClassOf a:Person .
+
+
+Thus, the annotated axiom is transformed into the following triples:
+
+
+a:Child rdfs:subClassOf a:Person .
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource a:Child .
+_:x owl:annotatedProperty rdfs:subClassOf .
+_:x owl:annotatedTarget a:Person .
+_:x rdfs:comment "Children are people." .
+
+
+
+For ax' of type DisjointUnion, SubObjectPropertyOf with a subproperty chain, or HasKey, the first triple from the corresponding row of Table 1 is the main triple and it is subjected to the
+transformation described above; the other triples from the corresponding row of Table 1 ó called side triples ó are output without any change.
+
+
+Consider the following subproperty axiom:
+
+
+SubObjectPropertyOf( Annotation( rdfs:comment "An aunt is a mother's sister." ) ObjectPropertyChain( a:hasMother a:hasSister ) a:hasAunt ) )
+
+
+Without the annotation, the axiom would be translated into the following triples:
+
+
+a:hasAunt owl:propertyChainAxiom _:y1.
+_:y1 rdf:first a:hasMother .
+_:y1 rdf:rest _:y2 .
+_:y2 rdf:first a:hasSister .
+_:y2 rdf:rest rdf:nil .
+
+
+In order to capture the annotation on the axiom, the first triple plays the role of the main triple for the axiom, so it is represented using a fresh blank node _:x in order to be able to attach the
+annotation to it. The original triple is output alongside all other triples as well.
+
+
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource a:hasAunt .
+_:x owl:annotatedProperty owl:propertyChainAxiom .
+_:x owl:annotatedTarget _:y1 .
+_:x rdfs:comment "An aunt is a mother's sister." .
+
+a:hasAunt owl:propertyChainAxiom _:y1.
+_:y1 rdf:first a:hasMother .
+_:y1 rdf:rest _:y2 .
+_:y2 rdf:first a:hasSister .
+_:y2 rdf:rest rdf:nil .
+
+
+
+
+Consider the following key axiom:
+
+
+HasKey( Annotation( rdfs:comment "SSN uniquely determines a person." ) a:Person () ( a:hasSSN ) )
+
+
+Without the annotation, the axiom would be translated into the following triples:
+
+
+a:Person owl:hasKey _:y .
+_:y rdf:first a:hasSSN .
+_:y rdf:rest rdf:nil .
+
+
+In order to capture the annotation on the axiom, the first triple plays the role of the main triple for the axiom, so it is represented using a fresh blank node _:x in order to be able to attach the
+annotation to it.
+
+
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource a:Person .
+_:x owl:annotatedProperty owl:hasKey .
+_:x owl:annotatedTarget _:y .
+_:x rdfs:comment "SSN uniquely determines a person." .
+
+a:Person owl:hasKey _:y .
+_:y rdf:first a:hasSSN .
+_:y rdf:rest rdf:nil .
+
+
+
+
+2.3.2 Axioms that are Translated to Multiple Triples
+
+
+If the axiom ax' is of type EquivalentClasses, EquivalentObjectProperties, EquivalentDataProperties, or SameIndividual, its translation into RDF can be broken up into several RDF triples (because
+RDF can only represent binary relations). In this case, each of the RDF triples obtained by the translation of ax' is transformed as described in previous section, and the annotations are repeated
+for each of the triples obtained in the translation.
+
+
+Consider the following individual equality axiom:
+
+
+SameIndividual( Annotation( a:source a:Fox ) a:Meg a:Megan a:Megan_Griffin )
+
+
+This axiom is first split into the following equalities between pairs of individuals, and the annotation is repeated on each axiom obtained in this process:
+
+
+SameIndividual( Annotation( a:source a:Fox ) a:Meg a:Megan )
+SameIndividual( Annotation( a:source a:Fox ) a:Megan a:Megan_Griffin )
+
+
+Each of these axioms is now transformed into triples as explained in the previous section:
+
+
+a:Meg owl:sameAs a:Megan .
+_:x1 rdf:type owl:Axiom .
+_:x1 owl:annotatedSource a:Meg .
+_:x1 owl:annotatedProperty owl:sameAs .
+_:x1 owl:annotatedTarget a:Megan .
+_:x1 a:source a:Fox .
+
+a:Megan owl:sameAs a:Megan_Griffin .
+_:x2 rdf:type owl:Axiom .
+_:x2 owl:annotatedSource a:Megan .
+_:x2 owl:annotatedProperty owl:sameAs .
+_:x2 owl:annotatedTarget a:Megan_Griffin .
+_:x2 a:source a:Fox .
+
+
+
+
+2.3.3 Axioms Represented by Blank Nodes
+
+
+If the axiom ax' is of type NegativeObjectPropertyAssertion, NegativeDataPropertyAssertion, DisjointClasses with more than two classes, DisjointObjectProperties with more than two properties,
+DisjointDataProperties with more than two properties, or DifferentIndividuals with more than two individuals, then its translation already requires introducing a blank node _:x. In such cases, ax is
+translated by first translating ax' into _:x as shown in Table 1, and then attaching the annotations of ax to _:x.
+
+
+Consider the following negative object property assertion:
+
+
+NegativeObjectPropertyAssertion( Annotation( a:author a:Seth_MacFarlane ) a:brotherOf a:Chris a:Stewie )
+
+
+Even without the annotation, this axiom would be represented using a blank node. The annotation can readily be attached to this node, so the axiom is transformed into the following triples:
+
+
+_:x rdf:type owl:NegativePropertyAssertion .
+_:x owl:sourceIndividual a:Chris .
+_:x owl:assertionProperty a:brotherOf .
+_:x owl:targetIndividual a:Stewie .
+_:x a:author a:Seth_MacFarlane .
+
+
+
+
+3 Mapping from RDF Graphs to the Structural Specification
+
+
+This section specifies the results of steps CP 2.2 and CP 3.3 of the canonical parsing process from Section 3.6 of the OWL 2 Specification [OWL 2 Specification] on an ontology document D that can be
+parsed into an RDF graph G. An OWL 2 tool MAY implement these steps in any way it chooses; however, the results MUST be structurally equivalent to the ones defined in the following sections. These
+steps do not depend on the RDF syntax used to encode the RDF graph in D; therefore, the ontology document D is identified in this section with the corresponding RDF graph G.
+
+An RDF syntax ontology document is any document accessible from some given IRI that can be parsed into an RDF graph, and that then be transformed into an OWL 2 ontology by the canonical parsing
+process instantiated as specified in this section.
+
+The following sections contain rules in which triple patterns are matched to G. Note that if a triple pattern contains a variable number of triples, the maximal possible subset of G MUST be matched.
+
+The following notation is used in the patterns:
+
+* The notation NN_INT(n) can be matched to any literal whose value n is a nonnegative integer.
+* Possible conditions on the pattern are enclosed in curly braces '{ }'.
+* Some patterns use optional parts, which are enclosed in square brackets '[ ]'.
+* The abbreviation T(SEQ y1 ... yn) denotes the pattern corresponding to RDF lists, as shown in Table 3. When a list pattern is matched to G, all list variables _:xi and _:xj with i &ne; j MUST be
+  matched to different nodes; furthermore, it MUST NOT be possible to match the list pattern to two maximal subsets of G such that some list variable in the first pattern instance is matched to the
+  same node as some (possibly different) variable in the second pattern instance. This is necessary in order to detect malformed lists such as lists with internal cycles, lists that share tails, and
+  lists that cross.
+
+Table 3. Patterns Corresponding to RDF Lists
+Sequence S Triples Corresponding to T(S) Main Node of T(S)
+SEQ  rdf:nil
+SEQ y _:x rdf:first y .
+_:x rdf:rest rdf:nil . _:x
+SEQ y1 ... yn
+{ n>1 } _:x1 rdf:first y1 .
+_:x1 rdf:rest _:x2 .
+...
+_:xn rdf:first yn .
+_:xn rdf:rest rdf:nil . _:x1
+
+
+
+3.1 Extracting Declarations and the IRIs of the Directly Imported Ontology Documents
+
+
+This section specifies the result of step CP 2.2 of the canonical parsing process on an RDF graph G.
+
+
+3.1.1 Resolving Included RDF Graphs
+
+
+For backwards compatibility with OWL 1 DL, if G contains an owl:imports triple pointing to an RDF document encoding an RDF graph G' where G' does not have an ontology header, this owl:imports triple
+is interpreted as an include rather than an import ó that is, the triples of G' are included into G and are not parsed into a separate ontology. To achieve this, the following transformation is
+applied to G as long as the following rule is applicable to G.
+
+
+If G contains a pair of triples of the form
+
+
+x rdf:type owl:Ontology .
+x owl:imports *:y .
+
+
+and the values for x and *:y have not already been considered, the following actions are performed:
+
+1. The document accessible from the IRI *:y is retrieved using the augmented retrieval process from Section 3.2 of the OWL 2 Specification [OWL 2 Specification].
+2. The document is parsed into an RDF graph G'.
+3. If the parsing succeeds and the graph G' does not contain a triple of the form
+   z rdf:type owl:Ontology.
+   then G' is merged (as in the RDF Semantics [RDF Semantics]) into G and the triple
+   x owl:imports *:y .
+   is removed from G.
+
+
+
+3.1.2 Parsing of the Ontology Header and Declarations
+
+
+Next, the ontology header is extracted from G by matching patterns from Table 4 to G. It MUST be possible to match exactly one such pattern to G in exactly one way. The matched triples are removed
+from G. The set Imp(G) of the IRIs of ontology documents that are directly imported into G contains exactly all *:z1, ..., *:zk that are matched in the pattern.
+
+Table 4. Parsing of the Ontology Header
+If G contains this pattern... ...then the ontology header has this form.
+*:x rdf:type owl:Ontology .
+[ *:x owl:versionIRI *:y .]
+*:x owl:imports *:z1 .
+...
+*:x owl:imports *:zk .
+{ k &ge; 0 and
+  the following triple pattern cannot be matched in G:
+     u w *:x .
+     u rdf:type owl:Ontology .
+     w rdf:type owl:OntologyProperty .
+} Ontology( *:x [ *:y ]
+    Import( *:z1 )
+    ...
+    Import( *:zk )
+    ...
+)
+_:x rdf:type owl:Ontology .
+_:x owl:imports *:z1 .
+...
+_:x owl:imports *:zk .
+{ k &ge; 0 and
+  the following triple pattern cannot be matched in G:
+     u w _:x .
+     u rdf:type owl:Ontology .
+     w rdf:type owl:OntologyProperty .
+} Ontology(
+    Import( *:z1 )
+    ...
+    Import( *:zk )
+    ...
+)
+
+
+Next, for backwards compatibility with OWL 1 DL, certain redundant triples are removed from G. In particular, if the triple pattern from the left-hand side of Table 5 is matched in G, then the
+triples on the right-hand side of Table 5 are removed from G.
+
+Table 5. Triples to be Removed for Backwards Compatibility with OWL 1 DL
+If G contains this pattern... ...then these triples are removed from G.
+x rdf:type owl:Ontology . x rdf:type owl:Ontology .
+x rdf:type owl:Class .
+x rdf:type rdfs:Class . x rdf:type rdfs:Class .
+x rdf:type rdfs:Datatype .
+x rdf:type rdfs:Class . x rdf:type rdfs:Class .
+x rdf:type owl:DataRange .
+x rdf:type rdfs:Class . x rdf:type rdfs:Class .
+x rdf:type owl:Restriction .
+x rdf:type rdfs:Class . x rdf:type rdfs:Class .
+x rdf:type owl:Restriction .
+x rdf:type owl:Class . x rdf:type owl:Class .
+x rdf:type owl:ObjectProperty .
+x rdf:type rdf:Property . x rdf:type rdf:Property .
+x rdf:type owl:FunctionalProperty .
+x rdf:type rdf:Property . x rdf:type rdf:Property .
+x rdf:type owl:InverseFunctionalProperty .
+x rdf:type rdf:Property . x rdf:type rdf:Property .
+x rdf:type owl:TransitiveProperty .
+x rdf:type rdf:Property . x rdf:type rdf:Property .
+x rdf:type owl:DatatypeProperty .
+x rdf:type rdf:Property . x rdf:type rdf:Property .
+x rdf:type owl:AnnotationProperty .
+x rdf:type rdf:Property . x rdf:type rdf:Property .
+x rdf:type owl:OntologyProperty .
+x rdf:type rdf:Property . x rdf:type rdf:Property .
+x rdf:type rdf:List .
+x rdf:first y .
+x rdf:rest z . x rdf:type rdf:List .
+
+
+Next, for backwards compatibility with OWL 1 DL, G is modified such that declarations can be properly extracted in the next step. When a triple pattern from the first column of Table 6 is matched in
+G, the matching triples are replaced in G with the triples from the second column. This matching phase stops when matching a pattern and replacing it as specified does not change G. Note that G is a
+set and thus cannot contain duplicate triples, so this last condition prevents infinite matches.
+
+Table 6. Additional Declaration Triples
+If G contains this pattern... ...then the matched triples are replaced in G with these triples.
+*:x rdf:type owl:OntologyProperty . *:x rdf:type owl:AnnotationProperty .
+*:x rdf:type owl:InverseFunctionalProperty . *:x rdf:type owl:ObjectProperty .
+*:x rdf:type owl:InverseFunctionalProperty .
+*:x rdf:type owl:TransitiveProperty . *:x rdf:type owl:ObjectProperty .
+*:x rdf:type owl:TransitiveProperty .
+*:x rdf:type owl:SymmetricProperty . *:x rdf:type owl:ObjectProperty .
+*:x rdf:type owl:SymmetricProperty .
+
+
+Next, the set of declarations Decl(G) is extracted from G according to Table 7. The matched triples are not removed from G ó the triples from Table 7 can contain annotations so, in order to
+correctly parse the annotations, they will be matched again in the step described in Section 3.2.5.
+
+Table 7. Parsing Declarations in G
+If G contains this pattern... ...then this declaration is added to Decl(G).
+*:x rdf:type owl:Class . Declaration( Class( *:x ) )
+*:x rdf:type rdfs:Datatype . Declaration( Datatype( *:x ) )
+*:x rdf:type owl:ObjectProperty . Declaration( ObjectProperty( *:x ) )
+*:x rdf:type owl:DatatypeProperty . Declaration( DataProperty( *:x ) )
+*:x rdf:type owl:AnnotationProperty . Declaration( AnnotationProperty( *:x ) )
+*:x rdf:type owl:NamedIndividual . Declaration( NamedIndividual( *:x ) )
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource *:y .
+_:x owl:annotatedProperty rdf:type .
+_:x owl:annotatedTarget owl:Class . Declaration( Class( *:y ) )
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource *:y .
+_:x owl:annotatedProperty rdf:type .
+_:x owl:annotatedTarget rdfs:Datatype . Declaration( Datatype( *:y ) )
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource *:y .
+_:x owl:annotatedProperty rdf:type .
+_:x owl:annotatedTarget owl:ObjectProperty . Declaration( ObjectProperty( *:y ) )
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource *:y .
+_:x owl:annotatedProperty rdf:type .
+_:x owl:annotatedTarget owl:DatatypeProperty . Declaration( DataProperty( *:y ) )
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource *:y .
+_:x owl:annotatedProperty rdf:type .
+_:x owl:annotatedTarget owl:AnnotationProperty . Declaration( AnnotationProperty( *:y ) )
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource *:y .
+_:x owl:annotatedProperty rdf:type .
+_:x owl:annotatedTarget owl:NamedIndividual . Declaration( NamedIndividual( *:y ) )
+
+
+Finally, the set RIND of blank nodes used in reification is identified. This is done by initially setting RIND = &empty; and then applying the patterns shown in Table 8. The matched triples are not
+deleted from G.
+
+Table 8. Identifying Reification Blank Nodes
+If G contains this pattern, then _:x is added to RIND.
+_:x rdf:type owl:Axiom .
+_:x rdf:type owl:Annotation .
+_:x rdf:type owl:AllDisjointClasses .
+_:x rdf:type owl:AllDisjointProperties .
+_:x rdf:type owl:AllDifferent .
+_:x rdf:type owl:NegativePropertyAssertion .
+
+
+
+3.2 Populating an Ontology
+
+
+This section specifies the result of step CP 3.3 of the canonical parsing process on an RDF graph G, the corresponding instance OG of the Ontology class, and the set AllDecl(G) of all declarations
+for G computed as specified in step CP 3.1 of the canonical parsing process.
+
+
+3.2.1 Analyzing Declarations
+
+
+The following functions map an IRI or a blank node x occurring in G into an object of the structural specification. In particular,
+
+* CE(x) maps x into a class expression,
+* DR(x) maps x into a data range,
+* OPE(x) maps x into an object property expression,
+* DPE(x) maps x into a data property expression, and
+* AP(x) maps x into an annotation property.
+
+Initially, these functions are undefined for all IRIs and blank nodes occurring in G; this is written as CE(x) = &epsilon;, DR(x) = &epsilon;, OPE(x) = &epsilon;, DPE(x) = &epsilon;, and AP(x) =
+&epsilon;. The functions are updated as parsing progresses. All of the following conditions MUST be satisfied at any given point in time during parsing.
+
+* For each x, at most one of OPE(x), DPE(x), and AP(x) is defined.
+* For each x, at most one of CE(x) and DR(x) is defined.
+
+Furthermore, the value of any of these functions for any x MUST NOT be redefined during parsing (i.e., if a function is not undefined for x, no attempt should be made to change the function's value
+for x).
+
+Functions CE, DR, OPE, DPE, and AP are initialized as shown in Table 9.
+
+Table 9. Initialization of CE, DR, OPE, DPE, and AP
+If AllDecl(G) contains this declaration... ...then perform this assignment.
+Declaration( Class( *:x ) ) CE(*:x) := a class with the IRI *:x
+Declaration( Datatype( *:x ) ) DR(*:x) := a datatype with the IRI *:x
+Declaration( ObjectProperty( *:x ) ) OPE(*:x) := an object property with the IRI *:x
+Declaration( DataProperty( *:x ) ) DPE(*:x) := a data property with the IRI *:x
+Declaration( AnnotationProperty( *:x ) ) AP(*:x) := an annotation property with the IRI *:x
+
+
+
+3.2.2 Parsing of Annotations
+
+
+The annotations in G are parsed next. The function ANN assigns a set of annotations ANN(x) to each IRI or blank node x. This function is initialized by setting ANN(x) = &empty; for each each IRI or
+blank node x. Next, the triple patterns from Table 10 are matched in G and, for each matched pattern, ANN(x) is extended with an annotation from the right column. Each time one of these triple
+patterns is matched, the matched triples are removed from G. This process is repeated until no further matches are possible.
+
+Table 10. Parsing of Annotations
+If G contains this pattern... ...then this annotation is added to ANN(x).
+x *:y xlt .
+{ AP(*:y) &ne; &epsilon; and
+  there is no blank node _:w such that G contains the following triples:
+    _:w rdf:type owl:Annotation .
+    _:w owl:annotatedSource x .
+    _:w owl:annotatedProperty *:y .
+    _:w owl:annotatedTarget xlt . } Annotation( *:y xlt )
+x *:y xlt .
+_:w rdf:type owl:Annotation .
+_:w owl:annotatedSource x .
+_:w owl:annotatedProperty *:y .
+_:w owl:annotatedTarget xlt .
+{ AP(*:y) &ne; &epsilon; and
+  no other triple in G contains _:w in subject or object position } Annotation( ANN(_:w) *:y xlt )
+
+
+
+3.2.3 Parsing of Ontology Annotations
+
+
+Let x be the node that was matched in G to *:x or _:x according to the patterns from Table 4; then, ANN(x) determines the set of ontology annotations of OG.
+
+
+3.2.4 Parsing of Expressions
+
+
+Next, functions OPE, DR, and CE are extended as shown in Tables 11, 12, and 13, as well as in Tables 14 and 15. The patterns in the latter two tables are not generated by the mapping from Section 2,
+but they can be present in RDF graphs that encode OWL 1 DL ontologies. Each time a pattern is matched, the matched triples are removed from G. Pattern matching is repeated until no triple pattern
+can be matched to G.
+
+Table 11. Parsing Object Property Expressions
+If G contains this pattern... ...then OPE(_:x) is set to this object property expression.
+_:x owl:inverseOf *:y .
+{ OPE(_:x) = &epsilon; and OPE(*:y) &ne; &epsilon; } ObjectInverseOf( OPE(*:y) )
+
+
+Table 12. Parsing of Data Ranges
+If G contains this pattern... ...then DR(_:x) is set to this data range.
+_:x rdf:type rdfs:Datatype .
+_:x owl:intersectionOf T(SEQ y1 ... yn) .
+{ n &ge; 2 and DR(yi) &ne; &epsilon; for each 1 &le; i &le; n } DataIntersectionOf( DR(y1) ... DR(yn) )
+_:x rdf:type rdfs:Datatype .
+_:x owl:unionOf T(SEQ y1 ... yn) .
+{ n &ge; 2 and DR(yi) &ne; &epsilon; for each 1 &le; i &le; n } DataUnionOf( DR(y1) ... DR(yn) )
+_:x rdf:type rdfs:Datatype .
+_:x owl:datatypeComplementOf y .
+{ DR(y) &ne; &epsilon; } DataComplementOf( DR(y) )
+_:x rdf:type rdfs:Datatype .
+_:x owl:oneOf T(SEQ lt1 ... ltn) .
+{ n &ge; 1 } DataOneOf( lt1 ... ltn )
+_:x rdf:type rdfs:Datatype .
+_:x owl:onDatatype *:y .
+_:x owl:withRestrictions T(SEQ _:z1 ... _:zn) .
+_:z1 *:w1 lt1 .
+...
+_:zn *:wn ltn .
+{ DR(*:y) is a datatype } DatatypeRestriction( DR(*:y)
+    *:w1 lt1
+    ...
+    *:wn ltn
+)
+
+
+Table 13. Parsing of Class Expressions
+If G contains this pattern... ...then CE(_:x) is set to this class expression.
+_:x rdf:type owl:Class .
+_:x owl:intersectionOf T(SEQ y1 ... yn) .
+{ n &ge; 2 and CE(yi) &ne; &epsilon; for each 1 &le; i &le; n } ObjectIntersectionOf( CE(y1) ... CE(yn) )
+_:x rdf:type owl:Class .
+_:x owl:unionOf T(SEQ y1 ... yn) .
+{ n &ge; 2 and CE(yi) &ne; &epsilon; for each 1 &le; i &le; n } ObjectUnionOf( CE(y1) ... CE(yn) )
+_:x rdf:type owl:Class .
+_:x owl:complementOf y .
+{ CE(y) &ne; &epsilon; } ObjectComplementOf( CE(y) )
+_:x rdf:type owl:Class .
+_:x owl:oneOf T(SEQ *:y1 ... *:yn) .
+{ n &ge; 1 } ObjectOneOf( *:y1 ... *:yn )
+_:x rdf:type owl:Restriction .
+_:x owl:onProperty y .
+_:x owl:someValuesFrom z .
+{ OPE(y) &ne; &epsilon; and CE(z) &ne; &epsilon; } ObjectSomeValuesFrom( OPE(y) CE(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:onProperty y .
+_:x owl:allValuesFrom z .
+{ OPE(y) &ne; &epsilon; and CE(z) &ne; &epsilon; } ObjectAllValuesFrom( OPE(y) CE(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:onProperty y .
+_:x owl:hasValue *:z .
+{ OPE(y) &ne; &epsilon; } ObjectHasValue( OPE(y) *:z )
+_:x rdf:type owl:Restriction .
+_:x owl:onProperty y .
+_:x owl:hasSelf "true"^^xsd:boolean .
+{ OPE(y) &ne; &epsilon; } ObjectHasSelf( OPE(y) )
+_:x rdf:type owl:Restriction .
+_:x owl:minQualifiedCardinality NN_INT(n) .
+_:x owl:onProperty y .
+_:x owl:onClass z .
+{ OPE(y) &ne; &epsilon; and CE(z) &ne; &epsilon; } ObjectMinCardinality( n OPE(y) CE(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:maxQualifiedCardinality NN_INT(n) .
+_:x owl:onProperty y .
+_:x owl:onClass z .
+{ OPE(y) &ne; &epsilon; and CE(z) &ne; &epsilon; } ObjectMaxCardinality( n OPE(y) CE(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:qualifiedCardinality NN_INT(n) .
+_:x owl:onProperty y .
+_:x owl:onClass z .
+{ OPE(y) &ne; &epsilon; and CE(z) &ne; &epsilon; } ObjectExactCardinality( n OPE(y) CE(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:minCardinality NN_INT(n) .
+_:x owl:onProperty y .
+{ OPE(y) &ne; &epsilon; } ObjectMinCardinality( n OPE(y) )
+_:x rdf:type owl:Restriction .
+_:x owl:maxCardinality NN_INT(n) .
+_:x owl:onProperty y .
+{ OPE(y) &ne; &epsilon; } ObjectMaxCardinality( n OPE(y) )
+_:x rdf:type owl:Restriction .
+_:x owl:cardinality NN_INT(n) .
+_:x owl:onProperty y .
+{ OPE(y) &ne; &epsilon; } ObjectExactCardinality( n OPE(y) )
+_:x rdf:type owl:Restriction .
+_:x owl:onProperty y .
+_:x owl:hasValue lt .
+{ DPE(y) &ne; &epsilon; } DataHasValue( DPE(y) lt )
+_:x rdf:type owl:Restriction .
+_:x owl:onProperty y .
+_:x owl:someValuesFrom z .
+{ DPE(y) &ne; &epsilon; and DR(z) &ne; &epsilon; } DataSomeValuesFrom( DPE(y) DR(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:onProperties T(SEQ y1 ... yn) .
+_:x owl:someValuesFrom z .
+{ n &ge; 1, DPE(yi) &ne; &epsilon; for each 1 &le; i &le; n, and DR(z) &ne; &epsilon; } DataSomeValuesFrom( DPE(y1) ... DPE(yn) DR(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:onProperty y .
+_:x owl:allValuesFrom z .
+{ DPE(y) &ne; &epsilon; and DR(z) &ne; &epsilon; } DataAllValuesFrom( DPE(y) DR(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:onProperties T(SEQ y1 ... yn) .
+_:x owl:allValuesFrom z .
+{ n &ge; 1, DPE(yi) &ne; &epsilon; for each 1 &le; i &le; n, and DR(z) &ne; &epsilon; } DataAllValuesFrom( DPE(y1) ... DPE(yn) DR(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:minQualifiedCardinality NN_INT(n) .
+_:x owl:onProperty y .
+_:x owl:onDataRange z .
+{ DPE(y) &ne; &epsilon; and DR(z) &ne; &epsilon; } DataMinCardinality( n DPE(y) DR(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:maxQualifiedCardinality NN_INT(n) .
+_:x owl:onProperty y .
+_:x owl:onDataRange z .
+{ DPE(y) &ne; &epsilon; and DR(z) &ne; &epsilon; } DataMaxCardinality( n DPE(y) DR(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:qualifiedCardinality NN_INT(n) .
+_:x owl:onProperty y .
+_:x owl:onDataRange z .
+{ DPE(y) &ne; &epsilon; and DR(z) &ne; &epsilon; } DataExactCardinality( n DPE(y) DR(z) )
+_:x rdf:type owl:Restriction .
+_:x owl:minCardinality NN_INT(n) .
+_:x owl:onProperty y .
+{ DPE(y) &ne; &epsilon; } DataMinCardinality( n DPE(y) )
+_:x rdf:type owl:Restriction .
+_:x owl:maxCardinality NN_INT(n) .
+_:x owl:onProperty y .
+{ DPE(y) &ne; &epsilon; } DataMaxCardinality( n DPE(y) )
+_:x rdf:type owl:Restriction .
+_:x owl:cardinality NN_INT(n) .
+_:x owl:onProperty y .
+{ DPE(y) &ne; &epsilon; } DataExactCardinality( n DPE(y) )
+
+
+Table 14. Parsing of Data Ranges for Compatibility with OWL 1 DL
+If G contains this pattern... ...then DR(_:x) is set to this object property expression.
+_:x rdf:type owl:DataRange .
+_:x owl:oneOf T(SEQ lt1 ... ltn) .
+{ n &ge; 1 } DataOneOf( lt1 ... ltn )
+_:x rdf:type owl:DataRange .
+_:x owl:oneOf T(SEQ) . DataComplementOf( rdfs:Literal )
+
+
+Table 15. Parsing of Class Expressions for Compatibility with OWL 1 DL
+If G contains this pattern... ...then CE(_:x) is set to this class expression.
+_:x rdf:type owl:Class .
+_:x owl:unionOf T(SEQ) . owl:Nothing
+_:x rdf:type owl:Class .
+_:x owl:unionOf T(SEQ y) .
+{ CE(y) &ne; &epsilon; } CE(y)
+_:x rdf:type owl:Class .
+_:x owl:intersectionOf T(SEQ) . owl:Thing
+_:x rdf:type owl:Class .
+_:x owl:intersectionOf T(SEQ y) .
+{ CE(y) &ne; &epsilon; } CE(y)
+_:x rdf:type owl:Class .
+_:x owl:oneOf T(SEQ) . owl:Nothing
+
+
+
+3.2.5 Parsing of Axioms
+
+
+Next, OG is populated with axioms. For clarity, the axiom patterns are split into two tables.
+
+* Table 16 presents the patterns for axioms without annotations.
+* Annotated axioms are parsed as follows:
+  o In case of the patterns for owl:AllDisjointClasses, owl:AllDisjointProperties, owl:AllDifferent, and owl:NegativePropertyAssertion, axiom annotations are defined by ANN(_:x).
+  o For all other axioms, axiom annotations are obtained by additionally matching patterns from Table 17 in G during axiom matching.
+
+
+The axioms in G are parsed as follows:
+
+* All annotated axioms are parsed first.
+* Only when no pattern for annotated axioms can be matched in G, then the patterns for axioms without annotations are matched.
+
+In either case, each time a triple pattern is matched, the matched triples are removed from G.
+
+Table 16. Parsing of Axioms without Annotations
+If G contains this pattern... ...then the following axiom is added to OG.
+*:x rdf:type owl:Class . Declaration( Class( *:x ) )
+*:x rdf:type rdfs:Datatype . Declaration( Datatype( *:x ) )
+*:x rdf:type owl:ObjectProperty . Declaration( ObjectProperty( *:x ) )
+*:x rdf:type owl:DatatypeProperty . Declaration( DataProperty( *:x ) )
+*:x rdf:type owl:AnnotationProperty . Declaration( AnnotationProperty( *:x ) )
+*:x rdf:type owl:NamedIndividual . Declaration( NamedIndividual( *:x ) )
+x rdfs:subClassOf y .
+{ CE(x) &ne; &epsilon; and CE(y) &ne; &epsilon; } SubClassOf( CE(x) CE(y) )
+x owl:equivalentClass y .
+{ CE(x) &ne; &epsilon; and CE(y) &ne; &epsilon; } EquivalentClasses( CE(x) CE(y) )
+x owl:disjointWith y .
+{ CE(x) &ne; &epsilon; and CE(y) &ne; &epsilon; } DisjointClasses( CE(x) CE(y) )
+_:x rdf:type owl:AllDisjointClasses .
+_:x owl:members T(SEQ y1 ... yn) .
+{ n &ge; 2 and CE(yi) &ne; &epsilon; for each 1 &le; i &le; n } DisjointClasses( CE(y1) ... CE(yn) )
+*:x owl:disjointUnionOf T(SEQ y1 ... yn) .
+{ n &ge; 2,
+  CE(x) &ne; &epsilon;, and
+  CE(yi) &ne; &epsilon; for each 1 &le; i &le; n } DisjointUnion( CE(*:x) CE(y1) ... CE(yn) )
+x rdfs:subPropertyOf y .
+{ OPE(x) &ne; &epsilon; and OPE(y) &ne; &epsilon; } SubObjectPropertyOf( OPE(x) OPE(y) )
+x owl:propertyChainAxiom T(SEQ y1 ... yn) .
+{ n &ge; 2,
+  OPE(yi) &ne; &epsilon; for each 1 &le; i &le; n, and
+  OPE(x) &ne; &epsilon; } SubObjectPropertyOf(
+    ObjectPropertyChain( OPE(y1) ... OPE(yn) )
+    OPE(x)
+)
+x owl:equivalentProperty y .
+{ OPE(x) &ne; &epsilon; and OPE(y) &ne; &epsilon; } EquivalentObjectProperties( OPE(x) OPE(y) )
+x owl:propertyDisjointWith y .
+{ OPE(x) &ne; &epsilon; and OPE(y) &ne; &epsilon; } DisjointObjectProperties( OPE(x) OPE(y) )
+_:x rdf:type owl:AllDisjointProperties .
+_:x owl:members T(SEQ y1 ... yn) .
+{ n &ge; 2 and OPE(yi) &ne; &epsilon; for each 1 &le; i &le; n } DisjointObjectProperties( OPE(y1) ... OPE(yn) )
+x rdfs:domain y .
+{ OPE(x) &ne; &epsilon; and CE(y) &ne; &epsilon; } ObjectPropertyDomain( OPE(x) CE(y) )
+x rdfs:range y .
+{ OPE(x) &ne; &epsilon; and CE(y) &ne; &epsilon; } ObjectPropertyRange( OPE(x) CE(y) )
+x owl:inverseOf y .
+{ OPE(x) &ne; &epsilon; and OPE(y) &ne; &epsilon; } InverseObjectProperties( OPE(x) OPE(y) )
+x rdf:type owl:FunctionalProperty .
+{ OPE(x) &ne; &epsilon; } FunctionalObjectProperty( OPE(x) )
+x rdf:type owl:InverseFunctionalProperty .
+{ OPE(x) &ne; &epsilon; } InverseFunctionalObjectProperty( OPE(x) )
+x rdf:type owl:ReflexiveProperty .
+{ OPE(x) &ne; &epsilon; } ReflexiveObjectProperty( OPE(x) )
+x rdf:type owl:IrreflexiveProperty .
+{ OPE(x) &ne; &epsilon; } IrreflexiveObjectProperty( OPE(x) )
+x rdf:type owl:SymmetricProperty .
+{ OPE(x) &ne; &epsilon; } SymmetricObjectProperty( OPE(x) )
+x rdf:type owl:AsymmetricProperty .
+{ OPE(x) &ne; &epsilon; } AsymmetricObjectProperty( OPE(x) )
+x rdf:type owl:TransitiveProperty .
+{ OPE(x) &ne; &epsilon; } TransitiveObjectProperty( OPE(x) )
+x rdfs:subPropertyOf y .
+{ DPE(x) &ne; &epsilon; and DPE(y) &ne; &epsilon; } SubDataPropertyOf( DPE(x) DPE(y) )
+x owl:equivalentProperty y .
+{ DPE(x) &ne; &epsilon; and DPE(y) &ne; &epsilon; } EquivalentDataProperties( DPE(x) DPE(y) )
+x owl:propertyDisjointWith y .
+{ DPE(x) &ne; &epsilon; and DPE(y) &ne; &epsilon; } DisjointDataProperties( DPE(x) DPE(y) )
+_:x rdf:type owl:AllDisjointProperties .
+_:x owl:members T(SEQ y1 ... yn) .
+{ n &ge; 2 and DPE(yi) &ne; &epsilon; for each 1 &le; i &le; n } DisjointDataProperties( DPE(y1) ... DPE(yn) )
+x rdfs:domain y .
+{ DPE(x) &ne; &epsilon; and CE(y) &ne; &epsilon; } DataPropertyDomain( DPE(x) CE(y) )
+x rdfs:range y .
+{ DPE(x) &ne; &epsilon; and DR(y) &ne; &epsilon; } DataPropertyRange( DPE(x) DR(y) )
+x rdf:type owl:FunctionalProperty .
+{ DPE(x) &ne; &epsilon; } FunctionalDataProperty( DPE(x) )
+*:x owl:equivalentClass y .
+{ DR(*:x) &ne; &epsilon; amd DR(y) &ne; &epsilon; } DatatypeDefinition( DR(*:x) DR(y) )
+x owl:hasKey T(SEQ y1 ... yk) .
+{ CE(x) &ne; &epsilon;, and
+  the sequence y1 ... yk can be partitioned into disjoint sequences
+    z1 ... zm and w1 ... wn such that
+    m > 0 or n > 0 (or both) and
+    OPE(zi) &ne; &epsilon; for each 1 &le; i &le; m and
+    DPE(wj) &ne; &epsilon; for each 1 &le; j &le; n } HasKey( CE(x) ( OPE(z1) ... OPE(zm) ) ( DPE(w1) ... DPE(wn) ) )
+x owl:sameAs y . SameIndividual( x y )
+x owl:differentFrom y . DifferentIndividuals( x y )
+_:x rdf:type owl:AllDifferent .
+_:x owl:members T(SEQ x1 ... xn) .
+{ n &ge; 2 } DifferentIndividuals( x1 ... xn )
+_:x rdf:type owl:AllDifferent .
+_:x owl:distinctMembers T(SEQ x1 ... xn) .
+{ n &ge; 2 } DifferentIndividuals( x1 ... xn )
+x rdf:type y .
+{ CE(y) &ne; &epsilon; } ClassAssertion( CE(y) x )
+x *:y z .
+{ OPE(*:y) &ne; &epsilon; } ObjectPropertyAssertion( OPE(*:y) x z )
+_:x rdf:type owl:NegativePropertyAssertion .
+_:x owl:sourceIndividual w .
+_:x owl:assertionProperty y .
+_:x owl:targetIndividual z .
+{ OPE(y) &ne; &epsilon; } NegativeObjectPropertyAssertion( OPE(y) w z )
+x *:y lt .
+{ DPE(*:y) &ne; &epsilon; } DataPropertyAssertion( DPE(*:y) x lt )
+_:x rdf:type owl:NegativePropertyAssertion .
+_:x owl:sourceIndividual w .
+_:x owl:assertionProperty y .
+_:x owl:targetValue lt .
+{ DPE(y) &ne; &epsilon; } NegativeDataPropertyAssertion( DPE(y) w lt )
+*:x rdf:type owl:DeprecatedClass . AnnotationAssertion( owl:deprecated *:x "true"^^xsd:boolean )
+*:x rdf:type owl:DeprecatedProperty . AnnotationAssertion( owl:deprecated *:x "true"^^xsd:boolean )
+*:x rdfs:subPropertyOf *:y .
+{ AP(*:x) &ne; &epsilon; and AP(*:y) &ne; &epsilon; } SubAnnotationPropertyOf( AP(*:x) AP(*:y) )
+*:x rdfs:domain *:y .
+{ AP(*:x) &ne; &epsilon; } AnnotationPropertyDomain( AP(*:x) *:y )
+*:x rdfs:range *:y .
+{ AP(*:x) &ne; &epsilon; } AnnotationPropertyRange( AP(*:x) *:y )
+
+
+Table 17. Parsing of Annotated Axioms
+If G contains this pattern... ...then the following axiom is added to OG.
+s *:p xlt .
+_:x rdf:type owl:Axiom .
+_:x owl:annotatedSource s .
+_:x owl:annotatedProperty *:p .
+_:x owl:annotatedTarget xlt .
+{ s *:p xlt .
+  is the main triple of an axiom according to Table 16 and
+  G contains possible necessary side triples for the axiom } The result is the axiom corresponding to s *:p xlt . (and possible side triples)
+that additionally contains the annotations ANN(_:x).
+
+
+Next, for each blank node or IRI x such that x &notin; RIND, and for each annotation Annotation( annotation1 ... annotationn AP y ) &isin; ANN(x) with n possibly being equal to zero, the following
+annotation assertion is added to OG:
+
+
+AnnotationAssertion( annotation1 ... annotationn AP x y )
+
+
+Finally, the patterns from Table 18 are matched in G and the resulting axioms are added to OG. These patterns are not generated by the mapping from Section 2, but they can be present in RDF graphs
+that encode OWL 1 DL ontologies. (Note that the patterns from the table do not contain triples of the form *:x rdf:type owl:Class because such triples are removed while parsing the entity
+declarations, as specified in Section 3.1.2.) Each time a triple pattern is matched, the matched triples are removed from G.
+
+Table 18. Parsing of Axioms for Compatibility with OWL 1 DL
+If G contains this pattern... ...then the following axiom is added to OG.
+*:x owl:complementOf y .
+{ CE(*:x) &ne; &epsilon; and CE(y) &ne; &epsilon; } EquivalentClasses( CE(*:x) ObjectComplementOf( CE(y) ) )
+*:x owl:unionOf T(SEQ) .
+{ CE(*:x) &ne; &epsilon; } EquivalentClasses( CE(*:x) owl:Nothing )
+*:x owl:unionOf T(SEQ y) .
+{ CE(*:x) &ne; &epsilon; and CE(y) &ne; &epsilon; } EquivalentClasses( CE(*:x) CE(y) )
+*:x owl:unionOf T(SEQ y1 ... yn) .
+{ n &ge; 2,
+  CE(*:x) &ne; &epsilon;, and
+  CE(yi) &ne; &epsilon; for each 1 &le; i &le; n } EquivalentClasses( CE(*:x) ObjectUnionOf( CE(y1) ... CE(yn) ) )
+*:x owl:intersectionOf T(SEQ) .
+{ CE(*:x) &ne; &epsilon; } EquivalentClasses( CE(*:x) owl:Thing )
+*:x owl:intersectionOf T(SEQ y) .
+{ CE(*:x) &ne; &epsilon; and CE(y) &ne; &epsilon; } EquivalentClasses( CE(*:x) CE(y) )
+*:x owl:intersectionOf T(SEQ y1 ... yn) .
+{ n &ge; 2,
+  CE(*:x) &ne; &epsilon;, and
+  CE(yi) &ne; &epsilon; for each 1 &le; i &le; n } EquivalentClasses( CE(*:x) ObjectIntersectionOf( CE(y1) ... CE(yn) ) )
+*:x owl:oneOf T(SEQ) .
+{ CE(*:x) &ne; &epsilon; } EquivalentClasses( CE(*:x) owl:Nothing )
+*:x owl:oneOf T(SEQ *:y1 ... *:yn) .
+{ n &ge; 1 and CE(*:x) &ne; &epsilon; } EquivalentClasses( CE(*:x) ObjectOneOf( *:y1 ... *:yn ) )
+
+
+At the end of this process, the graph G MUST be empty.
+
+
+
+4 Appendix: Change Log (Informative)
+
+
+
+4.1 Changes Since Recommendation
+
+
+This section summarizes the changes to this document since the Recommendation of 27 October, 2009.
+
+* With the publication of the XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes Recommendation of 5 April 2012, the elements of OWL 2 which are based on XSD 1.1 are now considered
+  required, and the note detailing the optional dependency on the XSD 1.1 Candidate Recommendation of 30 April, 2009 has been removed from the "Status of this Document" section.
+* Minor typographical errors were corrected as detailed on the OWL 2 Errata page.
+
+
+4.2 Changes Since Proposed Recommendation
+
+
+This section summarizes the changes to this document since the Proposed Recommendation of 22 September, 2009.
+
+* The two arguments in the ClassAssertion axiom in Table 16 were swapped to bring the axiom in line with the functional-style syntax.
+
+
+4.3 Changes Since Candidate Recommendation
+
+
+This section summarizes the changes to this document since the Candidate Recommendation of 11 June, 2009.
+
+* Two minor bugs were fixed in the reverse mappings of inverseOf and hasKey.
+
+
+4.4 Changes Since Last Call
+
+
+This section summarizes the changes to this document since the Last Call Working Draft of 21 April, 2009.
+
+* The RDF vocabulary for annotations was changed: owl:subject, owl:predicate and owl:object became, respectively, owl:annotatedSource, owl:annotatedProperty and owl:annotatedTarget.
+* Several lists of syntax were updated to track a previous change in Structural Specification and Functional-Style Syntax.
+* Two of the examples were fixed.
+* Some minor editorial changes were made.
+
+
+
+5 Acknowledgments
+
+
+The starting point for the development of OWL 2 was the OWL1.1 member submission, itself a result of user and developer feedback, and in particular of information gathered during the OWL Experiences
+and Directions (OWLED) Workshop series. The working group also considered postponed issues from the WebOnt Working Group.
+
+This document has been produced by the OWL Working Group (see below), and its contents reflect extensive discussions within the Working Group as a whole. The editors extend special thanks to Markus
+Kr÷tzsch (FZI), Alan Ruttenberg (Science Commons), Uli Sattler (University of Manchester), Michael Schneider (FZI) and Evren Sirin (Clark & Parsia) for their thorough reviews.
+
+The regular attendees at meetings of the OWL Working Group at the time of publication of this document were: Jie Bao (RPI), Diego Calvanese (Free University of Bozen-Bolzano), Bernardo Cuenca Grau
+(Oxford University Computing Laboratory), Martin Dzbor (Open University), Achille Fokoue (IBM Corporation), Christine Golbreich (Universit… de Versailles St-Quentin and LIRMM), Sandro Hawke
+(W3C/MIT), Ivan Herman (W3C/ERCIM), Rinke Hoekstra (University of Amsterdam), Ian Horrocks (Oxford University Computing Laboratory), Elisa Kendall (Sandpiper Software), Markus Kr÷tzsch (FZI),
+Carsten Lutz (Universitƒt Bremen), Deborah L. McGuinness (RPI), Boris Motik (Oxford University Computing Laboratory), Jeff Pan (University of Aberdeen), Bijan Parsia (University of Manchester),
+Peter F. Patel-Schneider (Bell Labs Research, Alcatel-Lucent), Sebastian Rudolph (FZI), Alan Ruttenberg (Science Commons), Uli Sattler (University of Manchester), Michael Schneider (FZI), Mike Smith
+(Clark & Parsia), Evan Wallace (NIST), Zhe Wu (Oracle Corporation), and Antoine Zimmermann (DERI Galway). We would also like to thank past members of the working group: Jeremy Carroll, Jim Hendler,
+and Vipul Kashyap.
+
+
+6 References
+
+
+[OWL 2 Specification]
+        Structural Specification and Functional-Style Syntax (Second Edition) Boris Motik, Peter F. Patel-Schneider, Bijan Parsia, eds. W3C Recommendation, 11 December 2012,
+        http://www.w3.org/TR/2012/REC-owl2-syntax-20121211/. Latest version available at http://www.w3.org/TR/owl2-syntax/.
+[RDF Concepts]
+        Resource Description Framework (RDF): Concepts and Abstract Syntax. Graham Klyne and Jeremy J. Carroll, eds. W3C Recommendation, 10 February 2004,
+        http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/. Latest version available as http://www.w3.org/TR/rdf-concepts/.
+[RDF Semantics]
+        RDF Semantics. Patrick Hayes, ed., W3C Recommendation, 10 February 2004, http://www.w3.org/TR/2004/REC-rdf-mt-20040210/. Latest version available as http://www.w3.org/TR/rdf-mt/.
+[RFC 2119]
+        RFC 2119: Key words for use in RFCs to Indicate Requirement Levels. Network Working Group, S. Bradner. IETF, March 1997, http://www.ietf.org/rfc/rfc2119.txt

@@ -1,0 +1,1168 @@
+XML Schema Datatypes in RDF and OWL
+
+
+
+
+XML Schema Datatypes in RDF and OWL
+
+
+
+W3C Working Group Note 14 March 2006
+
+
+This version:
+        http://www.w3.org/TR/2006/NOTE-swbp-xsch-datatypes-20060314/
+Latest version:
+        http://www.w3.org/TR/swbp-xsch-datatypes/
+Previous version:
+        http://www.w3.org/TR/2005/WD-swbp-xsch-datatypes-20050427/
+Editors:
+        Jeremy J. Carroll, HP Lab
+        Jeff Z. Pan, University of Aberdeen
+
+Copyright ©2006 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+The RDF and OWL Recommendations use the simple types from XML Schema. This document addresses three questions left unanswered by these Recommendations: Which URIref should be used to refer to a user
+defined datatype? Which values of which XML Schema simple types are the same? How to use the problematic xsd:duration in RDF and OWL? In addition, we further describe how to integrate OWL DL with
+user defined datatypes (in appendix B).
+
+
+Status of this Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This document is a Working Group Note, produced by the Semantic Web Best Practices and Deployment Working Group, part of the W3C Semantic Web Activity.
+
+As of the publication of this Working Group Note the SWBPD Working Group has completed work on this document. Changes from the previous Working Draft are summarized in Appendix C. Comments on this
+document may be sent to public-swbp-wg@w3.org, a mailing list with a public archive. Further discussion on this material may be sent to the Semantic Web Interest Group mailing list,
+semantic-web@w3.org, also with a public archive.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. This document is informative only. W3C has a public list of any patent disclosures made in connection
+with the deliverables of the group; that page also includes instructions for disclosing a patent.
+
+Publication as a Working Group Note does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+========================================================================================================================================================================================================
+
+
+
+Table of Contents
+
+
+* 1. Introduction
+  o 1.1 Reading this Document
+  o 1.2 Namespaces Used in this Document
+  o 1.3 XML Schema Simple Types
+
+* 2. User Defined Datatypes
+  o 2.1 Problem Statement
+  o 2.2 Component Designators Solution
+  o Attribute
+  o 2.4 Suggested Practice
+
+* 3. Comparison of Values
+  o 3.1 Problem Statement
+  o 3.2 All Primitive Types Differ
+  o 3.3 Formal Analysis
+  o 3.4 Examples
+  o 3.5 Using SPARQL for Equality
+  o 3.6 Value Approximate Mapping
+
+* 4. Duration
+* 5. The Use of Numeric Types
+* 6. Acknowledgements
+* 7. References
+
+
+* Appendix A: The Semantics of Datatyping in the Semantic Web Recommendations
+  o A.1 Datatypes in RDF
+  o A.2 Datatypes in OWL DL
+
+* Appendix B: Integrating Description Logics with User-Defined Datatypes
+* Appendix C: Changes since Working Draft of 27 April 2005
+
+
+========================================================================================================================================================================================================
+
+
+1. Introduction
+
+
+An overview of the datatype abstraction used by RDF is found in the [RDF Concepts and Abstract Syntax]; this is shared by the [OWL Abstract Syntax]. The semantics of RDF datatyping and OWL
+datatyping are summarized in appendix A.
+
+RDF and OWL allow the use of typed literal values in the description of resources and ontologies. See the [RDF Primer], and the [OWL Guide] for a more introductory treatments for RDF and OWL. Both
+the [RDF Semantics] and the [OWL Semantics] use the lexical-to-value mapping of the datatype to give the interpretation (the value) of a typed literal, thus the semantics of typed literals is given
+by the type system. The type systems are defined externally to RDF and OWL, most notably by [XML Schema2].
+
+Concrete syntaxes for typed literals are found in [RDF Syntax], [N-triples], and [N3].
+
+Some questions about XML Schema datatypes in the Semantic Web are not directly answered by the published W3C Recommendations. This document considers four of them:
+
+* Within RDF and OWL, how to refer to an XML Schema user defined simple type with a URI.
+* Details of the denotational semantics of the values of the primitive XML Schema simple types. XML Schema principally gives an operational semantics. RDF and OWL applications need a denotational
+  semantics for interoperable behaviour.
+* A possible solution to the problems concerning xsd:duration, which are reported in [RDF Semantics].
+* Appropriate use of numeric types for engineering applications.
+
+
+1.1 Reading this Document
+
+
+While this document can be read from start to finish, many readers will benefit from skipping sections.
+
+The intended reader is informed about RDF and/or OWL, and may be a creator or user of metadata or ontologies, or may be an implementor of systems that implement the RDF or OWL Recommendations, or
+may be the author or editor of related specifications.
+
+The reader who is interested in defining their own datatypes should read section 2 and maybe appendix B, which gives a formal treatment, in terms of OWL DL and user defined datatypes, that has not
+been covered by the [OWL Semantics].
+
+The reader who is interested in the correct use of datatypes should read section 3, concerning which values are the same, and section 5 concerning numerics, particularly, but not exclusively, for
+engineering applications.
+
+Implementors probably should read most of the document: appendix A summarizes the formal treatment of datatyping from the recommendations; section 3 gives an extended discussion about equality;
+section 2 discusses the mapping from URIs to user defined types.
+
+Readers most interested in formal semantics will find most value in appendix B, concerning user defined datatypes, and section 3 concerning equality. Such readers should start by reviewing appendix
+A, which should be familiar.
+
+Section 4 on durations, is of more limited interest, but is significant to any reader who wishes to use, implement or build on top of duration datatypes.
+
+
+1.2 Namespaces Used in this Document
+
+
+In this document we use N3 such as "10"^^xsd:int following the subset used by the [OWL Test Cases], with the following namespace prefixes:
+
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix eg: <http://www.example.org/> .
+@prefix egdt: <http://example.org/simpleTypes#> .
+@prefix xsd: <http://www.example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+
+1.3 XML Schema Simple Types
+
+
+[XML SCHEMA2] defines facilities for defining simple types to be used in XML Schema as well as other XML specifications. It is influenced by earlier work on datatypes such as [ISO 11404].
+
+[Definition:] An XML Schema simple type d is characterised by a value space, V(d), which is a non-empty set, a lexical space, L(d), which is a non-empty set of Unicode strings, and a set of facets,
+F(d), each of which characterizes a value space along independent axes or dimensions.
+
+XML Schema simple types are divided into disjoint built-in simple types and derived simple types. Derived datatypes can be defined from primitive or existing derived datatypes by the following three
+means:
+
+* By restriction, i.e., by using facets on an existing type, so as to limit the number of possible values of the derived type.
+* By union, i.e., to allow values from a list of simple types.
+* By list, i.e., to define the list type of an existing simple type.
+
+
+Example 1A
+
+
+The following is the definition of a derived simple type (of the base datatype xsd:integer) which restricts values to integers greater than or equal to 0 and less than 150, using the facets
+minInclusive and maxExclusive.
+
+
+   <xsd:schema ...>
+     <xsd:simpleType name="humanAge">
+       <xsd:restriction base="integer">
+        <xsd:minInclusive value="0">
+        <xsd:maxExclusive value="150">
+       </xsd:restriction>
+     </xsd:simpleType>
+     ...
+   </xsd:schema>
+   
+
+
+
+2. User Defined Datatypes
+
+
+[XML Schema2] predefines about forty simple types, the ones suitable for RDF and OWL are listed in [RDF Semantics].
+
+In addition, XML Schema permits users to refine these builtin types by taking a restriction including only some of the values or some of the lexical forms.
+
+
+Example 2A
+
+
+As a further example, we may wish to talk about ages of adults in years, where an adult is over 18. This can be described as a restriction on the xsd:integer datatype.
+
+
+   <xsd:schema ...>
+     <xsd:simpleType name="adultAge">
+       <xsd:restriction base="integer">
+        <xsd:minInclusive value="18">
+       </xsd:restriction>
+     </xsd:simpleType>
+     ...
+   </xsd:schema>
+   
+
+
+In a Semantic Web context this may be used with the objects of triples of an eg:age property, used, for instance, when describing some members of a club which is restricted to adults, e.g. a
+nightclub or a political party.
+
+We will use this example throughout this section, and assume it can be retrieved from http://example.org/simpleTypes.
+
+Within RDF, and RDF reasoning, this additional restriction may be enough to catch some typos or data entry errors (e.g. putting an inappropriate value of 0 for the eg:age property). Within OWL, and
+OWL reasoning, this may interact with axioms in the ontology to significantly restrict the possible interpretations, adding to the modelling power of the language.
+
+This section only deals with the problem of how to refer to such datatypes. Their semantics is treated in the appendices. Appendix A reviews the semantics of datatypes from the RDF and OWL
+recommendations. Appendix B describes how to integrate Description Logics (such as the SHOIN DL, which is the underpinning of OWL DL) with user defined datatypes.
+
+We will also consider the topic of the target namespace from [XML SCHEMA1]. For clarity, we will consider two variants on this example. The first has no target namespace, the second defines one.
+
+
+Example 2B
+
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="adultAge">
+    <xs:restriction base="integer">
+     <xs:minInclusive value="18">
+    </xs:restriction>
+  </xs:simpleType>
+     ...
+</xs:schema> 
+
+
+
+Example 2C
+
+
+
+<xs:schema 
+  targetNamespace="http://example.org/ns"
+  elementFormDefault="qualified"
+  xmlns:egn="http://example.org/ns"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="adultAge">
+    <xs:restriction base="integer">
+     <xs:minInclusive value="18">
+    </xs:restriction>
+  </xs:simpleType>
+     ...
+</xs:schema> 
+
+
+The case where the XML Schema has been assembed from multiple schema documents lies outside the scope of this document. This case is discussed in [XML SCHEMA1] and explicitly not discussed in [XSCD].
+
+
+2.1 Problem Statement:
+
+
+When describing a resource with RDF or building an ontology with OWL, in which a user defined simple XML Schema datatype, such as adultAge above, what URI should be used to identify this datatype?
+
+
+2.2 Component Designators Solution
+
+
+Following XML Schema Component Designators [XSCD] Example 2B has URI reference http://example.org/simpleTypes#xscd(/type::adultAge).
+
+A URI reference for Example 2C requires a choice of prefix for the namespace http://example.org/ns. A good choice is to use the prefix used by the schema itself, i.e. egn. The resulting URI
+reference for the datatype is then http://example.org/simpleTypes#xmlns(egn=http://example.org/ns)xscd(/type::egn:adultAge)
+
+When the schema does not define a prefix for the target namespace, perhaps by using the default namespace, then an arbitrary prefix needs to be chosen. As always with namespace prefixes, it is
+permitted to use any prefix of your choice, even when a conventional prefix is used in the schema document.
+
+XML Schema Component Designators [XSCD] defines an XPointer scheme that navigates the XML Schema document to identify any of the schema components using a fragment. This is very general: fragments
+are defined that identify many different aspects of the document, including unnamed simple types within complex schema.
+
+Our example 2B becomes:
+
+eg:membersAge rdfs:range <http://example.org/simpleTypes#xscd(/type::adultAge)> .
+_:aMember eg:name "Jane Doe" .
+_:aMember eg:membersAge "24"^^<http://example.org/simpleTypes#xscd(/type::adultAge)> .
+
+
+One way of reading the fragment is that it provides full semantic clarity about what is being identified: the xscd(.) shows that an XML Schema component is being identified; the /type indicates that
+a type is being identified; the ::adultAge shows which type is being identified.
+
+The above URIrefs cannot be abbreviated as:
+
+eg:membersAge rdfs:range egdt:xscd(/type::adultAge) .
+_:aMember eg:name "Jane Doe" .
+_:aMember eg:membersAge "24"^^egdt:xscd(/type::adultAge) .
+
+
+because xscd(/type::adultAge) does not match the NCName production.
+
+Overall, referring to XML Schema Datatypes in the manner proposed by the XML Schema Working Group is a good practice, and will be moreso, when [XSCD] reaches Recommendation status.
+
+
+2.3 Using the id Attribute
+
+
+In cases where the XML Schema is under the control of a Semantic Web author, the full generality of [XSCD] is not needed. This section shows how when defining your own datatype, derived from an XML
+Schema type, it is possible to use a simpler method, by slightly modifying the schema defining the datatype. Example 2A becomes:
+
+
+   <xsd:schema ...>
+     <xsd:simpleType id="adultAge" name="adultAge">
+       <xsd:restriction base="integer">
+        <xsd:minInclusive value="18">
+       </xsd:restriction>
+     </xsd:simpleType>
+     ...
+   </xsd:schema>
+
+
+The difference is that the datatype we wish to use is not only identified by the @name attribute, but also by an @id attribute. While it is technically possibly to use different values for these two
+attributes, it would be confusing.
+
+The URI reference http://example.org/simpleTypes#adultAge can then be used to refer to the datatype.
+
+In the terminology of [RFC 3986], the URI http://example.org/simpleTypes#adultAge identifies a secondary resource. When http://example.org/simpleTypes is retrieved as an XML Schema document, with
+mimetype application/xml, this may be taken as a shorthand pointer from the [XPointer Framework]. This identifies a view on the XML representation of the primary resource being the XML element with
+the matching @id attribute.
+
+When used in RDF (see [RDF Concepts], this URI reference may be understood with the URI http://example.org/simpleTypes as identifying the schema, and the URI http://example.org/simpleTypes#adultAge
+as identifying the datatype itself, a resource defined or described by the representation identified by the application/xml retrieval. It is preferred that no targetNamespace is given in the schema
+for this usage.
+
+If there is no @id attribute with the given name, the [XPointer Framework] is clear that this is an error:
+
+If no element information item is identified by a shorthand pointer's NCName, the pointer is in error.
+
+Our example RDF is:
+
+eg:membersAge rdfs:range <http://example.org/simpleTypes#adultAge> .
+_:aMember eg:name "Jane Doe" .
+_:aMember eg:membersAge "24"^^<http://example.org/simpleTypes#adultAge> .
+
+
+Or:
+
+eg:membersAge rdfs:range egdt:adultAge .
+_:aMember eg:name "Jane Doe" .
+_:aMember eg:membersAge "24"^^egdt:adultAge .
+
+
+As a further example, a club which has members of all ages, but wishes to have a class of its adult members, could use an OWL expression like the following (in the [OWL Abstract Syntax]:
+
+
+Class(AdultMembers
+   insersectionOf(
+     Members
+     Restriction(eg:membersAge, allValuesFrom(egdt:adultAge)) ) )
+
+
+
+2.4 Suggested Practice
+
+
+When referring to arbitrary user defined datatypes in arbitrary XML Schema, the [XSCD] solution is appropriate. When an RDF or OWL author or tool is writing an XML Schema for use with an RDF/XML
+document, the @id solution may be preferred.
+
+
+3. Comparison of Values
+
+
+Two different authors publishing the same information on the Semantic Web may make different syntactic choices. They then say the same thing in different ways. This is seen most clearly when the two
+documents entail one another as determined by the [RDF Semantics] or [OWL Semantics].
+
+One aspect of the syntactic choices facing an author is which datatypes to use. Even if they use only the built in [XML SCHEMA2] simple types, there are non-trivial choices, and different authors
+may legitimately choose different datatypes. This section addresses the issue of how implementations of [RDF Semantics] and [OWL Semantics] should allow for the different choices of datatype made by
+different authors.
+
+
+3.1 Problem Statement
+
+
+What is the relationship between the value spaces of the various XML Schema built-in simple types when used within RDF and OWL?
+
+Or in other words, when do two literals, which are written down differently, refer to the same value. For example, "10"^^xsd:integer and "010"^^xsd:integer both denote the integer ten.
+
+
+3.2 All Primitive Types Differ
+
+
+The most appropriate solution is that all primitive XML Schema Datatypes are treated as having disjoint value spaces. This approach is both easy to understand, and easy to implement.
+
+Formally, in a unary datatype group, value spaces of primitive base datatypes are required to be defined as disjoint with each other. For instance, if the value space datatype D1 is a subset of that
+of the datatype D2, then D1 and D2 can not be both primitive base datatypes in a unary datatype group.
+
+
+3.3 Formal Analysis
+
+
+In discussing the examples, we presented pairs of literals which denoted the same value. This relationship of denoting the same value forms an equivalence relation, which we will write as ~; it is
+conventionally written as '=' and called equality. It is reflexive, symmetric and transitive.
+
+In terms of the [RDF Semantics] (see appendix A.1) the equivalence relation ~ can be constructed from the interpretation function IL, in the following way:
+
+~ = { <x,y> : IL(x)=IL(y), for any x, y ∈ LV }
+
+In terms of [OWL Semantics] (see appendix A.2), this can be constructed in terms of the interpretation function ED as:
+
+~ = { <x,y> : ED(x)=ED(y), for any x, y ∈ LV }
+
+A key term we will use in the following examples, is primitive base datatype in a type system. A recursive definition is:
+
+* Each built in primitive datatype is its own primitive base datatype.
+* The primitive base datatype of a derived simple type is the primitive base datatype of its base datatype.
+
+In other words, the primitive base datatype of a type system is found by walking up the restriction tree until reaching a primitive type. Note that the concept of primitive base datatypes in a type
+system is slightly different from the concept of primitive base datatypes in a unary datatype group. This is because it is possible that a primitive base datatype of a type system is not in a
+datatype map, but its derived datatypes are. For instance, in Example_B, xsd:integer is a primitive base datatype in the unary datatype group G1.
+
+
+3.4 Examples
+
+
+We give two sets of examples. The first set of examples, depend on comparisons where the primitive base datatype is the same. The second set where the primitive base datatype is not. However, the
+second set are intended to be slightly counter-intuitive, and to illustrate limitations in this approach to comparing typed literals.
+
+Each example is presented in two ways:
+
+* As a pair of literals which may, or may not, denote the same value.
+* As a possible entailment. Technically the intended entailment is a D-entailment, in terms of [RDF Semantics], or an OWL Full entailment in terms of the [OWL Semantics]. Similar, slightly longer,
+  OWL DL entailments could be constructed, illustrating the same issues.
+
+
+3.4.1 Easy Examples
+
+
+It is uncontested that in [XML SCHEMA2] a datatype derived by restriction refers to a subset of the values of its base datatype, and not to different values (see [XML SCHEMA2]).
+
+Hence, two typed literals whose type have the same primitive base datatype, and whose lexical forms are equivalent, are equal.
+
+In addition, [RDF Semantics] explicitly sanctions identification of RDF plain literals without language tags with corresponding typed literals with datatype xsd:string.
+
+
+Derived Numerics
+
+
+As a first example "15"^^xsd:byte and "15.0"^^xsd:decimal both denote the same value, fifteen. This follows because xsd:byte has primitive base datatype xsd:decimal.
+
+This licenses the following entailment:
+
+
+
+Example 3A
+
+
+
+eg:Jane eg:age "15"^^xsd:byte .
+
+
+entails
+
+
+eg:Jane eg:age "15.0"^^xsd:decimal .
+
+
+
+The same result holds for two types both of which have primitive base datatype decimal. For example "15"^^xsd:byte and "15"^^xsd:nonNegativeInteger both denote fifteen, and the entailment:
+
+
+
+Example 3B
+
+
+
+eg:Jane eg:age "15"^^xsd:nonNegativeInteger .
+
+
+entails
+
+
+eg:Jane eg:age "15"^^xsd:byte .
+
+
+
+Note that xsd:byte is not derived from xsd:nonNegativeInteger, or vice versa, even with intermediate steps.
+
+
+Derived Strings
+
+
+xsd:language has primitive base datatype xsd:string. Thus "en-US"^^xsd:language and "en-US"^^xsd:string denote the same value, and the following entailment holds:
+
+
+
+Example 3C
+
+
+
+eg:doc dc:language "en-US"^^xsd:language .
+
+
+entails
+
+
+eg:doc dc:language "en-US"^^xsd:string .
+
+
+
+However, despite the language identifier being case insensitive according to [RFC 3066], this case insensitivity is not represented in the datatype, so that "en-US"^^xsd:language and
+"en-us"^^xsd:language denote different values and we have the following non-entailment:
+
+
+
+Example 3D
+
+
+
+eg:doc dc:language "en-US"^^xsd:language .
+
+
+does not entail
+
+
+eg:doc dc:language "en-us"^^xsd:language .
+
+
+
+
+Plain Strings
+
+
+The [RDF Semantics] says (in an informative section):
+
+the value space and lexical-to-value mapping of the XSD datatype xsd:string sanctions the identification of typed literals with plain literals without language tags for all character strings which
+are in the lexical space of the datatype, since both of them denote the Unicode character string which is displayed in the literal;
+
+Thus "en-US"^^xsd:string denotes the same as the plain literal "en-US", and the following two entailments hold:
+
+
+
+Example 3E
+
+
+
+eg:doc dc:language "en-US"^^xsd:string .
+
+
+entails
+
+
+eg:doc dc:language "en-US" .
+
+
+
+
+
+Example 3F
+
+
+
+eg:doc dc:language "en-US"^^xsd:language .
+
+
+entails
+
+
+eg:doc dc:language "en-US" .
+
+
+
+
+3.4.2 Hard Examples
+
+
+When the two typed literals being compared have different primitive base datatypes, all the values are assumed to be different, and entailments do not follow, even when this is counterintuitive. The
+number one for instance can be a float, a double, or a decimal. Since they all have different primitive base datatypes, these are all different.
+
+
+Float and Decimal
+
+
+A human age is conventionally given as an integer (number of years, except for babies). but a float is a plausible alternative representation. On April 7th 2004, Jeremy was forty, "40"^^xsd:integer
+has a different primitive basetype to "40"^^xsd:float, so that, they are not equal and:
+
+
+
+Example 3G
+
+
+
+eg:JeremyCarroll eg:ageInYears "40"^^xsd:integer .
+
+
+does not entail
+
+
+eg:JeremyCarroll eg:ageInYears "40"^^xsd:float .
+
+
+
+Similarly, float and double are different primitive base datatypes, and so superficially similar values, such as "1.3"^^xsd:float and "1.3"^^xsd:decimal are different, and:
+
+
+
+Example 3H
+
+
+
+eg:car eg:engineSizeInLitres "1.3"^^xsd:decimal .
+
+
+does not entail
+
+
+eg:car eg:engineSizeInLitres "1.3"^^xsd:float .
+
+
+
+
+Float and Double
+
+
+As with float and decimal, neither float or double is derived from the other. Thus, "40"^^xsd:double and "40"^^xsd:float are treated as not equal, and:
+
+
+
+Example 3J
+
+
+
+eg:JeremyCarroll eg:ageInYears "40"^^xsd:double .
+
+
+does not entail
+
+
+eg:JeremyCarroll eg:ageInYears "40"^^xsd:float .
+
+
+
+Similarly:
+
+
+
+Example 3K
+
+
+
+eg:car eg:engineSizeInLitres "1.3"^^xsd:double .
+
+
+does not entail
+
+
+eg:car eg:engineSizeInLitres "1.3"^^xsd:float .
+
+
+
+
+String and anyURI
+
+
+Similarly, the two types string and anyURI, are distinct primitive base datatypes. So that, despite superficial similarities, "http://www.example.org/doc"^^xsd:string is different from
+"http://www.example.org/doc"^^xsd:anyURI, and:
+
+
+
+Example 3L
+
+
+
+eg:doc dc:identifier "http://www.example.org/doc"^^xsd:anyURI .
+
+
+does not entail
+
+
+eg:doc dc:identifier "http://www.example.org/doc"^^xsd:string .
+
+
+
+
+hexBinary and base64Binary
+
+
+The final case where the value spaces of two XML Schema simple types appear to the same is for xsd:hexBinary and xsd:base64Binary. For both the value space is described as: the set of finite-length
+sequences of binary octets. For instance the binary sequence of two octets (00001111 10110111) (i.e. the 16-bit integer 4023) can be written in hexadecmial as 0FB7. In base64 encoding [RFC 2045]
+this same sequence of two octets is represented as D7c=.
+
+Despite this, the two types hexBinary and base64Binary, are distinct primitive base datatypes. So that, "0FB7"^^xsd:hexBinary is different from "D7c="^^xsd:base64Binary, and:
+
+
+
+Example 3M
+
+
+
+eg:doc eg:checkSum "0FB7"^^xsd:hexBinary .
+
+
+does not entail
+
+
+eg:doc eg:checkSum "D7c="^^xsd:base64Binary .
+
+
+
+
+3.5 Using SPARQL for Equality
+
+
+While some of the non-entailments shown may be counterintuitive, it is possible to use SPARQL to query a graph and retrieve literal values that are similar even if not derived from the same
+primitive base type.
+
+For example, related to examples 3H and 3K. Given a graph including the following three triples:
+
+
+eg:car eg:engineSizeInLitres "1.3"^^xsd:double .
+eg:car eg:engineSizeInLitres "1.3"^^xsd:decimal .
+eg:car eg:engineSizeInLitres "1.3"^^xsd:float .
+
+
+The following [SPARQL] query will match all three.
+
+
+SELECT  ?size
+WHERE   { eg:car eg:engineSizeInLitres ?size .
+          FILTER (?size = 1.3) . }
+
+
+In the current [SPARQL] working draft, the mapping from the typed literal, as a syntactic object, to its corresponding value, is done as part of the operation of the = operator in the above query,
+rather than as part of say a D-interpretation from [RDF Semantics]. This mapping is specified in [Functions &amp; Operators], and, being strongly typed, is not identical with that specified in [RDF
+Semantics]
+
+
+3.6 Value Approximate Mapping
+
+
+A different approach, better embedded in [RDF Semantics], could enable meaningful mappings among values from different datatypes. This could give better foundations for operations such as the type
+promotion of the XML Path Language 2.0 [XPath 2.0] and the = operator in SPARQL mentioned in Section 3.5. A quick sketch is that we extend the RDF D-interpretation to support value approximate maps,
+as follows:
+
+[Definition:] A value approximate map mapsTo is a partial mapping from typed literals to typed literals.
+
+
+Example 3N
+
+
+An example value approximate mapping is
+
+
+"1.3"^^xsd:decimal owlx:mapsTo "1.3"^^xsd:float .
+
+[Definition:] Given a datatype map D and a value approximate map mapsTo, the approximate equality aeq is defined as follows:
+
+* aeq("s1"^^u1, "s2"^^u2)=true if L2S(D(u1))(s1) = L2S(D(u2))(s2) or if mapsTo("s1"^^u1)="s3"^^u2 and L2S(D(u2))(s3) = L2S(D(u2))(s2),
+* aeq("s1"^^u1, "s2"^^u2)=false otherwise.
+
+Note that, according to the above definition, aeq("s1"^^u1, "s2"^^u2)=true does not imply that "s1"^^u1 and "s2"^^u2 are interpreted as the same value (L2S(D(u1))(s1) = L2S(D(u2))(s2)). The
+approximate equality is different from equality and is not necessarily symmetric, depending on the corresponding value approxiate map. The unsymmetry is needed to support e.g. type promotions in the
+XML Path Language 2.0 [XPath 2.0]. Note that notion of value approxiate mappings is very general - it does not disallow having symmetric mappings between two typed literals. In Example 3N, one can
+also specify a value approximate mapping from "1.3"^^xsd:float to "1.3"^^xsd:decimal to make the mappings between the two typed literals symmetric.
+
+To sum up, applications can specify a value approximate map mapsTo and make use of the approximate equality aeq for their purposes.
+
+
+4. Duration
+
+
+The [RDF Semantics] Recommendation discourages the use of the xsd:duration datatype (see [XML SCHEMA2]). It says:
+
+[Some] built-in XML Schema datatypes are unsuitable for various reasons, and SHOULD NOT be used: xsd:duration does not have a well-defined value space (this may be corrected in later revisions of
+XML Schema datatypes, in which case the revised datatype would be suitable for use in RDF datatyping);
+
+The underlying difficulty is the impossibility of an unequivocal answer to the question "How many days in a month?" This has proved problematic in other applications of XML Schema datatypes. The
+XQuery and XSLT Working Groups have a proposed solution. They derive two new datatypes, xdt:yearMonthDuration and xdt:dayTimeDuration from xsd:duration, sidestepping the unanswerable question. In
+section 10.2 of [Functions &amp; Operators] we read:
+
+[Definition:] xdt:yearMonthDuration is derived from xs:duration by restricting its lexical representation to contain only the year and month components. The value space of xdt:yearMonthDuration is
+the set of xs:integer month values. The year and month components of xdt:yearMonthDuration correspond to the Gregorian year and month components defined in section 5.5.3.2 of [ISO 8601],
+respectively.
+
+and
+
+[Definition:] xdt:dayTimeDuration is derived from xs:duration by restricting its lexical representation to contain only the days, hours, minutes and seconds components. The value space of
+xdt:dayTimeDuration is the set of fractional second values. The components of xdt:dayTimeDuration correspond to the day, hour, minute and second components defined in Section 5.5.3.2 of [ISO 8601],
+respectively.
+
+These two new datatypes are suitable for use with RDF and OWL. (Note that they are not yet recommended, since F&O is still in Working Draft).
+
+
+5. The Use of Numeric Types
+
+
+For much data on the Semantic Web a motivation for providing type information is to permit the use of the data by engineering applications, and interoperation between engineering applications. Most
+such data will be marked up using the numeric types from XML Schema.
+
+Loss in precision or unexpected changes in values due to automatic type conversion could be problematic in an engineering environment.
+
+In the engineering domain there are three important types of usage for numerics: count, measurement, and constant.
+
+count
+        A count is an integer representing essentially the cardinal number for a set of things classified by some set of tests. An example would be the count of packages of candy available for
+        shipment. A count is an exact number. Tests may include measurements, but a count is not an approximation of a sum of these measurements nor is it a sum of the approximation of these
+        measurements. A type such as xsd:integer or a type derived from xsd:integer is appropriate for counts.
+measurement
+        A measurement is an inexact numeric value (usually represented as a real) produced by some measurement method. This value indicates a value range which includes the actual value. The actual
+        value is unknowable, but more precise measurement methods can reduce the range of uncertainty. The precision or uncertainty is usually included with the measurement value. Either implicitly
+        using significant figures or explicitly using a separate property value such as error range. Either the xsd:float or xsd:double datatypes are appropriate for measurement, but it should be
+        noted that these do not include a precision or uncertainity, which should be included as the value of a separate property. [XML SCHEMA2] explicitly states for xsd:decimal that, "Precision is
+        not reflected in this value space, the number 2.0 is not distinct from the number 2.00."
+constant
+        A constant is an exact value used in computation. It may or may not be possible to express exactly as a numeric. A millimeter is exactly 0.001 meters, but Pi is not 3.14159. Often an
+        xsd:decimal will be more appropriate than an xsd:float or xsd:double for expressing a constant.
+
+Example 5A
+
+
+As an example of a measurement with an error range to indicate a weight in the interval (73.0Kg, 73.2Kg).
+
+
+eg:JeremyCarroll eg:weight _:w .
+_:w eg:units "kilogram" .
+_:w eg:value "73.1"^^xsd:float .
+_:w eg:errorRange "0.1"^^xsd:float .
+
+
+
+These different usages suggest some potential needs and concerns for a type system underlying this.
+
+* Because the value spaces for these types are different, measurements are disjoint from counts and constants.
+* Some means of capturing precision or error/uncertainty is needed for measurement values.
+* Some means is desirable for writing down constants that cannot be expressed precisely in numeric form.
+
+The first of these issues will generally be reflected in the use of xsd:integer for counts, xsd:float and xsd:double for measurements, and xsd:decimal for constants.
+
+The second issue concerning precision of measurements, must be addressed at the modelling level by using objects to state precision or error properties for measurements. This is not a bad approach,
+in any case, since there are often other properties or metadata associated with a measurement.
+
+For the third issue, concerning some constants, no solution is offered.
+
+
+6. Acknowledgements
+
+
+Evan Wallace is the author of Section 5.
+
+Evan Wallace, Ashok Malhotra, Pat Hayes, Dave Peterson, Dave Reynolds, Michael Sperberg-McQueen and Ralph Swick contributed useful reviews.
+
+
+7. References
+
+
+[RDF-SEMANTICS]
+        RDF Semantics, Patrick Hayes, Editor, W3C Recommendation, 10 February 2004, http://www.w3.org/TR/2004/REC-rdf-mt-20040210/ . Latest version available at http://www.w3.org/TR/rdf-mt/ .
+[RDF Primer]
+        RDF Primer, Frank Manola and Eric Miller, Editors, W3C Recommendation, 10 February 2004, http://www.w3.org/TR/2004/REC-rdf-primer-20040210/ . Latest version available at
+        http://www.w3.org/TR/rdf-primer/ .
+[RDF Concepts]
+        Resource Description Framework (RDF): Concepts and Abstract Syntax, Graham Klyne and Jeremy J. Carroll, Editors, W3C Recommendation, 10 February 2004,
+        http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/ . Latest version available at http://www.w3.org/TR/rdf-concepts/ .
+[RDF Syntax]
+        RDF/XML Syntax Specification (Revised), Dave Beckett, Editor, W3C Recommendation, 10 February 2004, http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/ . Latest version available at
+        http://www.w3.org/TR/rdf-syntax-grammar/ .
+[N-triples]
+        RDF Test Cases, Jan Grant and Dave Beckett, Editors, W3C Recommendation, 10 February 2004, http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/ . Latest version available at
+        http://www.w3.org/TR/rdf-testcases/ .
+[OWL Abstract Syntax]
+[OWL Semantics]
+        OWL Web Ontology Language Semantics and Abstract Syntax, Peter F. Patel-Schneider, Patrick Hayes, and Ian Horrocks, Editors, W3C Recommendation 10 February 2004,
+        http://www.w3.org/TR/2004/REC-owl-semantics-20040210/ . Latest version available at http://www.w3.org/TR/owl-semantics/ .
+[OWL Guide]
+        OWL Web Ontology Language Guide, Michael K. Smith, Chris Welty, and Deborah L. McGuinness, Editors, W3C Recommendation, 10 February 2004, http://www.w3.org/TR/2004/REC-owl-guide-20040210/ .
+        Latest version available at http://www.w3.org/TR/owl-guide/ .
+[OWL Test Cases]
+        , Jeremy J. Carroll and Jos De Roo, Editors. W3C Recommendation, 10 February 2004,
+        http://www.w3.org/TR/2004/REC-owl-test-20040210/.
+        Latest version available at http://www.w3.org/TR/owl-test/.
+[XPointer Framework]
+        XPointer Framework , Paul Grosso, Eve Maler, Jonathan Marsh and Norman Walsh, Editors, W3C Recommendation, 25 March 2003, http://www.w3.org/TR/2003/REC-xptr-framework-20030325/ . Latest
+        version available at http://www.w3.org/TR/xptr-framework/ .
+[XML-SCHEMA1]
+        XML Schema Part 1: Structures, Second Edition, W3C Recommendation, World Wide Web Consortium, Henry S. Thompson, David Beech, Murray Maloney and Noah Mendelsohn (editors), 28 October 2004.
+        This version is http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/. The latest version is available at http://www.w3.org/TR/xmlschema-1/.
+[XML-SCHEMA2]
+        XML Schema Part 2: Datatypes, Second Edition, W3C Recommendation, World Wide Web Consortium, Paul V. Biron and Ashok Malhotra (editors), 28 October 2004. This version is
+        http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/. The latest version is available at http://www.w3.org/TR/xmlschema-2/.
+[RFC 2045]
+        N. Freed and N. Borenstein. RFC 2045: Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies. 1996. Available at: http://www.ietf.org/rfc/rfc2045.txt
+[RFC 3986]
+        T. Berners-Lee, R. Fielding, and L. Masinter. Uniform Resource Identifiers (URI): Generic Syntax. IETF RFC 3986. See http://www.ietf.org/rfc/rfc3986.txt.
+[RFC 3066]
+        H. Alvestrand, ed. RFC 3066: Tags for the Identification of Languages 2001. Available at: http://www.ietf.org/rfc/rfc3066.txt
+[ISO 8601]
+        ISO (International Organization for Standardization). Representations of dates and times, 2000-08-03. Available from: http://www.iso.ch/
+[ISO 11404]
+        ISO (International Organization for Standardization). Language-independent Datatypes. Available from: http://www.iso.ch/
+[UNICODE]
+        The Unicode Standard, Version 3, The Unicode Consortium, Addison-Wesley, 2000. ISBN 0-201-61633-5, as updated from time to time by the publication of new versions. (See
+        http://www.unicode.org/unicode/standard/versions/ for the latest version and additional information on versions of the standard and of the Unicode Character Database).
+[Functions & Operators]
+        XQuery 1.0 and XPath 2.0 Functions and Operators, Ashok Malhotra, Jim Melton and Norman Walsh (editors), World Wide Web Consortium Working Draft, work in progress, 15 September 2005. This
+        version of Functions and Operators is http://www.w3.org/TR/2005/WD-xpath-functions-20050915/. The latest version of Functions and Operators is at http://www.w3.org/TR/xpath-functions/.
+[XPath 2.0]
+        XML Path Language (XPath) 2.0, Anders Berglund, Scott Boag, Don Chamberlin, Mary F. Fern�ndez, Michael Kay, Jonathan Robie and J�r�me Sim�on (editors), W3C Candidate Recommendation 3
+        November 2005. This version of XML Path Language (XPath) is http://www.w3.org/TR/2005/CR-xpath20-20051103/. The latest version of XML Path Language (XPath) is at
+        http://www.w3.org/TR/xpath20/.
+[SPARQL]
+        SPARQL Query Language for RDF, Eric Prud'hommeaux and Andy Seaborne, Editors, W3C Working Draft 21 July 2005, http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050721/ . Latest version
+        available at http://www.w3.org/TR/rdf-sparql-query/ .
+[XSCD]
+        XML Schema Component Designators, Mary Holstege and Asir S. Vedamuthu, Editors, W3C Working Draft, 29 March 2005, http://www.w3.org/TR/2005/WD-xmlschema-ref-20050329/. Latest version
+        available at http://www.w3.org/TR/xmlschema-ref/ .
+[Pan 2004]
+        Description Logics: Reasoning Support for the Semantic Web, Jeff Z.Pan, PhD Thesis, School of Computer Science, The University of Manchester, 2004.
+[PH 2005]
+        OWL-Eu: Adding Customised Datatypes into OWL, Jeff Z.Pan and Ian Horrocks. In Proc. of the Second European Semantic Web Conference (ESWC 2005), pages 153-166, 2005. An extended version
+        appears in the Journal of Web Semantic, 4(1). An online version is available at http://www.websemanticsjournal.org/ps/pub/2005-24.
+[N3]
+        Primer: Getting into RDF &amp; Semantic Web using N3 Tim Berners-Lee, Dan Connolly
+
+Appendix A: The Semantics of Datatyping in the Semantic Web Recommendations
+
+
+
+A.1 Datatypes in RDF
+
+
+According to [RDF Semantics], (see section 5.1), RDF allows the use of datatypes defined by any external type systems, e.g., the XML Schema type system, which conform to the following specification.
+
+[Definition:] In RDF, a datatype d is characterised by a value space, V(d), which is a non-empty set, a lexical space, L(d), which is a non-empty set of Unicode strings, and a total mapping L2V(d)
+from the lexical space to the value space.
+
+This specification allows the use of non-list XML Schema simple types as datatypes in RDF.
+
+[Definition:] All literals have a lexical form being a Unicode [UNICODE] string. Typed literals are of the form "v"^^u, where "v" is a Unicode string, called the lexical form of the typed literal,
+and u is a URI reference of a datatype. Plain literals have a lexical form and optionally a language tag as defined by [RFC-3066], normalized to lowercase.
+
+
+Example A
+
+
+Boolean is a datatype with value space {true,false}, lexical space {"true", "false","1","0"} and lexical-to-value mapping {"true"→true, "false"→false, "1"→true, "0"→false}.
+"true"^^xsd:boolean is a typed literal, while "true" is a plain literal.
+
+The associations between datatype URI references (e.g., xsd:boolean) and datatypes (e.g., boolean) can be provided by datatype maps defined as follows.
+
+[Definition:] A datatype map D is a partial mapping from datatype URI references to datatypes.
+
+An RDFS-interpretation w.r.t. a datatype map D can be defined as follows.
+
+[Definition:] Given a datatype map D, an RDFS D-interpretation I of a vocabulary V is any RDFS-interpretation of V∪{u |∃d.D(u)=d} which introduces (i) a distinguished subset LV of IR, called the
+set of literal values, which contains all the plain literals in V, and (ii) a mapping IL from literals in V into IR, and satisfies the following extra conditions:
+
+1. LV = ICEXT(rdfs:Literal).
+2. For any plain literal pl∈V, IL(pl) = pl.
+3. For each pair <u,d> where d = D(u),
+   * I(u) ∈ ICEXT(rdfs:Datatype),
+   * there exists d∈IR s.t. I(u) = d,
+   * ICEXT(d) = V(d) ⊆ LV,
+   * for "s"^^u'∈V, I(u') = d, if s∈L(d), then IL("s"^^u') = L2S(d)(s); otherwise, IL("s"^^u') ∈ IR \ LV.
+
+4. If d ∈ ICEXT(rdfs:Datatype), then <d, I(rdfs:Literal)> ∈ IEXT(rdfs:subClassOf).
+
+
+A.2 Datatypes in OWL DL
+
+
+OWL Full datatyping follows the RDF Semantics as above; OWL DL datatyping is specified in section 3.1 of the [OWL Semantics], as follows.
+
+The fundamental difference between RDF datatyping and OWL DL datatyping is the relationship between datatypes and classes. In OWL DL, datatypes are not classes, and object and datatype domains are
+disjoint with each other.
+
+OWL allows different OWL reasoners to provide different supported datatypes.
+
+[Definition:] Given a datatype map D, a datatype URI reference u is called a supported datatype URI reference w.r.t. D if there exists a datatype d such that <u,d>∈D (in this case, d is called a
+supported datatype w.r.t. D); otherwise, u is called an unsupported datatype URI reference w.r.t. D.
+
+OWL provides the use of so called enumerated datatypes, which are built using literals.
+
+[Definition:] Let y1, ..., yn be literals. An enumerated datatype is of the form oneOf(y1, ..., yn).
+
+An OWL DL D-interpretation w.r.t. a datatype map D can be defined as follows.
+
+[Definition:] An OWL DL datatype interpretation w.r.t. to a datatype map D is a pair (LV,ED), where the datatype domain LV (only) contains the value spaces for each datatype in D and PL (the value
+space for plain literals, i.e., the union of the set of Unicode strings and the set of pairs of Unicode strings and language tags) and ED is a datatype interpretation function, which has to satisfy
+the following conditions:
+
+1. LV = ED(rdfs:Literal).
+2. For any plain literal pl, ED(pl) = pl ∈ PL.
+3. For each supported datatype URIref u (let d = D(u)):
+   * ED(u) = V(d) ⊆ LV,
+   * if s ∈ L(d), then ED("s"^^u) = L2V(d)(s); otherwise, ED("s"^^u) is not defined.
+
+4. For each unsupported datatype URIref u, ED(u) ⊆ LV and ED("s"^^u) ∈ ED(u).
+5. Each enumerated datatype oneOf(y1, ..., yn) is interpreted as {ED(y1)}∪ ... ∪ {ED(yn)}.
+
+Note that here we simplify the presentation by using ED as the interpretation function for both datatype URI references and literals, while [OWL Semantics] uses EC for datatypes URI references and L
+for literals.
+
+In OWL Full, the disjointness restriction between object and datatype domains is not required.
+
+
+Appendix B: Integrating Description Logics with User-Defined Datatypes
+
+
+[Pan 2004] and [PH 2005] present a scheme of integrating a large family of decidable Description Logics (including SHOIN, the underpinning of OWL DL) with unary datatype groups, so as to support
+user defined datatypes. A combined DL is decidable if the unary datatype group is conforming. A conforming unary datatype group is equipped with a decision procedure for the satisfiability problem
+of finite conjunctions over supported datatypes.
+
+[Definition:] A unary datatype group G is a triple <D,B,dom>, where D is a datatype map, B is the set of primitive base datatype URI references in G and dom is the declared domain function. We call
+S the set of supported datatype URI references, i.e., for each u∈S, D(u) is defined; we require B ⊆ S. The declared domain function dom has the following properties: for each u ∈ S, if u ∈
+B, dom(u) = u; otherwise, dom(u) = v, where v ∈ B. We assume that there exists a datatype URI reference rdfsx:DatatypeBottom such that D(rdfsx:DatatypeBottom) is undefined.
+
+Note that in [Pan 2004] datatype groups allow arbitrary datatype predicates, while here we consider only datatypes, which can be regarded as unary datatype predicates.
+
+
+Example B
+
+
+G1=(D1,B1,dom1) is a unary datatype group, where
+
+* D1 = {xsd:integer → integer, xsd:string → string, xsd:nonNegativeInteger → ≥0, xsdx:integerLessThanN → <N},
+* B1 = {xsd:integer, xsd:string},
+* dom1 = {xsd:integer → xsd:integer, xsd:string → xsd:string, xsd:nonNegativeInteger → xsd:integer, xsdx:integerLessThanN → xsd:integer}.
+
+According to D1, we have S1 = {xsd:integer, xsd:string, xsd:nonNegativeInteger, xsdx:integerGreaterThanN}, hence we have B1 ⊆ S1. Note that the value space of <N is V(<N) = {i ∈ V(integer) | i <
+L2S(integer)(N)} and by <N we mean there exists a built-in datatype <N for each integer L2S(integer)(N).
+
+In a unary datatype group, datatype expressions can be used to represent user defined datatypes.
+
+[Definition:] Let G be a unary datatype group, the set unary datatype expressions for G, abbreviated Dexp(G), is inductively defined as follows:
+
+* let u be a datatype URI reference, u ∈ DPexp(G);
+* let u be a datatype URI reference, its (relativised) negation not(u) ∈ DPexp(G);
+* let y1, ..., yn be literals, the enumerated datatype oneOf(y1, ..., yn) ∈ DPexp(G);
+* for any p,q ∈ DPexp(G), their conjunction and(p,q) ∈ DPexp(G);
+* for any p,q ∈ DPexp(G), their disjunction or(p,q) ∈ DPexp(G).
+
+
+Example C
+
+
+The XML Schema user defined datatype humanAge defined in [Example 1A] can be represented by the following unary datatype expression:
+
+and(xsd:nonNegativeInteger, xsdx:integerLessThan150).
+
+[Definition:] A datatype interpretation of a unary datatype group G = (D,B,dom) is a pair (LV,ED), where the datatype domain LV is a non-empty set and ED is a datatype interpretation function that
+has to satisfies the following conditions:
+
+1. ED(rdfs:Literal)=LV and ED(rdfsx:DatatypeBottom)} = ∅.
+2. For each plain literal pl, ED(pl) = pl ∈ PL and PL ⊆ LV.
+3. For any two primitive base datatype URI references u1 and u2, ED(u1) ∩ ED(u2) = ∅.
+4. For each supported datatype URI reference u ∈ S (let d = D(u)):
+   * ED(u) = V(d) ⊆ V(D(dom(u))) ⊆ LV, L(D(u)) ⊆ L(D(dom(u)) and L2S(D(u)) ⊆ L2S(D(dom(u)),
+   * if s ∈ L(d), then ED("s"^^u) = L2V(d)(s); otherwise, ED("s"^^u) is not defined.
+
+5. For each unsupported datatype URI reference u ∉ S, ED(u) ⊆ LV and "s"^^u ∈ ED(u).
+
+The datatype interpretation function ED can be extended to provide semantics to unary datatype expressions as follows:
+
+* Relativised negations: if u ∈ S \ D, ED(not(u)) = ED(dom(U)) \ ED(u); otherwise, ED(not(u)) = LV \ ED(u).
+* Enumerated datatypes: ED(oneOf(y1, ..., yn)) = {ED(y1)}∪ ... ∪ {ED(yn)}.
+* Conjunctions: ED(and(p,q)) = ED(p) ∩ ED(q).
+* Disjunctions: ED(or(p,q)) = ED(p) ∪ ED(q).
+
+[PH 2005] shows that we can combine any decidable DL (including SHOIN, the underpinning of OWL DL) that provides the conjunction and bottom constructors with a conforming unary datatype group and
+the combined DL is still decidable.
+
+
+Appendix C: Changes since Working Draft of 27 April 2005
+
+
+
+C.1 Typos etc.
+
+
+'Semanitcs' in introduction.
+
+Updated syntax for XML Schema Component Designators.
+
+Deleted broken link from description of [ISO 11404]. Added reference to ISO homepage instead.
+
+
+C.2 Discussion removal
+
+
+The earlier draft was a discussion document. This note is not intended as such, so some issues, particularly to do with the interactions between various standards, recommendations, RFCs etc. has
+been removed.
+
+Removed DAML+OIL solution.
+
+Removed true values solution.
+
+Removed XPath eq solution.
+
+Moved OWL syntax example from DAML+OIL section to the end of id section.
+
+In the XML Schema Component Designator section:
+
+* Discussion of relationship between XSCD, XPointer and RFC 3023 has been removed.
+* Discussion about the exact semantics of an XSCD fragment has been removed.
+
+Deleted words "(less contentious)" and "Moreover, " from id solution.
+
+Changed XML Schema Component Designator section, to indicate that XSCD is a good practice. In particular, see last paragraph.
+
+Changed discussion subsection on user defined datatypes to suggest that both the (remaining) solutions are appropriate, and have no discussion. Changed title to Suggested Practice.
+
+Discussion of harder examples cut down substantially, since these are all trivially non-entailments with the agreed semantics.
+
+Removed EDITORS' OPINION notes.
+
+
+C.3 Changes in response to comment from Ashok Malhotra
+
+
+Deleted all uses of the word "derivation" in section 1.3 since it has caused confusion. Added links to the XML Schema document for union, list and restriction, to make it clear that the intended
+concept is "derivation" as defined by that document.
+
+Added brief discussion of target namespace after example 2A providing further examples example 2B and example 2C. Scoped this document to not address "XML Schema [...] assembled from multiple schema
+documents". Added reference [XML SCHEMA1].
+
+In the XML Schema Component Designator section: added more extended discussion of target namespace issue; and added example XSCD for schema with target namespace.
+
+Added text showing how the @id solution does comply with the secondary resource concept from RFC 3986, when read in conjunction with RDF Concepts, XPointer and XML Schema.
+
+
+C.4 Restructuring of section 3
+
+
+Reordered subsections in section 3, deleting old 3.5, 3.6 and 3.7, and ordering the remaining subsections as follows: 3.1, 3.4, 3.2, 3.3. Followed by renumbering.
+
+Text discussing examples has changed, and the change tracking is not detailed.
+
+Moved definition of primitive base datatype from the examples subsection to the formal analysis subsection.
+
+Deleted references to the examples from the new section 3.2 (was 3.4)
+
+Added example SPARQL query, to show how to use = in SPARQL to compare across the type hierarchy.
+
+Added an updated discussion of mapsTo.
+
+
+C.5 Other changes
+
+
+Added further acknowledgements.
+
+Updated reference to RFC 2396 to be to RFC 3986
+
+Updated Table of Contents
+
+Removed unused references.
+
+Updated versions of W3C WD's in references.
+
+========================================================================================================================================================================================================
+
+
+

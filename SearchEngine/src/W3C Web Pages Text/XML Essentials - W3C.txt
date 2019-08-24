@@ -1,0 +1,287 @@
+XML Essentials - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+XML Technology
+
+
+* Publishing
+* Processing
+* Components
+* Query
+* Transformation
+* Security
+* Schema
+* XML Essentials
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* XML&#xA0;Technology » 
+* XML Essentials
+
+
+
+
+XML Essentials
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;XML &#x2022;
+* what&#xA0;is&#xA0;XML&#xA0;used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+
+What is XML?
+
+
+The Extensible Markup Language (XML) is a simple text-based format for representing structured information: documents, data, configuration, books, transactions, invoices, and much more. It was
+derived from an older standard format called SGML (ISO 8879), in order to be more suitable for Web use.
+
+
+What is XML Used For?
+
+
+XML is one of the most widely-used formats for sharing structured information today: between programs, between people, between computers and people, both locally and across networks.
+
+A short example:
+
+
+<part number="1976">
+  <name>Windscreen Wiper</name>
+  <description>The Windscreen wiper
+    automatically removes rain
+    from your windscreen, if it
+    should happen to splash there.
+    It has a rubber <ref part="1977">blade</ref>
+    which can be ordered separately
+    if you need to replace it.
+  </description>
+</part>
+
+If you are already familiar with HTML, you can see that XML is very similar. However, the syntax rules of XML are strict: XML tools will not process files that contain errors, but instead will give
+you error messages so that you fix them. This means that almost all XML documents can be processed reliably by computer software.
+
+The main differences from HTML are:
+
+1. All elements must be closed or marked as empty.
+
+2. Empty elements can be closed as normal, <happiness></happiness> or you can use a special short-form, <happiness /> instead.
+
+3. In HTML, you only need to quote an attribute value under certain circumstances (it contains a space, or a character not allowed in a name), but the rules are hard to remember. In XML,
+   attribute values must always be quoted:
+   <happiness type="joy" />
+
+4. In HTML there is a built-in set of element names (along with their attributes). In XML, there are no built-in names (although names starting with xml have special meanings).
+
+5. In HTML, there is a list of some built-in character names like &eacute; for É but XML does not have this. In XML, there are only five built-in character entities: &lt;, &gt;, &amp;, &quot; and
+   &apos; for <, >, &, " and ' respectively. You can define your own entities in a Document Type Definition, or you can use any Unicode character (see next item).
+
+6. In HTML, there are also numeric character references, such as &#38; for &. You can refer to any Unicode character, but the number is decimal, whereas in the Unicode tables the number is
+   usually in hexadecimal. XML also allows hexadecimal references: &#x26; for example.
+
+
+XML has a number of advantages over many other formats. For any particular scenario, you might be able to come up with a better format, but then you would have to include costs of converting and
+processing your format, and of training, and of the XML-specific editing and searching tool that are now very widely available. Some of the advantages of XML include:
+
+Redundancy
+
+        XML markup is very verbose. For example, every end tag must be supplied, such as </description> in the example. This lets the computer catch common errors such as incorrect nesting.
+
+Self-describing
+
+        The readability of XML (it is a text-based format) and the presence of element and attribute names in XML means that people looking at an XML document can often get a head start on
+        understanding the format (and it also helps people to find mistakes!)
+
+Network effect and the XML Promise
+
+        Any XML document can be read and processed by any XML tool whatsoever. Of course, some XML tools might want specific XML markup, but the XML format itself can be read by any XML parser: you
+        can't say, this XML document is only to be processed by such-and-such a tool.
+
+        This means that every new XML document increases the value of every other XML document, and of every XML tool, and every new XML tool increases the value of every XML document and hence of
+        every other tool. Today, XML is the most widely-used format of its kind anywhere in the world.
+
+
+Examples
+
+
+XML is very widely used today. It is the basis of a great many standards such as the Universal Business Language (UBL); of Universal Plug and Play (UPnP) used for home electronics; word processing
+formats such as ODF and OOXML; graphics formats such as SVG; it is used for communication with XMLRPC and Web Services, it is supported directly by computer programming languages and databases, from
+giant servers all the way down to mobile telephones.
+
+If you double-click an icon on your computer desktop (the icon may well have been drawn with SVG), chances are that an XML message is sent from one component of the desktop to another. If you take
+your car to be repaired, the engine's computer sends XML to the mechanic's diagnostic systems. It is the age of XML: it is everywhere.
+
+
+Learn More
+
+
+There are too many XML tutorials to list here. In most cases, people using XML for a specific purpose will have written a tutorial. The XML specification itself is approximately 30 pages long, and
+is aimed at computer programmers and information specialists.
+
+
+
+
+
+Recent Press
+
+
+13 June
+Laboratory Equipment
+        &#x201D;
+26 March
+Digital Journal
+        &#x201D;
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* XML
+* XML Canonicalization
+* Efficient XML Interchange
+* XML-binary Optimized Packaging
+* Internationalization of XML
+* XML Relationship to other formats
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Efficient XML Interchange Working Group
+* Internationalization Working Group
+* Technical Architecture Group
+* XML Core Working Group
+* XML Processing Model Working Group
+* XML Security Working Group
+
+
+========================================================================================================================================================================================================
+
+Contact: Liam R. E. Quin <liam@w3.org>
+
+
+
+
+
+Current Status
+
+
+* XML
+* XML Canonicalization
+* Efficient XML Interchange
+* XML-binary Optimized Packaging
+* Internationalization of XML
+* XML Relationship to other formats
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+
+
+Logos
+
+
+* XML
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2010 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

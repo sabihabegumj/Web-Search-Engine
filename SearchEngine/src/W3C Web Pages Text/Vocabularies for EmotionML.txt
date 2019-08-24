@@ -1,0 +1,584 @@
+Vocabularies for EmotionML
+
+
+
+
+
+
+Vocabularies for EmotionML
+
+
+
+W3C Working Group Note 1 April 2014
+
+
+This version:
+        http://www.w3.org/TR/2014/NOTE-emotion-voc-20140401/
+Latest version:
+        http://www.w3.org/TR/emotion-voc/
+Previous version:
+        http://www.w3.org/TR/2012/NOTE-emotion-voc-20120510/
+Editors:
+        Felix Burkhardt (Deutsche Telekom AG)
+        Marc Schröder (until 2012 while at DFKI GmbH)
+        Catherine Pelachaud (Telecom ParisTech)
+Authors:
+        (in alphabetic order)
+        Kazuyuki Ashimura (W3C/Keio)
+        Paolo Baggia (while at Loquendo, currently Nuance Communications)
+        Alessandro Oltramari (until 2012 while at CNR)
+        Christian Peter (Fraunhofer Gesellschaft)
+        Enrico Zovato (while at Loquendo, currently Nuance Communications)
+
+Copyright © 2014 W3C® (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+This document provides a list of emotion vocabularies that can be used with EmotionML to represent emotions and related states. EmotionML provides mechanisms to represent emotions in terms of
+scientifically valid descriptors: categories, dimensions, appraisals, and action tendencies. Given the lack of agreement in the community, EmotionML does not provide a single vocabulary of emotion
+terms, but gives users a choice to select the most suitable emotion vocabulary in their annotations. In order to promote interoperability, publicly defined vocabularies should be used where possible
+and reasonable from the point of view of the target application. The present document provides a number of emotion vocabularies that can be used for this purpose.
+
+
+Status of this document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This is the 1 April 2014 Working Group Note of "Vocabularies for EmotionML".
+
+This document represents an important complement to the Emotion Markup Language specification [EmotionML], i.e., a public collection of emotion vocabularies that can be used with EmotionML. It was
+originally part of an earlier draft of the EmotionML specification, but was moved out of it because of the quasi-static nature of Recommendation Track documents. Publishing the vocabularies as a
+separate document allows us to provide updates, extensions and corrections of the list of vocabularies as required, without having to follow the multiple steps involved in releasing a new version of
+a Recommendation.
+
+The present document serves as a repository of emotion vocabularies in both human-readable and machine-readable form. Even though its first version was published as a Working Draft, the document
+status has been changed to W3C Working Group Note to allow for occasional updates without raising the expectation of progressing towards a normative Recommendation. Since the work described here
+reflects an evolving state of the art on Emotion vocabularies, the Working Group believes it is premature to propose a normative Recommendation on Vocabularies at this time.
+
+The main differences from the previous version are:
+
+* adding the version information in the computer-readable definition of emotion vocabularies
+* changing the file extension of the computer-readable definition of emotion vocabularies from ".xml" to ".emotionml" based on the definition in the EmotionML specification
+
+The following editorial changes are also made:
+
+* updating the reference to the EmotionML specification with its Proposed Recommendation in Section 6.1
+* updating the link to Ekman's "Universals and Cultural Differences in Facial Expressions of Emotion" in Section 6.2
+
+Any future updates to this Note will respect the repository-type nature of this document, as described in Section 1.1.
+
+This W3C Working Group Note has been developed by the Multimodal Interaction Working Group of the W3C Multimodal Interaction Activity. It represents consensus in the group's EmotionML subgroup. The
+group is likely to produce new versions of this document, but will strive to maintain syntactic compatibility with the current version. In particular the XML identifiers of vocabularies and the
+items in each vocabulary can be expected to remain valid with future versions of this Note. It is expected that any updates to this document will mostly add new vocabularies, or add explanations to
+existing vocabularies and/or vocabulary items.
+
+Comments for this note are welcomed and should have a subject starting with the prefix '[emotion-voc]'. Please send them to www-multimodal@w3.org, the public email list for issues related to
+Multimodal. This list is archived and acceptance of this archiving policy is requested automatically upon first post. To subscribe to this list send an email to www-multimodal-request@w3.org with
+the word "subscribe" in the subject line.
+
+Publication as a Working Group Note does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also
+includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the information in
+accordance with Patent Policy.
+
+
+
+
+Table of Contents
+
+
+
+* 1 Introduction
+  o 1.1 Repository nature of this document
+  o 1.2 Use of undated URIs to refer to vocabularies in this document
+
+* 2 Emotion category vocabularies
+  o 2.1 Ekman's "big six" basic emotions
+  o 2.2 Everyday emotion vocabulary
+  o 2.3 OCC categories
+  o 2.4 FSRE categories
+  o 2.5 Frijda's categories
+
+* 3 Emotion dimension vocabularies
+  o 3.1 Mehrabian's PAD dimensions
+  o 3.2 FSRE dimensions
+  o 3.3 The intensity dimension
+
+* 4 Appraisal vocabularies
+  o 4.1 OCC appraisals
+  o 4.2 Scherer's appraisals
+  o 4.3 EMA appraisals
+
+* 5 Action tendency vocabularies
+  o 5.1 Frijda's action tendencies
+
+* 6 References
+  o 6.1 Technical references
+  o 6.2 Scientific references
+
+
+
+
+1 Introduction
+
+
+This document provides a list of emotion vocabularies that can be used with EmotionML to represent emotions and related states. EmotionML provides mechanisms to represent emotions in terms of
+scientifically valid descriptors: categories, dimensions, appraisals, and action tendencies. Given the lack of agreement in the community, EmotionML does not provide a single vocabulary of emotion
+terms, but gives users a choice to select the most suitable emotion vocabulary in their annotations. In order to promote interoperability, publicly defined vocabularies should be used where possible
+and reasonable from the point of view of the target application. The present document provides a number of emotion vocabularies that can be used for this purpose.
+
+The guiding principle for selecting emotion vocabularies for inclusion in this document has been to list vocabularies that are either:
+
+* commonly used in technological contexts, or
+* represent current emotion models from the scientific literature.
+
+In addition, given the difficulty to define mappings between emotion categories, dimensions, appraisals and action tendencies, we have included pairs or groups of vocabularies where these mappings
+are rather well defined. Future versions of EmotionML can use these vocabularies as a starting point to define mappings between different emotion descriptions.
+
+The selection of emotion vocabularies in this document is necessarily incomplete; users are likely to find emotion vocabularies to be missing. There are two ways how a user can address this
+situation. First, users can easily write a definition for a custom emotion vocabulary as described in the EmotionML specification's section on Defining vocabularies. Secondly, feedback on the
+selection of emotion vocabularies in this document is highly appreciated. Future versions of this document can include corrections and more thorough explanations for the existing vocabularies, and
+add additional vocabularies which may be of interest to a wider audience. Please send comments to www-multimodal@w3.org (with public archive).
+
+
+1.1 Repository nature of this document
+
+
+The present document serves as a repository of emotion vocabularies in both human-readable and machine-readable form. Any future updates to this Note will respect the repository-type nature of this
+document, by maintaining backward-compatibility as follows:
+
+* all future updates will retain all existing names of vocabularies and of existing vocabulary items;
+* new vocabularies may added under new names, and new items may be added to existing vocabularies;
+* new metadata may be added to vocabularies and items, in order to specify in more detail the intended meaning and properties of the vocabularies and items as defined in the present documents and
+  in the original literature from which the vocabularies were extracted.
+
+Should any corrections to existing vocabularies be required which would break the above-mentioned backward-compatibility rules, the corrected vocabulary will be published under a new name alongside
+the original, uncorrected vocabulary.
+
+
+1.2 Use of undated URIs to refer to vocabularies in this document
+
+
+Given the repository nature of the document, references to the vocabularies should use the undated "Latest Version" URI of this document to refer to emotion vocabularies, as shown in the examples
+below, and not the dated "This Version" URI. This promotes interoperability. Furthermore, it makes it possible for older documents to automatically benefit from updates to the repository, such as
+new metadata being added to existing vocabularies. Since documents always refer to the latest, compatible version of a vocabulary via the "Latest Version" URI, it becomes possible to process older
+documents in terms of the newest metadata without having to update the documents.
+
+
+2 Emotion category vocabularies
+
+
+This section provides vocabularies for use with the EmotionML &lt;category&gt; element.
+
+
+2.1 Ekman's "big six" basic emotions
+
+
+These six terms are proposed by Paul Ekman (Ekman, 1972, p. 251-252) as basic emotions with universal facial expressions -- emotions that are recognized and produced in all human cultures.
+
+Term Remarks
+anger 
+disgust 
+fear 
+happiness 
+sadness 
+surprise 
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion category-set="http://www.w3.org/TR/emotion-voc/xml#big6">
+    <category name="anger"/>
+</emotion>
+
+
+
+
+2.2 Everyday emotion vocabulary
+
+
+These 17 terms are the result of a study by Cowie et al. (Cowie et al., 1999) investigating emotions that frequently occur in everyday life.
+
+Term Remarks
+affectionate 
+afraid 
+amused 
+angry 
+bored 
+confident 
+content 
+disappointed 
+excited 
+happy 
+interested 
+loving 
+pleased 
+relaxed 
+sad 
+satisfied 
+worried 
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion category-set="http://www.w3.org/TR/emotion-voc/xml#everyday-categories">
+    <category name="affectionate"/>
+</emotion>
+
+
+
+
+2.3 OCC categories
+
+
+The 22 OCC categories are proposed by Ortony, Clore and Collins (Ortony et al., 1988, p. 19) as part of their appraisal model. See also OCC appraisals below.
+
+Term Remarks
+admiration 
+anger 
+disappointment 
+distress 
+fear 
+fears-confirmed 
+gloating 
+gratification 
+gratitude 
+happy-for 
+hate 
+hope 
+joy 
+love 
+pity 
+pride 
+relief 
+remorse 
+reproach 
+resentment 
+satisfaction 
+shame 
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion category-set="http://www.w3.org/TR/emotion-voc/xml#occ-categories">
+    <category name="admiration"/>
+</emotion>
+
+
+
+
+2.4 FSRE categories
+
+
+The 24 FSRE categories are used in the study by Fontaine, Scherer, Roesch and Ellsworth (Fontaine et al., 2007, p. 1055) investigating the dimensionality of emotion space. See also FSRE dimensions
+below.
+
+Term Remarks
+anger 
+anxiety 
+being hurt 
+compassion 
+contempt 
+contentment 
+despair 
+disappointment 
+disgust 
+fear 
+guilt 
+happiness 
+hate 
+interest 
+irritation 
+jealousy 
+joy 
+love 
+pleasure 
+pride 
+sadness 
+shame 
+stress 
+surprise 
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion category-set="http://www.w3.org/TR/emotion-voc/xml#fsre-categories">
+    <category name="anger"/>
+</emotion>
+
+
+
+
+2.5 Frijda's categories
+
+
+This category set is included because according to Nico Frijda's proposal of action tendencies (Frijda, 1986), these categories are related to action tendencies. See Frijda's action tendencies,
+below.
+
+Term Remarks
+anger related to action tendency 'agonistic'
+arrogance related to action tendency 'approach'
+desire related to action tendency 'approach'
+disgust related to action tendency 'rejecting'
+enjoyment related to action tendency 'being-with'
+fear related to action tendency 'avoidance'
+humility related to action tendency 'submitting'
+indifference related to action tendency 'nonattending'
+interest related to action tendency 'attending'
+resignation related to action tendency 'submitting'
+shock related to action tendency 'interrupting'
+surprise related to action tendency 'interrupting'
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion category-set="http://www.w3.org/TR/emotion-voc/xml#frijda-categories">
+    <category name="anger"/>
+</emotion>
+
+
+
+
+3 Emotion dimension vocabularies
+
+
+This section provides vocabularies for use with the EmotionML &lt;dimension&gt; element.
+
+
+3.1 Mehrabian's PAD dimensions
+
+
+Mehrabian proposed a three-dimensional description of emotion in terms of Pleasure, Arousal, and Dominance (PAD; Mehrabian, 1996, p. 264).
+
+Term Remarks
+pleasure 
+arousal 
+dominance 
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion dimension-set="http://www.w3.org/TR/emotion-voc/xml#pad-dimensions">
+    <dimension name="pleasure" value="0.5"/>
+</emotion>
+
+
+
+
+3.2 FSRE dimensions
+
+
+The four emotion dimensions obtained in the study by Fontaine, Scherer, Roesch and Ellsworth (Fontaine et al., 2007, p. 1051 and 1055) investigating the dimensionality of emotion space. See also
+FSRE categories above.
+
+Term Remarks
+valence also named evaluation or pleasantness
+potency also named control
+arousal also named activation
+unpredictability 
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion dimension-set="http://www.w3.org/TR/emotion-voc/xml#fsre-dimensions">
+    <dimension name="valence" value="0.5"/>
+</emotion>
+
+
+
+
+3.3 The intensity dimension
+
+
+Sometimes it is necessary to represent the mere fact that an emotion of some undefined nature is present with a certain intensity. This can be achieved using the dimension vocabulary consisting of
+the single dimension "intensity".
+
+Term Remarks
+intensity the intensity of the (unidentified) emotion that is considered to be present
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion dimension-set="http://www.w3.org/TR/emotion-voc/xml#intensity-dimension">
+    <dimension name="intensity" value="0.5"/>
+</emotion>
+
+
+
+
+4 Appraisal vocabularies
+
+
+This section provides vocabularies for use with the EmotionML &lt;appraisal&gt; element.
+
+
+4.1 OCC appraisals
+
+
+The following appraisals were proposed by Ortony, Clore and Collins (Ortony et al., 1988) in their appraisal model. See also OCC categories above.
+
+Term Remarks
+desirability relevant for event based emotions. (pleased/displeased)
+praiseworthiness relevant for attribution emotions. (approving/disapproving)
+appealingness relevant for attraction emotions. (liking/disliking)
+desirability-for-other related to fortunes of others. Whether the event is desirable for the other.
+deservingness related to fortunes of others. Whether the other “deserves” the event.
+liking related to fortunes of others. Whether the other is liked or not. These distinguish between: happy-for, pity, gloating (schadenfreude), and resentment.
+likelihood relevant for prospect emotions. (hope/fear)
+effort relevant for prospect emotions. How much effort the individual invested in the outcome.
+realization relevant for prospect emotions. The actual resulting outcome. These distinguish between: relief, disappointment, satisfaction, and fears-confirmed.
+strength-of-identification relevant for attribution emotions. The stronger one identifies with the other, that distinguishes between whether pride or admiration is felt.
+expectation-of-deviation relevant for attribution emotions. Distinguishes whether the other is expected to act in the manner deserving of admiration or reproach. These distinguish b between: pride,
+shame, admiration, reproach.
+familiarity relevant for attraction emotions. (love/hate)
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion appraisal-set="http://www.w3.org/TR/emotion-voc/xml#occ-appraisals">
+    <appraisal name="suddenness" value="0.5"/>
+</emotion>
+
+
+
+
+4.2 Scherer's appraisals
+
+
+The following list of appraisals was proposed by Klaus Scherer as a sequence of Stimulus Evaluation Checks (SECs) in his Component Process Model of emotion (Scherer, 1984, p. 310; Scherer, 1999, p.
+639).
+
+Term Remarks
+Novelty
+suddenness 
+familiarity 
+predictability 
+Intrinsic pleasantness
+intrinsic-pleasantness 
+Goal significance
+relevance-person 
+
+Relevance to the concerns of the person him- or herself, e.g. survival, bodily integrity, fulfillment of basic needs, self-esteem
+
+relevance-relationship Relevance to concerns regarding relationships with others, e.g. establishment, continued existence and intactness of relationships, cohesion of social groups
+relevance-social-order Relevance to social order, e.g. sense of orderliness, predictability in a social environment including fairness & appropriateness
+outcome-probability 
+consonant-with-expectation 
+goal-conduciveness 
+urgency 
+Coping potential
+agent-self The event was caused by the agent him- or herself
+agent-other The event was caused by another person
+agent-nature The event was caused by chance or by nature
+cause-intentional 0: caused by negligence, 1: caused intentionally
+control Is the event controllable?
+power Power of the agent him- or herself
+adjustment-possible Is adjustment possible to the agent's own goals?
+Compatibility with standards
+norm-compatibility Compatibility with external standards, such as norms or demands of a reference group
+self-compatibility Compatibility with internal standards, such as the self ideal or internalized moral code
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion appraisal-set="http://www.w3.org/TR/emotion-voc/xml#scherer-appraisals">
+    <appraisal name="suddenness" value="0.5"/>
+</emotion>
+
+
+
+
+4.3 EMA appraisals
+
+
+The following list of appraisals was compiled by Gratch and Marsella (Gratch &amp; Marsella, 2004) for their EMA model.
+
+Term Remarks
+relevance 
+desirability 
+agency causal attribution -- who caused the event?
+blame blame and credit -- part of causal attribution
+likelihood 
+unexpectedness 
+urgency 
+ego-involvement 
+controllability part of coping potential
+changeability part of coping potential
+power part of coping potential
+adaptability part of coping potential
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion appraisal-set="http://www.w3.org/TR/emotion-voc/xml#ema-appraisals">
+    <appraisal name="relevance" value="0.5"/>
+</emotion>
+
+
+
+
+5 Action tendency vocabularies
+
+
+This section provides vocabularies for use with the EmotionML &lt;action-tendency&gt; element.
+
+
+5.1 Frijda's action tendencies
+
+
+This set of action tendencies was proposed by Nico Frijda (Frijda, 1986), who also coined the term 'action tendency'. See also Frijda's category set, above.
+
+Term Remarks
+approach aimed towards access and consummatory activity, related to desire
+avoidance aimed towards own inaccessibility and protection, related to fear
+being-with aimed at contact and interaction, related to enjoyment
+attending aimed at identification, related to interest
+rejecting aimed at removal of object, related to disgust
+nonattending aimed at selecting, related to indifference
+agonistic aimed at removal of obstruction and regaining control, related to anger
+interrupting aimed at reorientation, related to shock and surprise
+dominating aimed at retained control, related to arrogance
+submitting aimed at deflecting pressure, related to humility and resignation
+
+The computer-readable definition of this vocabulary can be used in EmotionML as indicated in the following example.
+
+<emotion action-tendency-set="http://www.w3.org/TR/emotion-voc/xml#frijda-action-tendencies">
+    <action-tendency name="approach"/>
+</emotion>
+
+
+
+
+6 References
+
+
+
+6.1 Technical references
+
+
+EmotionML
+        Emotion Markup Language (EmotionML) 1.0, F. Burkhardt and M. Schröder, Editors. W3C Proposed Recommendation, 16 April 2013.
+
+6.2 Scientific references
+
+
+Cowie et al., 1999
+        Cowie, R., Douglas-Cowie, E., Appolloni, B., Taylor, J., Romano, A., & Fellenz, W. (1999). What a neural net needs to know about emotion words. In N. Mastorakis (Ed.), Computational
+        Intelligence and Applications (pp. 109-114). World Scientific & Engineering Society Press.
+Ekman, 1972
+        Ekman, P. (1972). Universals and Cultural Differences in Facial Expressions of Emotion. In J. Cole (Ed.), Nebraska Symposium on Motivation (Vol. 19, pp.207-282). University of Nebraska Press.
+Fontaine et al., 2007
+        Fontaine, J. R., Scherer, K. R., Roesch, E. B., & Ellsworth, P. C.(2007). The World of Emotions Is Not Two-Dimensional. Psychological Science, 18(12), 1050-1057.
+Frijda, 1986
+        Frijda, N. H. (1986). The Emotions. Cambridge, UK: Cambridge University Press.
+Gratch and Marsella, 2004
+        Gratch, J., & Marsella, S. (2004). A domain-independent framework for modeling emotion. Cognitive Systems Research, 5(4), 269-306.
+Mehrabian, 1996
+        Mehrabian, A. (1996). Pleasure-arousal-dominance: A general framework for describing and measuring individual differences in Temperament. Current Psychology, 14(4), 261-292.
+Ortony et al., 1988
+        Ortony, A., Clore, G. L., & Collins, A. (1988). The Cognitive Structure of Emotion. Cambridge, UK: Cambridge University Press.
+Scherer, 1984
+        Scherer, K. R. (1984). On the nature and function of emotion: A component process approach. In K. R. Scherer & P. Ekman (Eds.), Approaches to emotion (p. 293-317). Hillsdale, NJ: Erlbaum.
+Scherer, 1999
+        Scherer, K. R. (1999). Appraisal theory. In T. Dalgleish & M. J. Power (Eds.), Handbook of Cognition & Emotion (p. 637-663). New York: John Wiley.
+
+
+

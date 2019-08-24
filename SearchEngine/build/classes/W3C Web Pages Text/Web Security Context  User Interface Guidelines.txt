@@ -1,0 +1,1053 @@
+Web Security Context: User Interface Guidelines
+
+
+
+
+
+
+Web Security Context: User Interface Guidelines
+
+
+
+W3C Recommendation 12 August 2010
+
+
+This version:
+        http://www.w3.org/TR/2010/REC-wsc-ui-20100812/
+Latest version:
+        http://www.w3.org/TR/wsc-ui/
+Previous version:
+        http://www.w3.org/TR/2010/PR-wsc-ui-20100622/
+Editors:
+        Thomas Roessler, W3C
+        Anil Saldhana, RedHat
+
+Please refer to the errata for this document, which may include some normative corrections.
+
+See also translations.
+
+Copyright © 2010 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+This specification defines guidelines and requirements for the presentation and communication of Web security context information to end-users.
+
+
+
+Status of this Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+Please see the Working Group's implementation report.
+
+To frame its development of this specification, the Working Group had previously published a use case note [WSC-USECASES]. This specification addresses most of the use cases and issues documented in
+that note by documenting best existing practice, with the following exceptions:
+
+* This specification does not include advice for web site authors.
+
+* This specification does not provide advice to address the issue explained in sections 9.1.2 Visually extending the chrome and 9.2.7 Information bar (aka: notification bar).
+
+
+Additionally, section 10.4 Implementation and testing of [WSC-USECASES] articulated an expectation that the recommendations in this specification would be subject to usability testing, at least on a
+low fidelity level, and that such testing would form part of the Candidate Recommendation exit criteria. Resources available to the Working Group at this point will not permit the group to conduct
+extensive usability testing. At the same time, the focus of this specification has shifted toward documenting best existing practice.
+
+This document was developed by the Web Security Context Working Group. For a list of changes to this document since its Proposed Recommendation version, please refer to the diff document. All
+changes were editorial in nature.
+
+Please send comments about this document to public-usable-authentication@w3.org (with public archive).
+
+This document has been reviewed by W3C Members, by software developers, and by other W3C groups and interested parties, and is endorsed by the Director as a W3C Recommendation. It is a stable
+document and may be used as reference material or cited from another document. W3C's role in making the Recommendation is to draw attention to the specification and to promote its widespread
+deployment. This enhances the functionality and interoperability of the Web.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the
+group; that page also includes instructions for disclosing a patent.
+
+
+
+
+Table of Contents
+
+
+1 Overview
+2 Acknowledgments
+3 Conformance
+    3.1 Product classes
+    3.2 Language conventions
+    3.3 Conformance levels
+    3.4 Conformance claims
+4 Interaction and content model
+    4.1 Overview
+    4.2 Terms and definitions
+        4.2.1 Common User Interface elements
+5 Applying TLS to the Web
+    5.1 Certificate Handling and Information
+        5.1.1 Interactively accepting trust anchors or certificates
+        5.1.2 Augmented Assurance Certificates
+        5.1.3 Validated Certificates
+        5.1.4 Self-signed Certificates and Untrusted Root Certificates
+    5.2 Types of TLS
+    5.3 Mixed Content
+    5.4 Error conditions
+        5.4.1 TLS errors
+        5.4.2 Error Conditions based on Third Party or Heuristic Information
+        5.4.3 Insecure form submission
+6 Indicators and Interactions
+    6.1 Identity and Trust Anchor Signaling
+        6.1.1 Identity Signal
+        6.1.2 Identity Signal Content
+    6.2 Additional Security Context Information
+    6.3 TLS indicator
+    6.4 Error handling and signaling
+        6.4.1 Common Error Interaction Requirements
+        6.4.2 Warning/Caution Messages
+        6.4.3 Danger Messages
+7 Robustness Best Practices
+    7.1 Keep Security Chrome Visible
+    7.2 Do not mix content and security indicators
+    7.3 Managing User Attention
+    7.4 APIs Exposed To Web Content
+        7.4.1 Obscuring or disabling Security User Interfaces
+        7.4.2 Software Installation
+        7.4.3 Bookmarking APIs
+        7.4.4 Pop-up Window APIs
+8 Security Considerations
+    8.1 Active attacks during initial TLS interactions
+    8.2 Certificate Status Checking Failures
+    8.3 Certificates assure identity, not security
+    8.4 Binding "human readable" names to domain names
+    8.5 Warning Fatigue
+    8.6 Mixing Augmented Assurance and Validated Certificates
+    8.7 Dynamic content might change security properties
+9 Terms defined in this document
+10 References
+
+
+
+========================================================================================================================================================================================================
+
+
+
+
+1 Overview
+
+
+This specification deals with the trust decisions that users must make online, and with ways to support them in making safe and informed decisions where possible.
+
+In order to achieve that goal, this specification includes recommendations on the presentation of identity information by user agents, 6.1.1 Identity Signal. We also include recommendations on
+conveying error situations in security protocols. The error handling recommendations both minimize the trust decisions left to users, and represent known best practice in inducing users toward safe
+behavior where they have to make these decisions. To complement the interaction and decision related parts of this specification, 7 Robustness Best Practices addresses the question of how the
+communication of context information needed to make decisions can be made more robust against attacks.
+
+This document specifies user interactions with a goal toward making security usable, based on known best practice in this area. This document is intended to provide user interface guidelines. Most
+sections assume the audience has a certain level of understanding of the core PKI (Public Key Infrastructure) technologies as used on the Web. The following sections are relevant to all readers and
+do not require a thorough understanding of PKI: 3 Conformance, 4 Interaction and content model, 6 Indicators and Interactions, 6.4 Error handling and signaling, 7 Robustness Best Practices and 8.5
+Warning Fatigue. Since this document is part of the W3C specification process, it is written to clearly lay out the requirements and options for conforming to it as a standard. User interface
+guidelines that are not intended for use as standards do not have such a structure. Readers more familiar with that latter form of user interface guideline are encouraged to read this specification
+as a way to avoid known mistakes in usable security.
+
+This specification comes with two companion documents: [WSC-USECASES] documents the initial assumptions about the scope of this specification. It also includes an initial set of use cases the
+Working Group discussed. [WSC-THREATS] documents the Working Group's initial threat analysis. This document is based on current best practices in deployed user agents, and covers the use cases and
+threats in those documents to that extent.
+
+
+
+
+2 Acknowledgments
+
+
+This specification is based on text from Mary Ellen Zurko, Stephen Farrell, Anil Saldhana, Ian Fette, Michael McCormick, Serge Egelman, Johnathan Nightingale, Yngve N. Pettersen, Luis Barriga, Hal
+Lockhart, Tyler Close, Bill Doyle, Thomas Roessler, as well as input and discussions from the active members of the Web Security Context Working Group, primarily Phillip Hallam-Baker, Mike Beltzner,
+Joe Steele, Jan Vidar Krey, Maritza Johnson, Rachna Dhamija and Dan Schutzer. It has also benefited from general public and working group commentary on earlier drafts.
+
+
+
+
+3 Conformance
+
+
+
+
+3.1 Product classes
+
+
+This specification addresses Web user agents as a product class. Web user agents and user agents are used synonymously in this specification.
+
+This specification also addresses products that might incorporate changes to a user agents, such as plug-ins, extensions, and others; they are summarily called [Definition: plug-ins] in this section.
+
+Such products that might incorporate changes to the user agent, e.g. through the addition or removal of features, can render an otherwise conforming user agent non conforming, or vice versa.
+
+
+
+
+3.2 Language conventions
+
+
+Throughout the specification, the RFC 2119 [RFC2119] keywords MUST, MUST NOT, SHOULD, SHOULD NOT, MAY are applied, with their respective meanings.
+
+
+
+
+3.3 Conformance levels
+
+
+A user agent conforms to this specification at the [Definition: basic level] if it honors all MUST and MUST NOT clauses of this specification.
+
+A user agent conforms to this specification at the [Definition: advanced level] if it also honors all SHOULD and SHOULD NOT clauses of this specification.
+
+Conformance of a plug-in is defined in terms of the conformance of the user agent that results when the plug-in is added to a base user agent. E.g., if a given user agent conforms to this
+specification on the basic level, and a plug-in adds features that lead to conformance on the advanced level, then this plug-in conforms on the advanced level with respect to this base user agent.
+
+
+
+
+3.4 Conformance claims
+
+
+A claim about a Web user agent's conformance with this specification must state:
+
+1. Whether basic or advanced conformance is claimed (see 3.3 Conformance levels)
+2. What TLS [SSLv3][TLSv11][TLSv12] protocol versions and algorithms are considered as strong TLS algorithms, and what protocol versions and algorithms are supported in TLS negotiation, but not
+   considered strong.
+3. What user interface element is the TLS indicator defined in this specification.
+4. What user interface element is the identity signal defined in this specification.
+5. What broadly accepted practices are considered sufficient for a trust anchor to be deemed augmented assurance qualified (see 5.1.2 Augmented Assurance Certificates), and what data elements are
+   deemed assured by those certificates.
+6. What features beyond the claimed conformance level the user agent conforms with.
+
+A claim about a plug-in's conformance with this specification must include all of the above, and also identify the base user agent with respect to which conformance is claimed.
+
+
+
+
+
+4 Interaction and content model
+
+
+
+
+4.1 Overview
+
+
+This specification assumes a human user interacting with a Web user agent, interacting with Web resources. Many of the requirements specified are focused on the presentation of security context
+information to the user, and therefore directly relate to user interfaces. Where requirements or techniques are specific to certain modalities, these are made explicit, and are part of the
+preconditions for applying the requirement or technique.
+
+When this specification speaks of a Web user agent to describe the application through which a user interacts with the Web, then this term is used on a conceptual level: No assumption is made about
+implementation details; the "Web user agent" may denote a combination of several applications, extensions to such applications, operating system features, and assistive technologies.
+
+A common user agent will therefore be a web browser with some number of plug-ins, extensions, call outs to external systems which render particular document formats, and assistive technologies.
+
+This specification makes no specific assumption about the content with which the user interacts, except for one: There is a top-level Web page that is identified by a URI [RFC3986]. This Web page
+might be an HTML frameset, an application running on top of a proprietary run-time environment, or a document in a format interpreted by plug-ins or external systems served as part of a Web
+interaction. The page's behavior might be determined by scripting, stylesheets, or other mechanisms.
+
+In interactive Web applications, the presentation to the user might also depend on state that is local to the client - be it local storage of structured data, or be it recent interactions with the
+Web page. The security properties of those data will depend on the security properties of the client computer itself, and are out of scope for this specification.
+
+Some requirements are expressed in terms of user interface components commonly found in current-generation Web user agents.
+
+4.2 Terms and definitions is expected to be consistent with the Web Content Accessibility Guidelines Version 2, [WCAG20].
+
+
+
+
+4.2 Terms and definitions
+
+
+[Definition: A Web User Agent is any software that retrieves and presents Web content for users.]
+
+[Definition: A Web Page is a resource that is referenced by a URI and is not embedded in another resource, plus any other resources that are used in the rendering or intended to be rendered together
+with it.]
+
+
+
+4.2.1 Common User Interface elements
+
+
+This section defines terms for user interface elements commonly present in Web User Agents.
+
+[Definition: Primary User Interface denotes the portions of a Web user agent's user interface that are available to users without being solicited by a user interaction.]
+
+Examples of primary user interface include the location bar in common Web user agents, the "padlock" icon present in common Web user agents, or error pages that take the place of a Web page that
+could not be retrieved.
+
+[Definition: Secondary User Interface denotes the portions of a Web user agent's user interface that are available to the user after they are solicited by a specific user interaction.]
+
+Examples of secondary user interface include the "Page Information" dialog commonly found in Web user agents, and the "Security Properties" dialog that can obtained by clicking the padlock icon in
+common Web user agents.
+
+We occasionally use the term [Definition: chrome] to refer to the representation through which the user interacts with the user agent itself, as distinct from the accessed web content. This includes
+both primary and secondary user interface.
+
+[Definition: Location Bar is a widget in a Web user agent's user interface which displays (and often allows input of) the textual location (entered as a URI) of the resource being requested (or
+displayed - after the response is received).]
+
+[Definition: Identity Information is information about the web site which is used to present the identity signal.]
+
+
+
+
+
+
+5 Applying TLS to the Web
+
+
+
+
+5.1 Certificate Handling and Information
+
+
+Public key certificates (see [PKIX]) are widely used in TLS [SSLv3] [TLSv11] [TLSv12], but have been the basis for the generation of many inappropriate warnings and other dialogs for users. This
+section describes some modifications to current certificate processing aimed at improving this aspect of handling web security context and defines some new terms describing various cases related to
+certificate handling in user agents.
+
+User agents can base their acceptance of certificates that are presented by Web servers on various sources, including user action, previous interactions involving the same certificate, or, as more
+traditionally assumed, on validation of a certificate chain where each certificate is issued by a Certification Authority (CA). The practices used by CAs (and the information attested) vary by CA
+and are not available in any useful sense to Web user agents.
+
+
+
+5.1.1 Interactively accepting trust anchors or certificates
+
+
+A trust anchor represents an authoritative entity represented by a public key and associated data. The public key is used to verify digital signatures and the associated data is used to constrain
+the types of information for which the trust anchor is authoritative. Relying parties use trust anchors to determine if digitally signed information objects are valid by verifying digital signatures
+using the trust anchor's public key and by enforcing the constraints expressed in the associated certificate data.
+
+Trust anchor installation is typically handled by user agent vendors, systems administrators and device manufacturers, based on out-of-band information. Note that updating trust anchors is therefore
+often handled as part of user agent or operating system software updates.
+
+However, current user agents sometimes support the interactive acceptance of a trust anchor during a session, based on user interaction. Most users cannot sensibly decide how to handle such
+interactions.
+
+Similarly, end-entity (e.g. web server) certificates that cannot be currently verified using the Basic Path Validation algorithm may trigger current user agents to offer the user a choice to accept
+the certificate in any case, sometimes for a single session, sometimes for all future sessions involving that certificate, possibly scoped to specific host and port combinations.
+
+[Definition: A trust anchor or certificate is interactively accepted if the acceptance was caused through a user interaction that happens while the user is focused on a primary task unrelated to
+trust and certificate management.]
+
+For example, if a web server certificate is presented for acceptance by a user during ordinary Web interactions, and is accepted by the user, then this matches the test for interactive acceptance.
+If, however, a systems administrator (or user) adds a trust anchor's certificate to an agent's store of trust roots, then that certificate is not considered interactively accepted.
+
+
+
+
+5.1.2 Augmented Assurance Certificates
+
+
+Some trust anchors adhere to documented broadly accepted practices (e.g. [EVTLSCERT]). These involve some level of guarantee that certificates chaining up to those roots embody augmented assurance
+and can therefore be treated more favorably in terms of the primary security indicators. We call such certificates "Augmented Assurance Certificates".
+
+[Definition: An Augmented Assurance Certificate is a public key certificate where the issuer asserts that the subject entity has been authenticated by means of some process that adheres to the
+requirements of an augmented assurance specification supported by the user agent. The certificate chain for such a certificate MUST be validated up to a trust root that is recognized as augmented
+assurance qualified by the user agent.]
+
+This specification does not define what an "augmented assurance qualified trust root" is, except to note that this designation is made by user agents through an out of band mechanism consistent with
+the relevant underlying augmented assurance specification.
+
+Marking a trust anchor as augmented assurance qualified is a security-critical step and most often will involve the use of some application-specific out-of-band mechanism.
+
+Implementations MUST NOT enable users to designate trust roots as augmented assurance qualified as part of a unrelated interaction. In particular, the notions of an augmented assurance qualified
+trust root and an interactively accepted trust root are mutually exclusive.
+
+In addition to the out of band designation process described above, the trust anchor, and possibly all certificates in a path chaining up to such a trust anchor may need to be specially marked, e.g.
+through the use of specific policy object identifiers.
+
+The specific marking mechanisms to be used and the special treatment to be afforded to such certificates are out of scope of this document, but will typically be covered by the underlying augmented
+assurance specification. User agent implementers determine the set of such standards that they support and the associated special treatment to apply, other than as outlined below, where we impose
+some consistency requirements on the handling of this type of certificate.
+
+To derive a human-readable subject name from an augmented assurance certificate, user agents SHOULD use the Subject field's Organization (O) and Country (C) attributes. They MUST use information
+that is subject to the certificate authority's additional assurances, as documented in the user agent's conformance statement.
+
+Note: Should certificates arise in the future that provide strong assurance of the holder's identity, but do not include an organization attribute, then user agents can make use of the additional
+assurance level and identity information without violating this specification. Such future certificates could, for example, include high assurance certificates for individuals.
+
+
+
+
+5.1.3 Validated Certificates
+
+
+The term [Definition: validated certificate ] is used to denote a public key certificate that has been verified by chaining up to a locally configured trust anchor. The set of trust anchors used by
+a given Web User agent is implementation-dependent.
+
+Since Augmented Assurance Certificates chain up to a "special" trust anchor, all valid Augmented Assurance Certificates are also validated certificates.
+
+Certificates or certificate chains that are pinned to a particular destination are not considered validated certificates by virtue of being pinned.
+
+The notion of a validated certificate in this specification corresponds to the domain validated certificate commonly deployed on the Web. This type of certificate attests to a binding between a
+domain name registration and a key pair; additional certificate attributes are often not validated.
+
+
+
+
+5.1.4 Self-signed Certificates and Untrusted Root Certificates
+
+
+Self-signed certificates (SSC) which are not trust anchors by themselves are commonly used for appliances and web sites catering to small groups of users, and essentially serve as a container for
+cryptographic key material in a key exchange that is not verified by any third party. Certificate chains that lead up to custom root certificates which are not part of the user agent's store of
+trust roots are sometimes used similarly.
+
+In both situations, use of TLS provides confidentiality protection services against passive attackers. No binding of a third-party asserted identity to the cryptographic key is achieved. In both
+cases, the certificates are not considered validated certificates.
+
+Using Key Continuity Management [KCM], user agents can use self-signed certificates (or certificates that chain up to an untrusted root) to determine that they are consistently communicating with
+the same end entity, thereby defending against active attacks as well. Simply put, if a Web site consistently presents the same self-signed certificate (or the same certificate chaining up to the
+same untrusted root) to a client, then this can be strong evidence that protection against an active attacker has been achieved as well. Conversely, a change of certificates for the same site can be
+evidence that a man in the middle attack occurs -- or it can merely indicate that the legitimate site has changed to a different certificate.
+
+User agents MAY support [Definition: pinning] a self-signed certificate or more generally a certificate chain that leads to an untrusted root certificate to a particular Web site, to enable behavior
+based on recorded state about certificates shown previously by the same site. Such behavior includes, e.g., warning users about changes of certificates, and not showing warning messages if a site
+shows a certificate consistent with previous visits.
+
+The interaction that enables users to pin a certificate to a destination SHOULD NOT cause a self-signed certificate to be pinned to more than one site, identified through URI scheme, domain, and
+port. The interaction MUST NOT cause an untrusted root certificate to be accepted automatically for additional sites.
+
+
+
+
+
+5.2 Types of TLS
+
+
+The most common mechanism for applying TLS to the Web is the use of the https URI scheme [RFC2818]; the alternative upgrade mechanism [RFC2817] is used rarely, if at all. For the purposes of this
+specification, the most relevant property of [RFC2818] is that the URI used to identify a resource includes an assertion that use of TLS is desired.
+
+This specification uses the term [Definition: HTTP transaction ] regardless of whether any kind of TLS protection was applied; in particular, the transactions arising when an https URI is
+dereferenced are subsumed under this term. [RFC2616]
+
+[Definition: An HTTP transaction is TLS-protected if the resource was identified through a URI with the https URI scheme, the TLS handshake was performed successfully, and the HTTP transaction has
+occurred through the TLS channel.]
+
+Note that an HTTP transaction may be considered TLS protected even though weak algorithms (including NULL encryption) are negotiated.
+
+[Definition: An HTTP transaction is strongly TLS-protected if it is TLS-protected, an https URL was used, strong TLS algorithms were negotiated for both confidentiality and integrity protection, and
+at least one of the following conditions is true:]
+
+1. the server used a validated certificate that matches the dereferenced URI; or
+2. the server used a self-signed certificate that was pinned to the destination; or
+3. the server used a certificate chain leading to an untrusted root certificate that was pinned to the destination.
+
+TLS modes that do not require the server to show a certificate (such as the DH_anon mode) do not lead to a strongly TLS-protected transaction.
+
+The ability to provide privacy and secure the connection between a user agent and web server is in part determined by the strength and capabilities of the TLS protocol and underlying cryptographic
+mechanisms. The TLS protocol is versioned to keep pace with protocol features and cipher suites that are available. Cipher suites are grouped according to algorithms and the key length used by
+cryptographic functions to provide cipher strength.
+
+When this document speaks of [Definition: Strong TLS algorithms], then the following must hold:
+
+1. No version of the TLS protocol that suffers known security flaws has been negotiated. At the point of writing of this document, versions of SSL prior to SSLv3 [SSLv3] MUST NOT be considered
+   strong.
+2. A cipher suite has been selected for which key and algorithm strengths correspond to industry practice. At the time of writing of this document, the "export" cipher suites explicitly forbidden
+   in appendix A.5 of [TLSv11] MUST NOT be considered strong.
+
+What set of algorithms is considered as strong by a given implementation must be described in any conformance claim against this specification, see 3.4 Conformance claims.
+
+[Definition: An HTTP transaction is weakly TLS-protected if it is TLS-protected, but strong TLS protection could not be achieved for one of the following reasons:]
+
+1. TLS handshake used an anonymous key exchange algorithm such as DH_anon
+2. the cryptographic algorithms negotiated are not considered strong
+3. certificates were used that are not either validated certificates, or self-signed certificates pinned to the destination (see 5.1.4 Self-signed Certificates and Untrusted Root Certificates)
+
+Weakly TLS-protected interactions may provide security services such as confidentiality protection against passive attackers, or integrity protection against active attackers (without
+confidentiality protection). These properties are often desirable, even if strong TLS protection cannot be achieved.
+
+
+
+
+5.3 Mixed Content
+
+
+If a given Web page consists of a single resource only, then all content that the user interacts with has security properties derived from the HTTP transaction used to retrieve the content.
+
+[Definition: A Web page is called TLS-secured if the top-level resource and all other resources that can affect or control the page's content and presentation have been retrieved through strongly
+TLS protected HTTP transactions. ]
+
+[Definition: A Web page is called mixed content if the top-level resource was retrieved through a strongly TLS protected HTTP transaction, but some dependent resources were retrieved through a
+weakly protected or unprotected HTTP transaction.]
+
+This definition implies that inline images, stylesheets, script content, and frame content for a secure page need to be retrieved through strongly TLS protected HTTP transactions in order for the
+overall page to be considered TLS-secured.
+
+Any UI indicator used to signal the presence of Augmented Assurance certificates MUST NOT signal the presence of such a certificate, unless the page is TLS-secured, i.e., all parts of the page are
+loaded from servers presenting at least a validated certificate, over strongly TLS-protected interactions.
+
+For relevant security considerations, see 8.6 Mixing Augmented Assurance and Validated Certificates.
+
+
+
+
+5.4 Error conditions
+
+
+
+
+5.4.1 TLS errors
+
+
+This section covers TLS-related error conditions, and maps them to the classes of error handling interactions (see 6.4 Error handling and signaling) that are used when these conditions arise.
+
+If multiple error conditions apply, the most severe signaling level currently known MUST be used, as defined in 6.4 Error handling and signaling.
+
+When, during TLS negotiation, the certificate chain presented by the server does not lead to a trusted root certificate, and the certificate chain presented was not pinned to the destination, the
+following applies:
+
+1. Error signaling of class warning or higher (6.4.2 Warning/Caution Messages , 6.4.3 Danger Messages) MUST be used to signal the error condition.
+2. User agents MAY offer a possibility to pin newly encountered certificates to the destination.
+
+Note that, when untrusted certificates are accepted without user interaction, an additional exposure to man-in-the-middle attacks is created. See 8.1 Active attacks during initial TLS interactions
+for a more detailed discussion of this scenario.
+
+When certificate information is presented in the interactions described in this section, then human-readable information from certificates MUST NOT be presented as trustworthy unless it is attested.
+E.g., a self-signed certificate's Common Name or Organization attribute MUST NOT be displayed, even if that certificate is pinned to a destination. User agents MAY display this information in a
+dialog or other secondary user interfaces reachable from the warning or error messages specified here.
+
+When, during TLS negotiation, the end-entity certificate presented or one of the intermediate certificates in the certificate chain are found to have been revoked, error signaling of class danger
+(6.4.3 Danger Messages) MUST be used.
+
+When, during TLS negotiation, the end-entity certificate presented or one of the intermediate certificates in the certificate chain are found to have expired, error signaling of class danger (6.4.3
+Danger Messages) MUST be used.
+
+When the URI corresponding to the transaction does not match the end-entity certificate presented, and a validated certificate is used, then error signaling of level danger (6.4.3 Danger Messages)
+MUST be used.
+
+If TLS negotiation otherwise fails, error signaling of level danger (6.4.3 Danger Messages) MUST be used.
+
+When TLS error conditions occur, user agents MAY choose to abort the connection without any further user interaction. The guidelines in this section apply when user agents choose to cause a user
+interaction in the case of TLS error conditions. Note that user agents may combine both practices: E.g., an interactive approach may be chosen for the top-level frame of a Web page, but a
+non-interactive approach may be chosen for inline content. It is expected that the XMLHttpRequest specification [XHR] will include a non-interactive approach as well.
+
+
+
+
+5.4.2 Error Conditions based on Third Party or Heuristic Information
+
+
+User agents that use third party services or heuristic approaches to assess the possible danger of a pending Web transaction MUST use error signaling of class danger (6.4.3 Danger Messages) to
+signal positively identified dangers, e.g., identified malicious downloads or exploits of user agent vulnerabilities.
+
+To signal risks that are identified with high likelihood, but involve further user decisions (e.g., phishing heuristics were triggered), error signaling of class warning or above (6.4.2
+Warning/Caution Messages , 6.4.3 Danger Messages) MUST be used.
+
+
+
+
+5.4.3 Insecure form submission
+
+
+Users interacting with a TLS-secured page are likely to develop the impression that information submitted during these interactions will be strongly TLS-protected. User agents MAY warn users, using
+an error of class Warning or higher (6.4.2 Warning/Caution Messages , 6.4.3 Danger Messages), if form submissions from a TLS-secured page are directed to an unsecured channel.
+
+
+
+
+
+
+6 Indicators and Interactions
+
+
+
+
+6.1 Identity and Trust Anchor Signaling
+
+
+This section specifies practices for signaling information about the identity of the Web site a user interacts with. All signals specified in this section are passive. No claim is made about the
+effectiveness of these signals to counter impersonation attacks.
+
+
+
+6.1.1 Identity Signal
+
+
+User agents MUST make information about the identity of the Web site that a user interacts with available. This [Definition: identity signal ] SHOULD be part of primary user interface during usage
+modes which entail the presence of signaling to the user beyond only presenting page content. Otherwise, it MUST be available through secondary user interface. Note that there may be usage modes
+during which this requirement does not apply: For example, a Web agent which is interactively switched into a presentation mode that does not display any chrome need not preserve security indicators
+in primary user interface. On the other hand, a user agent such as a smart phone, individual entertainment screen in an airplane seat back, or TV set which has a usage mode that makes minimal (but
+visible) chrome elements available does need to preserve security indicators in such a mode.
+
+User agents with a visual user interface MUST show the Identity Signal in a consistent visual position. Web Content MUST NOT obscure security user interface, 7.4.1 Obscuring or disabling Security
+User Interfaces.
+
+
+
+
+6.1.2 Identity Signal Content
+
+
+Information displayed in the identity signal MUST be derived from validated certificates, or from user agent state. Web user agents MUST NOT use information as part of the identity signal that is
+taken from unauthenticated or untrusted sources.
+
+During interactions with a TLS-secured Web page for which the top-level resource has been retrieved through a strongly TLS-protected interaction that involves an augmented assurance certificate, and
+for which all dependent resources have been retrieved through interactions that involve validated certificates, the following applies:
+
+* The identity signal MUST include human-readable information about the certificate subject, derived as specified in 5.1.2 Augmented Assurance Certificates, to inform the user about the owner of
+  the Web page.
+
+
+During interactions with a TLS-secured Web page for which the top-level resource has been retrieved through a strongly TLS-protected interaction that involves a validated certificate (including an
+augmented assurance certificate), the following applies:
+
+* If the identity signal does not include any other human readable information about the identity of the certificate subject (derived, e.g., from an augmented assurance certificate), then it MUST
+  include an applicable DNS name that matches either the subject's Common Name attribute or its subjectAltName extension. User agents MAY shorten such a DNS name by displaying only a suffix.
+
+* To inform the user about the party responsible for that information, the Issuer field's Organization attribute MUST be displayed in the Identity Signal, or in secondary user interface that is
+  available through a consistent interaction with the Identity Signal.
+
+* Subject logotypes [RFC3709] derived from certificates MUST NOT be rendered, unless the certificate used is an augmented assurance certificate.
+
+
+Note that this behavior does not apply when self-signed certificates or certificate chains that chain up to an untrusted root certificate are used.
+
+During interactions with a mixed content Web page, the identity signal MUST NOT include any site identity information beyond that which is in use for unprotected HTTP transactions. In this
+situation, the identity signal MAY include indicators that point out any error conditions that occurred.
+
+During interactions with mixed content, user agents MUST NOT render any logotypes [RFC3709] derived from certificates.
+
+
+
+
+
+6.2 Additional Security Context Information
+
+
+This section describes additional security context information provided by Web user agents. Where security context information is provided in both primary and secondary interface, the meaning of the
+presented information MUST be consistent. Best practice will also avoid inconsistent presentation, such as using identical or semantically similar icons for different information in different places.
+
+The information sources MUST make the following security context information available:
+
+1. the Web page's domain name
+2. Owner information, consistent with section 6.1.2 Identity Signal Content
+3. Verifier information, consistent with section 6.1.2 Identity Signal Content
+4. The reason why the displayed information is trusted (or not). This includes whether or not a certificate was accepted interactively, whether a self-signed certificate was used, and whether the
+   self-signed certificate was pinned to the site that the user interacts with, and whether trust relevant settings of the user agent were otherwise overridden through user action.
+
+The information sources SHOULD make the following security context information available:
+
+1. An explanation of the information represented by the TLS indicator, e.g., concerning the presence mixed content;
+2. If the Web page is weakly TLS-protected, then, what conditions cause the protection to be weak (e.g., bad algorithms, mixed content, ...)
+3. Whether the user has visited the site in the past.
+4. Whether the user has stored credentials for this site.
+5. Whether the site content was encrypted in transmission.
+6. Whether the site content was authenticated (e.g., server authentication via TLS).
+
+Additionally, the information sources MAY make the following security context information available:
+
+1. When the user first visited the site in the past.
+2. How often the user visited the site in the past.
+
+User agents that provide information about the presence or absence of Cookies [RFC2965] MUST NOT make any claims that suggest that the absence of cookies implies an absence of any user tracking, as
+there are numerous tracking and session management techniques that do not rely on Cookies.
+
+
+
+
+6.3 TLS indicator
+
+
+User agents MUST make information about the state of TLS protection available. The [Definition: TLS indicator] SHOULD be part of primary user interface during usage modes which entail the presence
+of signaling to the user beyond only presenting page content. Otherwise, it MUST be available through secondary user interface. As in the case of 6.1.1 Identity Signal, there may be usage modes
+during which this requirement does not apply. Web content MUST NOT obscure security interface, see 7.4.1 Obscuring or disabling Security User Interfaces.
+
+User agents with a visual user interface SHOULD make the TLS indicator available in a consistent visual position.
+
+The TLS indicator MUST present a distinct state that is used only for TLS-secured Web pages. The User Agent SHOULD inform users when they are viewing a page that, along with all dependent resources,
+was retrieved through at least weakly TLS protected transactions, including mixed content.
+
+The user agent MAY accomplish this by using a third state in the TLS indicator, or via another mechanism (such as a dialog, info bar, or other means).
+
+
+
+
+6.4 Error handling and signaling
+
+
+This section defines common error interaction requirements and, ordered by increasing severity, practices to signal the following classes of errors:
+
+* 6.4.2 Warning/Caution Messages
+* 6.4.3 Danger Messages
+
+User agents MAY communicate additional indicators to users. E.g., a user agent could additionally display a persistent indicator in a "danger" situation.
+
+For additional security considerations concerning frequent warning messages, see 8.5 Warning Fatigue.
+
+
+
+6.4.1 Common Error Interaction Requirements
+
+
+Error signaling that occurs as part of primary user interface SHOULD be phrased in terms of threat to user's interests, not technical occurrence.
+
+Primary user interface error messages MUST NOT be phrased solely in terms of art. For example, if a certificate includes a DNS name in the subjectAltName extension that does not match the URI of the
+site that the user tries to visit, an error message can explain that the user is reaching a different site, instead of reporting a "subjectAltName mismatch".
+
+They SHOULD NOT tell the user to enter the destination site that caused the error, e.g., to provide feedback or obtain assistance. For error messages that interrupt the user's flow of interaction,
+user agents SHOULD enable the user to easily return to the page that the user was previously interacting with. Note that this ideally implies returning to the previous user agent state -- including
+the results of user input and dynamic processing --; however, this may not be feasible under all circumstances.
+
+For advanced users, error interactions SHOULD have an option to request a detailed description of the condition that caused the error interaction to occur.
+
+The error interactions discussed in this section typically involve communication of security context information.
+
+
+
+
+6.4.2 Warning/Caution Messages
+
+
+Warning / Caution messages are intended for situations when the system has good reason to believe that the user may be at risk based on the current security context information, but a determination
+cannot positively be made.
+
+Warning / Caution messages MUST interrupt the user's current task, such that the user has to acknowledge the message.
+
+Warning / Caution messages MUST provide the user with distinct options for how to proceed (i.e., these messages MUST NOT lead to a situation in which the only option presented to the user is to
+dismiss the warning and continue). The options presented on these warnings MUST be descriptive to the point that their respective meaning can be understood in the absence of any other information
+contained in the warning interaction. One of the options offered SHOULD be recommended, and the warning message SHOULD include a succinct text component denoting which option is recommended. In the
+absence of a recommended option, the warning MUST present the user with a method of finding out more information (e.g., a hyperlink, secondary window, etc) if the options cannot be understood.
+
+
+
+
+6.4.3 Danger Messages
+
+
+Danger Messages are intended for situations when there is a positively identified danger to the user (i.e., not merely a risk).
+
+The interactions communicating these messages MUST be designed such that the user's task is interrupted.
+
+These interactions MUST be presented in a way that makes it impossible for the user to go to or interact with the destination web site that caused the danger situation to occur, without first
+explicitly interacting with the Danger Message.
+
+
+
+
+
+
+7 Robustness Best Practices
+
+
+
+
+7.1 Keep Security Chrome Visible
+
+
+For visual user agents, agent chrome SHOULD always be present to signal security context information. This requirement does not apply when user interface is explicitly dismissed by the user.
+
+
+
+
+7.2 Do not mix content and security indicators
+
+
+To the extent to which users pay attention to passive security indicators at all, noticing and understanding them is made difficult to impossible when the same signal path that is commonly used for
+security indicators can also be controlled by Web content. For example, the location bar commonly found on agents is often used to both display the "padlock" security indicator, and a possible
+"favorite icon" [FAVICON], which can in turn be a simple copy of the very padlock an informed and attentive user might look for.
+
+Web User Agents MUST NOT communicate positive trust information using user interface elements which can be mimicked within chrome under the control of web content. Site-controlled content (e.g. page
+title, favicon) MAY be hosted in chrome, but this content MUST NOT be displayed in a manner that confuses hosted content and chrome indicators, by allowing that content to mimic chrome indicators in
+a position close to them. This requirement applies to both primary and secondary elements of visual user interfaces.
+
+In particular, Web User Agents SHOULD NOT use a 16x16 image in chrome to indicate security status if doing so would allow the favorite icon to mimic it.
+
+
+
+
+7.3 Managing User Attention
+
+
+When confronted with multiple modal interactions during a short amount of time, users are known to exercise the default option (e.g., by pressing the Enter key repeatedly) until the sequence of
+modal interactions stops blocking the user's intended interaction.
+
+[Definition: An Interaction flooding attack refers to a Web site with the malicious intent of performing an unintended action (e.g. installing software that would have required an user intervention
+such as clicking OK on a warning dialog) or by exploiting distraction and task-focus. The Web site opens a large number of new windows over the desired web content and the malicious action is
+performed when the user tries to close these new windows and/or clicks on a dialog that indicates a trust decision. ]
+
+User interfaces used to inform users about security critical events or to solicit input MUST employ techniques that prevent immediate dismissal of the user interface, e.g., by using a temporarily
+disabled "OK" button on user interfaces that make such an interaction paradigm available. When users interact with security relevant notifications (6.4.2 Warning/Caution Messages and above), Web
+content MUST NOT be granted control of the user agent's interaction.
+
+A Web User Agent SHOULD NOT display a modal security dialog related to a web page which does not currently have focus. Security dialogs include prompts for user credentials, script errors and TLS
+errors.
+
+
+
+
+7.4 APIs Exposed To Web Content
+
+
+User agents commonly allow web content to perform certain manipulations of agent UI and functionality such as opening new windows, resizing existing windows, etc. to permit customization of the user
+experience. These manipulations need to be constrained to prevent malicious sites from concealing or obscuring important elements of the agent interface, or deceiving the user into performing
+dangerous acts. This section includes requirements and techniques to address known attacks of this kind.
+
+
+
+7.4.1 Obscuring or disabling Security User Interfaces
+
+
+Web user agents MUST prevent web content from obscuring, hiding, or disabling user interfaces that display security context information, except in response to a user interaction.
+
+User agents MUST restrict window sizing and moving operations consistent with section 7.1 Keep Security Chrome Visible. This prevents attacks wherein agent chrome is obscured by moving it off the
+edges of the visible screen.
+
+User agents MUST NOT allow web content to open new windows with the agent's security UI hidden. Allowing this operation facilitates picture-in-picture attacks, where artificial chrome (usually
+indicating a positive security state) is supplied by the web content in place of the hidden UI.
+
+User agents MUST prevent web content from overlaying chrome. This helps to ensure that user interactions that are perceived to target agent chrome are not redirected to Web applications.
+
+
+
+
+7.4.2 Software Installation
+
+
+This section covers web user agent APIs that allow web content to download software for later execution outside of the web user agent context.
+
+Web user agents MUST NOT expose programming interfaces which permit installation of software without a user intervention.
+
+User agents MUST inform the user and request consent when the user agent is attempting to install software outside of the agent environment as a result of web content. The interaction used MUST
+follow the requirements in 6.4.2 Warning/Caution Messages . User agents SHOULD NOT provide features which can be used by web content to install software outside of the agent environment without the
+user's consent.
+
+
+
+
+7.4.3 Bookmarking APIs
+
+
+User agents often include features that enable Web content to update the user's bookmarks, e.g. through an ECMAScript API. If permitted unchecked, these features can serve to confuse users by, e.g.,
+placing a bookmark that goes by the same name as the user's bank, but points to an attacker's site.
+
+Web user agents MUST NOT permit Web content to add bookmarks without explicit user consent.
+
+Web user agents MUST NOT permit Web content to add URIs to the user's bookmark collection that do not match the URI of the page that the user currently interacts with.
+
+
+
+
+7.4.4 Pop-up Window APIs
+
+
+With visual user interfaces that use a windowed interaction paradigm, User agents SHOULD restrict the opening of pop-up windows from web content, particularly those not initiated by user action.
+Creating excessive numbers of new pop-up windows is a technique that can be used to condition users to rapidly dismissing dialogs. This can be employed in interaction flooding attacks.
+
+User agents which offer this restriction SHOULD offer a way to extend permission to individual trusted sites. Failing to do so encourages users who desire the functionality on certain sites to
+disable the feature universally.
+
+
+
+
+
+
+8 Security Considerations
+
+
+
+
+8.1 Active attacks during initial TLS interactions
+
+
+Section 5.4.1 TLS errors leads to additional exposure during the first TLS interaction with a site, even if that site uses validated or extended validation certificates: An active attacker can show
+a self-signed certificate, which will cause only weak warning signals to the user. Traditional user agents react to this scenario with a dialog box that interrupts the user's flow of interaction,
+but gives users the ability to override the security warning. Empirical evidence shows that this ability is typically exercised by users.
+
+Countermeasures against this threat include the prior designation of high-value sites, for which extended validation or validated certificates are required (causing a stronger warning signal during
+the attack scenario described above), and communication of certification and TLS expectations by a mechanism separate from HTTP, e.g. through authenticated DNS records.
+
+5.4.1 TLS errors refers to the pinning of a new certificate to a destination. Note that this newly pinned certificate could be the basis for a spoofing attack, or it could represent a refresh of an
+Self Signed Certificate.
+
+
+
+
+8.2 Certificate Status Checking Failures
+
+
+The TLS Errors (5.4.1 TLS errors) section does not document intended behavior for user agents when a certificate status check fails for network or other non-revocation reasons. At time of writing,
+the deployment environment for OCSP [RFC2560] status checking is fragile and subject to frequent failures, so it is inappropriate to require that user agents treat such failures as warnings or
+errors. However, this creates a possibility for attack: site operators using a fraudulently obtained, and revoked, certificate may attempt to attack a CA's revocation infrastructure as a way to
+suppress revocation errors. User agent countermeasures for this vulnerability include: exposing failures of certificate validation checks to users as warning (6.4.2 Warning/Caution Messages ) or
+danger (6.4.3 Danger Messages) level messages; or refusal to load sites that fail these checks.
+
+
+
+
+8.3 Certificates assure identity, not security
+
+
+While TLS certificates of all types (i.e. self-signed, validated, or augmented assurance) provide the means for strong encryption of communications, they should not be understood to be, or treated
+as, blanket security assurances. In particular, validated and augmented assurance certificates make guarantees about some level of owner identity verification having been performed (see definitions)
+but they do not represent any guarantees that a site is operated in a safe manner, or is not otherwise subject to attack. Historically, issues of security and identity have been conflated by user
+agent interfaces which present SSL/TLS connections as "secure," but implementers of this specification are advised to be cautious and cognizant of this distinction.
+
+
+
+
+8.4 Binding "human readable" names to domain names
+
+
+Several recommendations in this document concern themselves with the binding between domain names and certificates, but equally important for users is the binding between domain name/certificate and
+the actual real-world entity involved in the transaction. It is helpful, for example, to know not only that example.com presents a valid certificate, but also that it is the "Example Inc., Norway"
+with whom the user expects to be interacting. In the case of augmented assurance certificates, the identity information provided may be considered sufficient for this purpose, but other validated
+certificates do not necessarily provide this real-world identity. User agents that wish to provide a mechanism for users to manually establish these linkages are advised to consider the petnames
+approach (see [PETNAMES]).
+
+
+
+
+8.5 Warning Fatigue
+
+
+Requirements in this document often involve warning (6.4.2 Warning/Caution Messages and 6.4.3 Danger Messages) messages when warranted by conditions in the user agent. However, it is important to be
+aware, when developing user interfaces, that users will habituate to over-frequent warnings, weakening the impact of the messages and their ability to effectively interrupt the user's task flow.
+
+User agents are advised to constrain the number of warnings and errors presented to the minimum required to satisfy these and other security guidelines. It is also recommended that user agents
+phrase options in these messages in terms of the action taken (e.g. "Ignore this warning," "Trust this site") rather than using generic labels (e.g. "OK", "Cancel").
+
+
+
+
+8.6 Mixing Augmented Assurance and Validated Certificates
+
+
+The Augmented Assurance indicator tells the user that the owner and author of the Web page being displayed can be identified using information from the associated augmented assurance certificate.
+Identity signals in this specification only directly address displaying the identity of the party responsible for the top level resource in a Web page. User agents may choose to make the identities
+of other resources that can affect or control the page's content available, but we do not put forward a model for users on how they might use such information in their trust decisions.
+
+The identity of the top level resource vouches for the content of all dependent resources. What resources these are is under the control of the top-level resource, which will typically identify
+these resources using URIs with domain based authority. Therefore, this specification requires that, in order to display any augmented assurance related indicators, dependent resources must all be
+strongly TLS protected using validated certificates.
+
+If an augmented assurance page includes content from other strongly TLS-protected resources that are not identified by augmented assurance certificates, the authors for these third party parts of
+the document cannot be identified to the same extent as for the main document. Given that certain types of content, for example external scripts and styling can change the containing document's
+entire appearance, and framed content and plug-ins can be where the user's main interaction occurs, the user's real interaction may be with content under the control of a completely different party
+than the one identified by the main document's augmented assurance certificate.
+
+Using third party content also makes the main document reliant upon the security of the third party contributor, and expands the available attack surface of the service, thus giving attackers
+several more lines of attack.
+
+Under the agent's Same Origin policy, separately displayed Web pages from the same origin can freely read and modify each other's state. A Web page's origin is comprised of the scheme, host and port
+of the URI used to retrieve the Web page. The origin does not take into account any attributes of the TLS session or server certificate used when retrieving a Web page. For example, consider a user
+agent that has loaded two Web pages from "https://www.example.com/". When the first page was retrieved, an Augmented Assurance Certificate was used by the TLS session. When the second page was
+retrieved, a different certificate, such as a domain validated or self-signed certificate, was used. Though the first page was retrieved using an augmented assurance certificate, the second page can
+freely read and write the first page. Differing security presentations of the two pages may obscure this relationship in the mind of the user.
+
+
+
+
+8.7 Dynamic content might change security properties
+
+
+This specification is expressed in terms of the fundamentally static indicators of existing agent security user interfaces.
+
+These indicators tend to assume that the security properties "of a page" will not change in a significant way once it has finished loading (whatever that might mean in detail). Strictly speaking,
+this assumption is flawed: Dynamic pages can load scripts and data at any time and from any source (using techniques like the insertion of script tags into the DOM at run time); the effect may very
+well be that a page that was retrieved from a secure Web site with an Augmented Assurance certificate could at some point be under the control of scripts that are retrieved insecurely. This
+specification does not prescribe any specific user interaction in this kind of situation.
+
+For TLS-protected HTTP requests caused using the XMLHttpRequest API [XHR] [XHR2], this specification permits either handling the error situation described above as a network error (and leaving
+behavior to the Web application in question) or causing a user interaction. It is expected that upcoming specifications for the XMLHttpRequest API will opt for the former choice.
+
+
+
+
+
+9 Terms defined in this document
+
+
+* advanced level
+* Augmented Assurance Certificate
+* basic level
+* chrome
+* HTTP transaction
+* Identity Information
+* identity signal
+* Interaction flooding attack
+* interactively accepted
+* Location Bar
+* mixed content
+* pinning
+* plug-ins
+* Primary User Interface
+* Secondary User Interface
+* Strong TLS algorithms
+* strongly TLS-protected
+* TLS indicator
+* TLS-protected
+* TLS-secured
+* validated certificate
+* weakly TLS-protected
+* Web Page
+* Web User Agent
+
+
+
+
+10 References
+
+
+ECRYPT2009
+        ECRYPT2 Yearly Report on Algorithms and Key Lengths (2009 Edition), available at http://www.ecrypt.eu.org/documents/D.SPA.7.pdf .
+EVTLSCERT
+        Guidelines for the Issuance and Management of Extended Validation Certificates, CA/Browser Forum, 7 June 2007, available at http://www.cabforum.org/EV_Certificate_Guidelines.pdf .
+FAVICON
+        How to Add a Favicon to your Site, D. Hazaël-Massieux, C. Lilley, O. Théreaux, W3C work in progress, available at http://www.w3.org/2005/10/howto-favicon .
+KCM
+        Key Management through Key Continuity (KCM), (Expired) Internet Draft, September 2008, Peter Gutmann. This draft is available at http://tools.ietf.org/id/draft-gutmann-keycont-01.txt .
+NESSIE
+        Portfolio of recommended cryptographic primitives, New European Schemes for Signatures, Integrity, and Encryption (NESSIE), available at
+        https://www.cosic.esat.kuleuven.be/nessie/deliverables/decision-final.pdf .
+PETNAMES
+        Petname Systems, HPL-2005-148, Mark Stiegler, August 2005. This report is available at http://www.hpl.hp.com/techreports/2005/HPL-2005-148.html .
+PKIX
+        Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile, RFC 5280, D. Cooper, S. Santesson, S. Farrell, S. Boeyen, R. Housley, W. Polk, May 2008,
+        available at http://www.ietf.org/rfc/rfc5280.txt .
+RFC2119
+        Key words for use in RFCs to Indicate Requirement Levels, RFC 2119, S. Bradner, March 1997, available at http://www.ietf.org/rfc/rfc2119.txt .
+RFC2560
+        X.509 Internet Public Key Infrastructure Online Certificate Status Protocol - OCSP, RFC 2560, M. Myers, R. Ankney, A. Malpani, S. Galperin, C. Adams, June 1999. This specification is
+        available at http://www.ietf.org/rfc/rfc2560.txt .
+RFC2616
+        Hypertext Transfer Protocol -- HTTP/1.1, RFC 2616, R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, T. Berners-Lee, June 1999, available at
+        http://www.ietf.org/rfc/rfc2616.txt .
+RFC2817
+        Upgrading to TLS Within HTTP/1.1, RFC 2817, R. Khare, S. Lawrence, May 2000, available at http://www.ietf.org/rfc/rfc2817.txt .
+RFC2818
+        HTTP Over TLS, RFC 2818, E. Rescorla, May 2000, available at http://www.ietf.org/rfc/rfc2818.txt .
+RFC2965
+        HTTP State Management Mechanism, RFC 2965, D. Kristol, L. Montulli, October 2000, available at http://www.ietf.org/rfc/rfc2965.txt .
+RFC3709
+        Internet X.509 Public Key Infrastructure: Logotypes in X.509 Certificates, RFC 3709, S. Santeson, R. Housley, T. Freeman, February 2004, available at http://www.ietf.org/rfc/rfc3709.txt .
+RFC3986
+        Uniform Resource Identifier (URI): Generic Syntax", RFC 3986, T. Berners-Lee, R. Fielding, L. Masinter, January 2005, available at http://www.ietf.org/rfc/rfc3986.txt .
+SSLv3
+        SSLv3 specification, Netscape, November 1996. This specification is archived at http://web.archive.org/web/20080208141212/http://wp.netscape.com/eng/ssl3/ .
+TLSv11
+        The Transport Layer Security (TLS) Protocol, RFC 4346, T. Dierks, E. Rescorla, April 2006. This specification is available at http://www.ietf.org/rfc/rfc4346.txt .
+TLSv12
+        The Transport Layer Security (TLS) Protocol Version 1.2, RFC 5246, T. Dierks, E. Rescorla, August 2008. This specification is available at http://www.ietf.org/rfc/rfc5246.txt .
+WCAG20
+        Web Content Accessibility Guidelines 2.0, B. Caldwell, M. Cooper, L. G. Reid, G. Vanderheiden (eds.), W3C Recommendation 11 December 2008. This version is
+        http://www.w3.org/TR/2008/REC-WCAG20-20081211/ . The latest version of WCAG 2.0 is available at http://www.w3.org/TR/WCAG20/ .
+WSC-THREATS
+        Web User Interaction: Threat Trees, T. Roessler (ed), W3C Working Group Note (work in progress) 1 November 2007. This version is http://www.w3.org/TR/2007/NOTE-wsc-threats-20071101". The
+        latest version is available at http://www.w3.org/TR/wsc-threats/ .
+WSC-USECASES
+        Web Security Experience, Indicators and Trust: Scope and Use Cases, T. Close, Editor, W3C Working Group Note (work in progress) 06 March 2008. This version is
+        http://www.w3.org/TR/2008/NOTE-wsc-usecases-20080306/ . The latest version is available at http://www.w3.org/TR/wsc-usecases/ .
+XHR
+        XMLHttpRequest. A. van Kesteren (ed.), W3C Working Draft (Work in Progress) 19 November 2009. This version of the XMLHttpRequest specification is at
+        http://www.w3.org/TR/2009/WD-XMLHttpRequest-20091119/ . The latest version of this specification is available at http://www.w3.org/TR/XMLHttpRequest/ .
+XHR2
+        XMLHttpRequest Level 2. A. van Kesteren (ed.), W3C Working Draft (Work in Progress) 20 August September 2009. This version of the XMLHttpRequest Level 2 specification is at
+        http://www.w3.org/TR/2009/WD-XMLHttpRequest2-20090820/ . The latest version of this specification is available at http://www.w3.org/TR/XMLHttpRequest2/ .
+
+

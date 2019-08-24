@@ -1,0 +1,467 @@
+HTML Imports
+
+
+
+
+
+
+HTML Imports
+
+
+
+W3C Working Draft 11 March 2014
+
+
+This version
+        http://www.w3.org/TR/2014/WD-html-imports-20140311/
+Latest version
+        http://www.w3.org/TR/html-imports/
+Previous version
+        http://www.w3.org/TR/2013/WD-html-imports-20130514/
+Revision history
+        https://github.com/w3c/webcomponents/commits/gh-pages/spec/imports/
+Participate
+        Discuss on public-webapps@w3.org (Web Applications Working Group)
+        File bugs (w3.org's Bugzilla)
+Editor
+        Dimitri Glazkov, Google, <dglazkov@chromium.org>
+        Hajime Morrita, Google, <morrita@chromium.org>
+
+Copyright © 2014 W3C® (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+Abstract
+
+
+HTML Imports are a way to include and reuse HTML documents in other HTML documents.
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the technical reports index at http://www.w3.org/TR/.
+
+This document was published by the Web Applications Working Group as an Working Draft. If you wish to make comments regarding this document, please send them to public-webapps@w3.org (subscribe,
+archives) with a Subject: prefix of [html-imports]. All feedback is welcome.
+
+Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also
+includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the information in
+accordance with Patent Policy.
+
+
+
+Table of Contents
+
+
+1. About this Document
+2. Dependencies
+3. Terminology
+4. "
+5. interface
+6. Loading Imports
+   1. Import Dependent
+   2. Requesting Import
+   3. Fetching Import
+   4. Imports and Content Security Policy
+
+7. Parsing Imports
+   1. Additions to Prepare A Script Algorithm
+   2. Additions to Tree Construction Algorithm
+   3. Additions to Parsing XHTML Documents
+   4. Additions to document.write() method
+
+8. Scripting in Imports
+   1. Additions to Script Enabling Criteria
+   2. Additions to document.currentScript
+
+9. Style processing with Imports
+10. Events in Imports
+    1. Additions to Event Handlers
+
+11. Acknowledgements
+
+
+About this Document
+
+
+All diagrams, examples, notes, are non-normative, as well as sections explicitly marked as non-normative. Everything else in this specification is normative.
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in the normative parts of this document are to be interpreted as
+described in RFC2119. For readability, these words do not appear in all uppercase letters in this specification.
+
+Any point, at which a conforming UA must make decisions about the state or reaction to the state of the conceptual model, is captured as algorithm. The algorithms are defined in terms of processing
+equivalence. The processing equivalence is a constraint imposed on the algorithm implementors, requiring the output of the both UA-implemented and the specified algorithm to be exactly the same for
+all inputs.
+
+
+Dependencies
+
+
+This document relies on the following specifications:
+
+* DOM4 (DOM Core)
+* HTML
+* DOM Parsing and Serialization
+* ECMAScript Language Specification
+* URL
+
+
+Terminology
+
+
+HTML Imports, or just imports from here on, are HTML documents that are linked as external resources from another HTML document. The document that links to an import is called an import referrer.
+For any given import, an import referrer ancestor is its import referrer or any import referrer ancestor of its import referrer.
+
+An import referrer which has its own browsing context is called a master document. Each import is associated with one master document: if the referrer of the import is a master document, it is the
+master document of the import. Otherwise, the master document of the import referrer is the master document of the import.
+
+Imported documents share its defaultView with the master document. (See Bug 23170 and Bug 22305.)
+
+The URL of an import is called the import location.
+
+In the import referrer, an import is represented as a Document, called the imported document. The imported documents don't have browsing context.
+
+The set of all imports associated with the master document forms an import map of the master document. The maps stores imports as its items with their import locations as keys. The import map is
+empty at beginning. New items are added to the map as import fetching algorithm specifies.
+
+
+Link Type "import"
+
+
+To enable declaring imports in HTML, a new link type is added to HTML link types:
+
+
+The import keyword may be used with link elements. This keyword creates an external resource link to an import.
+
+The default type for resources given by the import keyword is text/html.
+
+The link element may have an async attribute. The async attribute is a boolean attribute.
+
+The appropriate time to obtain the resource is when the external resource link is created or when its element is inserted into a document, whichever happens last.
+
+
+
+The following document has one import, located at /imports/heart.html:
+
+
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>Human Being</title>
+        <link rel="import" href="/imports/heart.html">
+    </head>
+    <body>
+        <p>What is a body without a heart?</p>
+    </body>
+</html>
+
+
+
+
+Extensions to HTMLLinkElement Interface
+
+
+
+partial interface LinkImport {
+    readonly attribute Document? import;
+};
+
+HTMLLinkElement implements LinkImport;
+
+
+On getting, the import attribute must return null, if:
+
+* The link does not represent an import
+* the user agent does not support imports
+* the link element is not Document
+
+Otherwise, the attribute must return the imported document for the import, represented by the link element.
+
+The same object must be returned each time.
+
+
+Here's how one could access the imported document, mentioned in the previous example:
+
+
+var link = document.querySelector('link[rel=import]');
+var heart = link.import;
+// Access DOM of the document in /imports/heart.html
+var pulse = heart.querySelector('div.pulse');
+
+
+
+An import in the context of the Document of an HTML parser or XML Parser is said to be an import that is blocking scripts if the element was created by that Document's parser, or and the element is
+a link of type import when the element was created by the parser, and the link is not marked as async, and the the import is yet to be completely loaded, and, the last time the event loop has
+reached step 1, the element was Document, and the user agent hasn't given up on that import yet. A user agent may give up on an import at any time.
+
+
+Giving up an import before it loads, even if the import eventually does still load, means that the script might end up operating with incorrect information. For example, if an import registers a
+custom element and a script relies on the availability of this element, the script will find that this element is unavailable if the user agent gives up early. Implementors have to balance the
+likelihood of a script using incorrect information with the performance impact of doing nothing while waiting for a slow network request to finish.
+
+
+A Document has an import that is blocking scripts if there is an import that is blocking scripts in the Document's import dependent. A Document has no import that is blocking scripts if it does not
+have an import that is blocking scripts as defined in the previous paragraph.
+
+
+The sate of "has an import that is blocking scripts" can change each time an existing import is completely loaded or new import loading is started. HTML parser has changes to unblock it for each of
+such timings.
+
+
+
+Loading Imports
+
+
+
+Import Dependent
+
+
+Each document has an import link list, each of whose item is consist of link, the link element and location, a URL. Also, the item is optionally marked as cycle. The list is empty at beginning and
+the item is added as import request altorighm specifies.
+
+An imported document has zero or more import ancestors. The import ancestor is a document. If the import link list of document A contains an non-cycle item whose location points document B, A is a
+import ancestor of B. B is also called the import parent of the Document. The import ancestor is transitive: If document C is a import ancestor of document B and document B is a import ancestor of
+document A, C is a import ancestor of document A.
+
+An imported document also has one or more import predecessor. The import predecessor is a document. If the URL of document A is located before the URL of document B in the import link list of B's
+import parent, A is import predecessor of B. The import predecessor is transitive. If document A is import predecessor of document B and B is redecessor of document C, A is import predecessor of C.
+
+The Document that is in either import ancestors or import predecessors of document A, or is linked from non-cycle item of A's import link list, is the import dependent of A.
+
+
+The import link list and the import dependent constrains the order of script execution in imports. It is intend to give a deterministic order of script execution which is defined by the order of
+link element in each import.
+
+The linking structure of import link lists forms a directed asyclic graph (DAG). Each node of the DAG is a document and its edge is a link. It cannot be a tree because more than one link can point
+same import. Any cycle is marked by the import request algorithm and excluded from dependency calculation. The edges of each node is ordered in terms of import link list. The import predecessors
+selection is aware of the order.
+An example of import link lists.
+
+In the figure,
+
+* The document A has an import link list which contains a link to B and another link to C.
+* The document D has a set of import ancestors that are A, B and c.
+* As B is a import ancestor of D, one of D's list item that points B is marked as cycle.
+* The import predecessors of E are B and D, its import ancestors are A and C and its import link list is empty. Thus its import dependents are A, B, C and D.
+* The document D has two import parents which are B and C.
+
+The difference between the import referrer and the import parent is that import referrer reflects the state of the node tree and that the import parent is built by the algorithm described in this
+document.
+
+
+
+Requesting Import
+
+
+When user agents attempt to obtain a linked import, they must also run the import request algorithm, which is equivalent to running these steps:
+
+
+Input
+        LINK, the link element that creates an external resource link to the import.
+        LOCATION, the URL of the linked resource.
+1. If the async attribute of LINK is true, mark LINK as async.
+2. Let DOCUMENT be a document of LINK.
+3. Let LIST be an import link list of DOCUMENT.
+4. Let ITEM be LINK and LOCATION:
+5. 
+   1. If there is a import ancestor of DOCUMENT whose URL is same as LOCATION, Mark ITEM as cycle.
+   2. Add ITEM at the end of LIST.
+
+
+
+
+Fetching Import
+
+
+All imports linked from documents that is the master document or the one in the import map must be loaded using potentially CORS-enabled fetch with mode set to "Anonymous".
+
+When an import is fetched, the user agent must run the import fetching algorithm, which must be equivalent to running these steps:
+
+
+Input
+        LINK, a link element which makes the external resource link to the import.
+        LOCATION, the import location
+Output
+        IMPORT, the imported document.
+1. If LOCATION is already in the import map:
+2. 
+   1. Let IMPORT be the imported document for LOCATION and stop.
+
+3. Fetch a resource from LOCATION, with IMPORT as overnride referrer source and block cookies flag set:
+4. 
+   1. If fetched response type is error:
+   2. 
+      * Add LOCATION and null to the import map and stop.
+
+   3. Let IMPORT be a new Document, the document's address of which is LOCATION
+   4. Set IMPORT no quirks mode.
+   5. Let PARSER be a new HTML parser, associated with IMPORT
+   6. Input a DOCTYPE token to PARSER's tree construction stage with name "html" and force-quirks flag turned off.
+
+      See Bug 24349.
+
+   7. Add LOCATION and IMPORT to the import map.
+   8. For each task that the networking task source places on the task queue while fetching:
+      1. Fill PARSER's input byte stream with the fetched bytes
+      2. Let PARSER process the input byte stream with utf-8 as a known definite encoding
+
+   9. When no more bytes are available:
+      1. Queue a task from the networking task source for PARSER to process implied EOF character
+
+
+
+
+All of loaded imports and imports under loading are in the import link list, thus every import which is linked from imports in the list will also be loaded using the import fetching algorithm, with
+LOCATION be the import location of the import.
+
+The loading attempt must be considered successful if IMPORT is not null on the algorithm completion, and failed otherwise.
+
+The link element fires a simple event called load for successful loading attempt. For failed attempt, it fires a simple event named error.
+
+
+Imports and Content Security Policy
+
+
+Content Security Policy must restrict import loading through the script-src directive.
+
+Each import must be restricted by the Content Security Policy of the master document. For example, if Content Security Header Field is sent to an import, the user agent must enforce the policy of
+the master document to the imported document.
+
+
+Parsing Imports
+
+
+Parsing behaviour of imports is defined as a set of changes to the HTML Parsing.
+
+
+Additions to Prepare A Script Algorithm
+
+
+In step 15 of prepare a script algorithm, modify the last part of condition which begins with If element does not have a src attribute to read:
+
+
+... and the Document of the HTML parser or XML parser that created the script element has a style sheet that is blocking scripts or has an import that is blocking scripts
+
+
+
+Additions to Tree Construction Algorithm
+
+
+In sub-condition named Otherwise of condition An end tag whose name is "script" in "text" insertion mode, modify step 3 to read:
+
+
+1. If the parser's Document has a style sheet that is blocking scripts or has an import that is blocking scripts or the script's "ready to be parser-executed" flag is not set: spin the event loop
+   until the parser's Document has no style sheet that is blocking scripts and has no import that is blocking scripts and the script's "ready to be parser-executed" flag is set.
+
+
+Modify sub-step 1 of step 3 of the end to read:
+
+
+1. Spin the event loop until the first script in the has finished parsing has its "ready to be parser-executed" flag set and the parser's Document has no style sheet that is blocking scripts and
+   has has no import that is blocking scripts.
+
+
+
+
+All import dependents must be loaded before DOMContentLoaded is fired. See Bug 23526.
+
+
+
+Additions to Parsing XHTML Documents
+
+
+Modify step 3 of steps that run following preparing the script element to read:
+
+
+1. Spin the event loop until the parser's Document has no style sheet that is blocking scripts and has no import that is blocking scripts and the pending parsing-blocking script's "ready to be
+   parser-executed" flag is set.
+
+
+
+
+
+Additions to document.write() method
+
+
+Insert following step between step 2 and step 3 of document.write() method:
+
+
+* If document.currentScript points the element that isn't owned by the active document, then abort these steps.
+
+
+See Bug 24042.
+
+
+
+Scripting in Imports
+
+
+
+Additions to Script Enabling Criteria
+
+
+Add following condition to the list of Enabling and disabling scripting criteria:
+
+
+* Scripting is enabled for a node if the Document object of the node is in the import map.
+
+
+
+Additions to document.currentScript
+
+
+Modify the definition of document.currentScript as follows:
+
+The currentScript attribute, on getting, must return the value to which it was most recently initialized in the document or the import map of the document. When the Document is created, the
+currentScript must be initialized to null. If the Document is an imported document, its currentScript is always null.
+
+
+Style processing with Imports
+
+
+The contents of the style elements and the external resources of the link elements in imports must be considered as input sources of the style processing model of the master document.
+
+
+Between declarations from different documents, the document order in terms of order of appearance is defined based on the document order of the link elements of their import referrer ancestors which
+are in the same document. If thre are more than one of such documents, the comparison result in the first document, in the document order, wins.
+
+See Bug 24756.
+
+
+
+Events in Imports
+
+
+Events in imports is defined as a set of changes to the HTML Events.
+
+
+Additions to Event Handlers
+
+
+Modify the event handler content attribute's script creation criteria by expanding the first paragraph:
+
+When an event handler content attribute is set, if the element is owned by a Document that is in a browsing context or in an import map, ...
+
+
+
+Acknowledgements
+
+
+David Hyatt developed XBL 1.0, and Ian Hickson co-wrote XBL 2.0. These documents provided tremendous insight into the problem of behavior attachment and greatly influenced this specification.
+
+Alex Russell and his considerable forethought triggered a new wave of enthusiasm around the subject of behavior attachment and how it can be applied practically on the Web.
+
+Dominic Cooney and Roland Steiner worked tirelessly to scope the problem within the confines of the Web platform and provided a solid foundation for this document.
+
+The editor would also like to thank Alex Komoroske, Angelina Fabbro, Anne van Kesteren, Boris Zbarsky, Brian Kardell, Daniel Buchner, Edward O'Connor, Eric Bidelman, Erik Arvidsson, Elliott Sprehn,
+Gabor Krizsanits, Hayato Ito, James Simonsen, Jonas Sicking, Ken Shirriff, Neel Goyal, Olli Pettay, Rafael Weinstein, Scott Miles, Steve Orvell, Tab Atkins, William Chan, and William Chen for their
+comments and contributions to this specification.
+
+This list is too short. There's a lot of work left to do. Please contribute by reviewing and filing bugs�and don't forget to ask the editor to add your name into this section.
+

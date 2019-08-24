@@ -1,0 +1,222 @@
+Multimodal Access - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Web of Devices
+
+
+* Voice Browsing
+* Device Independence and Content Adaptation
+* Multimodal Access
+* Web and TV
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web&#xA0;of&#xA0;Devices » 
+* Multimodal Access
+
+
+
+
+Multimodal Access
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;multimodal access &#x2022;
+* capabilities of multimodal access &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+
+What is Multimodal Access?
+
+
+Multimodal technology is a promising candidate of future human machine interfaces which can improve Web accessibility within various conditions and environments of the users. For example, these days
+we can access the Web using various devices including mobile phones, PDA, car navigation system and home appliances. However, the concrete access methods strongly depend on the type of devices and
+services, and are quite different from each other. Some of those applications are based on W3C standards. However, many are based on proprietary platforms and technologies. So a global and universal
+standardized mechanism which applies to various kinds of devices and services is required to materialize "One Web" which lets any person to access a specific information using any modalities on any
+devices from anywhere at any time.
+
+
+Capabilities of Multimodal Access
+
+
+The capabilities of multimodal applications include voice and GUI interaction. Standards for multimodal interfaces should be scalable to enable richer capabilities for subsequent generations of
+multimodal devices. To encourage rapid adoption, the same content can be designed for use on both old/simple and new/multimodal devices. For example, people with new multimodal devices will get to
+experience their multimodal capabilities, while users with old simple devices will get to use the keypad and/or stylus in the same way as now. Users of multimodal devices will be able to provide
+input via speech, handwriting or keystrokes with output presented via displays, pre-recorded and synthetic speech/audio and tactile mechanisms like vibrators and Braille strips. Application
+developers will be able to provide an effective user interface for whichever modes the user selects.
+
+
+Examples
+
+
+As a result of increasingly capable networks, devices, and speech recognition technology, the number of existing multimodal applications, especially mobile applications, is rapidly accelerating:
+
+* Multimodal Voice Search integrating GUI and speech
+* Voice control on mobile devices
+* Address input on GPS systems
+* Multimodal in-car systems for accessing navigation and audio/visual control
+
+Note that almost all of those multimodal applications have appeared in the last two years. Many of them are based on proprietary platforms and technologies, so standardization of multimodal
+interfaces is needed for global interoperability.
+
+
+Learn More
+
+
+The mission of the Multimodal Interaction Activity is to develop open standards that enable the following vision:
+
+* Extending the Web to allow multiple modes of interaction: GUI, Speech, Vision, Pen, Gestures, Haptic interfaces, ...
+* Anyone, Anywhere, Any device, Any time: Accessible through the user's preferred modes of interaction with services that adapt to the device, user and environmental conditions
+
+Visit the Multimodal Interaction Activity home page.
+
+
+
+Recent W3C Press Releases and Member Testimonials
+
+
+* Digital Ink Standard Enhances Device Integration
+
+  20 September 2011
+
+
+
+
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* InkML
+* Multimodal Web Applications
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Multimodal Interaction Working Group
+
+
+========================================================================================================================================================================================================
+
+
+Contact: Kazuyuki Ashimura <ashimura@w3.org>
+
+
+
+
+
+
+Current Status
+
+
+* InkML
+* Multimodal Web Applications
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

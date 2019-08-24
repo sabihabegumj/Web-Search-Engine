@@ -1,0 +1,250 @@
+Composite Capabilities/Preference Profiles: Terminology and Abbreviations
+
+
+
+
+Composite Capabilities/Preference Profiles: Terminology and Abbreviations
+
+
+
+W3C Working Draft 21 July 2000
+
+
+This version:
+        http://www.w3.org/TR/2000/WD-CCPP-ta-20000721/
+Latest version:
+        http://www.w3.org/TR/CCPP-ta/
+Editors:
+        Mikael Nilsson, mikael.nilsson@ks.ericsson.se, Ericsson
+
+Copyright © 2000 W3C ® (MIT, INRIA, Keio), All Rights Reserved. W3C liability, trademark, document use and software licensing rules apply.
+
+
+========================================================================================================================================================================================================
+
+
+Abstract
+
+
+This document contains terminology and abbreviations that are used in other CC/PP documents. For a detailed description of CC/PP, please see [CC/PP].
+
+
+
+
+Status of this document
+
+
+This document is a working draft made available by the World Wide Web Consortium (W3C) for discussion only. This indicates no endorsement of its content. This is the first public working draft, and
+work in progress, representing the current consensus of the working group, and future updates and changes are likely.
+
+The working group is part of the W3C Mobile Access activity. Continued status of the work is reported on the CC/PP Working Group Home Page (Member-only link).
+
+It incorporates suggestions resulting from reviews and active participation by members of the IETF CONNEG working group and the WAP Forum UAprof drafting committee.
+
+Please send comments and feedback to www-mobile@w3.org.
+
+A list of current W3C Recommendations and other technical documents can be found at http://www.w3.org/TR/.
+
+
+Table of Contents
+
+
+1. Terminology
+2. Abbreviations
+3. References
+
+
+========================================================================================================================================================================================================
+
+
+1. Terminology
+
+
+The key words "MUST," "MUST NOT," "SHOULD," "SHOULD NOT," "MAY," and "MAY NOT" in this document are to be interpreted as described in RFC 2119 [RFC2119].
+
+The following terms are used in this document.
+
+Anonymization
+        Hiding the identity of the user as a security precaution.
+Assurance of origin
+        Information provided to the receiver of a message that allows it to be certain of the origin of the message. (This assurance may not be sufficient to convince any other party about the
+        origin of the message.)
+Assurance of receipt
+        Information provided to the sender of a message that allows it to be certain that the message was delivered to its intended recipient. This is not necessarily a proof of receipt.
+Attributes
+        A CC/PP attribute refers to the data elements describing the profile and is denoted as an RDF property. Each CC/PP attribute is associated with a value or a list of values or resources.
+Authentication
+        Some communication process that provides definite and tamper-proof information about the identity of a communicating party.
+Authorization
+        Permission to view or modify a data resource, or to perform some other action. Authorization is usually granted to an identified entity, and thus depends on authentication of the party
+        performing the action.
+CC/PP Repository
+        A server that stores the user agent profile or profile segments persistently in a form that may be referenced by and incorporated into a profile. A CC/PP repository is typically a Web server
+        that provides CC/PP profiles or profile segments in response to HTTP requests.
+Cacheable
+        A data resource is said to be "cacheable" if the data resource contains a property that allows a sever to determine whether the cached resource matches a request for a similar resource.
+Cache
+        A storage area used by a server or proxy to store data resources that have been retrieved or created in response to a request. When a new request for a "cached" data resource is received,
+        the server or proxy can respond with the cached version instead of retrieving or creating a new copy.
+Capability
+        An attribute of a sender or receiver (often the receiver) which indicates an ability to generate or process a particular type of message content. See also "Attributes".
+Channel security
+        A form of security (authentication and/or confidentiality) that operates on a given communication channel, regardless of the information that is transferred over that channel. The security
+        thus provided is between the end-points of the channel only.
+Client
+        An entity that is the original compositor of a CC/PP profile.
+Confidentiality
+        Protecting the content of a message from unauthorized disclosure.
+Content Generation
+        For the purpose of this specification, "content generation" refers to generating content appropriate to the user agent profile of the request by using the user agent profile as input to a
+        dynamic content generation engine. The XSL and style sheets of the document are used to tailor the document to the user agent profile of the request.
+Content Negotiation
+        The mechanism for selecting the appropriate representation when servicing a request. The representation of entities in any response can be negotiated (including error responses).
+Content Selection
+        For the purpose of this specification, "content selection" refers to selecting an appropriate document from a list of possible choices or variants by matching the document profile with the
+        user agent profile of the request.
+Content Provider
+        A server that originates content in response to a request.
+Data Resource
+        A data object that can be transferred across a network. Data resources may be available in multiple representations (e.g. multiple languages, data formats, size, resolutions) or vary in
+        other ways.
+Document
+        For the purpose of this specification, "document" refers to content supplied in response to a request. Using this definition, a "document" may be a collection of smaller "documents", which
+        in turn is a part of a greater "document".
+Document Profile
+        Document profiles offer a means to characterize the features appropriate to given categories of user agents. For instance, one profile might include support for style sheets, vector graphics
+        and scripting, while another might be restricted to the tags in HTML 3.2. Document profiles can be used by servers to select between document variants developed for different user agent
+        categories. They can be used to determine what transformations to apply when such variants are not available. Content developers can use document profiles to ensure that their web sites will
+        be rendered as intended.
+Dynamic Content
+        Content that is generated in response to a request. This may be used for content that depends on changing environmental factors such as time (e.g., stock quotes) or place (e.g., nearby gas
+        stations)
+Feature
+        Functional property of a device or entity.
+Gateway
+        Software that is capable of bridging disparate network protocols. For the purposes of this specification, "gateway" refers to protocol bridging functionality, which may exist in a
+        stand-alone gateway or may be co-located with a proxy or origin server.
+Hint
+        A suggestion or preference for a particular option. While this option is strongly recommended, its use is not required.
+Integrity
+        Procedures applied to ensure that information is not corrupted in transit. Different integrity procedures may protect against accidental or intentional corruption of data.
+Machine Understandable
+        Data that is described with tags that associate a meaning to the data (i.e., an "author" tag would describe the author of the document), allowing data to be searched or combined and not just
+        displayed.
+Namespace
+        A qualifier added to an XML tag to ensure uniqueness among XML elements.
+Negotiate Content
+        Message content that has been selected by content negotiation.
+Negotiation Metadata
+        Information which is exchanged between the sender and the receiver of a message by content negotiation in order to determine the variant which should be transferred.
+Non-repudiation
+        This term has been the subject of much dispute. Broadly speaking, it is a process that prevents a party to a communication from subsequently denying that the communication took place, or
+        from denying the content of the communication. Sometimes this term is used in a purely technical sense (e.g. generation of data that is dependent on the communication and its content) and
+        sometimes in a legal sense (i.e. evidence that could be sustained in a court of law).
+Non-Repudiation of Origin
+        The ability of the receiver to verify the source of the information.
+Non-Repudiation of Receipt
+        The ability of the sender to verify that the intended recipient received the information.
+Non-variant Content
+        When the form/format of the content being sent does not depend on receiver's capabilities and/or preferences
+Object security
+        A form of security (authentication and/or confidentiality) that operates on an item of data (a object), regardless of the communication channel over which it is passed. Object security can
+        apply to data that is passed over several different data channels in succession, but cannot be used to protect message addressing and other transfer-related information.
+Origin Server
+        Software that can respond to requests by delivering appropriate content or error messages. The origin server may receive requests via either WSP or HTTP. Application programs executing on
+        the origin server deliver content that is tailored in accordance with the CC/PP that can be found within the provided profile. For the purpose of this specification, "origin server" refers
+        to content generation capabilities, which may physically exist in a stand-alone Web server or may be co-located with a proxy or gateway.
+Preference
+        An attribute of a sender or receiver (often the receiver) which indicates a preference to generate or process one particular type of message content over another, even if both are possible.
+Privacy
+        Preventing the unintended or unauthorized disclosure of information about a person. Such information may be contained within a message, but may also be inferred from patterns of
+        communication; e.g. when communications happen, the types of resource accessed, the parties withwhom communication occurs, etc.
+Profile
+        An instance of the schema that describe capabilities for a specific device and network. A profile need not have all the attributes identified in the vocabulary/schema.
+Proof of receipt, or Proof of delivery
+        Information provided to the sender of a message that allows them to prove subsequently to a third party that the message was delivered to its intended recipient. (This proof may not
+        necessarily be legally sustainable.)
+Proxy
+        Software that receives HTTP requests and forwards that request toward the origin server (possibly by way of an upstream proxy) using HTTP. The proxy receives the response from the origin
+        server and forwards it to the requesting client. In providing its forwarding functions, the proxy may modify either the request or response or provide other value-added functions. For the
+        purposes of this specification, "proxy" refers to request/response forwarding functionality, which may exist in a stand-alone HTTP proxy or may be co-located with a gateway or origin server.
+RDF Resource
+        An object or element being described by RDF expressions is a resource. An RDF resource is identified by a URI.
+Receiver
+        A system component (device or program) which receives a message.
+Receiver-initiated Transmission
+        A message transmission which is requested by the eventual receiver of the message. Sometimes described as "pull" messaging. E.g. an HTTP GET operation.
+Schema
+        An RDF schema denotes resources which constitute the particular unchanging versions of an RDF vocabulary at any point in time. It is used to provide semantic information (such as
+        organization and relationship) about the interpretation of the statements in an RDF data model. It does not include the values associated with the attributes.
+Security
+        Describes a set of procedures applied to data communications to ensure that information is transferred exactly as the sender and receiver intend, and in no other way. Security generally
+        breaks down into integrity, authentication, confidentiality and Privacy.
+Sender
+        A system component (device or program) which transmits a message.
+Sender-initiated transmission
+        A message transmission which is invoked by the sender of the message. Sometimes described as "push" messaging. E.g. sending an email.
+User
+        An individual or group of individuals acting as a single entity. The user is further qualified as an entity who uses a device to request content and/or resource from a server.
+User agent
+        A program, such as a browser, running on the device that acts on a user's behalf. Users may use different user agents at different times.
+User Agent Profile
+        Capabilities and preference Information pertaining to the capabilities of the device, the operating and network environment, and users personal preferences for receiving content and/or
+        resource.
+Variant
+        One of several possible representations of a data resource.
+Variant Content
+        When the form/format of the content being sent depends on receiver's capabilities and/or preferences
+Vocabulary
+        A collection of attributes that adequately describe the CC/PP. A vocabulary is associated with a schema.
+
+2. Abbreviations
+
+
+CC/PP Composite Capabilities/Preferences Profile
+CC/PPex CC/PP Exchange Protocol
+CONNEG Content Negotiation Working Group in the IETF
+ER Entity-Relationship
+HTML Hyper Text Markup Language
+HTTP Hyper Text Transfer Protocol
+HTTPex HTTP Extension Framework
+IANA Internet Assigned Numbers Authority
+IETF Internet Engineering Task Force
+IOTP Internet Open Trading Protocol
+LDAP Lightweight Directory Access Protocol
+OTA Over The Air, i.e. in the radio network
+P3P Project for Platform for Privacy Preferences
+RDF Resource Description Framework
+RFC Request For Comments
+TBD To Be Determined
+TCP/IP Transmission Control Protocol/Internet Protocol
+UAProf User Agent Profile
+W3C World Wide Web Consortium
+WAP Wireless Application Protocol
+WBXML WAP Binary XML
+WML Wireless Markup Language
+WSP Wireless Session Protocol
+XHTML Extensible Hyper-Text Markup Language
+XSL Extensible Style Language
+XML Extensible Markup Language
+
+
+
+
+3 References
+
+
+[CC/PP] Composite Capability/Preference Profiles (CC/PP): A user side framework for content negotiation
+
+[RDF] Resource Description Framework, (RDF) Model and Syntax Specification
+
+[RFC2119] RFC 2119 : Key words for use in RFCs to Indicate Requirement Levels
+
+[XML] Extensible Markup Language (XML) 1.0
+
+
+
+========================================================================================================================================================================================================
+
+
+

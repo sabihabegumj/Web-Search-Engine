@@ -1,0 +1,255 @@
+Ontologies - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Semantic Web
+
+
+* Vertical Applications
+* Inference
+* Query
+* Ontologies
+* Data
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Semantic&#xA0;Web » 
+* Ontologies
+
+
+
+
+Vocabularies
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;a vocabulary &#x2022;
+* what&#xA0;are&#xA0;vocabularies&#xA0;used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+
+What is a Vocabulary?
+
+
+On the Semantic Web, vocabularies define the concepts and relationships (also referred to as &#x201C;terms&#x201D;) used to describe and represent an area of concern. Vocabularies are used to
+classify the terms that can be used in a particular application, characterize possible relationships, and define possible constraints on using those terms. In practice, vocabularies can be very
+complex (with several thousands of terms) or very simple (describing one or two concepts only).
+
+There is no clear division between what is referred to as &#x201C;vocabularies&#x201D; and &#x201C;ontologies&#x201D;. The trend is to use the word &#x201C;ontology&#x201D; for more complex, and
+possibly quite formal collection of terms, whereas &#x201C;vocabulary&#x201D; is used when such strict formalism is not necessarily used or only in a very loose sense. Vocabularies are the basic
+building blocks for inference techniques on the Semantic Web.
+
+
+What are Vocabularies Used For?
+
+
+The role of vocabularies on the Semantic Web are to help data integration when, for example, ambiguities may exist on the terms used in the different data sets, or when a bit of extra knowledge may
+lead to the discovery of new relationships. Consider, for example, the application of ontologies in the field of health care. Medical professionals use them to represent knowledge about symptoms,
+diseases, and treatments. Pharmaceutical companies use them to represent information about drugs, dosages, and allergies. Combining this knowledge from the medical and pharmaceutical communities
+with patient data enables a whole range of intelligent applications such as decision support tools that search for possible treatments; systems that monitor drug efficacy and possible side effects;
+and tools that support epidemiological research.
+
+Another type of example is to use vocabularies to organize knowledge. Libraries, museums, newspapers, government portals, enterprises, social networking applications, and other communities that
+manage large collections of books, historical artifacts, news reports, business glossaries, blog entries, and other items can now use vocabularies, using standard formalisms, to leverage the power
+of linked data.
+
+It depends on the application how complex vocabularies they use. Some applications may decide not to use even small vocabularies, and rely on the logic of the application program. Some application
+may choose to use very simple vocabularies like the one described in the examples section below, and let a general Semantic Web environment use that extra information to make the identification of
+the terms. Some applications need an agreement on common terminologies, without any rigor imposed by a logic system. Finally, some applications may need more complex ontologies with complex
+reasoning procedures. It all depends on the requirements and the goals of the applications.
+
+To satisfy these different needs, W3C offers a large palette of techniques to describe and define different forms of vocabularies in a standard format. These include RDF and RDF Schemas, Simple
+Knowledge Organization System (SKOS), Web Ontology Language (OWL), and the Rule Interchange Format (RIF). The choice among these different technologies depend on the complexity and rigor required by
+a specific application.
+
+
+Examples
+
+
+A general example may help. A bookseller may want to integrate data coming from different publishers. The data can be imported into a common RDF model, eg, by using converters to the
+publishers&#x2019; databases. However, one database may use the term &#x201C;author&#x201D;, whereas the other may use the term &#x201C;creator&#x201D;. To make the integration complete, and extra
+definition should be added to the RDF data, describing the fact that the relationship described as &#x201C;author&#x201D; is the same as &#x201C;creator&#x201D;. This extra piece of information is,
+in fact, a vocabulary (or an ontology), albeit an extremely simple one.
+
+In a more complex case the application may need a more detailed ontology as part of the extra information. This may include formal description on how authors are to be uniquely identified (eg, in a
+US setting, by referring to a unique social security number), how the terms used in this particular application relate to other datasets on the Web (eg, Wikipedia or geographic information), how the
+term &#x201C;author&#x201D; (or &#x201C;creator&#x201D;) can be related to terms like &#x201C;editors&#x201D;, etc.
+
+
+Learn More
+
+
+The Semantic Web community maintains a list of books on a W3C Wiki page. Some of those books are introductory in nature while others are conference proceedings or textbook that address more advanced
+topics. Details of recent and upcoming Semantic Web related talks, given by the W3C Staff, the staff of the W3C Offices, and members of the W3C Working Groups are available separately; the slides
+are usually publicly available. The W3C also maintains a collection of Semantic Web Case Studies and Use Cases that show how Semantic Web technologies, including vocabularies, are used in practice.
+Finally, the Semantic Web FAQ may also be of help in understanding the various concepts.
+
+
+
+Recent Press
+
+
+18 June
+Semantic Web Journal
+        &#x201D;
+26 March
+Digital Journal
+        &#x201D;
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* RDF
+* OWL Web Ontology Language
+* SKOS
+* Evaluation and Report Language (EARL)
+* Government Linked Data
+* RDF vocabularies
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Evaluation and Repair Tools Working Group
+* Government Linked Data Working Group
+* Linked Data Platform (LDP) Working Group
+* RDF Working Group
+* RDFa Working Group
+* Semantic Web Interest Group
+
+
+
+
+
+
+Current Status
+
+
+* RDF
+* OWL Web Ontology Language
+* SKOS
+* Evaluation and Report Language (EARL)
+* Government Linked Data
+* RDF vocabularies
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+Validators
+
+
+* RDF
+
+
+
+
+Logos
+
+
+* OWL
+* POWDER
+* SKOS
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

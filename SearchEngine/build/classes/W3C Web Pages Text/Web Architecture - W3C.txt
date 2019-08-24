@@ -1,0 +1,533 @@
+Web Architecture - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Standards
+
+
+* Web Design and Applications
+* Web Architecture
+* Semantic Web
+* XML Technology
+* Web of Services
+* Web of Devices
+* Browsers and Authoring Tools
+* All Standards and Drafts
+* About W3C Standards
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web Architecture
+
+
+
+
+Web Architecture
+
+
+* On this page &#x2192;
+* technology&#xA0;topics &#x2022;
+* news &#x2022;
+* upcoming&#xA0;events&#xA0;and&#xA0;talks
+
+
+
+
+Web Architecture focuses on the foundation technologies and principles which sustain the Web, including URIs and HTTP.
+
+
+
+
+
+
+
+
+
+
+Web Architecture principles help to design technologies by providing guidance and articulating the issues around some specific choices.
+
+
+
+
+
+
+
+We share things by their names. URL, URI, IRI is the way to name things on the Web and manipulate them. Some additional addressing needs in the Web Services stack motivated some additional layers.
+
+
+
+
+
+
+
+Protocols are the vehicle for exchanging our ideas. HTTP is the core protocol of the Web. W3C is also working on XML Protocols and SOAP in relation to Web Services.
+
+
+
+
+
+
+
+
+
+XML, the Extensible Markup Language, is used to build new formats at low cost (due to widely available tools to manipulate content in those new formats). RDF and OWL allow people to define
+vocabularies (&#x201C;ontologies&#x201D;) of terms as part of the Semantic Web.
+
+
+
+
+
+
+
+Documents on the Web are loosely joined pieces by identifiers. It creates a maze of rich interactions between protocols and formats.
+
+
+
+
+
+
+
+W3C has worked with the community on the internationalization of identifiers (IRIs) and a general character model for the Web.
+
+
+
+
+
+
+
+News
+
+
+
+
+
+Announcing The Unicode Standard, Version 7.0
+
+
+17 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebArchitecture
+
+
+
+
+
+
+
+Version 7.0 of the Unicode Standardis now available, adding 2,834 new characters. This latest version adds the new currency symbols for the Russian ruble and Azerbaijani manat, approximately 250
+emoji (pictographic symbols), many other symbols, and 23 new lesser-used and historic scripts, as well as character additions to many existing scripts. These additions extend support for written
+languages of North America, China, India, other Asian countries, and Africa. See the link above for full details.
+
+Most of the new emoji characters derive from characters in long-standing and widespread use in Wingdings and Webdings fonts.
+
+Major enhancements were made to the Indic script properties. New property values were added to enable a more algorithmic approach to rendering Indic scripts. These include properties for joining
+behavior, new classes for numbers, and a further division of the syllabic categories of viramas and rephas. With these enhancements, the default rendering for newly added Indic scripts can be
+significantly improved.
+
+Unicode character properties were extended to the new characters. The old characters have enhancements to Script and Alphabetic properties, and casing and line-breaking behavior. There were also
+nearly 3,000 new Cantonese pronunciation entries, as well as new or clarified stability policies for promoting interoperable implementations.
+
+Two other important Unicode specifications are maintained in synchrony with the Unicode Standard, and have updates for Version 7.0. These will be released at the same time:
+
+UTS #10, Unicode Collation Algorithm&#x2014; the standard for sorting Unicode text
+UTS #46, Unicode IDNA Compatibility Processing&#x2014; for processing of non-ASCII URLs (IDNs)
+
+
+
+
+
+
+Last Call draft published for Encoding spec
+
+
+06 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebArchitecture
+
+
+
+A Last Call Working Draft of Encodinghas been published.
+
+While encodings have been defined to some extent, implementations have not always implemented them in the same way, have not always used the same labels, and often differ in dealing with undefined
+and former proprietary areas of encodings. This specification attempts to fill those gaps so that new implementations do not have to reverse engineer encoding implementations of the market leaders
+and existing implementations can converge.
+
+The body of this spec is an exact copy of the WHATWG version as of the date of its publication, intended to provide a stable reference for other specifications. We are hoping for people to review
+the specification and send comments about any technical areas that need attention (see the Status section for details).
+
+Please send comments by 1 July 2014.
+
+
+
+
+
+
+Capability URLs: We Need Your Feedback
+
+
+22 May 2014
+
+from W3C TAG Lines
+
+
+
+The battle for web security and privacy is fought at many levels. Sometimes common practice in web application design can lead to data leakage with untended consequences for users. A good example of
+this came up recently where confidential files shared through common web-based document sharing services were being exposed unintentionaly to third parties because the private URLs used to share
+them had been unintentionally leaked.
+
+Dropbox and Box Leaked Shared Private Files Through Google http://t.co/hvuSel9Xvzv/ @slashdot [ cf http://t.co/Mjhp7hsstd/cc @JeniT]
+
+&#x2014; Daniel Appelquist (@torgo) May 7, 2014
+
+
+
+URLs that allow a user to access an otherwise privileged resource or information are called  Capability URLs, and while they can be powerful, they can also cause potential problems when used
+improperly.
+
+TAG member Jeni Tennison has been working on a draft defining the space of capability URLs and outlining some good practices for usage. We think this document should be useful for web builders who
+are thinking about incorporating this pattern into their applications. We think it&#x2019;s pretty good, but we need your feedback before we finalize it and release it as a TAG finding.
+
+The draft may be found here: http://www.w3.org/TR/capability-urls/ and if you have feedback you are encouraged to raise an issue on github or e-mail us on the TAG public mailing list. Thanks!
+
+
+
+
+
+
+New version of Unicode Ideographic Variation Database released
+
+
+19 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebArchitecture
+
+
+
+
+
+
+
+The Unicode Consortium is pleased to announce the release of version 2014-05-16 of the Unicode Ideographic Variation Database (IVD). This release registers the new Moji_Joho collection, along with
+the first 10,710 sequences in that collection, 9,685 of which are shared by the registered Hanyo-Denshi collection. Details can be found at http://www.unicode.org/ivd/.
+
+
+
+
+
+
+Slides for the MultilingualWeb and LIDER workshops available
+
+
+15 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebArchitecture
+
+
+
+
+
+
+
+The slides from the MultilingualWeb workshop (including several posters) and the LIDER roadmapping workshopare now available for download. Additional material (videos of the presentations, a
+workshop report and more) will follow in the next weeks &#x2013; stay tuned.
+
+
+
+
+
+
+Extensible Web Summit Roundup
+
+
+17 April 2014
+
+from W3C TAG Lines
+
+
+
+On April 4 th, with the much-appreciated help and support of Adobe Systems, the TAG organized an event in San Francisco called the Extensible Web Summit. As I wrote before the event, the intention
+was to bring together web developers and web platform developers from the local area to discuss upcoming, in-development web platform technologies and standards both to throw a spotlight on some of
+the topics we think are key and to guide the TAG&#x2019;s thinking. Judging from the feedback we&#x2019;ve received, I we achieved these goals and more.
+
+There were quite a few positive views shared on Twitter, including:
+
+Epic day at the #ExtWebSummit. Devs, standards, and implementors all working together. Really excited about the future of the web platform.
+
+&#x2014; Erik Bryn (@ebryn) April 5, 2014
+
+
+
+Learning about ServiceWorkers, networking APIs for things like offline cache https://t.co/WXXmn1D0tI #ExtWebSummit
+
+&#x2014; Ans (@anselmbradford) April 4, 2014
+
+
+
+Discussion on web packaging & spdy- esp when web becomes modular w components etc. Concat all scripts? #extwebsummit pic.twitter.com/3r2F7FrFtO
+
+&#x2014; Tomomi &#x273F; Imura (@girlie_mac) April 4, 2014
+
+
+
+The Extensible Web Summit was bloody great & should be done again. Notes at http://t.co/wdQIaH9G6i&#x2013; nice one @torgo @annevk @domenicet al
+
+&#x2014; Jake Archibald (@jaffathecake) April 5, 2014
+
+
+
+&#x2026;and the summit has inspired a few blog posts, from Alan Sterns , Brian Kardell  and Simon St. Laurent.
+
+The final schedule of sessions and links to the unfiltered notes from these sessions can be found on the Lanyrd pagefor the event. Thanks again to everyone who came along! Based on the feedback we
+received, I think it&#x2019;s likely we&#x2019;ll be running events in the future in the same format. Watch this space and follow @w3ctagon Twitter to keep up to date.
+
+
+
+
+
+
+Program published for W3C MultilingualWeb Workshop in Madrid, 7-8 May
+
+
+11 April 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebArchitecture
+
+
+
+
+
+
+
+See the program.The keynote speaker will be Alolita Sharma, Director of Language Engineering from the Wikimedia Foundation. She is followed by a strong line up in sessions entitled Developers,
+Creators, Localizers, Machines, and Users, including speakers from Microsoft, Wikimedia Foundation, the UN FAO, W3C, Yandex, SDL, Lionbridge, Asia Pacific TLD, Verisign, DFKI, and many more. On the
+afternoon of the second day we will hold Open Space breakout discussions. Abstracts and details about an additional poster session will be provided shortly.
+
+The program will also feature an LD4LT event on May 8-9, focusing on text analytics and the usefulness of Wikipedia and Dbpedia for multiilngual text and content analytics, and on language resources
+and aspects of converting selected types of language resources into RDF.
+
+Participation in both events is free. See the Call for Participation for details about how to register for the MultilingualWeb workshop. The LD4LT event requires a separate registrationand you have
+the opportunity to submit position statements about language resources and RDF.
+
+If you haven&#x2019;t registered yet, note that space is limited, so please be sure to register soon to ensure that you get a place.
+
+The MultilingualWeb workshops, funded by the European Commission and coordinated by the W3C, look at best practices and standards related to all aspects of creating, localizing and deploying the
+multilingual Web. The workshops are successful because they attract a wide range of participants, from fields such as localization, language technology, browser development, content authoring and
+tool development, etc., to create a holistic view of the interoperability needs of the multilingual Web.
+
+We look forward to seeing you in Madrid!
+
+
+
+
+
+
+The Extensible Web Summit
+
+
+17 March 2014
+
+from W3C TAG Lines
+
+
+
+We&#x2019;re running an event on Friday the 4 thof April in San Francisco and you&#x2019;re invited.
+
+For the past year, along-side our regular face-to-face meetings, the TAG has been holding evening developer meet-ups under the moniker &#x201C;Meet the TAG.&#x201D; The radical idea has been to take
+advantage of the fact that our meetings are happening in cities with large concentrations of Web developers to connect with these developer communities in a meaningful and useful way. The hopeful
+outcome is to both keep developers informed about what we&#x2019;re doing, presumably on their behalf, with their platform, and to drive some feedback back into the TAG to help guide our thinking
+and our work. The results have generally been good, generating useful  criticism and feedbackwhich we&#x2019;ve tried to take on board, and making the TAG less of an echo chamber. In the mean time
+we&#x2019;ve met lots of developers who take a keen interest in web architecture and the future of the web platform.
+
+For our next face-to-face meeting in San Francisco, we&#x2019;re planning to expand this idea to a full-fledged one-day event, bringing in web developers and web platformdevelopers, people who are
+deeply invested in the web platform but may not be participating directly in standards. We&#x2019;re calling this event the Extensible Web Summit.
+
+As Twitter denizen Daniel Buchner put it:
+
+@briankardell  @wycats  @w3ctag are you telling me we&#x2019;re going to try developing API &#x201C;products&#x201D; using direct &#x201C;customer&#x201D; feedback? Mind = blown
+
+&#x2014; Daniel Buchner (@csuwildcat)  December 9, 2013
+
+The web is 25 years old. What do we want this platform to look like 25 years from now? This event will bring together web platform developers and practitioners from different communities and
+backgrounds to focus on the future of the web architecture and platform. With the exception of some curated lightning talks at the beginning of the day to set the scene, the event will be run as an
+unconference, with the agenda self-organized by the participants. We&#x2019;d like to thank Adobe Systems for stepping forward as our host for this event.
+
+Who should attend? We would ideally like to pack this event with platform developers, framework developers and web developers with an interest in helping to drive the future of the web platform. If
+you read and liked what you saw in the  Extensible Web Manifesto  and you&#x2019;d like to learn more and influence the direction of this thinking, then we&#x2019;d love to have you along. Likewise
+if you are interested in other web technologies such as real time communication, platform & device APIs, security, permissions, manifests & packaging, offline usage, JavaScript promises & streams,
+push notifications and touch. The event is free to attend, but is filling up fast. If this sounds like your cup of tea, visit our Lanyrd pageand grab a ticket.
+
+
+
+
+
+
+Speaker deadline for Madrid MultilingualWeb Workshop is Friday, March 14
+
+
+05 March 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebArchitecture
+
+
+
+We would like to remind you that the deadline for speaker proposals for the 7th MultilingualWeb Workshop (May 7&#x2013;8, 2014, Madrid, Spain) is on Friday, March 14, at 23:59 UTC.
+
+Featuring a keynote by Alolita Sharma (Director of Engineering, Wikipedia) and breakout sessions on linked open data and other critical topics, this Workshop will focus on the advances and
+challenges faced in making the Web truly multilingual. It provides an outstanding and influential forum for thought leaders to share their ideas and gain critical feedback.
+
+While the organizers have already received many excellent submissions, there is still time to make a proposal, and we encourage interested parties to do so by the deadline. With roughly 200
+attendees anticipated for the Workshop from a wide variety of profiles, we are certain to have a large and diverse audience that can provide constructive and useful feedback, with stimulating
+discussion about all of the presentations.
+
+For more information and to register, please visit the Madrid Workshop Call for Participation.
+
+
+
+
+
+
+Alolita Sharma (Wikipedia) to deliver keynote at 7th Multilingual Web Workshop (May 7&#x2013;8, 2014, Madrid)
+
+
+24 February 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebArchitecture
+
+
+
+
+
+
+
+
+
+
+
+We are please to announce that Alolita Sharma, Director of Engineering for Internationalization and Localization at Wikipedia, will deliver the keynote at the 7th Multilingual Web Workshop,
+&#x201C;New Horizons for the Multilingual Web,&#x201D; in Madrid, Spain (7&#x2013;8 May 2014).
+
+With over 30 million articles in 286 languages as of January 1, 2014, Wikipedia has now become one of the largest providers of multilingual content in the world. Because of its user-generated and
+constantly changing content, many traditional processes for managing multilingual content on the web either do not work or do not scale well for Wikipedia. Alolita Sharma&#x2019;s keynote will
+highlight Wikipedia&#x2019;s diversity in multilingual user-generated content and the language technologies that Wikipedia has had to develop to support its unprecedented growth of content. She will
+also discuss the many challenges Wikipedia faces in providing language support for the mobile web.
+
+The Multilingual Web Workshop series brings together participants interested in the best practices, new technologies, and standards needed to help content creators, localizers, language tools
+developers, and others address the new opportunities and challenges of the multilingual Web. It will provide for networking across communities and building connections.
+
+Registration for the Workshop is free, and early registrationis recommended since space at the Workshop is limited.
+
+There is still opportunity for individuals to submit proposals to speak at the workshop. Ideal proposals will highlight emerging challenges or novel solutions for reaching out to a global,
+multilingual audience. The deadline for speaker proposals is March 14, but early submission is strongly encouraged. See the Call for Participationfor more details.
+
+This workshop is made possible by the generous support of the LIDER project, which will organize a roadmapping workshop on linked data and content analytics as one of the tracks at Multilingual Web
+Workshop.
+
+
+
+
+
+
+
+
+
+
+
+Talks and Appearances
+
+
+None. See full list of W3C Talks and Appearances.
+
+
+
+
+
+
+
+
+
+None. See full list of W3C Events.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

@@ -1,0 +1,190 @@
+Accessible Rich Internet Applications (WAI-ARIA) 1.0
+
+
+[contents]
+
+
+
+Accessible Rich Internet Applications (WAI-ARIA) 1.0
+
+
+
+W3C Recommendation 20 March 2014
+
+
+This version:
+        http://www.w3.org/TR/2014/REC-wai-aria-20140320/
+Latest version:
+        http://www.w3.org/TR/wai-aria/
+Previous version:
+        http://www.w3.org/TR/2014/PR-wai-aria-20140206/
+Editors:
+        James Craig, Apple Inc.
+        Michael Cooper, W3C
+Previous Editors:
+        Lisa Pappas, Society for Technical Communication
+        Rich Schwerdtfeger, IBM
+        Lisa Seeman, UB Access
+
+Please check the errata for any errors or issues reported since publication.
+
+This document is also available as a single page version.
+
+See also translations.
+
+Copyright © 2008-2014 W3C® (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+
+Abstract
+
+
+#
+
+Accessibility of web content requires semantic information about widgets, structures, and behaviors, in order to allow assistive technologies to convey appropriate information to persons with
+disabilities. This specification provides an ontology of roles, states, and properties that define accessible user interface elements and can be used to improve the accessibility and
+interoperability of web content and applications. These semantics are designed to allow an author to properly convey user interface behaviors and structural information to assistive technologies in
+document-level markup. This document is part of the WAI-ARIA suite described in the Overview.
+
+
+
+
+Status of this Document
+
+
+#
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This is the WAI-ARIA 1.0 W3C Recommendation from the Protocols &amp; Formats Working Group of the Web Accessibility Initiative. The Working Group created an implementation report that shows the exit
+criteria have been met. The Director approved transition to Recommendation after reviewing this report and after Advisory Committee vote which unanimously supported publication. Some editorial
+changes have been made since the Proposed Recommendation: removing suggestions of "RDF ID reference", changing the spelling of "programming" to "programing", correcting the spelling of "assistive",
+and updating some references to latest versions.
+
+This document has been reviewed by W3C Members, by software developers, and by other W3C groups and interested parties, and is endorsed by the Director as a W3C Recommendation. It is a stable
+document and may be used as reference material or cited from another document. W3C's role in making the Recommendation is to draw attention to the specification and to promote its widespread
+deployment. This enhances the functionality and interoperability of the Web.
+
+To comment on this document, send email to public-pfwg-comments@w3.org (comment archive). Comments received on the WAI-ARIA 1.0 Recommendation cannot result in changes to this version of the
+specification, but may be addressed in errata or future versions of WAI-ARIA. The Working Group may not make formal responses to comments but future work undertaken by the Working Group may address
+comments received on this document.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the
+group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the
+information in accordance with section 6 of the W3C Patent Policy.
+
+The disclosure obligations of the Participants of this group are described in the charter.
+
+
+
+
+Table of Contents
+
+
+#
+
+1. Abstract
+2. Status of This Document
+3. 1. Introduction
+   1. 1.1. Rich Internet Application Accessibility
+   2. 1.2. Target Audience
+   3. 1.3. User Agent Support
+   4. 1.4. Co-Evolution of WAI-ARIA and Host Languages
+   5. 1.5. Authoring Practices
+      1. 1.5.1. Authoring Tools
+      2. 1.5.2. Testing Practices and Tools
+
+   6. 1.6. Assistive Technologies
+
+4. 2. Using WAI-ARIA
+   1. 2.1. WAI-ARIA Roles
+   2. 2.2. WAI-ARIA States and Properties
+   3. 2.3. Managing Focus
+
+5. 3. Normative Requirements for WAI-ARIA
+6. 4. Important Terms
+7. 5. The Roles Model
+   1. 5.1. Relationships Between Concepts
+      1. 5.1.1. Superclass Role
+      2. 5.1.2. Subclass Roles
+      3. 5.1.3. Related Concepts
+      4. 5.1.4. Base Concept
+
+   2. 5.2. Characteristics of Roles
+      1. 5.2.1. Abstract Roles
+      2. 5.2.2. Required States and Properties
+      3. 5.2.3. Supported States and Properties
+      4. 5.2.4. Inherited States and Properties
+      5. 5.2.5. Required Owned Elements
+      6. 5.2.6. Required Context Role
+      7. 5.2.7. Accessible Name Calculation
+      8. 5.2.8. Presentational Children
+      9. 5.2.9. Implicit Value for Role
+
+   3. 5.3. Categorization of Roles
+      1. 5.3.1. Abstract Roles
+      2. 5.3.2. Widget Roles
+      3. 5.3.3. Document Structure
+      4. 5.3.4. Landmark Roles
+
+   4. 5.4. Definition of Roles
+
+8. 6. Supported States and Properties
+   1. 6.1. Clarification of States versus Properties
+   2. 6.2. Characteristics of States and Properties
+      1. 6.2.1. Related Concepts
+      2. 6.2.2. Used in Roles
+      3. 6.2.3. Inherits into Roles
+      4. 6.2.4. Value
+
+   3. 6.3. Values for States and Properties
+   4. 6.4. Global States and Properties
+   5. 6.5. Taxonomy of WAI-ARIA States and Properties
+      1. 6.5.1. Widget Attributes
+      2. 6.5.2. Live Region Attributes
+      3. 6.5.3. Drag-and-Drop Attributes
+      4. 6.5.4. Relationship Attributes
+
+   6. 6.6. Definitions of States and Properties (all aria-* attributes)
+
+9. 7. Implementation in Host Languages
+   1. 7.1. Role Attribute
+   2. 7.2. State and Property Attributes
+   3. 7.3. Focus Navigation
+   4. 7.4. Implicit WAI-ARIA Semantics
+   5. 7.5. Conflicts with Host Language Semantics
+   6. 7.6. State and Property Attribute Processing
+
+10. 8. Conformance
+    1. 8.1. Non-interference with the Host Language
+    2. 8.2. All WAI-ARIA in DOM
+    3. 8.3. Assistive Technology Notifications Communicated to Web Applications
+    4. 8.4. Conformance Checkers
+
+11. 9. References
+    1. 9.1. Normative References
+    2. 9.2. Informative References
+
+12. 10. Appendices
+    1. 10.1. Schemata
+       1. 10.1.1. Roles Implementation
+       2. 10.1.2. WAI-ARIA Attributes Module
+       3. 10.1.3. XHTML plus WAI-ARIA DTD
+       4. 10.1.4. SGML Open Catalog Entry for XHTML+ARIA
+       5. 10.1.5. WAI-ARIA Attributes XML Schema Module
+       6. 10.1.6. HTML 4.01 plus WAI-ARIA DTD
+
+    2. 10.2. Mapping WAI-ARIA Value types to languages
+    3. 10.3. WAI-ARIA Role, State, and Property Quick Reference
+    4. 10.4. Acknowledgments
+       1. 10.4.1. Participants active in the PFWG at the time of publication
+       2. 10.4.2. Other ARIA contributors, commenters, and previously active PFWG participants
+       3. 10.4.3. Enabling funders
+
+
+
+

@@ -1,0 +1,284 @@
+Permissions for Device API Access
+
+
+
+
+
+
+Permissions for Device API Access
+
+
+
+W3C Working Draft 05 October 2010
+
+
+This version:
+        http://www.w3.org/TR/2010/WD-api-perms-20101005/
+Latest published version:
+        http://www.w3.org/TR/api-perms/
+Latest editor's draft:
+        http://dev.w3.org/2009/dap/api-perms/
+Previous version:
+        none
+Editors:
+        Paddy Byers, Aplix
+        Frederick Hirsch, Nokia
+        Dominique Hazaël-Massieux, W3C
+
+Copyright © 2010 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+
+Abstract
+
+This document identifies the permissions that are needed to use specific client-side APIs which grant access to sensitive data and operations.
+
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This First Public Working Draft represents the early consensus of the group on what identifiable permissions should look like and they encompass. The group is now looking for feedback on this
+approach, and its applicability to various use cases, including widgets configurations, installable Web applications, existing permissions verifications.
+
+This document was published by the Device APIs and Policy Working Group as a Working Draft. This document is intended to become a W3C Recommendation. If you wish to make comments regarding this
+document, please send them to public-device-apis@w3.org (subscribe, archives). All feedback is welcome.
+
+Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the
+group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the
+information in accordance with section 6 of the W3C Patent Policy.
+
+
+
+
+Table of Contents
+
+
+* Introduction
+* Permissions
+  o Geolocation API
+  o Contact API
+  o Capture API
+  o File API
+  o System Information API
+
+* Mapping to BONDI features and Android permissions
+  o Geolocation
+  o Contacts
+  o Media Capture
+  o File
+  o System Information
+
+* References
+  o Normative references
+  o Informative references
+
+
+
+
+
+1. Introduction
+
+
+A number of Web APIs, in particular those used to access private or sensitive data from the hosting device, are meant to be discoverable, as well as disabled or enabled on a site-by-site or
+application-by-application basis, depending on the security context.
+
+For instance, the feature element as defined in the Widget Packaging and Configuration specification [WIDGETS] allows a widget runtime engine to grant access only to the specific APIs that the
+configuration file of the widget listed.
+
+This document identifies and names the various permissions that are attached to existing Web APIs.
+
+
+
+
+2. Permissions
+
+
+Each permission described in this document is identified using a string specified in this document.
+
+Where these permissions needed to be identified as a URI (e.g. in a widget configuration file [WIDGETS]), a URI can be built from these strings by appending that string to the base
+http://www.w3.org/ns/api-perms/.
+
+The DAP base URI is entirely tentative at this stage.
+
+
+
+2.1 Geolocation API
+
+
+The geolocation identifier corresponds to the access to both or either of the Geolocation::getCurrentPosition and Geolocation::watchPosition methods defined in the Geolocation API [GEOLOCATION-API].
+
+In the Web browser environment, this permission is usually granted through explicit user’s consent, and is retained for later access in the same session.
+
+
+
+
+2.2 Contact API
+
+
+The contacts.read identifier corresponds to the access to the Contacts::find method defined in the Contacts API [CONTACTS-API].
+
+In the Web browser environment, this permission is usually granted implicitly by asking the user to select what data of which contacts should be shared, for each call to the said method.
+
+
+
+
+2.3 Capture API
+
+
+The mediacapture identifier corresponds to the access to the Capture::captureImage, Capture::captureVideo and Capture::captureAudio methods defined in Media Capture API [MEDIACAPTURE-API].
+
+In the Web browser environment, this permission is usually granted implicitly by asking the user to activate a button to start and stop the recording operations, for each call to the said methods.
+
+
+
+
+2.4 File API
+
+
+The file.read identifier corresponds to the access to the FileReader::readAsArrayBuffer, FileReader::readAsBinaryString, FileReader::readAsText and FileReader::readAsDataURL methods defined in the
+File API [FILE-API].
+
+In the Web browser environment, this permission is usually granted implicitly once the File object has been created, after the user has selected a file from a file picker, and is retained for later
+access in the same browsing context.
+
+The file.write identifier corresponds to the access to the FileWriter::write, FileWriter::truncate, FileWriterSync::write and FileWriterSync::truncate methods defined in the File Writer API
+[FILE-WRITER].
+
+In the Web browser environment, this permission is usually granted implicitly once the FileSaver object has been created, after the user has selected a path to which the data can be saved (e.g.
+through a “Save As” dialog).
+
+
+
+
+2.5 System Information API
+
+
+The deviceinfo identifier corresponds to the access to the data of the Power, CPU, Thermal, AVCodecs, Storage, OutputDevices, InputDevices properties available through the SystemInfo::get and
+SystemInfo::watch methods defined in the System Information API [SYSINFOAPI].
+
+The networkinfo identifier corresponds to the access to the data of the Network property available through the SystemInfo::get and SystemInfo::watch methods defined in the System Information API
+[SYSINFOAPI].
+
+The sensorinfo identifier corresponds to the access to the data of the AmbientLight, AmbientNoise, AmbientTemperature, AmbientAtmosphericPressure and Proximity properties available through the
+SystemInfo::get and SystemInfo::watch methods defined in the System Information API [SYSINFOAPI].
+
+In the Web browser environment, these permissions are usually granted through explicit user’s consent, and are retained for later access in the same session.
+
+
+
+
+
+A. Mapping to BONDI features and Android permissions
+
+
+This section maps the permissions defined in this document to BONDI 1.11 feature strings [BONDI-FEATURES1-11] and corresponding Android permissions.
+
+BONDI 1.11 feature URIs are formed by appending the BONDI string to the base URI: http://bondi.omtp.org/api/1.1/.
+
+BONDI and Android values are only given as examples.
+
+Note also that this section might contain errors. BONDI and Android meanings may not correspond as shown and even if the names are similar they may not be equivalent.
+
+
+
+A.1 Geolocation
+
+
+W3C API permissions BONDI 1.11 Feature Android Permissions
+Identifier Scope Identifier Scope
+geolocation geolocation.position Detection of the user’s position android.permission.ACCESS_COARSE_LOCATION access coarse (e.g., Cell-ID, WiFi) location
+android.permission.ACCESS_FINE_LOCATION access fine (e.g., GPS) location
+
+
+
+
+A.2 Contacts
+
+
+W3C API permissions BONDI 1.11 Feature Android Permissions
+Identifier Scope Identifier Scope
+contacts.read pim.contacts.read Read the contacts stored in the terminal android.permission.READ_CONTACTS read the user's contacts data.
+
+
+
+
+A.3 Media Capture
+
+
+W3C API permissions BONDI 1.11 Feature Android Permissions
+Identifier Scope Identifier Scope
+mediacapture camera.capture capturing a picture from a selected camera android.permission.CAMERA access the camera device
+camera.record capturing a video from a selected camera
+  android.permission.RECORD_AUDIO Allows an application to record audio
+
+BONDI 1.1 has a separate permission for detecting available cameras, camera.access.
+
+
+
+
+A.4 File
+
+
+W3C API permissions BONDI 1.11 Feature Android Permissions
+Identifier Scope Identifier Scope
+file.read filesystem.read Read access to a filesystem android.permission.READ_OWNER_DATA Allows an application to read the owner's data.
+file.write filesystem.write Write access to a filesystem android.permission.WRITE_OWNER_DATA Allows an application to write (but not read) the owner's data.g
+
+
+
+
+A.5 System Information
+
+
+W3C API permissions BONDI 1.11 Feature Android Permissions
+Identifier Scope Identifier Scope
+deviceinfo pim.devicestatus Access to the device status module android.permission.BATTERY_STATS collect battery statistics
+networkinfo N/A android.permission.NETWORK_STATE Allows applications to access information about networks
+sensorinfo N/A N/A
+
+
+
+
+
+B. References
+
+
+
+
+B.1 Normative references
+
+
+[CONTACTS-API]
+        R. Tibbett. Contacts API. 3rd August 2010. W3C Latest Editor's Draft. (Work in progress.) URL: http://dev.w3.org/2009/dap/contacts/Overview.html
+[FILE-API]
+        Arun Ranganathan. File API. 17 November 2009. W3C Working Draft. (Work in progress.) URL: http://www.w3.org/TR/2009/WD-FileAPI-20091117/
+[FILE-WRITER]
+        Eric Uhrhane. File Writer API. W3C Working Draft. (Work in progress.) URL: http://dev.w3.org/2009/dap/file-system/file-writer.html
+[GEOLOCATION-API]
+        Andrei Popescu. Geolocation API Specification. 22 December 2008. W3C Working Draft. (Work in progress.) URL: http://www.w3.org/TR/2008/WD-geolocation-API-20081222
+[MEDIACAPTURE-API]
+        Dzung D Tran; Ilkka Oksanen; Ingmar Kliche. The Media Capture API 3 September 2010. W3C Editors Draft (Workin progress.) URL: http://dev.w3.org/2009/dap/camera/Overview-API.html
+[SYSINFOAPI]
+        Dzung Tran, Max Froumentin, eds. , 2 February 2010, W3C Working Draft. (Work in Progess.) URL: http://www.w3.org/TR/2010/WD-system-info-api-20100202/
+
+
+
+B.2 Informative references
+
+
+[BONDI-FEATURES1-11]
+        BONDI API Features v1.1 2 June 2010. Formerly available at http://bondi.omtp.org/1.11/apis/apifeatures.html
+[WIDGETS]
+        Marcos Caceres. Widget Packaging and Configuration. 01 December 2009. W3C Candidate Recommendation. (Work in progress.) URL: http://www.w3.org/TR/2009/CR-widgets-20091201/
+
+

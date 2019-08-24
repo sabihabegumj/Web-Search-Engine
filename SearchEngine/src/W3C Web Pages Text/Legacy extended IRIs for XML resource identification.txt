@@ -1,0 +1,314 @@
+Legacy extended IRIs for XML resource identification
+
+
+
+
+
+
+Legacy extended IRIs for XML resource identification
+
+
+
+W3C Working Group Note 3 November 2008 (BNF comment style corrected in place 2009-07-09)
+
+
+This version:
+        http://www.w3.org/TR/2008/NOTE-leiri-20081103/
+Latest version:
+        http://www.w3.org/TR/leiri/
+Previous version:
+
+Editors:
+        Henry S. Thompson, University of Edinburgh &lt;ht@inf.ed.ac.uk&gt;
+        Richard Tobin, University of Edinburgh &lt;richard@inf.ed.ac.uk&gt;
+        Norman Walsh, Mark Logic Corporation &lt;norman.walsh@marklogic.com&gt;
+
+This document is also available in these non-normative formats: XML.
+
+Copyright © 2008 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+For historic reasons, some formats have allowed variants of IRIs that are somewhat less restricted in syntax, for example XML system identifiers and W3C XML Schema anyURIs. This document provides a
+definition and a name (Legacy Extended IRI or LEIRI) for these variants for easy reference. These variants have to be used with care; they require further processing before being fully
+interchangeable as IRIs. New protocols and formats should not use Legacy Extended IRIs.
+
+
+
+
+Status of this Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This document is a W3C Working Group Note. It has been developed by the XML Core Working Group, part of the XML Activity in the W3C Ubiquitous Web Domain.
+
+Publication as a Working Group Note does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+Please send comments about this document to xml-editor@w3.org (archived).
+
+This document is very closely based on material from [IRI-bis], specifically section 2.2, "ABNF for IRI References and IRIs" and section 7, "Legacy Extended IRIs", included here by permission of its
+authors. It is intended to provide a basis for a single normative reference from many XML- and/or HTML-related standards in advance of the final publication of [IRI-bis] as an RFC. When that
+publication occurs, this specification will be re-issued to reference it in place of the extracts given below.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the
+group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the
+information in accordance with section 6 of the W3C Patent Policy.
+
+
+
+
+Table of Contents
+
+
+1 Introduction
+2 Notation
+3 Legacy Extended IRI Syntax
+4 Conversion of Legacy Extended IRIs to IRIs
+5 Characters allowed in Legacy Extended IRIs but not in IRIs
+
+
+
+Appendix
+
+
+A References
+
+
+
+========================================================================================================================================================================================================
+
+
+
+
+1 Introduction
+
+
+For historic reasons, some formats have allowed variants of IRIs [RFC3987] that are somewhat less restricted in syntax, for example XML system identifiers and W3C XML Schema anyURIs. This document
+provides a definition and a name (Legacy Extended IRI or LEIRI) for these variants for easier reference. These variants have to be used with care; they require further processing before being fully
+interchangeable as IRIs. New protocols and formats should not use Legacy Extended IRIs. The provisions in this document also apply to Legacy Extended IRI references.
+
+
+
+
+2 Notation
+
+
+In this document, characters are referenced by using a prefix of 'U+' followed by four to six hexadecimal digits.
+
+In this document, the key words must, must not, required, shall, shall not, should, should not, recommended, may, and optional are to be interpreted as described in [RFC2119].
+
+
+
+
+3 Legacy Extended IRI Syntax
+
+
+The syntax of Legacy Extended IRIs (LEIRIs) and LEIRI references is the same as that for IRIs and IRI references except that ucschar is redefined. The syntax of this ABNF is described in [RFC5234].
+Character numbers are taken from the UCS, without implying any actual binary encoding. Terminals in the ABNF are characters, not bytes.
+
+For consistency with [RFC3987] for IRIs, generic LEIRI software should not check LEIRIs for conformance to this syntax.
+
+Some productions are ambiguous. The "first-match-wins" (a.k.a. "greedy") algorithm applies. For details, see [RFC3986].
+
+
+Productions changed from RFC3986
+
+
+[1]    LEIRI    ::=    scheme ":" ihier-part [ "?" iquery ] [ "#" ifragment ]
+[2]    ihier-part    ::=    "//" iauthority ipath-abempty
+   / ipath-absolute
+   / ipath-rootless
+   / ipath-empty
+[3]    LEIRI-reference    ::=    LEIRI / irelative-ref
+[4]    absolute-LEIRI    ::=    scheme ":" ihier-part [ "?" iquery ]
+[5]    irelative-ref    ::=    irelative-part [ "?" iquery ] [ "#" ifragment ]
+[6]    irelative-part    ::=    "//" iauthority ipath-abempty
+   / ipath-absolute
+   / ipath-noscheme
+   / ipath-empty
+[7]    iauthority    ::=    [ iuserinfo "@" ] ihost [ ":" port ]
+[8]    iuserinfo    ::=    *( iunreserved / pct-encoded / sub-delims / ":" )
+[9]    ihost    ::=    IP-literal / IPv4address / ireg-name
+[10]    ireg-name    ::=    *( iunreserved / pct-encoded / sub-delims )
+[11]    ipath    ::=    ipath-abempty ; begins with "/" or is empty
+   / ipath-absolute ; begins with "/" but not "//"
+   / ipath-noscheme ; begins with a non-colon segment
+   / ipath-rootless ; begins with a segment
+   / ipath-empty ; zero characters
+[12]    ipath-abempty    ::=    *( "/" isegment )
+[13]    ipath-absolute    ::=    "/" [ isegment-nz *( "/" isegment ) ]
+[14]    ipath-noscheme    ::=    isegment-nz-nc *( "/" isegment )
+[15]    ipath-rootless    ::=    isegment-nz *( "/" isegment )
+[16]    ipath-empty    ::=    0<ipchar>
+[17]    isegment    ::=    *ipchar
+[18]    isegment-nz    ::=    1*ipchar
+[19]    isegment-nz-nc    ::=    1*( iunreserved / pct-encoded / sub-delims / "@" )
+   ; non-zero-length segment without any colon ":"
+[20]    ipchar    ::=    iunreserved / pct-encoded / sub-delims / ":"
+   / "@"
+[21]    iquery    ::=    *( ipchar / iprivate / "/" / "?" )
+[22]    ifragment    ::=    *( ipchar / "/" / "?" )
+[23]    iunreserved    ::=    ALPHA / DIGIT / "-" / "." / "_" / "~" / ucschar
+[24]    iprivate    ::=    %xE000-F8FF / %xE0000-E0FFF / %xF0000-FFFFD
+   / %x100000-10FFFD
+
+
+Productions unchanged from RFC3986
+
+
+[25]    scheme    ::=    ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+[26]    port    ::=    *DIGIT
+[27]    IP-literal    ::=    "[" ( IPv6address / IPvFuture ) "]"
+[28]    IPvFuture    ::=    "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
+[29]    IPv6address    ::=    6( h16 ":" ) ls32
+   / "::" 5( h16 ":" ) ls32
+   / [ h16 ] "::" 4( h16 ":" ) ls32
+   / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+   / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+   / [ *3( h16 ":" ) h16 ] "::" h16 ":" ls32
+   / [ *4( h16 ":" ) h16 ] "::" ls32
+   / [ *5( h16 ":" ) h16 ] "::" h16
+   / [ *6( h16 ":" ) h16 ] "::"
+[30]    h16    ::=    1*4HEXDIG
+[31]    ls32    ::=    ( h16 ":" h16 ) / IPv4address
+[32]    IPv4address    ::=    dec-octet "." dec-octet "." dec-octet "." dec-octet
+[33]    dec-octet    ::=    DIGIT ; 0-9
+   / %x31-39 DIGIT ; 10-99
+   / "1" 2DIGIT ; 100-199
+   / "2" %x30-34 DIGIT ; 200-249
+   / "25" %x30-35 ; 250-255
+[34]    pct-encoded    ::=    "%" HEXDIG HEXDIG
+[35]    unreserved    ::=    ALPHA / DIGIT / "-" / "." / "_" / "~"
+[36]    reserved    ::=    gen-delims / sub-delims
+[37]    gen-delims    ::=    ":" / "/" / "?" / "#" / "[" / "]" / "@"
+[38]    sub-delims    ::=    "!" / "$" / "&" / "'" / "(" / ")"
+   / "*" / "+" / "," / ";" / "="
+
+
+Modified ucschar production
+
+
+[39]    ucschar    ::=    " " / "<" / ">" / '"' / "{" / "}" / "|"
+   / "\" / "^" / "`" / %x0-1F / %x7F-D7FF
+   / %xE000-FFFD / %x10000-10FFFF
+
+The restriction on bidirectional formatting characters in Section 4.1 of [RFC3987] is lifted. The iprivate production becomes redundant.
+
+Formats that use Legacy Extended IRIs may further restrict the characters allowed therein, either implicitly by the fact that the format as such does not allow some characters, or explicitly. An
+example of a character not allowed implicitly may be the NUL character (U+0000). However, all the characters allowed in IRIs must still be allowed.
+
+
+
+
+4 Conversion of Legacy Extended IRIs to IRIs
+
+
+To convert a Legacy Extended IRI (reference) to an IRI (reference), each character allowed in a Legacy Extended IRI (reference) but not allowed in an IRI (reference) (see 5 Characters allowed in
+Legacy Extended IRIs but not in IRIs) must be percent-encoded by applying the following steps:
+
+1. Convert the character to a sequence of one or more octets using UTF-8 [RFC3629].
+
+2. Convert each octet to %HH, where HH is the hexadecimal notation of the octet value. Note that this is identical to the percent-encoding mechanism in Section 2.1 of [RFC3986]. To reduce
+   variability, the hexadecimal notation should use uppercase letters.
+
+3. Replace the original character with the resulting character sequence (that is, a sequence of %HH triplets).
+
+
+Conversion from a LEIRI to an IRI or a URI must be performed only when absolutely necessary and as late as possible in a processing chain. In particular, neither the process of converting a relative
+LEIRI to an absolute one nor the process of passing a LEIRI to a process or software component responsible for dereferencing it should trigger percent-encoding.
+
+
+
+
+5 Characters allowed in Legacy Extended IRIs but not in IRIs
+
+
+This section provides a list of the groups of characters and code points that are allowed in Legacy Extedend IRIs but are not allowed in IRIs or are allowed in IRIs only in the query part. For each
+group of characters, advice on the usage of these characters is also given, concentrating on the reasons not to use them.
+
+Space (U+0020)
+
+        Some formats and applications use space as a delimiter, for example, for items in a list. Appendix C of [RFC3986] also mentions that white space may have to be added when displaying or
+        printing long URIs; the same applies to long IRIs. This means that spaces can disappear or can make the Legacy Extended IRI to be interpreted as two or more separate IRIs.
+
+Delimiters "<" (U+003C), ">" (U+003E) and '"' (U+0022)
+
+        Appendix C of [RFC3986] suggests the use of double-quotes ("http://example.com/") and angle brackets (<http://example.com/>) as delimiters for URIs in plain text. These conventions are often
+        used and also apply to IRIs. Legacy Extended IRIs using these characters will be cut off at the wrong place.
+
+Unwise characters "\" (U+005C), "^" (U+005E), "`" (U+0060), "{" (U+007B), "|" (U+007C) and "}" (U+007D)
+
+        These characters originally have been excluded from URIs because the respective codepoints are assigned to different graphic characters in some 7-bit or 8-bit encoding. Despite the move to
+        Unicode, some of these characters are still occasionally displayed differently on some systems, for example, U+005C as a Japanese Yen symbol. Also, the fact that these characters are not
+        used in URIs or IRIs has encouraged their use outside URIs or IRIs in contexts that may include URIs or IRIs. In case a Legacy Extended IRI with such a character is used in such a context,
+        the Legacy Extended IRI will be interpreted piecemeal.
+
+The controls (C0 controls, DEL and C1 controls, U+0000 - U+001F U+007F - U+009F)
+
+        There is no way to transmit these characters reliably except potentially in electronic form. Even when in electronic form, some software components might silently filter out some of these
+        characters or may stop processing alltogether when encountering some of them. These characters may affect text display in subtle, unnoticable ways or in drastic, global and irreversible ways
+        depending on the hardware and software involved. The use of some of these characters may allow malicious users to manipulate the display of a Legacy Extended IRI and its context.
+
+Bidi formatting characters (U+200E, U+200F, U+202A-202E)
+
+        These characters affect the display ordering of characters. Displayed Legacy Extended IRIs containing these characters cannot be converted back to electronic form (logical order)
+        unambiguously. These characters may allow malicious users to manipulate the display of a Legacy Extended IRI and its context.
+
+Specials (U+FFF0-FFFD)
+
+        These code points provide functionality beyond that useful in a Legacy Extended IRI, for example byte order identification, annotation and replacements for unknown characters and objects.
+        Their use and interpretation in a Legacy Extended IRI serves no purpose and may lead to confusing display variations.
+
+Private use code points (U+E000-F8FF, U+F0000-FFFFD, U+100000- 10FFFD)
+
+        Display and interpretation of these code points is by definition undefined without private agreement. Therefore, these code points are not suited for use on the Internet. They are not
+        interoperable and may have unpredictable effects.
+
+Tags (U+E0000-E0FFF)
+
+        These characters provide a way to include language tags in Unicode plain text. They are not appropriate for Legacy Extended IRIs because language information in identifiers cannot reliably
+        be input, transmitted (for example, on a visual medium such as paper), or recognized.
+
+Non-characters (U+FDD0-FDEF, U+1FFFE-1FFFF, U+2FFFE-2FFFF, U+3FFFE-3FFFF, U+4FFFE-4FFFF, U+5FFFE-5FFFF, U+6FFFE-6FFFF, U+7FFFE-7FFFF, U+8FFFE-8FFFF, U+9FFFE-9FFFF, U+AFFFE-AFFFF, U+BFFFE-BFFFF,
+U+CFFFE-CFFFF, U+DFFFE-DFFFF, U+EFFFE-EFFFF, U+FFFFE-FFFFF, U+10FFFE-10FFFF)
+
+        These code points are defined as non-characters. Applications may use some of them internally, but are not prepared to interchange them.
+
+For reference, we here also list the code points and code units not even allowed in Legacy Extended IRIs:
+
+Surrogate code units (U+D800-U+DFFF)
+
+        These do not represent Unicode codepoints.
+
+
+
+
+
+
+A References
+
+
+RFC2119
+        Bradner, S., Key words for use in RFCs to Indicate Requirement Levels, BCP 14, RFC 2119, IETF, March 1997. Available online as http://tools.ietf.org/html/bcp14 and
+        http://tools.ietf.org/html/rfc2119
+RFC5234
+        Crocker, D. and P. Overell, Eds, Augmented BNF for Syntax Specifications: ABNF, RFC 5234/STD 68, IETF, January 2008. Available online as http://tools.ietf.org/html/rfc5234
+RFC3629
+        Yergeau, F., UTF-8, a transformation format of ISO 10646, STD 63, RFC 3629, IETF November 2003. Available online as http://tools.ietf.org/html/rfc3629.
+RFC3986
+        Berners-Lee, T., R. Fielding and L. Masinter, Uniform Resource Identifier (URI): Generic Syntax, STD 66, RFC 3986, IETF, January 2005. Available online as http://tools.ietf.org/html/rfc3986.
+RFC3987
+        Internationalized Resource Identifiers (IRIs), RFC3987, Dürst, M. and M. Suignard, eds. IETF, 2005. Available online as http://tools.ietf.org/html/rfc3987
+IRI-bis
+        Internationalized Resource Identifiers (IRIs), draft-duerst-iri-bis-04, Dürst, M. and M. Suignard, eds. IETF, 2008. Available online as http://tools.ietf.org/html/draft-duerst-iri-bis-04.
+
+

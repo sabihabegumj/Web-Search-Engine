@@ -1,0 +1,222 @@
+Processing - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+XML Technology
+
+
+* Publishing
+* Processing
+* Components
+* Query
+* Transformation
+* Security
+* Schema
+* XML Essentials
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* XML&#xA0;Technology » 
+* Processing
+
+
+
+
+Processing
+
+
+* On this page &#x2192;
+* What is a Processing Model? &#x2022;
+* How is a processing model used? &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+A processing model defines what operations should be performed in what order on an XML document.
+
+
+What is XProc?
+
+
+An unusual characteristic of XML is that documents in that format do not have intrinsic meaning: any XML processor is free to interpret any XML document in any way. This is sometimes called the XML
+Promise. However, it is often useful to be able to suggest how a particular document might be processed. The XProc specification provides a way to do that: XProc: An XML Pipeline Language is an
+XML-based language for describing operations to be performed on XML documents.
+
+Note that there is no single processing model for all XML Documents, and there is no default processing model. XProc (XML Pipeline) is one example of a way to say how to process an XML document. You
+can also have multiple XML Pipelines that you might select from to process a given document.
+
+
+What is XProc Used For?
+
+
+Use XProc to say that a particular document or set of documents should be processed in a certain order: for example, first XInclude and then XSD Schema validation, and then XSLT with a particular
+XSL stylesheet.
+
+
+Examples
+
+
+
+<pipeline xmlns="http://www.w3.org/ns/xproc">
+
+<xinclude/>
+
+
+<validate-with-xml-schema>
+
+<input port="schema">
+
+<document href="http://example.com/path/to/schema.xsd"/>
+</input>
+</validate-with-xml-schema>
+
+
+<xslt>
+
+<input port="stylesheet">
+
+<document href="http://example.com/path/to/stylesheet.xsl"/>
+</input>
+</xslt>
+</pipeline>
+
+
+This example indicates that a document with which this pipeline is associated should first have XInclude processing done on it, then be validated with a specific schema, and finally have an XSLT
+stylesheet applied to the result of validation.
+
+
+
+
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* XML Pipeline (XProc)
+* XInclude
+
+
+These W3C Groups are working on the related specifications:
+
+
+* XML Processing Model Working Group
+* XML Core Working Group
+
+
+========================================================================================================================================================================================================
+
+Contact: Liam R. E. Quin <liam@w3.org>
+
+
+
+
+
+Current Status
+
+
+* XML Pipeline (XProc)
+* XInclude
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2010 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

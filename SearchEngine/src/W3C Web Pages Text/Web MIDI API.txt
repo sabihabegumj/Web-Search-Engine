@@ -1,0 +1,1072 @@
+Web MIDI API
+
+
+
+
+
+
+Web MIDI API
+
+
+
+W3C Working Draft 26 November 2013
+
+
+This version:
+        http://www.w3.org/TR/2013/WD-webmidi-20131126/
+Latest published version:
+        http://www.w3.org/TR/webmidi/
+Previous version:
+        http://www.w3.org/TR/2012/WD-webmidi-20121213/
+Latest editor's draft:
+        http://webaudio.github.io/web-audio-api/
+Editors:
+        Jussi Kalliokoski
+        Chris Wilson, Google
+Versioning Repository:
+        https://github.com/WebAudio/web-midi-api/
+Issues tracker:
+        https://github.com/WebAudio/web-midi-api/issues?state=open
+Test suite:
+        https://github.com/jussi-kalliokoski/web-midi-test-suite (unofficial)
+Working Group:
+        Audio Working Group
+Comments:
+        public-audio@w3.org (archives)
+
+Copyright © 2012-2013 W3C® (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+Some user agents have music devices, such as synthesizers, keyboard and other controllers, and drum machines connected to their host computer or device. The widely adopted Musical Instrument Digital
+Interface (MIDI) protocol enables electronic musical instruments, controllers and computers to communicate and synchronize with each other. MIDI does not transmit audio signals: instead, it sends
+event messages about musical notes, controller signals for parameters such as volume, vibrato and panning, cues and clock signals to set the tempo, and system-specific MIDI communications (e.g. to
+remotely store synthesizer-specific patch data). This same protocol has become a standard for non-musical uses, such as show control, lighting and special effects control.
+
+This specification defines an API supporting the MIDI protocol, enabling web applications to enumerate and select MIDI input and output devices on the client system and send and receive MIDI
+messages. It is intended to enable non-music MIDI applications as well as music ones, by providing low-level access to the MIDI devices available on the users' systems. The Web MIDI API is not
+intended to describe music or controller inputs semantically; it is designed to expose the mechanics of MIDI input and output interfaces, and the practical aspects of sending and receiving MIDI
+messages, without identifying what those actions might mean semantically (e.g., in terms of "modulate the vibrato by 20Hz" or "play a G#7 chord", other than in terms of changing a controller value
+or sending a set of note-on messages that happen to represent a G#7 chord).
+
+To some users, "MIDI" has become synonymous with Standard MIDI Files and General MIDI. That is not the intent of this API; the use case of simply playing back a .SMF file is not within the purview
+of this specification (it could be considered a different format to be supported by the HTML5 <audio> element, for example). The Web MIDI API is intended to enable direct access to devices that
+respond to MIDI - external synthesizers or lighting systems, for example, or even the software synthesizers that are built in to many common operating systems. The Web MIDI API is also explicitly
+designed to enable a new class of applications on the web that can respond to MIDI controller inputs - using external hardware controllers with physical buttons, knobs and sliders (as well as
+musical controllers like keyboard, guitar or wind instrument controllers) to control web applications.
+
+The Web MIDI API is also expected to be used in conjunction with other APIs and elements of the web platform, notably the Web Audio API. This API is also intended to be familiar to users of MIDI
+APIs on other systems, such as Apple's CoreMIDI and Microsoft's Windows MIDI API.
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the technical reports index at http://www.w3.org/TR/.
+
+This document was published by the Audio Working Group as an Working Draft. If you wish to make comments regarding this document, please send them to public-audio@w3.org (subscribe, archives). All
+comments are welcome.
+
+Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also
+includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the information in
+accordance with Patent Policy.
+
+
+Table of Contents
+
+
+* Introduction
+* Conformance
+* Terminology
+* Obtaining Access to MIDI Devices
+  o requestMIDIAccess()
+    - Methods
+
+  o dictionary
+    - Members
+
+  o Interface
+    - Attributes
+    - Methods
+
+  o Interface
+    - Attributes
+    - Methods
+
+  o MIDISuccessCallback
+    - Parameters
+
+  o MIDIErrorCallback
+    - Parameters
+
+
+* Interface
+  o Attributes
+
+* Interface
+  o Attributes
+  o Interface
+    - Attributes
+
+  o Interface
+    - Methods
+
+
+* Interface
+  o Attributes
+  o Interface
+    - Members
+
+
+* Interface
+  o Attributes
+  o Interface
+    - Members
+
+
+* Examples of Web MIDI API Usage in JavaScript
+  o Getting Access to the MIDI System
+  o Requesting Access to the MIDI System with System Exclusive Support
+  o Listing Inputs and Outputs
+  o Handling MIDI Input
+  o Sending MIDI Messages to an Output Device
+  o A Simple Loopback
+  o A Simple Monophonic Sine Wave MIDI Synthesizer
+
+* Security and Privacy Considerations of MIDI
+* References
+  o Normative references
+
+
+
+1. Introduction
+
+
+This section is non-normative.
+
+The Web MIDI API specification defines a means for web developers to enumerate, manipulate and access MIDI devices - for example interfaces that may provide hardware MIDI ports with other devices
+plugged in to them and USB devices that support the USB-MIDI specification. Having a Web API for MIDI enables web applications that use existing software and hardware synthesizers, hardware music
+controllers and light systems and other mechanical apparatus controlled by MIDI. This API has been defined with this wide variety of use cases in mind.
+
+The approaches taken by this API are similar to those taken in Apple's CoreMIDI API and Microsoft's Windows MIDI API; that is, the API is designed to represent the low-level software protocol of
+MIDI, in order to enable developers to build powerful MIDI software on top. The API enables the developer to enumerate input and output interfaces, and send and receive MIDI messages, but (similar
+to the aforementioned APIs) it does not attempt to semantically define or interpret MIDI messages beyond what is necessary to robustly support current devices.
+
+The Web MIDI API is not intended to directly implement high-level concepts such as sequencing; it does not directly support Standard MIDI Files, for example, although a Standard MIDI File player can
+be built on top of the Web MIDI API. It is also not intended to semantically capture patches or controller assignments, as General MIDI does; such interpretation is outside the scope of the Web MIDI
+API (though again, General MIDI can easily be utilized through the Web MIDI API).
+
+
+2. Conformance
+
+
+As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
+
+The key words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this specification are to be interpreted as described in [RFC2119].
+
+This specification defines conformance criteria that apply to a single product: the user agent that implements the interfaces that it contains.
+
+Implementations that use ECMAScript to implement the APIs defined in this specification MUST implement them in a manner consistent with the ECMAScript Bindings defined in the Web IDL specification
+[WEBIDL], as this specification uses that specification and terminology.
+
+
+3. Terminology
+
+
+The concepts queue a task and fires a simple event are defined in [HTML5].
+
+The terms event handlers and event handler event types and corresponding EventHandler interface are defined in [HTML5].
+
+The Uint8Array interface is defined in [TYPED-ARRAYS].
+
+The term octet is defined in [WEBIDL].
+
+The Web Audio API and its associated interfaces and concepts are defined in [webaudio].
+
+The Event interface is defined in [DOM4].
+
+The DOMError interface is defined in [DOM-LEVEL-3-CORE].
+
+The DOMHighResTimeStamp interface is defined in [HIGHRES-TIME].
+
+The terms MIDI, MIDI device, MIDI input port, MIDI output port, MIDI interface, MIDI message, MIDI System Real-Time message and system exclusive are defined in [MIDI].
+
+The Promise interface is currently defined in the WHATWG DOM specification.
+
+
+4. Obtaining Access to MIDI Devices
+
+
+
+4.1 requestMIDIAccess()
+
+
+partial interface Navigator {
+    Promise requestMIDIAccess (optional MIDIOptions options);
+};
+
+
+4.1.1 Methods
+
+
+requestMIDIAccess
+
+        When invoked, returns a Promise object representing a request for access to MIDI devices on the user's system.
+
+        Requesting MIDI access SHOULD prompt the user for access to MIDI devices, particularly if system exclusive access is requested. In some scenarios, this permission may have already been
+        implicitly or explicitly granted, in which case this prompt may not appear. If the user gives express permission or the call is otherwise approved, the vended Promise's resolveCallback is
+        invoked, as a MIDISuccessCallback (i.e., with a MIDIAccess object and a MIDIOptions object as its arguments. The underlying system may choose to allow the user to select specific MIDI
+        interfaces to expose to this API (i.e. pick and choose interfaces on an individual basis), although this is not required. The system may also choose to prompt (or not) based on whether
+        system exclusive support is requested, as system exclusive has greater privacy and security implications.
+
+        If the user declines or the call is denied for any other reason, the Promise's rejectCallback (if any) is invoked as a MIDIErrorCallback.
+
+        When the requestMIDIAccess method is called, the user agent MUST run the algorithm to request MIDI Access:
+
+        1. Let promise be a new Promise object and resolver be its associated resolver.
+
+        2. Return promise and run the following steps asynchronously.
+
+        3. Optionally, e.g. based on a previously-established user preference, for security reasons, or due to platform limitations, jump to the step labeled failure below.
+
+        4. Optionally, e.g. based on a previously-established user preference, jump to the step labeled success below.
+
+        5. Prompt the user in a user-agent-specific manner for permission to provide the entry script's origin with a MIDIAccess object representing control over user's MIDI devices. This
+           prompt may be contingent upon whether system exclusive support was requested, and may allow the user to enable or disable that access.
+
+           If permission is denied, jump to the step labeled failure below. If the user never responds, this algorithm will never progress beyond this step. If permission is granted, continue the
+           following steps.
+
+        6. success: Let access be a new MIDIAccess object. (It is possible to call requestMIDIAccess() multiple times; this may prompt the user multiple times, so it may not be best
+           practice, and the same instance of MIDIAccess will not be returned each time.)
+
+        7. Call resolver's accept(value) method with access as value argument.
+
+        8. Terminate these steps.
+
+        9. failure: Let error be a new DOMError. This should be of type "SecurityError" if the user or their security settings denied the application from creating a MIDIAccess instance
+           with the requested options, "InvalidStateError" if the underlying systems raise any errors, or otherwise it should be of type "NotSupportedError".
+
+        10. Call resolver's reject(value) method with error as value argument.
+
+
+        Parameter Type Nullable Optional Description
+        options MIDIOptions ✘ ✔ 
+
+        Return type: Promise
+
+
+4.2 MIDIOptions dictionary
+
+
+This dictionary contains optional settings that may be provided to the requestMIDIAccess request.
+
+dictionary MIDIOptions {
+    boolean sysex;
+};
+
+
+4.2.1 Dictionary MIDIOptions Members
+
+
+sysex of type boolean
+
+        This member informs the system whether the ability to send and receive system exclusive messages is requested or allowed on a given MIDIAccess object. On the option passed to
+        requestMIDIAccess, if this member is set to true, but system exclusive support is denied (either by policy or by user action), the access request will fail with a "SecurityError" error. If
+        this support is not requested (and allowed), the system will throw exceptions if the user tries to send system exclusive messages, and will silently mask out any system exclusive messages
+        received on the port.
+
+        In the options parameter passed to the resolveCallback, this member indicates whether system exclusive is allowed on the MIDIAccess.
+
+
+4.3 MIDIInputMap Interface
+
+
+interface  {
+                attribute readonly int size;
+    function  keys (void function ( DOMString));
+    function  entries (void function ( Array));
+    function  values (void function ( MIDIInput));
+    MIDIInput get (DOMString key);
+    boolean   has (DOMString key);
+};
+
+
+4.3.1 Attributes
+
+
+size of type readonly int,
+        The number of available MIDI input ports at the current time.
+
+4.3.2 Methods
+
+
+entries
+        iterator for map entries; the passed arrays would contain [ MIDIKeyType, MIDIInput ]
+        Parameter Type Nullable Optional Description
+        Array) void function ( ✘ ✘ 
+
+        Return type: function
+
+get
+        Getter for a particular input
+        Parameter Type Nullable Optional Description
+        key DOMString ✘ ✘ 
+
+        Return type: MIDIInput
+
+has
+        Returns true if the keyed port currently exists and is available.
+        Parameter Type Nullable Optional Description
+        key DOMString ✘ ✘ 
+
+        Return type: boolean
+
+keys
+        iterator for keys
+        Parameter Type Nullable Optional Description
+        DOMString) void function ( ✘ ✘ 
+
+        Return type: function
+
+values
+        Iterator for values
+        Parameter Type Nullable Optional Description
+        MIDIInput) void function ( ✘ ✘ 
+
+        Return type: function
+
+This type is used to represent all the currently available MIDI input ports as a MapClass-like interface. This enables
+
+    // to tell how many entries there are:
+    var numberOfMIDIInputs = inputs.size;
+
+    // add each of the ports to a <select> box
+    inputs.values( function( port ) {
+      var opt = document.createElement("option");
+      opt.text = port.name;
+      document.getElementById("inputportselector").add(opt);
+    });
+
+    // or you could express as:
+    for (input in inputs) {
+      var opt = document.createElement("option");
+      opt.text = input.name;
+      document.getElementById("inputportselector").add(opt);
+    }
+
+
+4.4 MIDIOutputMap Interface
+
+
+interface  {
+                attribute readonly int size;
+    function   keys (void function ( DOMString));
+    function   entries (void function ( Array));
+    function   values (void function ( MIDIOutput));
+    MIDIOutput get (DOMString key);
+    boolean    has (DOMString key);
+};
+
+
+4.4.1 Attributes
+
+
+size of type readonly int,
+        The number of available MIDI output ports at the current time.
+
+4.4.2 Methods
+
+
+entries
+        iterator for map entries; the passed arrays would contain [ MIDIKeyType, MIDIOutput ]
+        Parameter Type Nullable Optional Description
+        Array) void function ( ✘ ✘ 
+
+        Return type: function
+
+get
+        Getter for a particular input
+        Parameter Type Nullable Optional Description
+        key DOMString ✘ ✘ 
+
+        Return type: MIDIOutput
+
+has
+        Returns true if the keyed port currently exists and is available.
+        Parameter Type Nullable Optional Description
+        key DOMString ✘ ✘ 
+
+        Return type: boolean
+
+keys
+        iterator for keys
+        Parameter Type Nullable Optional Description
+        DOMString) void function ( ✘ ✘ 
+
+        Return type: function
+
+values
+        Iterator for values
+        Parameter Type Nullable Optional Description
+        MIDIOutput) void function ( ✘ ✘ 
+
+        Return type: function
+
+This type is used to represent all the currently available MIDI output ports as a MapClass-like interface. This enables
+
+    // to tell how many entries there are:
+    var numberOfMIDIOutputs = inputs.size;
+
+    // add each of the ports to a <select> box
+    outputs.values( function( port ) {
+      var opt = document.createElement("option");
+      opt.text = port.name;
+      document.getElementById("outputportselector").add(opt);
+    });
+
+    // or you could express as:
+    for (output in outputs) {
+      var opt = document.createElement("option");
+      opt.text = input.name;
+      document.getElementById("inputportselector").add(opt);
+    }
+
+
+4.5 MIDISuccessCallback
+
+
+callback MIDISuccessCallback = void (MIDIAccess access, MIDIOptions options);
+
+
+4.5.1 Callback MIDISuccessCallback Parameters
+
+
+access of type MIDIAccess
+
+        A MIDIAccess object created to provide script access to the user's MIDI devices. This object is used to enumerate and obtain access to individual MIDI devices.
+
+        Note: The term "MIDI device" in this specification refers to a MIDI interface available to the host system; for example, if a hardware MIDI adapter is connected to the host system, it will
+        be enumerated as a single device, even if several MIDI-supporting devices (such as synthesizers or drum machines) are plugged into hardware MIDI ports on the adapter.
+
+options of type MIDIOptions
+
+        This parameter describes the options enabled on this MIDIAccess object.
+
+
+4.6 MIDIErrorCallback
+
+
+callback MIDIErrorCallback = void (DOMError error);
+
+
+4.6.1 Callback MIDIErrorCallback Parameters
+
+
+error of type DOMError
+        A DOMError object representing the reason why creating getting a MIDIAccess failed.
+
+5. MIDIAccess Interface
+
+
+This interface provides the methods to list MIDI input and output devices, and obtain access to an individual device.
+
+interface MIDIAccess : EventTarget {
+    readonly    attribute MIDIInputMap  inputs;
+    readonly    attribute MIDIOutputMap outputs;
+                attribute EventHandler  onconnect;
+                attribute EventHandler  ondisconnect;
+    readonly    attribute boolean       sysexEnabled;
+};
+
+
+5.1 Attributes
+
+
+inputs of type MIDIInputMap, readonly
+        The MIDI input ports available to the system.
+onconnect of type EventHandler,
+
+        The handler called when a new port is connected.
+
+        This event handler, of type MIDIConnectionEvent, MUST be supported by all objects implementing the MIDIAccess interface.
+
+        Whenever a previously unavailable MIDI port becomes available for use, the user agent SHOULD run the following steps:
+
+        1. Let port be the MIDIPort corresponding to the newly-available port.
+        2. Let event be a newly constructed MIDIConnectionEvent, with the port attribute set to the port.
+        3. Fire an event named connectat the MIDIAccess, using the event as the event object.
+
+ondisconnect of type EventHandler,
+
+        The handler called when a previously-available port is disconnected.
+
+        This event handler, of type MIDIConnectionEvent, MUST be supported by all objects implementing the MIDIAccess interface.
+
+        Whenever a previously available MIDI port becomes unavailable for use, the user agent SHOULD run the following steps:
+
+        1. Let port be the MIDIPort corresponding to the newly-available port.
+        2. Let event be a newly constructed MIDIConnectionEvent, with the port attribute set to the port.
+        3. Fire an event named disconnectat the MIDIAccess, using the event as the event object.
+
+outputs of type MIDIOutputMap, readonly
+        The MIDI output ports available to the system.
+sysexEnabled of type boolean, readonly
+        This attribute informs the user whether system exclusive support is enabled on this MIDIAccess.
+
+6. MIDIPort Interface
+
+
+This interface represents a MIDI input or output port.
+
+enum MIDIPortType {
+    "input",
+    "output"
+};
+
+Enumeration description
+input If a MIDIPort is an input port, the type member MUST be this value.
+output If a MIDIPort is an output port, the type member MUST be this value.
+
+interface MIDIPort : EventTarget {
+    readonly    attribute DOMString    id;
+    readonly    attribute DOMString?   manufacturer;
+    readonly    attribute DOMString?   name;
+    readonly    attribute MIDIPortType type;
+    readonly    attribute DOMString?   version;
+                attribute EventHandler ondisconnect;
+};
+
+
+6.1 Attributes
+
+
+id of type DOMString, readonly
+
+        A unique ID of the port. This can be used by developers to remember ports the user has chosen for their application. The User Agent MUST ensure that the id is unique to only that port. The
+        User Agent SHOULD ensure that the id is maintained across instances of the application - e.g., when the system is rebooted - and when a device is removed from the system. Applications may
+        want to cache these ids locally to re-create a MIDI setup. Some systems may not support completely unique persistent identifiers; in such cases, it will be more challenging to maintain
+        identifiers when another interface is added or removed from the system. (This might throw off the index of the requested port.) It is expected that the system will do the best it can to
+        match a port across instances of the MIDI API: for example, storing the port interface manufacturer, name and index in the id, and attempting to find any ports with that name to consider as
+        a match. Applications may use the comparison of id of MIDIPorts to test for equality.
+
+manufacturer of type DOMString, readonly , nullable
+
+        The manufacturer of the port.
+
+name of type DOMString, readonly , nullable
+
+        The system name of the port.
+
+ondisconnect of type EventHandler,
+
+        The handler called when a previously-available port is disconnected.
+
+        This event handler, of type disconnect, MUST be supported by all objects implementing MIDIPort interface.
+
+type of type MIDIPortType, readonly
+
+        A descriptor property to distinguish whether the port is an input or an output port. For MIDIOutput, this MUST be "output". For MIDIInput, this MUST be "input".
+
+version of type DOMString, readonly , nullable
+
+        The version of the port.
+
+Whenever the MIDI port corresponding to the MIDIPort becomes unavailable for use, the user agent SHOULD run the following steps:
+
+1. Let port be the MIDIPort.
+
+2. Let event be a newly constructed MIDIConnectionEvent, with the port attribute set to the port.
+
+3. Fire an event named disconnect at the port, using the event as the event object.
+
+
+
+6.2 MIDIInput Interface
+
+
+interface MIDIInput : MIDIPort {
+                attribute EventHandler onmidimessage;
+};
+
+
+6.2.1 Attributes
+
+
+onmidimessage of type EventHandler,
+
+        This event handler, of type MIDIMessage, MUST be supported by all objects implementing MIDIInput interface.
+
+Whenever the MIDI port corresponding to the MIDIInput finishes receiving one or more MIDI messages, the user agent MUST run the following steps:
+
+1. Let port be the MIDIInput.
+
+2. If the MIDIAccess did not enable system exclusive access, and the message is a system exclusive message, abort this process.
+
+3. Let event be a newly constructed MIDIMessageEvent, with the timestamp attribute set to the time the message was received by the system, and with the data attribute set to a Uint8Array of MIDI
+   data bytes representing a single MIDI message.
+
+4. Fire an event named midimessage at the port, using the event as the event object.
+
+
+It is specifically noted that MIDI System Real-Time Messages may actually occur in the middle of system exclusive messages in the input stream; in this case, the System Real-Time messages will be
+dispatched as they occur, while the system exclusive message will be buffered until it is complete (and then dispatched).
+
+
+6.3 MIDIOutput Interface
+
+
+interface MIDIOutput : MIDIPort {
+    void send (sequence<octet> data, optional double timestamp);
+};
+
+
+6.3.1 Methods
+
+
+send
+
+        Enqueues the message to be sent to the corresponding MIDI port. The underlying implementation will (if necessary) coerce each member of the sequence to an unsigned 8-bit integer. The use of
+        sequence rather than a Uint8Array enables developers to use the convenience of output.send( [ 0x90, 0x45, 0x7f ] ); rather than having to create a Uint8Array, e.g. output.send( new
+        Uint8Array( [ 0x90, 0x45, 0x7f ] ) ); - while still enabling use of Uint8Arrays for efficiency in large MIDI data scenarios (e.g. reading Standard MIDI Files and sending sysex messages).
+
+        The data contains one or more valid, complete MIDI messages. Running status is not allowed in the data, as underlying systems may not support it.
+
+        If the port is disconnected, throw an InvalidStateError exception.
+
+        If data is not a valid sequence or does not contain a valid MIDI message, throw a TypeError exception.
+
+        If data is a system exclusive message, and the MIDIAccess did not enable system exclusive access, throw an InvalidAccessError exception.
+
+        Parameter Type Nullable Optional Description
+        data sequence<octet> ✘ ✘ The data to be enqueued, with each sequence entry representing a single byte of data.
+        timestamp double ✘ ✔ The time at which to begin sending the data to the port (as a DOMHighResTimeStamp - a number of milliseconds measured relative to the navigation start of the
+        document). If timestamp is not present or is set to zero (or another time in the past), the data is to be sent as soon as possible.
+
+        Return type: void
+
+
+7. MIDIMessageEvent Interface
+
+
+An event object implementing this interface is passed to a MIDIInput's onmidimessage handler when MIDI messages are received.
+
+[Constructor(DOMString type, optional MIDIMessageEventInit eventInitDict)]
+interface MIDIMessageEvent : Event {
+    readonly    attribute double     receivedTime;
+    readonly    attribute Uint8Array data;
+};
+
+
+7.1 Attributes
+
+
+data of type Uint8Array, readonly
+
+        A Uint8Array containing the MIDI data bytes of a single MIDI message.
+
+receivedTime of type double, readonly
+
+        A DOMHighResTimeStamp specifying when the event occurred.
+
+
+        Note
+
+        The DOM4 Event object has a timeStamp member in the event object that will be filled out with the current time, but that it is lower precision (DOMTimeStamp is defined as an integer number
+        of milliseconds), has a different zero reference (DOMTimeSTamp is the number of milliseconds that has passed since 00:00:00 UTC on 1 January 1970), and therefore is less suitable for MIDI
+        applications.
+
+
+
+7.2 MIDIMessageEventInit Interface
+
+
+dictionary MIDIMessageEventInit {
+    double     receivedTime;
+    Uint8Array data;
+};
+
+
+7.2.1 Dictionary MIDIMessageEventInit Members
+
+
+data of type Uint8Array
+
+        A Uint8Array containing the MIDI data bytes of a single MIDI message.
+
+receivedTime of type double
+
+        A DOMHighResTimeStamp specifying when the event occurred.
+
+
+8. MIDIConnectionEvent Interface
+
+
+An event object implementing this interface is passed to a MIDIAccess' ondisconnect handler, and (if present) to any MIDIPorts referencing the port when a previously-available port becomes
+unavailable (for example, when a MIDI interface is disconnected), and is also passed to a MIDIAccess' onconnect handler when a new port becomes available (for example, when a MIDI interface that has
+been disconnected is plugged in to the computer).
+
+Connection events are not required to be dispatched, as some underlying systems do not support them as notification events; or, such systems may have long time delays as they poll for new devices
+infrequently.
+
+[Constructor(DOMString type, optional MIDIConnectionEventInit eventInitDict)]
+interface MIDIConnectionEvent : Event {
+    readonly    attribute MIDIPort port;
+};
+
+
+8.1 Attributes
+
+
+port of type MIDIPort, readonly
+
+        The port that has been connected or disconnected.
+
+
+8.2 MIDIConnectionEventInit Interface
+
+
+dictionary MIDIConnectionEventInit {
+    MIDIPort port;
+};
+
+
+8.2.1 Dictionary MIDIConnectionEventInit Members
+
+
+port of type MIDIPort
+
+        The port that has been connected or disconnected.
+
+
+9. Examples of Web MIDI API Usage in JavaScript
+
+
+This section is non-normative.
+
+The following are some examples of common MIDI usage in JavaScript.
+
+
+9.1 Getting Access to the MIDI System
+
+
+This example shows how to request access to the MIDI system.
+
+var midi = null;  // global MIDIAccess object
+
+function onMIDISuccess( midiAccess ) {
+  console.log( "MIDI ready!" );
+  midi = midiAccess;  // store in the global (in real usage, would probably keep in an object instance)
+}
+
+function onMIDIFailure(msg) {
+  console.log( "Failed to get MIDI access - " + msg );
+}
+
+navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure );
+
+
+9.2 Requesting Access to the MIDI System with System Exclusive Support
+
+
+This example shows how to request access to the MIDI system, including the ability to send and receive system exclusive messages.
+
+var midi = null;  // global MIDIAccess object
+
+function onMIDISuccess( midiAccess ) {
+  console.log( "MIDI ready!" );
+  midi = midiAccess;  // store in the global (in real usage, would probably keep in an object instance)
+}
+
+function onMIDIFailure(msg) {
+  console.log( "Failed to get MIDI access - " + msg );
+}
+
+navigator.requestMIDIAccess( { sysex: true } ).then( onMIDISuccess, onMIDIFailure );
+
+
+9.3 Listing Inputs and Outputs
+
+
+This example gets the list of the input and output ports and prints their information to the console log.
+
+function listInputsAndOutputs( midiAccess ) {
+  for (var input in midiAccess.inputs) {
+    console.log( "Input port [type:'" + input.type + "'] id:'" + input.id +
+      "' manufacturer:'" + input.manufacturer + "' name:'" + input.name +
+      "' version:'" + input.version + "'" );
+  }
+
+  for (var output in midiAccess.outputs) {
+    console.log( "Output port [type:'" + output.type + "'] id:'" + output.id +
+      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
+      "' version:'" + output.version + "'" );
+  }
+}
+
+
+9.4 Handling MIDI Input
+
+
+This example prints incoming MIDI messages on a single arbitrary input port to the console log.
+
+function onMIDIMessage( event ) {
+  var str = "MIDI message received at timestamp " + event.timestamp + "[" + event.data.length + " bytes]: ";
+  for (var i=0; i<event.data.length; i++) {
+    str += "0x" + event.data[i].toString(16) + " ";
+  }
+  console.log( str );
+}
+
+function startLoggingMIDIInput( midiAccess, indexOfPort ) {
+  midiAccess.inputs.entries[indexOfPort].onmidimessage = onMIDIMessage;
+}
+
+
+9.5 Sending MIDI Messages to an Output Device
+
+
+This example sends a middle C note on message immediately on MIDI channel 1 (MIDI channels are 0-indexed, but generally referred to as channels 1-16), and queues a corresponding note off message for
+1 second later.
+
+function sendMiddleC( midiAccess, indexOfPort ) {
+  var noteOnMessage = [0x90, 60, 0x7f];    // note on, middle C, full velocity
+  var output = midiAccess.outputs.entries[indexOfPort];
+  output.send( noteOnMessage );  //omitting the timestamp means send immediately.
+  output.send( [0x80, 60, 0x40], window.performance.now() + 1000.0 ); // Inlined array creation- note off, middle C,  
+                                                                      // release velocity = 64, timestamp = now + 1000ms.
+}
+
+
+9.6 A Simple Loopback
+
+
+This example loops all input messages on the first input port to the first output port - including system exclusive messages.
+
+var midi = null;  // global MIDIAccess object
+var output = null;
+
+function echoMIDIMessage( event ) {
+  if (output) {
+    output.send( event.data, event.timestamp );
+  }
+}
+
+function onMIDISuccess( midiAccess ) {
+  console.log( "MIDI ready!" );
+  try { 
+    var input = midiAccess.inputs.entries[indexOfPort];
+    input.onmidimessage = echoMIDIMessage;
+    output = midiAccess.outputs.entries[indexOfPort];
+  }
+  catch (e) {
+    console.error("Exception! Couldn't get i/o ports." + e );
+  }
+}
+
+function onMIDIFailure(msg) {
+  console.log( "Failed to get MIDI access - " + msg );
+}
+
+navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure );
+
+
+9.7 A Simple Monophonic Sine Wave MIDI Synthesizer
+
+
+This example listens to all input messages from all available input ports, and uses note messages to drive the envelope and frequency on a monophonic sine wave oscillator, creating a very simple
+synthesizer, using the Web Audio API. Note on and note off messages are supported, but sustain pedal, velocity and pitch bend are not. This sample is also hosted on webaudiodemos.appspot.com.
+
+var context=null;   // the Web Audio "context" object
+    var midiAccess=null;  // the MIDIAccess object.
+    var oscillator=null;  // the single oscillator
+    var envelope=null;    // the envelope for the single oscillator
+    var attack=0.05;      // attack speed
+    var release=0.05;   // release speed
+    var portamento=0.05;  // portamento/glide speed
+    var activeNotes = []; // the stack of actively-pressed keys
+
+    window.addEventListener('load', function() {
+      // patch up prefixes
+      window.AudioContext=window.AudioContext||window.webkitAudioContext;
+
+      context = new AudioContext();
+      if (navigator.requestMIDIAccess)
+        navigator.requestMIDIAccess().then( onMIDIInit, onMIDIReject );
+      else
+        alert("No MIDI support present in your browser.  You're gonna have a bad time.")
+
+      // set up the basic oscillator chain, muted to begin with.
+      oscillator = context.createOscillator();
+      oscillator.frequency.setValueAtTime(110, 0);
+      envelope = context.createGain();
+      oscillator.connect(envelope);
+      envelope.connect(context.destination);
+      envelope.gain.value = 0.0;  // Mute the sound
+      oscillator.start(0);  // Go ahead and start up the oscillator
+    } );
+
+    function onMIDIInit(midi) {
+      midiAccess = midi;
+
+      if (midiAccess.inputs.length === 0)
+        alert("No MIDI input devices present.  You're gonna have a bad time.")
+      else { // Hook the message handler for all MIDI inputs
+        for (var input in inputs)
+          input.onmidimessage = MIDIMessageEventHandler;
+      }
+    }
+
+    function onMIDIReject(err) {
+      alert("The MIDI system failed to start.  You're gonna have a bad time.");
+    }
+
+    function MIDIMessageEventHandler(event) {
+      // Mask off the lower nibble (MIDI channel, which we don't care about)
+      switch (event.data[0] & 0xf0) {
+        case 0x90:
+          if (event.data[2]!=0) {  // if velocity != 0, this is a note-on message
+            noteOn(event.data[1]);
+            return;
+          }
+          // if velocity == 0, fall thru: it's a note-off.  MIDI's weird, y'all.
+        case 0x80:
+          noteOff(event.data[1]);
+          return;
+      }
+    }
+
+    function frequencyFromNoteNumber( note ) {
+      return 440 * Math.pow(2,(note-69)/12);
+    }
+
+    function noteOn(noteNumber) {
+      activeNotes.push( noteNumber );
+      oscillator.frequency.cancelScheduledValues(0);
+      oscillator.frequency.setTargetAtTime( frequencyFromNoteNumber(noteNumber), 0, portamento );
+      envelope.gain.cancelScheduledValues(0);
+      envelope.gain.setTargetAtTime(1.0, 0, attack);
+    }
+
+    function noteOff(noteNumber) {
+      var position = activeNotes.indexOf(noteNumber);
+      if (position!=-1) {
+        activeNotes.splice(position,1);
+      }
+      if (activeNotes.length==0) {  // shut off the envelope
+        envelope.gain.cancelScheduledValues(0);
+        envelope.gain.setTargetAtTime(0.0, 0, release );
+      } else {
+        oscillator.frequency.cancelScheduledValues(0);
+        oscillator.frequency.setTargetAtTime( frequencyFromNoteNumber(activeNotes[activeNotes.length-1]), 0, portamento );
+      }
+    }
+
+
+10. Security and Privacy Considerations of MIDI
+
+
+There are two primary security and privacy concerns with adding the Web MIDI API to the web platform:
+
+1. Allowing the enumeration of the user's MIDI interfaces is a potential target for fingerprinting (that is, uniquely identifying a user by the specific MIDI interfaces they have connected). Note
+   that in this context, what can be enumerated is the MIDI interfaces - not, for example, an individual sampler or synthesizer plugged into a MIDI interface, as these would not be enumerated,
+   unless those devices are connected to the host computer with USB (USB-MIDI devices typically have their own MIDI interface, and would be enumerated). The interfaces that could be fingerprinted
+   are equivalent to MIDI "ports", and for each device the API will expose the name of the device, manufacturer, and opaque identifier of the MIDI interface (but not any attached devices).
+
+   Few systems will have significant numbers of MIDI devices attached; those systems that do will typically use hardware MIDI interfaces, not fanning out a dozen USB-MIDI connections through USB
+   hubs. In this case, of course, enumerating the MIDI “devices” will only see the hardware MIDI interface(s), not the synthesizers, samplers, etc. plugged into it on the other side. Given the
+   few number of devices plugged in, the amount of information exposed here is fairly symmetric with the fingerprinting concern exposed by other APIs such as the Gamepad API. The vast majority of
+   systems have relatively few MIDI interfaces attached.
+
+2. Separate from the fingerprinting concerns of identifying the available ports are concerns around sending and receiving MIDI messages. Those issues are explored in more depth below.
+
+In brief, the general categories of things you can do with MIDI ports are:
+
+1. Sending short messages (all messages except SysEx)
+2. Receiving short messages (all messages except SysEx)
+3. Sending SysEx messages. SysEx messages include both commonly recognized MIDI Time Code and MIDI Sample Dump Standard, as well as device-specific messages (like “patch control data for a
+   Roland Jupiter-80 synthesizer”) that do not apply to other devices.
+4. Receiving SysEx messages.
+
+The impact of each of these is:
+
+1. Sending short messages: sending note-on/note-off/controller messages would let you cause sounds to be played by attached devices, including (on Mac and Windows) any default virtual
+   synthesizers. This by itself does not cause any concerning exposure - you can already make sounds without interaction, through <audio>, Flash, or Web Audio. Some attached devices might be
+   professional lighting control systems, so it’s possible you could control stage lighting; however, this is extremely rare, and no known system has the ability to cause lasting damage or
+   information leakage based solely on short messages; at worst, a malicious page could flash lights, and the user could close the page and reset their lighting controller.
+2. Receiving short messages: receiving note-on/note-off/controller messages would not cause any information exposure or security issues, as there is no identifying data being received, just a
+   stream of controller messages - all of which must be initiated by the user on that MIDI device (except clock-type messages). This is very analogous to receiving keyboard or mouse events.
+3. Sending and Receiving SysEx. This is the biggest concern, because it would be possible to write code that looked for system-specific responses to sysex messages, which could identify the
+   hardware available, and then use it to download data - e.g. samples stored in a sampler - or replace that data (erasing sample data or patches in the device), although both these scenarios would
+   have to be coded for a particular device. It is also possible that some samplers might enable a system exclusive message to start recording a sample - so if the sampler happened to have a
+   dedicated microphone attached (uncommon in practice, but possible), it would be possible to write code specific to a particular device that could record a short sample of sound and then upload it
+   to the network without further user intervention. (You could not stream audio from the device, and most samplers have fairly limited memory, and MIDI Sample Dump sysex is a slow way to transfer
+   data - it has to transcode into 7-bit - so it’s unlikely you could listen in for long periods.) More explicit fingerprinting is a concern, as the patch information/stored samples/user
+   configuration could uniquely identify the system (although again, this requires much device-specific code; there is not standardized “grab all patches and hash it” capability.) This does
+   suggest that system exclusive messages are in a security category of their own.
+
+It's also useful to examine what scenarios are enabled by MIDI, mapped against these features:
+
+1. Receiving short messages. This is the most attractive scenario for Web MIDI, as it enables getting input from keyboards, drum pads, guitars, wind controllers, DJ/controllerist controllers, and
+   more, and use those messages as input to control instruments and features in the Web Audio API as well as other control scenarios (MIDI is the protocol of choice for the multi-billion-dollar
+   music production industry for getting physical controllers like knobs and buttons attached to your computer, both in pro/prosumer audio and media applications as well as consumer applications
+   like Garageband.)
+2. Sending short messages - it’s tempting to say sending is significantly less interesting, as the scenario of attached output devices like hardware synthesizers is less common in today's
+   market. The major exception to this is that many of the MIDI controllers have external host control of their indicator lights, and this makes them dramatically more useful. For example, the very
+   popular Novation Launchpad controller uses MIDI note on/off messages sent to it to turn on/off and change colors of the buttons. The same is true of nearly all DJ controllers.
+3. Sending and receiving SysEx - obviously, for more advanced communication with high-end hardware devices, SysEx is required. Unfortunately, some common MIDI commands are also sent as system
+   exclusive messages (MIDI Machine Control, for example - generic start/stop/rew/ffw commands) - and many devices use system exclusive to program patches, send advanced controller messages,
+   download firmware, etc., which are much-demanded scenarios for Web MIDI. Some devices use sysex as a direct control protocol, as they can pack more data into a single “message”, and most
+   devices use SysEx as way to save and restore patches and configuration information on less-expensive computer storage. Several of the major music hardware producers have expressed strong interest
+   in using Web MIDI to provide web-based configuration and programming interfaces to their hardware. In short, disabling sysex altogether does not only disable high-end scenarios.
+
+In short: the additional fingerprinting exposure of enumerating MIDI devices is directly analogous to the Gamepad API’s additional fingerprinting exposure through gamepad enumeration; typical
+users will only have at most a few devices connected, their configuration may change, and the information exposed is about the interface itself (i.e., no user-configured data).
+
+The additional security concern for receiving short messages is also small - it’s analogous to listening to keyboard, mouse, mobile/laptop accelerometer, touch input or gamepad events; there is no
+additional information exposed, and all messages other than clock signals must be initiated by the user.
+
+The additional concerns about sending short messages are analogous to any audio output - you cannot overwrite user information or expose use information, but you can make sounds happen, change
+patches, or (in rare configurations) toggle lights - but non-destructively, and not persistently.
+
+System Exclusive, on the other hand, has a much less bounded potential, and it seems that distinguishing requests for SysEx separately in the API is a good idea, in order to more carefully provide
+user security hooks. The suggested security model explicitly allows user agents to require the user's approval before giving access to MIDI devices, although it is not currently required to prompt
+the user for this approval - but it also detailed that system exclusive support must be requested as part of that request.
+
+
+A. References
+
+
+
+A.1 Normative references
+
+
+[DOM-LEVEL-3-CORE]
+        Arnaud Le Hors; Philippe Le Hégaret; Lauren Wood; Gavin Nicol; Jonathan Robie; Mike Champion; Steven B Byrne et al. Document Object Model (DOM) Level 3 Core Specification. 7 April 2004. W3C
+        Recommendation. URL: http://www.w3.org/TR/DOM-Level-3-Core/
+[DOM4]
+        Anne van Kesteren; Aryeh Gregor; Lachlan Hunt; Ms2ger. DOM4. 6 December 2012. W3C Working Draft. URL: http://www.w3.org/TR/dom/
+[HIGHRES-TIME]
+        Jatinder Mann. High Resolution Time Specification. 18 October 2012. W3C Editor's Draft. URL: http://dvcs.w3.org/hg/webperf/raw-file/tip/specs/HighResolutionTime/Overview.html
+[HTML5]
+        Robin Berjon; Steve Faulkner; Travis Leithead; Erika Doyle Navara; Edward O'Connor; Silvia Pfeiffer. HTML5. 6 August 2013. W3C Candidate Recommendation. URL: http://www.w3.org/TR/html5/
+[MIDI]
+        Musical Instrument Digital Interface (MIDI) November 2001. MIDI Manufacturers Association. Complete MIDI 1.0 Detailed Specification ISBN 0-9728831-0-X URL:
+        http://www.midi.org/techspecs/index.php
+[RFC2119]
+        S. Bradner. Key words for use in RFCs to Indicate Requirement Levels. March 1997. Internet RFC 2119. URL: http://www.ietf.org/rfc/rfc2119.txt
+[TYPED-ARRAYS]
+        David Herman; Kenneth Russell. Typed Array Specification. 26 June 2013. Khronos Working Draft. URL: https://www.khronos.org/registry/typedarray/specs/latest/
+[WEBIDL]
+        Cameron McCormack. Web IDL. 19 April 2012. W3C Candidate Recommendation. URL: http://www.w3.org/TR/WebIDL/
+[webaudio]
+        Paul Adenot; Chris Wilson; Chris Rogers. Web Audio API. 10 October 2013. W3C Working Draft. URL: http://www.w3.org/TR/webaudio/

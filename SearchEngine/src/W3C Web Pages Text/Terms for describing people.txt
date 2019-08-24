@@ -1,0 +1,646 @@
+Terms for describing people
+
+
+
+
+
+
+Terms for describing people
+
+
+
+W3C Working Draft 05 April 2012
+
+
+This version:
+        http://www.w3.org/TR/2012/WD-vocab-people-20120405/
+Latest published version:
+        http://www.w3.org/TR/vocab-people/
+Latest editor's draft:
+        https://dvcs.w3.org/hg/gld/raw-file/default/people/index.html
+Editor:
+        Michael Hausenblas, DERI
+
+Copyright © 2012 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+
+Abstract
+
+
+This document defines a set of terms for describing people. It defines how to describe people's characteristics such as names or addresses and how to relate people to other things, for example to
+organizations or projects. For each term, guidance on the usage within a running example is provided. This document also defines mappings to widely used vocabularies to enable interoperability.
+
+
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the technical reports index at http://www.w3.org/TR/.
+
+This document is work in progress. You might also want to check the accompanying Wiki page of the GLD Working Group for ongoing discussions.
+
+This document was published by the Government Linked Data (GLD) Working Group as a First Public Working Draft. This document is intended to become a W3C Recommendation. If you wish to make comments
+regarding this document, please send them to public-gld-comments@w3.org (subscribe, archives). All feedback is welcome.
+
+Publication as a Working Draft does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also
+includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the information in
+accordance with Patent Policy.
+
+
+
+
+Table of Contents
+
+
+* Introduction
+  o Terminology
+  o Conventions
+  o Walkthrough example
+
+* Use Cases and requirements
+  o UC1 — Finding a politician
+  o UC2 — Provide spending of local authority
+  o UC3 — Public tenders
+  o UC4 — Awarded bids
+  o UC5 — Budget positions and salaries
+  o UC6 — Lobbying activity
+  o UC7 — Question time archive
+  o Requirements
+
+* What is a person?
+* Relating a person to other entities
+  o Relating a person to a contact information
+  o Relating a person to another person
+  o Relating a person to an organization
+  o Relating a person to a building or room
+  o Relating a person to a project
+  o Relating a person to online posts
+
+* Terms
+* Interoperability considerations
+  o Mapping to ISA Core Person Vocabulary
+  o Mapping to Schema.org
+  o Mapping to Personal Information Model (PIMO)
+
+* Acknowledgments
+* References
+  o Normative references
+  o Informative references
+
+
+
+
+
+Scope
+
+
+This document is aimed at both publishers and consumers of Linked Data. We assume that the reader has a certain familiarity with RDF and RDF Schema as well as well-known vocabularies, such as FOAF
+or Dublin Core. The goal of the document is to specify an interoperable way to describe people and their relationships to other entities such as organisations or projects.
+
+
+
+
+1. Introduction
+
+
+This section is non-normative.
+
+
+
+1.1 Terminology
+
+
+source data
+        Data from datastores such as RDBs or spreadsheets that acts as a source for the Linked Data publishing process.
+publisher
+        A person or organization that exposes source data as Linked Data on the Web.
+consumer
+        A person or agent that uses Linked Data from the Web.
+
+@@TODO: point out definition of source data in the BP document for further details.
+
+
+
+
+1.2 Conventions
+
+
+The key words must, must not, required, should, should not, recommended, may, and optional in this specification are to be interpreted as described in RFC 2119 [RFC2119].
+
+Examples of RDF serialisations in this document are written in the Turtle [TURTLE] syntax; we assume the following namespace prefix bindings unless otherwise stated:
+
+Prefix IRI
+rdf: 
+http://www.w3.org/1999/02/22-rdf-syntax-ns#
+
+rdfs: 
+http://www.w3.org/2000/01/rdf-schema#
+
+dct: 
+http://purl.org/dc/terms/
+
+xsd: 
+http://www.w3.org/2001/XMLSchema#
+
+
+
+
+
+1.3 Walkthrough example
+
+
+In many cases, source data contains data about people and other, related entities. We will use the following text as an example throughout the document to demonstrate the usage of terms:
+
+Jane Doe is CEO of ColCids Inc., headquartered in 2242 Old Middlefield Way, Mountain View, CA, United States.
+Recently, ColCids won a contract for providing an Open Data platform, awarded by the Santa Clara County. The
+project, called OpenData4SantaClara, starts on 1 Feb 2013 and runs initially for three months. Jane's contact
+point in the County of Santa Clara is Björk Guðmundsdóttir. To ensure a successful project delivery, Jane has
+invited 東海林賢蔵, a business contact and Open Data guru she recently met at a local event, to brief her and 
+the CoolCids team on the challenges and requirements in the domain.
+
+Note: if you're not familiar with people's names throughout the world, you might want to read the personal names around the world article provided by the W3C Internationalization (I18n) Activity.
+
+
+A visual representation of the walkthrough example as a graph (big version).
+
+
+
+
+
+
+2. Use Cases and requirements
+
+
+This section is non-normative.
+
+@@TODO: describe real world use cases and derive requirements common to all to decide what is and what is not in scope re target entities.
+
+
+
+2.1 UC1 — Finding a politician
+
+
+
+
+Scenario
+
+
+A publisher wants to provide contact details for politicians, responsible for a certain region and/or topic.
+
+Real-world example: WriteToThem.
+
+
+
+
+Requirements
+
+
+* Contact details of politician, incl. name, address, email, phone number, fax number
+* Area of responsibility
+* Office location
+* Membership in a body (such as parliament, etc.)
+
+
+
+
+
+2.2 UC2 — Provide spending of local authority
+
+
+
+
+Scenario
+
+
+A publisher wants to provide an overview of how a local authority, such as a County Council, spends its money.
+
+Real-world example: Councillors Allowances and Expenses 2010, Fingal County Council, Ireland.
+
+
+
+
+Requirements
+
+
+* Contact details of politician, incl. name, address, email, phone number, fax number
+* Membership in a body (such as parliament, etc.)
+* Expense, incl. type, event, amount
+
+
+
+
+
+2.3 UC3 — Public tenders
+
+
+
+
+Scenario
+
+
+A publisher wants to provide access to public tenders for transparency or accountability applications.
+
+Real-world example: Tenders Electronic Daily by the European Union and it's Linked Open Data version.
+
+
+
+
+Requirements
+
+
+* Contact details of contracting authority
+* Object of the contract
+* Contract duration and conditions
+
+
+
+
+
+2.4 UC4 — Awarded bids
+
+
+
+
+Scenario
+
+
+A publisher wants to provide a listing of awarded bids.
+
+Real-world example: Awarded Bids, Alabama Department of Finance, USA.
+
+
+
+
+Requirements
+
+
+* Contact details of contracting authority and buyer
+* Object of the contract
+* Action date
+
+
+
+
+
+2.5 UC5 — Budget positions and salaries
+
+
+
+
+Scenario
+
+
+A publisher wants to inform about the budget positions along with salaries.
+
+Real-world example: Budget - Positions and Salaries in 2011 Appropriation Ordinance, City of Chicago, USA.
+
+
+
+
+Requirements
+
+
+* Department codes and details such as area of responsibility
+* Position, incl. title, assigned budget type, etc.
+* Amount
+
+
+
+
+
+2.6 UC6 — Lobbying activity
+
+
+
+
+Scenario
+
+
+A publisher wants to disclose lobbying activities.
+
+Real-world example: Lobbying Activity, State of California, USA.
+
+
+
+
+Requirements
+
+
+* Contact details of individual lobbyists
+* Lobbyist relationships to companies, such as membership in a body, etc.
+
+
+
+
+
+2.7 UC7 — Question time archive
+
+
+
+
+Scenario
+
+
+A publisher wants to provide an archive of online question times for a certain topic and/or politician.
+
+Real-world example: #AskNeelie by Neelie Kroes, Vice President of the European Commission, Europe.
+
+
+
+
+Requirements
+
+
+* Online handle of person who answers and people who ask questions
+* Topics via hashtags or indirect via question
+* Sequence of questions and answers such as follow-ups, etc.
+
+
+
+
+
+2.8 Requirements
+
+
+Requirement UC1 UC2 UC3 UC4 UC5 UC6 UC7
+Contact details • • • • • • 
+Area of responsibility •    •  
+Location •     • 
+Membership in body • •    • 
+Expense or budget type  •   •  
+Events  • • •  • •
+Amount  • • • •  
+Object of contract   • •   
+Online handle       •
+Conversation topic       •
+
+@@TODO: describe how we determine which requirements are common to all UC: for example, we could say that a requirement must at least show up in half of the UC, etc.
+
+
+
+
+
+3. What is a person?
+
+
+The core concept we are dealing with in this document is that of a person. A person in the context of this specification is defined as an entity of type foaf:Person.
+
+If only the person's name is known foaf:name must be used.
+
+<http://data.sccgov.org/people/björkg> rdf:type foaf:Person ;
+                                       foaf:name "Björk Guðmundsdóttir" .
+
+How to provide further details about a person, such as an address, is specified in section relating a person to a contact information.
+
+
+Best Practice 1: Deriving domain-specific person types
+
+One sometimes finds specialisations of a person in a domain, for example, in the legal domain there is a distinction made between a natural person and a legal person. In such a case the publisher
+should, in addition to the domain-specific type (e.g., legal:NaturalPerson) explicitly set the type foaf:Person in order to increase interoperability. This also allow systems that do not perform
+reasoning, for example, plain SPARQL processors to benefit from it. Read more ...
+
+
+
+
+
+4. Relating a person to other entities
+
+
+Beyond stating the basic characteristics of a person one can relate a person to a target entity such as an organisation or project. The following sections normatively specify how to do this. For any
+target entity type not listed in the below sections the publisher is free to use any appropriate vocabulary. See also the (@@link) vocabulary selection section of the Best Practices for Publishing
+Linked Data document for guidance on how to find and select such a vocabulary.
+
+ISSUE-18
+
+
+
+4.1 Relating a person to a contact information
+
+
+In order to relate a person to a contact information, such as typically found on a business card:
+
+1. the contact information must be represented using vCard, and
+
+   ISSUE-22
+
+2. the link type used between a person and a contact information must be gldp:card.
+
+   ISSUE-24
+
+
+@prefix gldp: <http://www.w3.org/ns/people#> .
+@prefix : <http://colcids.com/person/> .
+	
+:42 a foaf:Person ;
+    gldp:card :42#bc .
+
+:42#bc a v:VCard ;
+       v:fn "Jane Doe" ;
+       ...
+
+
+
+
+4.2 Relating a person to another person
+
+
+In order to relate a person to another person one must use the FOAF Vocabulary Specification:
+
+* To state that one person knows another person, foaf:knows must be used.
+* To state other relationships between people, the RELATIONSHIP vocabulary should be used.
+
+<http://colcids.com/person/42> foaf:knows <http://opendataguru.net/me> .
+
+
+Best Practice 2: Trusting people's relationships
+
+A foaf:knows only establishes an unidirectional claim that someone knows someone else. The relation should only be considered to be of a mutual nature if the other person sets a foaf:knows relation
+as well. Read more ...
+
+
+
+
+
+4.3 Relating a person to an organization
+
+
+In order to relate a person to an organization one must use the Organization Ontology.
+
+<http://colcids.com/company> a org:FormalOrganization .
+
+<http://colcids.com/person/42> a foaf:Person .
+
+_:bn123 a org:Membership ;
+        org:organization <http://colcids.com/company> ;
+        org:member <http://colcids.com/person/42> .
+
+ISSUE-19
+
+
+
+
+4.4 Relating a person to a building or room
+
+
+In order to relate a person to a building or room one must use the Buildings and Rooms Vocabulary.
+
+To state that a person is located in a building or room rooms:occupant must be used.
+
+@prefix rooms: <http://vocab.deri.ie/rooms#> .
+@prefix :  <>.
+
+<http://colcids.com/person/42> a foaf:Person .
+
+:CCHQ a rooms:Building ;
+      rooms:contains :r101 .
+
+:r101 a rooms:Room ;
+      rooms:occupant <http://colcids.com/person/42> .
+
+ISSUE-23
+
+
+
+
+4.5 Relating a person to a project
+
+
+In order to relate a person to a project one must use the FOAF Vocabulary Specification.
+
+@prefix gldp: <http://www.w3.org/ns/people#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix :  <http://data.sccgov.org/project/> .
+
+<http://data.sccgov.org/people/björkg> a foaf:Person .
+
+:OpenData4SantaClara a foaf:Project ;
+                     gldp:title "OpenData4SantaClara" ;
+                     rdfs:label "OpenData4SantaClara" ;
+                     gldp:lead <http://data.sccgov.org/people/björkg> ;
+                     gldp:starts "2013-02-01T00:00:00Z"^^xsd:dateTime ;
+                     gldp:ends "2013-05-01T00:00:00Z"^^xsd:dateTime .
+
+
+Best Practice 3: Multiple label properties
+
+In order to enable generic Linked Data browsers, such as Tabulator, which typically hard-code well-known label terms to display human readable labels rather than URIs, one should repeat the content
+of the gldp:title's literal object in an rdfs:label literal object.
+
+
+ISSUE-20
+
+
+
+
+4.6 Relating a person to online posts
+
+
+In order to relate a person to online posts such as blog posts, mailing list posts, etc, one must use the SIOC Core Ontology Specification.
+
+@prefix sioc: <http://rdfs.org/sioc/ns#> .
+
+<http://blog.colcids.com/2012/12/01/launching-opendata4santaclara/> a sioc:Post ;
+                                                                    dct:title "OpenData4SantaClara will launch in early 2013" ;
+                                                                    dct:created "2012-12-01T17:25:30Z" ;
+                                                                    sioc:has_creator <http://colcids.com/person/42> .
+
+<http://colcids.com/person/42> a sioc:User .
+
+
+
+
+
+5. Terms
+
+
+This section defines terms that allow to relate a person to other entities, such as contact information, etc. The terms below are defined in the namespace URI http://www.w3.org/ns/people# and the
+preferred namespace prefix for the namespace URI is gldp.
+
+An implementer of this spec must support the following terms:
+
+Term Definition
+gldp:card Relates a foaf:Person to a v:VCard; read: a person has a business card.
+gldp:ends Specifies the end date of a foaf:Project as an xsd:dateTime [XMLSCHEMA2]; read: a project ends on date.
+gldp:lead Relates a foaf:Project to a foaf:Person; read: a project has a project lead.
+gldp:starts Specifies the start date of a foaf:Project as an xsd:dateTime [XMLSCHEMA2]; read: a project starts on date.
+gldp:title Specifies the title of a foaf:Project as an xsd:string [XMLSCHEMA2]; read: a projects has a title.
+
+
+
+
+6. Interoperability considerations
+
+
+Our concept of a person is based on foaf:Person, but there are many more conceptualisations in use, for example as defined by the Interoperability Solutions for European Public Administrations (ISA)
+project, the Schema.org project by the search engine providers Bing, Google, Yahoo! or as found in the Personal Information Model (PIMO) by the Semantic Desktop project.
+
+To enable interoperability and, in general, to make the data more useful, we define mappings of terms, in the following. An implementer of this spec should support these mappings.
+
+ISSUE-21
+
+
+
+6.1 Mapping to ISA Core Person Vocabulary
+
+
+@@TODO: evaluate ISA Core Person Vocabulary and identify how and what to map.
+
+
+
+
+6.2 Mapping to Schema.org
+
+
+@@TODO: evaluate schema:Person and identify how and what to map.
+
+
+
+
+6.3 Mapping to Personal Information Model (PIMO)
+
+
+@@TODO: evaluate pimo:Person and identify how and what to map.
+
+
+
+
+
+A. Acknowledgments
+
+
+The Editor would like to thank the following people for their input and directions: Phil, Renato, George, Sandro, Richard.
+
+
+
+
+B. References
+
+
+
+
+B.1 Normative references
+
+
+[RFC2119]
+        S. Bradner. Key words for use in RFCs to Indicate Requirement Levels. March 1997. Internet RFC 2119. URL: http://www.ietf.org/rfc/rfc2119.txt
+[XMLSCHEMA2]
+        W3C XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes David Peterson; et al. W3C Proposed Recommendation 19 January 2012. URL: http://www.w3.org/TR/xmlschema11-2/
+
+
+
+B.2 Informative references
+
+
+[TURTLE]
+        Turtle - Terse RDF Triple Language D. Beckett and T. Berners-Lee. W3C Team Submission 28 March 2011. URL: http://www.w3.org/TeamSubmission/turtle/
+
+

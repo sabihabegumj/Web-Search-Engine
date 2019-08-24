@@ -1,0 +1,161 @@
+Techniques for User Agent Accessibility Guidelines 1.0
+
+
+
+
+[next chapter]   [contents]  
+
+
+
+
+
+
+
+Techniques for User Agent Accessibility Guidelines 1.0
+
+
+
+W3C Note 17 December 2002
+
+
+This version:
+        http://www.w3.org/TR/2002/NOTE-UAAG10-TECHS-20021217/
+Latest version:
+        http://www.w3.org/TR/UAAG10-TECHS/
+Previous version:
+        http://www.w3.org/TR/2002/WD-UAAG10-TECHS-20021016/
+Editors:
+        Ian Jacobs, W3C
+        Jon Gunderson, University of Illinois at Urbana-Champaign
+        Eric Hansen, Educational Testing Service
+Authors and Contributors:
+        See acknowledgements.
+
+Please refer to the errata for this document, which may include some normative corrections.
+
+This document is also available in these non-normative packages: single HTML [669K] (gzipped [148K]), HTML [556K], and zip archive of HTML [572K].
+
+See also translations of this document.
+
+Copyright © 1999 - 2002 W3C ® ( MIT, INRIA, Keio), All Rights Reserved. W3C liability, trademark, document use and software licensing rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+This document provides techniques for satisfying the checkpoints defined in "User Agent Accessibility Guidelines 1.0" [UAAG10]. These techniques address key aspects of the accessibility of user
+interfaces, content rendering, application programming interfaces (APIs), and languages such as the Hypertext Markup Language (HTML), Cascading Style Sheets (CSS) and the Synchronized Multimedia
+Integration Language (SMIL).
+
+The techniques listed in this document are not required for conformance to the Guidelines. These techniques are not necessarily the only way of satisfying the checkpoint, nor are they a definitive
+set of requirements for satisfying a checkpoint.
+
+
+Status of this document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. The latest status of this document series is maintained at the W3C.
+
+This is the 17 December 2002 Note of "Techniques for User Agent Accessibility Guidelines 1.0." It is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to use this document as reference material or to cite it as other than "work in progress." Though this document has been endorsed by the User Agent Accessibility Guidelines Working
+Group, it has not been endorsed by the W3C Membership.
+
+While User Agent Accessibility Guidelines 1.0 strives to be a stable document (as a W3C Recommendation), the current document is expected to evolve as technologies change and software developers
+discover more effective techniques for designing accessible user agents.
+
+This document was produced by the User Agent Accessibility Guidelines Working Group (UAWG). The goals of the UAWG are described in UAWG charter. The complete list of changes to this document is
+available on the Web.
+
+The UAWG also provides additional resources to support this document (e.g., Frequently Asked Questions (FAQ) about UAAG 1.0, implementation reports, and test suites). Please consult the UAWG home
+page for more information.
+
+Patent disclosures relevant to this specification may be found on the Working Group's patent disclosure page in conformance with W3C policy.
+
+The list of errata for this document is available at http://www.w3.org/WAI/UA/UAAG-errata. Please report errors in this document to wai-uaag-editor@w3.org.
+
+Please send other comments about this document to the public mailing list w3c-wai-ua@w3.org; public archives are available.
+
+The English version of this document is the authoritative version. Translations into other languages may be available at http://www.w3.org/WAI/UA/UAAG-translations.
+
+This document is part of a series of accessibility documents published by the ) of the World Wide Web Consortium (W3C). WAI Accessibility Guidelines are produced as part of the WAI Technical
+Activity.
+
+A list of current W3C Recommendations and other technical documents can be found at the W3C Web site.
+
+
+
+
+Table of contents
+
+
+* Abstract
+* Status of this document
+* 1 Introduction
+* 2 The user agent accessibility guidelines
+  o 1. Support input and output device-independence
+  o 2. Ensure user access to all content
+  o 3. Allow configuration not to render some content that may reduce accessibility
+  o 4. Ensure user control of rendering
+  o 5. Ensure user control of user interface behavior
+  o 6. Implement interoperable application programming interfaces
+  o 7. Observe operating environment conventions
+  o 8. Implement specifications that benefit accessibility
+  o 9. Provide navigation mechanisms
+  o 10. Orient the user
+  o 11. Allow configuration and customization
+  o 12. Provide accessible user agent documentation and help
+
+* 3 Accessibility topics
+  o 3.1 Access to content
+  o 3.2 User control of rendering and style
+  o 3.3 Link techniques
+  o 3.4 List techniques
+  o 3.5 Table techniques
+  o 3.6 Image map techniques
+  o 3.7 Frame techniques
+  o 3.8 Form techniques
+  o 3.9 Generated content techniques
+  o 3.10 Content repair techniques
+  o 3.11 Script and applet techniques
+  o 3.12 Input configuration techniques
+  o 3.13 Synthesized speech techniques
+  o 3.14 Techniques for reducing dependency on spatial interactions
+  o 3.15 Accessibility and internationalization techniques
+  o 3.16 Appendix: Impact matrix
+  o 3.17 Appendix: Accessibility features of some operating systems
+  o 3.18 Appendix: Loading assistive technologies for access to the document object model
+
+* 4 Glossary
+* 5 References
+  o 5.1 How to refer to this document
+  o 5.2 Normative references
+  o 5.3 Informative references
+
+* 6 Resources
+  o 6.1 Operating system and programming guidelines
+  o 6.2 User agents and other tools
+  o 6.3 Accessibility resources
+  o 6.4 Standards resources
+
+* 7 Acknowledgments
+
+
+Note: With a user agent that implements HTML 4 [HTML4] access keys, readers may navigate directly to the table of contents via the "c" character. Users may have to use additional keyboard strokes
+depending on their operating environment.
+
+
+
+
+
+========================================================================================================================================================================================================
+
+
+
+
+[next chapter]   [contents]  
+
+
+

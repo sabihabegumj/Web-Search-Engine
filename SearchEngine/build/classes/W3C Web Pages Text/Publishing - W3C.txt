@@ -1,0 +1,216 @@
+Publishing - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+XML Technology
+
+
+* Publishing
+* Processing
+* Components
+* Query
+* Transformation
+* Security
+* Schema
+* XML Essentials
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* XML&#xA0;Technology » 
+* Publishing
+
+
+
+
+Publishing
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;topic &#x2022;
+* what&#xA0;is&#xA0;topic&#xA0;used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+The Extensible Markup Language (XML) originally grew out of the technical publication community. People had been using the larger, more complex SGML standard to publish technical documentation,
+manuals, financial reports, books and much more, but they needed something that would fit in better with the World Wide Web, and that would have a lower total cost.
+
+The Extensible Stylesheet Language (XSL) came out of earlier work at ISO on DSSSL, the Document Styling and Semantics Specification Language, but adapted for XML.
+
+
+What is XSL-FO?
+
+
+XSL is in two parts. The first part, XSLT, is used to transform XML documents into something that one can see how to format: in fact, for publishing, into the XML vocabulary that is the second part
+of XSL: XSL-FO.
+
+XSL-FO, the Formatting Objects part of XSL, is an XML markup language for describing page layout and formatting.
+
+You can use XSL-FO to publish even large or complex multilingual XML documents to HTML, PDF or other formats; you can include SVG diagrams and MathML formulas, as well as other foreign objects.
+
+
+What is XSL-FO Used For?
+
+
+You can find XSL-FO in use wherever automated publishing is needed: everything from bank statements to driving licenses, from text books to database reports. XSL-FO is also used by some
+organizations for brochures and magazines; it has more sophisticated formatting than HTML and CSS, but is still a standard.
+
+
+
+
+
+Recent Press
+
+
+10 August
+Computer Sweden
+        "Microsoft satsar p&#xE5; html 5 (Microsoft puts effort on HTML 5)"
+7 August
+Poynter Online
+        "How AP's News Registry Will (and Won't) Work"
+6 August
+International Relations and Security Network.com
+        "Web 3.0: Installing the Plumbing"
+5 August
+ZDNet
+        "The future of enterprise data in a radically open and Web-based world"
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* XSL-FO
+
+
+These W3C Groups are working on the related specifications:
+
+
+* XSLT Working Group
+* Internationalization Working Group
+
+
+
+Contact
+
+
+Liam R. E. Quin <liam@w3.org>
+
+
+
+
+
+Current Status
+
+
+* XSL-FO
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+
+
+Logos
+
+
+* XML
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2010 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

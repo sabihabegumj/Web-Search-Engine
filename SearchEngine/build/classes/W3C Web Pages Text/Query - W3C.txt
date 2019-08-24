@@ -1,0 +1,203 @@
+Query - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+XML Technology
+
+
+* Publishing
+* Processing
+* Components
+* Query
+* Transformation
+* Security
+* Schema
+* XML Essentials
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* XML&#xA0;Technology » 
+* Query
+
+
+
+
+Query
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;topic &#x2022;
+* what&#xA0;is&#xA0;topic&#xA0;used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+
+
+
+What is XQuery?
+
+
+XQuery is a standardized language for combining documents, databases, Web pages and almost anything else. It is very widely implemented. It is powerful and easy to learn.
+
+
+What is XQuery Used For?
+
+
+XQuery is replacing proprietary middleware languages and Web Application development languages. XQuery is replacing complex Java or C++ programs with a few lines of code. XQuery is simpler to work
+with and easier to maintain than many other alternatives.
+
+It is used as a back end for implementing Web sites, integrating corporate data stores in the enterprise, in the XRX architecture (XForms, REST and XQuery), as well as for large publishing projects,
+for data mining, and for academic research. It can run on large servers and on mobile devices, as part of commercial software and as open source.
+
+
+Examples
+
+
+...Explanation...
+
+
+Learn More
+
+
+...Explanation...
+
+
+
+
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* XQuery
+* XPath
+
+
+These W3C Groups are working on the related specifications:
+
+
+* XML Query Working Group
+* XSLT Working Group
+
+
+
+Contact
+
+
+Liam R. E. Quin <liam@w3.org>
+
+
+
+
+
+Current Status
+
+
+* XQuery
+* XPath
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2010 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

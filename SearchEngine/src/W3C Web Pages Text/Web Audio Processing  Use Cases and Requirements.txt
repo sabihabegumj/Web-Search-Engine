@@ -1,0 +1,600 @@
+Web Audio Processing: Use Cases and Requirements
+
+
+
+
+
+
+Web Audio Processing: Use Cases and Requirements
+
+
+
+W3C Working Group Note 29 January 2013
+
+
+This version:
+        http://www.w3.org/TR/2013/NOTE-webaudio-usecases-20130129/
+Latest published version:
+        http://www.w3.org/TR/webaudio-usecases/
+Previous version:
+        http://www.w3.org/TR/2012/WD-webaudio-usecases-20121004/
+Latest editor's draft:
+        https://dvcs.w3.org/hg/audio/raw-file/tip/reqs/Overview.html
+Editors:
+        Joe Berkovitz, Noteflight
+        Olivier Thereaux, British Broadcasting Corporation (BBC)
+
+Copyright © 2013 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+This document introduces a series of scenarios and a list of requirements guiding the work of the W3C Audio Working Group in its development of a web API for processing and synthesis of audio on the
+web.
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the technical reports index at http://www.w3.org/TR/.
+
+This document was published by the Audio Working Group as a Working Group Note. If you wish to make comments regarding this document, please send them to public-audio@w3.org (subscribe, archives).
+All comments are welcome.
+
+Publication as a Working Group Note does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also
+includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the information in
+accordance with Patent Policy.
+
+
+Table of Contents
+
+
+* Introduction
+* Web Audio Scenarios
+  o Video Chat Application
+  o 3D game with music and convincing sound effects
+  o Online music production tool
+  o Online radio broadcast
+  o Music Creation Environment with Sampled Instruments
+  o booth
+  o Playful sonification of user interfaces
+  o Podcast on a flight
+  o Short film with director's commentary and audio description
+  o Web-based guitar practice service
+  o User Control of Audio
+
+* Acknowledgements
+
+
+1. Introduction
+
+
+What should the future web sound like? That was, in essence, the mission of the W3C Audio Working Group when it was chartered in early 2011 to "support the features required by advanced interactive
+applications including the ability to process and synthesize audio". Bringing audio processing and synthesis capabilities to the Open Web Platform should allow developers to re-create well-loved
+audio software on the open web and add great sound to web games and applications; it may also enable web developers to reinvent the world of audio and music by making it more connected, linked and
+social.
+
+This document attempts to describe the scenarios considered by the W3C Audio Working Group in its work to define Web Audio technologies. Not intended to be a comprehensive list of things which the
+Web Audio standards will make possible, it nevertheless attempts to:
+
+* document a number of key applications of audio which Web Audio standards should enable,
+* provide a basis for discussion on the desired architecture of Web Audio standards,
+* offer examples for early uses of the technology, which can then be used to gather feedback on the draft standard, and
+* extract technical and architectural requirements for the Web Audio APIs or libraries built upon it. The Notes and Implementation Considerations sections will note which constructs of the Web
+  Audio API Working Draft apply. Whenever possible, the document will note which features are yet to be implemented or documented in that specification as of 02 August 2012.
+
+
+2. Web Audio Scenarios
+
+
+This section will introduce a number of scenarios involving the use of Web Audio processing or synthesis technologies, and discuss implementation and architectural considerations.
+
+
+2.1 Video Chat Application
+
+
+Three people have joined a three-way conversation through a web application. Each of them see the other two participants in split windows, and hear their voice in sync with the video.
+
+The application provides a simple interface to control the incoming audio and video of the other participants: at any time, the user can mute the incoming streams, control the overall sound volume,
+or mute themselves while continuing to send a live video stream through the application.
+
+Advanced controls are also available. In the "Audio" option panel, the user has the ability to adapt the incoming sound to their taste through a graphic equalizer interface, as well as a number of
+filters for voice enhancement, a feature which can be useful between people with hearing difficulties, in imperfect listening environments, or to compensate for poor transmission environments.
+
+Another option allows the user to change the spatialization of the voices of their interlocutors; the default is a binaural mix matching the disposition of split-windows on the screen, but the
+interface makes it possible to reverse the left-right balance, or make the other participants appear closer or further apart.
+
+The makers of the chat applications also offer a "fun" version which allows users to distort (pitch, speed, other effects) their voice. They are considering adding the option to the default
+software, as such a feature could also be used to protect one participants' privacy in some contexts.
+
+
+Notes and Implementation Considerations
+
+
+1. The processing capabilities needed by this scenario include:
+
+   * Mixing and spatialization of several sound sources
+   * Controlling the gain (mute and volume control) of several audio sources
+   * Filtering (EQ, voice enhancement)
+   * Modifying the pitch and speed of sound sources
+
+2. This scenario is also a good example of the need for audio capture (from line in, internal microphone or other inputs). We expect this to be provided by HTML Media Capture.
+
+3. The first scenario in WebRTC's Use Cases and Requirements document has been a strong inspiration for this scenario. Most of the technology, described above should be covered by the Web
+   Real-Time Communication API. The scenario illustrates, however, the need to integrate audio processing with the handling of RTC streams, with a technical requirement for processing of the audio
+   signal at both ends (capture of the user's voice and output of its correspondents' conversation).
+
+4. Speed changes are currently unsupported by the Web Audio API.
+
+
+
+2.2 3D game with music and convincing sound effects
+
+
+A commuter is playing a 3D first-person adventure game on their mobile device. The game is built entirely using open web technologies, and includes rich, convincing sound piped through the
+commuter's stereo headphones.
+
+As soon as the game starts, a musical background starts, loops seamlessly, and transitions smoothly from one music track to another as the player enters a house. Some of the music is generated live,
+and reacts to the state of the game: tempo, time signature, note properties and envelopes change depending on the the health level of the characters and their actions.
+
+While walking in a corridor, the player can hear the muffled sound of a ticking grandfather's clock. Following the direction of the sound and entering a large hall, the sound of the clock becomes
+clear, reverberating in the large hall. At any time, the sound of the clock spatialized in real-time based on the position of the player's character in the room (relative to the clock) and the
+current camera angle.
+
+The soundscape changes, bringing a more somber, scary atmosphere to the scene: the once full orchestral underscore is slowly reduced, instrument by instrument, to a lonely and echoing cello. The
+player equips a firearm. Suddenly, a giant snake springs from behind a corner, its hissing becoming a little louder as the snake turns its head towards the player. The weapon fires at the touch of a
+key, and the player can hear the sound of bullets in near-perfect synchronization with the firing, as well as the sound of bullets ricocheting against walls. The sounds are played immediately after
+the player presses the key, but the action and video frame rate can remain smooth even when a lot of sounds (bullets being fired, echoing and ricocheting, sound of the impacts, etc) are played at
+the same time. The snake is now dead, and many flies gather around it, and around the player's character, buzzing and zooming in the virtual space of the room.
+
+
+Notes and Implementation Considerations
+
+
+1. Developing the soundscape for a game as the one described above can benefit from a modular, node based approach to audio processing. In our scenario, some of the processing needs to happen for
+   a number of sources at the same time (e.g room effects) while others (e.g mixing and spatialization) need to happen on a per-source basis. A graph-based API makes it very easy to envision,
+   construct and control the necessary processing architecture, in ways that would be possible with other kinds of APIs, but more difficult to implement. The fundamental AudioNode construct in the
+   Web Audio API supports this approach.
+
+2. While a single looping music background can be created today with the HTML5 &lt;audio&gt; element, the ability to transition smoothly from one musical background to another requires additional
+   capabilities that are found in the Web Audio API including sample-accurate playback scheduling and automated cross-fading of multiple sources. Related API features include
+   AudioBufferSourceNode.start() and AudioParam.setValueAtTime().
+
+3. The musical background of the game not only involves seamless looping and transitioning of full tracks, but also the automated creation of generative music from basic building blocks or
+   algorithms ("Some of the music is generated live, and reacts to the state of the game"), as well as the creation and evolution of a musical score from multiple instrument tracks ("the once full
+   orchestral underscore is slowly reduced, instrument by instrument"). Related requirements for such features are developed in details within the Online music production tool and Music Creation
+   Environment with Sampled Instruments scenarios.
+
+4. The scenario illustrates many aspects of the creation of a credible soundscape. The game character is evolving in a virtual three-dimensional environment and the soundscape is at all times
+   spatialized: a panning model can be used to spatialize sound sources in the game (AudioPanningNode); obstruction / occlusion modeling is used to muffle the sound of the clock going through walls,
+   and the sound of flies buzzing around would need Doppler Shift simulation to sound believable (also supported by AudioPanningNode). The listener's position is part of this 3D model as well
+   (AudioListener).
+
+5. As the soundscape changes from small room to large hall, the game benefits from the simulation of acoustic spaces, possibly through the use of a convolution engine for high quality room
+   effects as supported by ConvolverNode in the Web Audio API.
+
+6. Many sounds in the scenario are triggered by events in the game, and would need to be played with low latency. The sound of the bullets as they are fired and ricochet against the walls, in
+   particular, illustrate a requirement for basic polyphony and high-performance playback and processing of many sounds. These are supported by the general ability of the Web Audio API to include
+   many sound-generating nodes with independent scheduling and high-throughput native algorithms.
+
+
+
+2.3 Online music production tool
+
+
+A music enthusiast creates a musical composition from audio media clips using a web-based Digital Audio Workstation (DAW) application.
+
+Audio "clips" are arranged on a timeline representing multiple tracks of audio. Each track's volume, panning, and effects may be controlled separately. Individual tracks may be muted or soloed to
+preview various combination of tracks at a given moment. Audio effects may be applied per-track as inline (insert) effects. Additionally, each track can send its signal to one or more global send
+effects which are shared across tracks. Sub-mixes of various combinations of tracks can be made, and a final mix bus controls the overall volume of the mix, and may have additional insert effects.
+
+Insert and send effects include dynamics compressors (including multi-band), extremely high-quality reverberation, filters such as parametric, low-shelf, high-shelf, graphic EQ, etc. Also included
+are various kinds of delay effects such as ping-pong delays, and BPM-synchronized delays with feedback. Various kinds of time-modulated effects are available such as chorus, phasor, resonant filter
+sweeps, and BPM-synchronized panners. Distortion effects include subtle tube simulators, and aggressive bit decimators. Each effect has its own UI for adjusting its parameters. Real-time changes to
+the parameters can be made (e.g. with a mouse) and the audible results heard with no perceptible lag.
+
+Audio clips may be arranged on the timeline with a high-degree of precision (with sample accurate playback). Certain clips may be repeated loops containing beat-based musical material, and are
+synchronized with other such looped clips according to a certain musical tempo. These, in turn, can be synchronized with sequences controlling real-time synthesized playback. The values of volume,
+panning, send levels, and each parameter of each effect can be changed over time, displayed and controlled through a powerful UI dealing with automation curves. These curves may be arbitrary and can
+be used, for example, to control volume fade-ins, filter sweeps, and may be synchronized in time with the music (beat synchronized).
+
+Visualizers may be applied for technical analysis of the signal. These visualizers can be as simple as displaying the signal level in a VU meter, or more complex such as real-time frequency
+analysis, or L/R phase displays.
+
+The actual audio clips to be arranged on the timeline are managed in a library of available clips. These can be searched and sorted in a variety of ways and with high-efficiency. Although the clips
+can be cloud-based, local caching offers nearly instantaneous access and glitch-free playback.
+
+The final mix may be rendered at faster than real-time and then uploaded and shared with others. The session representing the clips, timeline, effects, automation, etc. may also be shared with
+others for shared-mixing collaboration.
+
+
+Notes and Implementation Considerations
+
+
+1. This scenario details the large number of feature requirements typically expected of professional audio software or hardware. It encompasses many advanced audio control capabilities such as
+   filtering, effects, dynamics compression and control of various audio parameters.
+
+2. Building such an application may only be reasonably possible if the technology enables the control of audio with acceptable performance, in particular for real-time processing and control of
+   audio parameters and sample accurate scheduling of sound playback. Because performance is such a key aspect of this scenario, it should probably be possible to control the buffer size of the
+   underlying Audio API: this would allow users with slower machines to pick a larger buffer setting that does not cause clicks and pops in the audio stream.
+
+3. The ability to visualize the samples and their processing benefits from real-time time-domain and frequency analysis, as supplied by the Web Audio API's RealtimeAnalyzerNode.
+
+4. Clips must be able to be loaded into memory for fast playback. The Web Audio API's AudioBuffer and AudioBufferSourceNode interfaces address this requirement.
+
+5. Some sound sources may be purely algorithmic in nature, such as oscillators or noise generators. This implies the ability to generate sound from both precomputed and dynamically computed
+   arbitrary sound samples. The Web Audio API's ability to create an AudioBuffer from arrays of numerical samples, coupled with the ability of JavaScriptAudioNode to supply numerical samples on the
+   fly, both address this requirement.
+
+6. The ability to schedule both audio clip playback and effects parameter value changes in advance is essential to support automated mixdown
+
+7. To export an audio file, the audio rendering pipeline must be able to yield buffers of sample frames directly, rather than being forced to an audio device destination. Built-in codecs to
+   translate these buffers to standard audio file output formats are also desirable.
+
+8. Typical per-channel effects such as panning, gain control, compression and filtering must be readily available in a native, high-performance implementation.
+
+9. Typical master bus effects such as room reverb must be readily available. Such effects are applied to the entire mix as a final processing stage. A single ConvolverNode is capable of
+   simulating a wide range of room acoustics.
+
+
+
+2.4 Online radio broadcast
+
+
+A web-based online radio application supports one-to-many audio broadcasting on various channels. For any one broadcast channel it exposes three separate user interfaces on different pages. One
+interface is used by the broadcaster controlling a radio show on the channel. A second interface allows invited guests to supply live audio to the show. The third interface is for the live online
+audience listening to the channel.
+
+The broadcaster interface supports live and recorded audio source selection as well as mixing of those sources. Audio sources include:
+
+* any local microphone
+* prerecorded audio such as jingles or tracks from music libraries
+* a remote microphone for a remote guest
+
+A simple mixer lets the broadcaster control the volume, pan and effects processing for each local or remote audio source, blending them into a single stereo output mix that is broadcast as the
+show's content. Indicators track the level of each active source. This mixer also incorporates some automatic features to make the broadcaster's life easier, including ducking of prerecorded audio
+sources when any local or remote microphone source is active. Muting (un-muting) of sources causes an automatic fast volume fade-out(in) to avoid audio transients. The broadcaster can hear a live
+monitor mix through headphones, with an adjustable level for monitoring their local microphone.
+
+The application is aware of when prerecorded audio is playing in the mix, and each audio track's descriptive metadata is shown to the audience in synchronization with what they are hearing.
+
+The guest interface supports a single live audio source from a choice of any local microphone.
+
+The audience interface delivers the channel's broadcast mix, but also offers basic volume and EQ control plus the ability to pause/rewind/resume the live stream. Optionally, the listener can slow
+down the content of the audio without changing its pitch, for example to aid in understanding a foreign language.
+
+An advanced feature would give the audience control over the mix itself. The mix of tracks and sources created by the broadcaster would be a default, but the listener would have the ability to
+create a different mix. For instance, in the case of a radio play with a mix of voices, sound effects and music, the listener could be offered an interface to control the relative volume of the
+voices to effects and music, or create a binaural mix tailored specifically to their taste. Such a feature would provide valuable personalization of the radio experience, as well as significant
+accessibility enhancements.
+
+
+Notes and Implementation Considerations
+
+
+1. As with the Video Chat Application scenario, streaming and local device discovery and access within this scenario are handled by the Web Real-Time Communication API. The local audio processing
+   in this scenario highlights the requirement that RTC streams and Web Audio be tightly integrated. Incoming MediaStreams must be able to be exposed as audio sources, and audio destinations must be
+   able to yield an outgoing RTC stream. For example, the broadcaster's browser employs a set of incoming MediaStreams from microphones, remote participants, etc., locally processes their audio
+   through a graph of AudioNodes, and directs the output to an outgoing MediaStream representing the live mix for the show.
+
+2. Building this application requires the application of gain control, panning, audio effects and blending of multiple mono and stereo audio sources to yield a stereo mix. Some relevant features
+   in the API include AudioGainNode, ConvolverNode, AudioPannerNode.
+
+3. Noise gating (suppressing output when a source's level falls below some minimum threshold) is highly desirable for microphone inputs to avoid stray room noise being included in the broadcast
+   mix. This could be implemented as a custom algorithm using a JavaScriptAudioNode.
+
+4. To drive the visual feedback to the broadcaster on audio source activity and to control automatic ducking, this scenario needs a way to easily detect the time-averaged signal level on a given
+   audio source. The Web Audio API does not currently provide a prepackaged way to do this, but it can be implemented with custom JS processing or an ultra-low-pass filter built with
+   BiquadFilterNode.
+
+5. Ducking affects the level of multiple audio sources at once, which implies the ability to associate a single dynamic audio parameter to the gain associated with these sources' signal paths.
+   The specification's AudioGain interface provides this.
+
+6. Smooth muting requires the ability to smoothly automate gain changes over a time interval, without using browser-unfriendly coding techniques like tight loops or high-frequency callbacks. The
+   parameter automation features associated with AudioParam are useful for this kind of feature.
+
+7. Pausing and resuming the show on the audience side implies the ability to buffer data received from audio sources in the processing graph, and also to send buffered data to audio destinations.
+
+8. Speed changes are currently unsupported by the Web Audio API. Thus, the functionality for audio speed changing, a custom algorithm, requires the ability to create custom audio transformations
+   using a browser programming language (e.g. JavaScriptAudioNode). When audio delivery is slowed down, audio samples will have to be locally buffered by the application up to some allowed limit,
+   since they continue to be delivered by the incoming stream at a normal rate.
+
+9. There is a standard way to access a set of metadata properties for media resources with the following W3C documents:
+
+   * Ontology for Media Resources 1.0. This document defines a core set of metadata properties for media resources, along with their mappings to elements from a set of existing metadata formats.
+
+   * API for Media Resources 1.0. This API provides developers with a convenient access to metadata information stored in different metadata formats. It provides means to access the set of
+     metadata properties defined in the Ontology for Media Resources 1.0 specification.
+
+
+10. The ability for the listeners to create their own mix rely on the possibility of sending multiple tracks in the RTC stream. This is in scope of the current WebRTC specification, where one
+    MediaStream can have multiple MediaStreamTracks.
+
+
+2.5 Music Creation Environment with Sampled Instruments
+
+
+A composer is employing a web-based application to create and edit a musical composition with live synthesized playback. The user interface for composing can take a number of forms including
+conventional Western notation and a piano-roll style display. The document can be sonically rendered on demand as a piece of music, i.e. a series of precisely timed, pitched and modulated audio
+events (notes).
+
+The musician occasionally stops editing and wishes to hear playback of some or all of the score they are working on to take stock of their work. At this point the program performs sequenced playback
+of some portion of the document. Some simple effects such as instrument panning and room reverb are also applied for a more realistic and satisfying effect.
+
+Compositions in this editor employ a set of instrument samples, i.e. a pre-existing library of recorded audio snippets. Any given snippet is a brief audio recording of a note played on an instrument
+with some specific and known combination of pitch, dynamics and articulation. The combinations in the library are necessarily limited in number to avoid bandwidth and storage overhead. During
+playback, the editor must simulate the sound of each instrument playing its part in the composition. This is done by transforming the available pre-recorded samples from their original pitch,
+duration and volume to match the characteristics prescribed by each note in the composed music. These per-note transformations must also be scheduled to be played at the times prescribed by the
+composition.
+
+During playback a moving cursor indicates the exact point in the music that is being heard at each moment.
+
+At some point the user exports an MP3 or WAV file from the program for some other purpose. This file contains the same audio rendition of the score that is played interactively when the user
+requested it earlier.
+
+
+Notes and Implementation Considerations
+
+
+1. Instrument samples must be able to be loaded into memory for fast processing during music rendering. These pre-loaded audio snippets must have a one-to-many relationship with objects in the
+   Web Audio API representing specific notes, to avoid duplicating the same sample in memory for each note in a composition that is rendered with it. The API's AudioBuffer and AudioBufferSourceNode
+   interfaces address this requirement.
+
+2. It must be possible to schedule large numbers of individual events over a long period of time, each of which is a transformation of some original audio sample, without degrading real-time
+   browser performance. A graph-based approach such as that in the Web Audio API makes the construction of any given transformation practical, by supporting simple recipes for creating sub-graphs
+   built around a sample's pre-loaded AudioBuffer. These subgraphs can be constructed and scheduled to be played in the future. In one approach to supporting longer compositions, the construction
+   and scheduling of future events can be kept "topped up" via periodic timer callbacks, to avoid the overhead of creating huge graphs all at once.
+
+3. A given sample must be able to be arbitrarily transformed in pitch and volume to match a note in the music. AudioBufferSourceNode's playbackRate attribute provides the pitch-change capability,
+   while AudioGainNode allows the volume to be adjusted.
+
+4. A given sample must be able to be arbitrarily transformed in duration (without changing its pitch) to match a note in the music. AudioBufferSourceNode's looping parameters provide
+   sample-accurate start and end loop points, allowing a note of arbitrary duration to be generated even though the original recording may be brief.
+
+5. Looped samples by definition do not have a clean ending. To avoid an abrupt glitchy cutoff at the end of a note, a gain and/or filter envelope must be applied. Such envelopes normally follow
+   an exponential trajectory during key time intervals in the life cycle of a note. The AudioParam features of the Web Audio API in conjunction with AudioGainNode and BiquadFilterNode support this
+   requirement.
+
+6. It is necessary to coordinate visual display with sequenced playback of the document, such as a moving cursor or highlighting effect applied to notes. This implies the need to programmatically
+   determine the exact time offset within the performance of the sound being currently rendered through the computer's audio output channel. This time offset must, in turn, have a well-defined
+   relationship to time offsets in prior API requests to schedule various notes at various times. The API provides such a capability in the AudioContext.currentTime attribute.
+
+7. To export an audio file, the audio rendering pipeline must be able to yield buffers of sample frames directly, rather than being forced to an audio device destination. Built-in codecs to
+   translate these buffers to standard audio file output formats are also desirable.
+
+8. Typical per-channel effects such as stereo pan control must be readily available. Panning allows the sound output for each instrument channel to appear to occupy a different spatial location
+   in the output mix, adding greatly to the realism of the playback. Adding and configuring one of the Web Audio API's AudioPannerNode for each channel output path provides this capability.
+
+9. Typical master bus effects such as room reverb must be readily available. Such effects are applied to the entire mix as a final processing stage. A single ConvolverNode is capable of
+   simulating a wide range of room acoustics.
+
+
+
+2.6 Connected DJ booth
+
+
+A popular DJ is playing a live set, using a popular web-based DJ software. The web application allows her to perform both in the club where she is mixing, as well as online, with tens of thousands
+joining live to enjoy the set.
+
+The DJ-deck web interface offers the typical features of decks and turntables. While a first track is playing and its sound sent to both the sound system in the club and streamed to the web browsers
+of fans around the world, the DJ would be able to quickly select several other track, play them through headphones without affecting the main audio output of the application, and match them to the
+track currently playing through a mix of pausing, skipping forward or back and pitch/speed change. The application helps automate a lot of this work: by measuring the beat of the current track at
+125BPM and the one of the chosen next track at 140 BPM, it can automatically slow down the second track, and even position it to match the beats of the one currently playing.
+
+Once the correct match is reached, The DJ would be able to start playing the track in the main audio output, either immediately or by slowly changing the volume controls for each track. She uses a
+cross fader to let the new song blend into the old one, and eventually goes completely across so only the new song is playing. This gives the illusion that the song never ended.
+
+At the other end, fans listening to the set would be able to watch a video of the DJ mixing, accompanied by a graphic visualization of the music, picked from a variety of choices: spectrum analysis,
+level-meter view or a number of 2D or 3D abstract visualizations displayed either next to or overlaid on the DJ video.
+
+
+Notes and Implementation Considerations
+
+
+1. As in many other scenarios in this document, it is expected that APIs such as the Web Real-Time Communication API will be used for the streaming of audio and video across a number of clients.
+2. One of the specific requirements illustrated by this scenario is the ability to have two different outputs for the sound: one for the headphones, and one for the music stream sent to all the
+   clients. With the typical web-friendly hardware, this would be difficult or impossible to implement by considering both as audio destinations, since they seldom have or allow two sound outputs to
+   be used at the same time. And indeed, in the current Web Audio API draft, a given AudioContext can only use one AudioDestinationNode as destination.
+
+   However, if we consider that the headphones are the audio output, and that the streaming DJ set is not a typical audio destination but an outgoing MediaStream passed on to the WebRTC API, it
+   should be possible to implement this scenario, sending output to both headphones and the stream and gradually sending sound from one to the other without affecting the exact state of playback and
+   processing of a source. With the Web Audio API, this can be achieved by using the createMediaStreamDestination() interface.
+
+3. This scenario makes heavy usage of audio analysis capabilities, both for automation purposes (beat detection and beat matching) and visualization (spectrum, level and other abstract
+   visualization modes).
+4. The requirement for pitch/speed change are not currently covered by the Web Audio API's native processing nodes. Such processing would probably have to be handled with custom processing nodes.
+
+
+2.7 Playful sonification of user interfaces
+
+
+A child is visiting a social website designed for kids. The playful, colorful HTML interface is accompanied by sound effects played as the child hovers or clicks on some of the elements of the page.
+For example, when filling in a form the sound of a typewriter can be heard as the child types in the form field. Some of the sounds are spatialized and have a different volume depending on where and
+how the child interacts with the page. When an action triggers a download visualized with a progress bar, a gradually rising pitch sound accompanies the download and another sound (ping!) is played
+when the download is complete.
+
+
+Notes and Implementation Considerations
+
+
+1. Although the web UI incorporates many sound effects, its controls are embedded in the site's pages using standard web technology such as HTML form elements and CSS stylesheets. JavaScript
+   event handlers may be attached to these elements, causing graphs of AudioNodes to be constructed and activated to produce sound output.
+
+2. Modularity, spatialization and mixing play an important role in this scenario, as for the others in this document.
+
+3. Various effects can be achieved through programmatic variation of these sounds using the Web Audio API. The download progress could smoothly vary the pitch of an AudioBufferSourceNode's
+   playbackRate using an exponential ramp function, or a more realistic typewriter sound could be achieved by varying an output filter's frequency based on the keypress's character code.
+
+4. In a future version of CSS, stylesheets may be able to support simple types of sonification, such as attaching a "typewriter key" sound to an HTML textarea element or a "click" sound to an
+   HTML button. These can be thought of as an extension of the visual skinning concepts already embodied by style attributes such as background-image.
+
+
+
+2.8 Podcast on a flight
+
+
+A traveler is subscribed to a podcast, and has previously downloaded an audio book on his device using the podcast's web-based application. The audio files are stored locally on his device, giving
+simple and convenient access to episodic content whenever the user wishes to listen.
+
+Sitting in an airplane for a 2-hour flight, he opens the podcast application in his HTML browser and sees that the episode he has selected lasts 3 hours. The application offers a speed-up feature
+that allows the speech to be delivered at a faster than normal speed without pitch distortion ("chipmunk voices"). He sets the audition time to 2 hours in order to finish the audio book before
+landing. He also sets the sound control in the application to "Noisy Environment", causing the sound to be equalized for greatest intelligibility in a noisy setting such as an airplane.
+
+
+Notes and Implementation Considerations
+
+
+1. Local audio can be downloaded, stored and retrieved using the HTML File API.
+
+2. This scenario requires a special audio transformation that can compress the duration of speech without affecting overall timbre and intelligibility. In the Web Audio API this function isn't
+   natively supported but could be accomplished through attaching custom processing code to a JavaScriptAudioNode.
+
+3. The "Noisy Environment" setting could be accomplished through equalization features in the Web Audio API such as BiquadFilterNode or ConvolverNode.
+
+
+
+2.9 Short film with director's commentary and audio description
+
+
+A video editor is using an online editing tool to refine the soundtrack of a short film. Once the video is ready, she will work with the production team to prepare an audio description of the scenes
+to make the video work more accessible to people with sight impairments. The video director is also planning to add an audio commentary track to explain the creative process behind the film.
+
+Using the online tool, the video editor extracts the existing recorded vocals from the video stream, modifies their levels and performs other modifications of the audio stream. She also adds several
+songs, including a orchestral background and pop songs, at different parts of the film soundtrack. Several Foley effects (footsteps, doors opening and closing, etc.) are also added to make the
+soundscape of each scene complete.
+
+While editing, the online tool must ensure that the audio and video playback are synchronized, allowing the editor to insert audio samples at the right time. As the length of one of the songs is
+slightly different from the video segment she is matching it with, she can synchronize the two by slightly speeding up or slowing down the audio track. The final soundtrack is mixed down into the
+final soundtrack, added to the video as a replacement for the original audio track, and synced with the video track.
+
+Once the audio description and commentary are recorded, the film, displayed in a HTML web page, can be played with its original audio track (embedded in the video container) or with any of the audio
+commentary tracks loaded from a different source and synchronized with the video playback. When there's audio on the commentary track, the main track volume is reduced (ducked) gradually and
+smoothly brought back to full volume when the commentary / description track is silent. The visitor can switch between audio tracks on the fly, without affecting the video playback. Pausing the
+video playback also pauses the commentary track, which then remains in sync when playback resumes.
+
+
+Notes and Implementation Considerations
+
+
+1. This scenario is, in many ways, fairly similar to a number of others already discussed throughout the document. The ability to lay out a number of sources and mix them in a consistent
+   soundtrack is the subject of the Online music production tool scenario, while some effects such as ducking have already been discussed in the Online radio broadcast scenario.
+2. Essentially, this use case illustrates the need to do all these things in sync with video. In the context of the open web platform, it means that audio processing API to integrate with the
+   interface.
+
+
+2.10 Web-based guitar practice service
+
+
+A serious guitar player uses a web-based tool to practice a new tune. Connecting a USB microphone and a pair of headphones to their computer, the guitarist is able to tune an acoustic guitar using a
+graphical interface and set a metronome for the practice session. A mix of one or more backing tracks can be optionally selected for the guitarist to play along with, with or without the metronome
+present.
+
+During a practice session, the microphone audio is analyzed to determine whether the guitarist is playing the correct notes in tempo, and visual feedback is provided via a graphical interface of
+guitar tablature sheet music with superimposed highlighting.
+
+The guitarist's performance during each session is recorded, optionally mixed with the audio backing-track mix. At the conclusion of a session, this performance can be saved to various file formats
+or uploaded to an online social music service for sharing and commentary with other users.
+
+
+Notes and Implementation Considerations
+
+
+1. The audio input reflects the guitarist's performance, which is itself aurally synchronized by the guitarist to the current audio output. The scenario requires that the input be analyzed for
+   correct rhythmic and pitch content. Such an algorithm can be implemented in a JavaScriptAudioNode.
+
+2. Analysis of the performance in turn requires measurement of the real-time latency in both audio input and output, so that the algorithm analyzing the live performance can know the temporal
+   relationship of a given output sample (reflecting the metronome and/or backing track) to a given input sample (reflecting the guitarist playing along with that output). These latencies are
+   unpredictable from one system to another and cannot be hard-coded. Currently the Web Audio API lacks such support.
+
+3. This scenario uses a mixture of sound sources including a live microphone input, a synthesized metronome and a set of pre-recorded audio backing tracks (which are synced to a fixed tempo). The
+   mixing of these sources to the browser's audio output can be accomplished by a combination of instances of AudioGainNode and AudioPannerNode.
+
+4. The live input requires microphone access, which it is anticipated will be available via HTML Media Capture bridged through an AudioNode interface.
+
+5. Pre-recorded backing tracks can be loaded into AudioBuffers and used as sample-accurate synced sources by wrapping these in AudioBufferSourceNode instances.
+
+6. Metronome synthesis can be accomplished with a variety of means provided by the Web Audio API. In one approach, an implementer could use an Oscillator square-wave source to generate the
+   metronome sound. A timer callback repeatedly runs at a low frequency to maintain a pool of these instances scheduled to occur on future beats in the music (which can be sample-accurately synced
+   to offsets in the backing tracks given the lock-step timing in the Web Audio API).
+
+7. Programmatic output of a recorded session's audio buffer must be accomplished to files (via the HTML5 File API) or upload streams (via MediaStreams or HTTP). The scenario implies the use of
+   one or more encoders on this buffered data to yield the supported audio file formats. Native audio-to-file encoding is not currently supported by the Web Audio API and thus would need to be
+   implemented in JavaScript.
+
+
+
+2.11 User Control of Audio
+
+
+A programmer wants to create a browser extension to allow the user to control the volume of audio.
+
+The extension should let the user control the audio volume on a per-tab basis, or to kill any audio playing completely. The extension developer wishes to make sure killing the audio is done in a way
+that takes care of garbage collection.
+
+Among the features sometimes requested for his extension are the ability to limit the audio volume to an acceptable level, both per tab and globally. On operating systems that allow it, the
+developer would also like his extension to mute or pause sound when a critical system sound is being played.
+
+
+Notes and Implementation Considerations
+
+
+1. This function is likely to combine usage of both a browser-specific extension API and the Web Audio API. One way to implement this scenario would be to use a browser-dependent API to iterate
+   through a list of window objects, and then for each window object iterate through a list of active AudioContexts and manage their volume (or, more conveniently, manage some kind of master audio
+   volume for the window). Neither of these latter approaches are currently supported by the Web Audio API.
+
+2. The ability to mute or pause sounds when the Operating System fires a critical system sound is modelled after the feature in existing Operating Systems which will automatically mute
+   applications when outputting a system sound. As such, this may not involve any specific requirement for the Web Audio API. However, because some operating systems may implement such a feature,
+   Web Audio apps may want to be notified of the muting and act accordingly (suspend, pause, etc). There may therefore be a requirement for the Web Audio API to provide such an event handler.
+
+
+
+A. Acknowledgements
+
+
+This document is the result of the work of the W3C Audio Working Group. Members of the working group, at the time of publication, included:
+
+* Bateman, Adrian (Microsoft Corporation);
+* Berkovitz, Joe (Invited expert);
+* Cardoso, Gabriel (INRIA);
+* Carlson, Eric (Apple, Inc.);
+* Chen, Bin (Baidu, Inc.);
+* Geelnard, Marcus (Opera Software);
+* Goode, Adam (Google, Inc.);
+* Gregan, Matthew (Mozilla Foundation);
+* JÃ¤genstedt, Philip (Opera Software);
+* Kalliokoski, Jussi (Invited expert);
+* Lowis, Chris (British Broadcasting Corporation);
+* MacDonald, Alistair (Invited Expert);
+* Mandyam, Giridhar (Qualcomm Innovation Center, Inc);
+* Michel, Thierry (W3C/ERCIM);
+* Noble, Jer (Apple, Inc.);
+* O'Callahan, Robert (Mozilla Foundation);
+* Olivier, Frank (Microsoft Corporation);
+* Paradis, Matthew (British Broadcasting Corporation);
+* Peraza Barreras, Jorge Armando (Microsoft Corporation);
+* Raman, T.V. (Google, Inc.);
+* Rogers, Chris (Google, Inc.);
+* Schepers, Doug (W3C/MIT);
+* Shires, Glen (Google, Inc.);
+* Smith, Michael (W3C/Keio);
+* Thereaux, Olivier (British Broadcasting Corporation);
+* Wei, James (Intel Corporation);
+* Wilson, Chris (Google,Inc.);
+* Young, Milan (Nuance Communications, Inc.).
+
+The people who have contributed to discussions on public-audio@w3.org are also gratefully acknowledged.
+
+This document was also heavily influenced by earlier work by the audio working group and others, including:
+
+* A list of "Core Use Cases" authored by the Audio Incubator Group, which predated the W3C Audio Working Group
+* The use cases requirements from Web RTC
+* The Scenarios from the Media Streams Processing
+

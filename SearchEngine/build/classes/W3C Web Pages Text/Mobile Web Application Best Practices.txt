@@ -1,0 +1,1335 @@
+Mobile Web Application Best Practices
+
+
+
+
+
+
+Mobile Web Application Best Practices
+
+
+
+W3C Recommendation 14 December 2010
+
+
+This version:
+        http://www.w3.org/TR/2010/REC-mwabp-20101214/
+Latest version:
+        http://www.w3.org/TR/mwabp/
+Previous version:
+        http://www.w3.org/TR/2010/PR-mwabp-20101021/
+Editors:
+        Adam Connors, Google
+        Bryan Sullivan, AT&T (until 2008)
+
+Please refer to the errata for this document, which may include some normative corrections.
+
+See also translations.
+
+Copyright ©2010 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+The goal of this document is to aid the development of rich and dynamic mobile Web applications. It collects the most relevant engineering practices, promoting those that enable a better user
+experience and warning against those that are considered harmful.
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This is the W3C Recommendation of Mobile Web Application Best Practices. This document was developed by the Mobile Web Best Practices Working Group as part of the Mobile Web Initiative.
+
+Since publication as a Proposed Recommendation on 21 October 2010, the Working Group clarified that alternative compression formats (such as EXI) referred to in section 3.4.1 Use Transfer
+Compression may not share some of the impediments of common compression formats. A diff version is available. No substantive change has been made.
+
+The document contains statements that may be regarded as forward-looking when this document is published (14 December 2010). Examples provided in the How to do it sections sometimes reference
+on-going works on technologies that the Working Group expects to become prevalent in the development community soon. These sections should be taken with a grain of salt, depending on the actual
+evolution of these technologies. The best practices statements should remain valid in any case. An implementation report is available.
+
+Comments on this specification may be sent to public-bpwg-comments@w3.org (with public archive).
+
+This document has been reviewed by W3C Members, by software developers, and by other W3C groups and interested parties, and is endorsed by the Director as a W3C Recommendation. It is a stable
+document and may be used as reference material or cited from another document. W3C's role in making the Recommendation is to draw attention to the specification and to promote its widespread
+deployment. This enhances the functionality and interoperability of the Web.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. This document is informative only. W3C maintains a public list of any patent disclosures made in
+connection with the deliverables of the group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains
+Essential Claim(s) must disclose the information in accordance with section 6 of the W3C Patent Policy.
+
+
+
+Table of Contents
+
+
+1 Introduction
+    1.1 Purpose of the Document
+    1.2 Audience
+    1.3 Scope
+        1.3.1 Best Practices
+        1.3.2 Web Application
+        1.3.3 Mobile Context
+        1.3.4 Delivery Context
+    1.4 Relationship to other Best Practices and recommendations
+    1.5 Terminology
+2 Structure of Best Practice Statements
+3 Best Practice Statements
+    3.1 Application Data
+        3.1.1 Use Cookies Sparingly
+        3.1.2 Use Appropriate Client-Side Storage Technologies for Local Data
+        3.1.3 Replicate Local Data
+    3.2 Security and privacy
+        3.2.1 Do not Execute Unescaped or Untrusted JSON data
+    3.3 User Awareness and Control
+        3.3.1 Ensure the User is Informed About Use of Personal and Device Information
+        3.3.2 Enable Automatic Sign-in
+    3.4 Conservative use of resources
+        3.4.1 Use Transfer Compression
+        3.4.2 Minimize Application and Data Size
+        3.4.3 Avoid Redirects
+        3.4.4 Optimize Network Requests
+        3.4.5 Minimize External Resources
+        3.4.6 Aggregate Static Images into a Single Composite Resource (Sprites)
+        3.4.7 Include Background Images Inline in CSS Style Sheets
+        3.4.8 Cache Resources By Fingerprinting Resource References
+        3.4.9 Cache AJAX Data
+        3.4.10 Do not Send Cookie Information Unnecessarily
+        3.4.11 Keep DOM Size Reasonable
+    3.5 User Experience
+        3.5.1 Optimize For Application Start-up Time
+        3.5.2 Minimize Perceived Latency
+        3.5.3 Design for Multiple Interaction Methods
+        3.5.4 Preserve Focus on Dynamic Page Updates
+        3.5.5 Use Fragment IDs to Drive Application View
+        3.5.6 Make Telephone Numbers "Click-to-Call"
+        3.5.7 Ensure Paragraph Text Flows
+        3.5.8 Ensure Consistency Of State Between Devices
+        3.5.9 Consider Mobile Specific Technologies for Initiating Web Applications
+        3.5.10 Use Meta Viewport Element To Identify Desired Screen Size
+    3.6 Handling Variations in the Delivery Context
+        3.6.1 Prefer Server-Side Detection Where Possible
+        3.6.2 Use Client-Side Detection When Necessary
+        3.6.3 Use Device Classification to Simplify Content Adaptation
+        3.6.4 Support a non-JavaScript Variant if Appropriate
+        3.6.5 Offer Users a Choice of Interfaces
+    3.7 Further Considerations
+        3.7.1 Consider Use Of Canvas Element or SVG For Dynamic Graphics
+        3.7.2 Inform the User About Automatic Network Access
+        3.7.3 Provide Sufficient Means to Control Automatic Network Access
+
+
+
+Appendices
+
+
+Appendix 1: Best Practice Dependent Device Properties
+Appendix 2: References
+    2.1 MWI References
+    2.2 Device Independence
+    2.3 Web, Protocols and Languages
+    2.4 Other References
+Appendix 3: Acknowledgments
+
+
+
+List of Best Practices
+
+
+The following Best Practices are discussed in this document and listed here for convenience.
+
+1. Use Cookies Sparingly
+
+2. Use Appropriate Client-Side Storage Technologies for Local Data
+
+3. Replicate Local Data
+
+4. Do not Execute Unescaped or Untrusted JSON data
+
+5. Ensure the User is Informed About Use of Personal and Device Information
+
+6. Enable Automatic Sign-in
+
+7. Use Transfer Compression
+
+8. Minimize Application and Data Size
+
+9. Avoid Redirects
+
+10. Optimize Network Requests
+
+11. Minimize External Resources
+
+12. Aggregate Static Images into a Single Composite Resource (Sprites)
+
+13. Include Background Images Inline in CSS Style Sheets
+
+14. Cache Resources By Fingerprinting Resource References
+
+15. Cache AJAX Data
+
+16. Do not Send Cookie Information Unnecessarily
+
+17. Keep DOM Size Reasonable
+
+18. Optimize For Application Start-up Time
+
+19. Minimize Perceived Latency
+
+20. Design for Multiple Interaction Methods
+
+21. Preserve Focus on Dynamic Page Updates
+
+22. Use Fragment IDs to Drive Application View
+
+23. Make Telephone Numbers "Click-to-Call"
+
+24. Ensure Paragraph Text Flows
+
+25. Ensure Consistency Of State Between Devices
+
+26. Consider Mobile Specific Technologies for Initiating Web Applications
+
+27. Use Meta Viewport Element To Identify Desired Screen Size
+
+28. Prefer Server-side Detection Where Possible
+
+29. Use Client-side Detection When Necessary
+
+30. Use Device Classification to Simplify Content Adaptation
+
+31. Support a non-JavaScript Variant if Appropriate
+
+32. Offer Users a Choice of Interfaces
+
+
+The following advisory notes from the Mobile Web Best Practices Working Group are also discussed in this document and listed here for convenience.
+
+1. Consider Use Of Canvas Element or SVG For Dynamic Graphics
+
+2. Inform the User About Automatic Network Access
+
+3. Provide Sufficient Means to Control Automatic Network Access
+
+
+
+1 Introduction
+
+
+
+1.1 Purpose of the Document
+
+
+This document sets out a series of recommendations designed to facilitate development and delivery of Web applications on mobile devices. The recommendations are offered to creators, maintainers and
+operators of mobile Web sites.
+
+
+1.2 Audience
+
+
+Readers of this document are expected to be familiar with the creation of Web applications, and to have a general familiarity with the technologies involved, but are not expected to have a
+background in mobile technologies or previous experience with Mobile Web Best Practices (BP1) [MWBP].
+
+The document is not targeted solely at developers; others, such as interaction and graphic designers, site administrators, and tool developers are encouraged to read it.
+
+
+1.3 Scope
+
+
+These recommendations expand on the recommendations of BP1. Where the focus of BP1 is primarily the extension of Web browsing to mobile devices, this document considers the development of Web
+applications on mobile devices.
+
+
+1.3.1 Best Practices
+
+
+The approach in writing this document has been to collate and present the most relevant engineering practices prevalent in the development community today and identify those that: a) facilitate the
+exploitation of device capabilities to enable a better user experience; or b) are considered harmful and can have non-obvious detrimental effects on the overall quality of an application.
+
+The goal of this document is not to invent or endorse future technologies. However, there are a number of cases where explicitly omitting a Best Practice that referred to an emerging technology on
+the grounds that it was too recent to have received wide adoption would have unnecessarily excluded a valuable recommendation. As such, some Best Practices have been included on the grounds that the
+Working Group believes that they will soon become fully qualified Best Practices (e.g. in prevalent use within the development community).
+
+In building a Web application, it is not necessary to implement all Best Practices. Instead, each Best Practice should be considered as a possible measure that might be implemented towards the goal
+of providing as rich and dynamic an experience as possible on a mobile Web browser.
+
+
+1.3.2 Web Application
+
+
+For the purposes of this document, the term "Web application" refers to a Web page (XHTML or a variant thereof + CSS) or collection of Web pages delivered over HTTP which use server-side or
+client-side processing (e.g. JavaScript) to provide an "application-like" experience within a Web browser. Web applications are distinct from simple Web content (the focus of BP1) in that they
+include locally executable elements of interactivity and persistent state.
+
+While the focus of this document is the Best Practices that apply to applications running in a Web browser, in many cases these recommendations are equally applicable to other kinds of Web run-time,
+such as the W3C work on Web Widgets [WIDGETS] and also in a number of vendor-specific initiatives.
+
+
+1.3.3 Mobile Context
+
+
+In a world where the line between mobile and non-mobile is necessarily blurred and a document that restricts its focus solely to best practices that are uniquely mobile would most likely be very
+short. With this in mind, the focus of this document is to address those aspects of Web application development for which there are additional, non-trivial concerns associated with the mobile
+context. This applies equally both to the limitations of the mobile context (e.g. small screen, intermittent connectivity), and also the additional scope and features that should be considered when
+developing for the mobile context (e.g. device context / location, presence of personal data on the device, etc).
+
+
+1.3.4 Delivery Context
+
+
+This document builds on some of the concepts described by the Ubiquitous Web Applications Working Group (UWA) and the Device Independence Principles [DIP]. It also discusses device and delivery
+channel characteristics, which the UWA has named "Delivery Context" [DCODI].
+
+This document does not make any explicit assumptions about features of the Delivery Context, but most Best Practices assume devices with support for standard XHTML, JavaScript, and CSS capability.
+At the time of writing, developers of relatively complex Web applications targeting mid- to high-end devices are most likely to benefit from these Best Practices, but as the technology evolves it is
+expected that the range of relevant devices will increase.
+
+Additionally, some Best Practices are relevant only if the device exposes certain capabilities (for example, access to device information such as location). In these cases the requirements are
+summarized as a separate sub-heading.
+
+Saying that applications should be sensitive to the Delivery Context implies that some level of device knowledge and content adaptation is required. For Best Practices specifically related to this
+area, see 3.6 Handling Variations in Delivery Context.
+
+
+1.4 Relationship to other Best Practices and recommendations
+
+
+These recommendations are complementary to the recommendations of Mobile Web Best Practices 1.0 (BP1) though their focus is somewhat orthogonal. Whereas BP1 focused on delivering a good experience
+on a broad range of devices, this document's focus is on making use of advanced device capabilities to deliver the best possible experience on those devices that can support it. For this reason,
+while readers of this document are likely to benefit from reading BP1 it is not a pre-requisite.
+
+
+1.5 Terminology
+
+
+Note that the term "JavaScript" is used in place of the (arguably more correct) term "ECMAScript" in order to provide consistency with the companion Web application technologies (JSON and AJAX)
+which are in common use and both implicitly refer to JavaScript in their names.
+
+Also, the terms "AJAX" and XMLHttpRequest (XHR) are used to refer to any asynchronous browser request.
+
+
+2 Structure of Best Practice Statements
+
+
+The Heading
+        A summary of the functional area to be addressed by these statements.
+What it means
+        An explanation of the intention of the Best Practice statement.
+How to do it
+        A discussion of the techniques and device capabilities required to implement this Best Practice.
+[Requires]
+        A summary of device capabilities required in order for this Best Practice to apply.
+
+3 Best Practice Statements
+
+
+
+3.1 Application Data
+
+
+Most applications have the need to store data of various forms, both intrinsic content (e.g. the emails of an email application, the calendar events of a calendar application) and supplementary
+personalization settings (e.g. preferred theme, default view, etc).
+
+These Best Practices relate to the appropriate technologies and techniques to use for managing a Web application's data.
+
+
+3.1.1 Use Cookies Sparingly
+
+
+
+3.1.1.1 What it means
+
+
+Cookies are a common and effective means to store small amounts of state on the client. They are appropriate for simple personalization data and are commonly used to store a token representing user
+identity in order to enable automatic sign-in.
+
+Information stored in cookies, however, is sent to the server for every request and so using them for excessive amounts of data can negatively impact performance, particularly on a mobile network.
+
+Also, in the mobile context, cookie support cannot be relied upon since it may be disabled either in the device configuration or by the mobile network. For this reason, applications should endeavor
+to remain functional even if cookies are unavailable. See BP1 [COOKIES] Do not rely on cookies being available for more cookie related caveats.
+
+
+3.1.2 Use Appropriate Client-Side Storage Technologies for Local Data
+
+
+
+3.1.2.1 What it means
+
+
+If supported by the device, client-side storage APIs provide a mechanism to store more extensive amounts of data than would be appropriate with cookies. At the time of writing, work is still
+undergoing to unify these APIs, see the W3C WebApps working group [WEBAPPS] and Device APIs working group [DAP] for more information. Additionally, some examples of existing technologies that
+support client-side storage APIs are BONDI [BONDI], HTML5 [HTML5], and Opera Widgets [OPERA].
+
+Making use of client-side storage in Web applications is a powerful technique that brings Web applications into parity with native applications in terms of start-up time and responsiveness. Two key
+advantages are worth noting explicitly:
+
+* Application data stored locally can be displayed immediately when the application is started (without the need for a server roundtrip) allowing start-up latency to be reduced.
+
+
+
+* By making updates locally at first and replicating changes back to the server in the background when connectivity is available, Web applications can continue to operate responsively even when
+  the network signal is unreliable.
+
+
+3.1.2.2 How to do it
+
+Each technology offers a variety of storage facilities that range from simple "key = value" models appropriate for relatively simple, unstructured data, to full SQL Database APIs appropriate for
+more extensive and structured content. For a good technical discussion of these facilities in the context of HTML5 see Offline Web Applications [OFFLINE].
+
+
+
+[ Client-Side Storage ] Requires: Local Storage API.
+
+
+
+
+3.1.3 Replicate Local Data To A Server If Necessary
+
+
+
+3.1.3.1 What it means
+
+
+If a client-side storage API is being used the data in it is not visible to the user's other devices. Whilst this is appropriate for some forms of data (e.g. preferences and state relevant only to a
+given device), it is often necessary to send this data back to a server in order to provide a consistent view across devices (e.g. between mobile and desktop instances of an application) and make it
+possible to recover data if the device is lost or damaged. See 3.5.8 Ensure Consistency Of State Between Devices for further discussion on these topics.
+
+As a rule of thumb, data that needs to be shared with other devices or recovered in the case of a lost or damaged device, should be replicated back to the server as soon as possible.
+
+
+3.1.3.2 How to do it
+
+
+The technologies that provide client-side storage APIs provide facilities to detect the current network connectivity. For example, HTML5 provides a property on the navigator object
+(navigator.onLine) to indicate whether the client is currently online, and dispatches two events on the Window object to indicate a change of network state (online and offline).
+
+However, these APIs should be used with caution. Even if the browser is reporting an online state, on an intermittent network this is no guarantee that a subsequent connection will succeed. The most
+effective approach is to fail gracefully in the event of a connection failure, store unsaved data in a queue of uncommitted changes, and set a timer to try again later.
+
+[ Client-Side Storage ] Requires: Local Storage API.
+
+
+3.2 Security and privacy
+
+
+Use trusted information, and protect all personally identifiable information. Mobile Web applications are subject to the same security considerations and risks as desktop Web applications, and as
+such most desktop related security advice is applicable to mobile. (For example, see OWASP [OWASP] for a good summary of common Web security Best Practices). This document does not attempt to
+provide an exhaustive survey of security issues but the following Best Practice has been called out on the grounds that it is specifically relevant to mobile.
+
+
+3.2.1 Do not Execute Unescaped or Untrusted JSON data
+
+
+3.2.1.1 What it means
+
+A common technique is to use JSON to transfer data to a client and then use JavaScript's eval() function to parse it. This is a powerful technique, since on constrained devices eval() can execute
+more quickly than the alternatives. However, direct execution of a datafeed that contains unescaped user-generated data represents a significant security risk and should be avoided.
+
+Inadvertently executing malicious JavaScript is particularly dangerous on mobile devices where personal information (current location, contact data, etc) may be exposed.
+
+3.2.1.2 How to do it
+
+Where possible, instead of parsing JSON data by executing it with the eval() function, use a JSON parser (for example a JavaScript implementation of a JSON parser [JSON-PARSE]).
+
+If this is impractical ensure that the data contains no user-generated content (e.g. the server is responsible for the content of all fields in the datafeed) or that any user-generated content is
+correctly escaped.
+
+See RFC4627 [RFC4627] for details on how to ensure a JSON datafeed is suitably escaped and can be safely passed into JavaScript's eval() function.
+
+
+3.3 User Awareness and Control
+
+
+Allow the user to control application behaviour that might not otherwise be apparent, such as access to the network and access to device data. For example:
+
+* Pictures, music, and video clips;
+* Contacts, calendar (PIM data);
+* Call history;
+* System data (battery, coverage, roaming, location);
+* Media recording (record audio/video clip, get new picture);
+* Device context (e.g. location, connectivity, profile setting).
+
+Note that where possible it is preferable to rely on the browser's native functionality to notify the user of these activities, however the Best Practices below provide further advice on appropriate
+application behaviour in situations where the native functionality of the browser may not be sufficient.
+
+
+3.3.1 Ensure the User is Informed About Use of Personal and Device Information
+
+
+
+3.3.1.1 What it means
+
+
+Ensure that the user is informed if the application needs to access personal or device information. The user should be informed of the types of information that will be used by the application and
+whether / how that data will be exchanged with the server.
+
+These notices should be provided when the user first accesses the Web application, or on first access to user information. It should provide the user with enough information to judge whether or not
+they want to allow the application access to their data.
+
+
+3.3.1.2 How to do it
+
+
+In many cases use of APIs that provide access to personal or device information causes a native confirmation dialog to be presented to the user. In this case the application should not force the
+user to confirm again at the application level, but should make clear in the UI that displayed data has been accessed from the device.
+
+If the user declines a prompt to allow application access to personal or device information, the application must recover gracefully. For example, if a request to a device API fails, do not
+automatically retry if this will lead to the user being presented with repeated native confirmation dialog boxes.
+
+[ DEVICE DATA ] Requires: Device Data APIs.
+
+
+3.3.2 Enable Automatic Sign-in
+
+
+
+3.3.2.1 What it means
+
+
+If an application requires user identity it is usual to prompt for user credentials (username and password) and provide the option to sign-in automatically on next usage session. This is especially
+important on a mobile device where data input is more difficult than on a desktop.
+
+Note that if automatic sign-in is enabled, a sign-out link should also be provided.
+
+
+3.3.2.2 How to do it
+
+
+User credentials can be stored in a cookie or in local storage. However, it is important not to store unencrypted password information since this is insecure. Typically, a securely hashed token
+which, if necessary, can be revoked on the server, is stored locally in order to enable automatic sign-in.
+
+
+3.4 Conservative use of resources
+
+
+The most effective way to ensure that applications run smoothly and with low latency is to minimize use of device memory, processor power, and network bandwidth which are more limited on mobile
+devices than on the desktop.
+
+
+3.4.1 Use Transfer Compression
+
+
+
+3.4.1.1 What it means
+
+
+Compress content for efficient delivery.
+
+
+3.4.1.2 How to do it
+
+
+HTTP 1.1 compression, which uses the gzip and DEFLATE algorithms, is widely supported. Web servers should be configured to serve appropriately compressed responses.
+
+Note however, that the cost (in time and battery usage) of decompressing data should be balanced against the gains in transport efficiency. When configuring HTTP 1.1 compression note that:
+
+* Most image formats (especially JPEGs) do not benefit from compression, but SVG does;
+* Most other media formats (e.g. audio, video) do not benefit from compression;
+* Very small files (e.g. <1k) generally do not benefit from compression.
+
+Where supported, alternative compression formats (such as EXI [EXI]) that do not share some of the above impediments, may provide benefit.
+
+
+3.4.2 Minimize Application and Data Size
+
+
+
+3.4.2.1 What it means
+
+
+This section elaborates on the Best Practices of BP1 (MINIMIZE). Smaller applications will download and execute more quickly and more reliably than larger ones on constrained devices.
+
+
+3.4.2.2 How to do it
+
+
+Process HTML, JavaScript and CSS files to remove whitespace and minify before delivery.
+
+"Minification" / "optimization" may take a number of forms from simple removal of white space and comments, to the global substitution of tokens (variables, method names, selector names) with
+shorter alternatives. In general, minification based upon a lexical / grammatical understanding of that source is less fragile and is preferred to simple regular-expression based tools.
+
+See the JavaScript CompressorRater [JSCOMP] for a comparison of JavaScript minification tools.
+
+
+
+3.4.3 Avoid Redirects
+
+
+
+3.4.3.1 What it means
+
+
+The redirection of requests (using HTTP 3xx status or HTML meta refresh) is typically used to exchange information between servers (e.g. account authentication). The delay incurred by redirects is
+much higher over mobile networks and so the number of redirects should be kept to a minimum.
+
+
+3.4.3.2 How to do it
+
+
+Try not to use redirects. If more than two redirects are required consider using an interstitial page to communicate to the user that the application is still working.
+
+
+
+3.4.4 Optimize Network Requests
+
+
+
+3.4.4.1 What it means
+
+
+Establishing the necessary connections in order to complete an HTTP request can take significantly longer on a mobile network than on a fixed network. Even though bandwidth is typically more
+restricted on a mobile network it is still preferable to make fewer, larger requests.
+
+
+3.4.4.2 How to do it
+
+
+Consider the following possibilities when designing an application:
+
+Batching requests:
+        Since a single request for more data is likely to provide a better user experience than several smaller requests, wherever possible, batch up multiple requests at the application level.
+Throttle low-priority requests:
+        In some applications certain requests may be less critical than others (e.g. logging requests). Throttle low-priority requests to ensure they don't block the network and prevent more
+        critical requests from being serviced quickly.
+Back off during periods of inactivity:
+        If the application polls for updates, it should monitor user activity and poll less frequently during inactive periods.
+Device Context:
+        If supported by the device, use awareness of current connectivity (e.g. WiFi) to select an appropriate level of interaction.
+
+
+
+3.4.5 Minimize External Resources
+
+
+3.4.5.1 What it means
+
+A Web application typically requires a number of resources (style sheets, scripts, image, etc) each of which requires an HTTP request. As above, HTTP requests are particularly expensive on a mobile
+network and so fewer, larger requests should be favored over a larger number of smaller requests.
+
+3.4.5.2 How to do it
+
+As far as makes sense after taking into account 3.5.2 Minimize Perceived Latency combine all style sheets into a single resource and all scripts into a single resource. If multiple scripts and style
+sheets are required as part of the authoring process, then try to arrange that they are merged before the page is served.
+
+
+
+
+3.4.6 Aggregate Static Images into a Single Composite Resource (Sprites)
+
+
+3.4.6.1 What it means
+
+Web applications often depend on a number of static images to provide icons, buttons, etc. If served as a separate image each one incurs an additional HTTP request which is detrimental to
+performance.
+
+3.4.6.2 How to do it
+
+Define candidate images as CSS background images and combine them into a single image for transfer (spriting). To optimize efficiency combine images of similar sizes and color palettes. Also,
+combine images that do not change often, since if one of the component images changes the entire combination image will need to be refreshed. To render individual components of a resource use CSS
+positioning and clipping.
+
+Note that this technique should only be applied to decorative images (e.g. those that don't require an alt text). Spriting informational images leads to an undesirable coupling of content and layout
+and is detrimental to accessibility.
+
+[ CSS ] Requires: CSS2 Clipping and Positioning Support
+
+
+3.4.7 Include Background Images Inline in CSS Style Sheets
+
+
+3.4.7.1 What it means
+
+Visual effects (e.g. background images and gradients) are often used to improve the look and feel of an application. These can be included in CSS as base64 encoded strings in order to avoid an
+additional HTTP request
+
+Note that base64 encoding adds around 10% to the image size after gzip compression and this additional cost should be weighed against the benefits of fewer requests.
+
+3.4.7.2 How to do it
+
+Background images can be encoded using the data URI scheme: url('data:image/png;base64, [data])
+
+[ CSS ] Requires: RFC2397 [RFC2397] data uri support.
+
+
+3.4.8 Cache Resources By Fingerprinting Resource References
+
+
+3.4.8.1. What it means
+
+Dynamic resources that change occasionally (e.g. a user's avatar) can still be cached by identifying them with a URI that includes a hash of the resource content. Using this technique means that the
+browser does not need to check the resource headers in order to validate its cache, instead, any change in the resource will lead naturally to a corresponding change in the resource reference.
+
+For example,
+
+<img src="http://www.example.com/userimages/joeblogs-67f90da089da">
+
+Where the actual resource at joeblogs-[xxx] could be either generated in some offline process or served dynamically.
+
+3.4.8.2 How to do it
+
+* Set the resource caching policy to "never expire" by setting the Expires header to a date in the far future.
+* Reference the resource using a URI that contains a Hash of the content. If the content changes, this reference will change and the browser will fetch the updated data.
+
+
+3.4.9 Cache AJAX Data
+
+
+3.4.9.1 What it means
+
+If possible, data designed to be accessed by AJAX requests from the client should be cached in the same way as primary content.
+
+3.4.9.2 How to do it
+
+The standard caching techniques (Expires header and Cache-Control header), as well as resource fingerprinting (see 3.4.8) can be used on AJAX data as readily as primary content pages.
+
+
+3.4.10 Do not Send Cookie Information Unnecessarily
+
+
+3.4.10.1 What it means
+
+Static resources do not need cookie information and so performance can be improved by serving them from a path or sub-domain for which the application's cookies are out of scope.
+
+3.4.10.2 How to do it
+
+Use a different domain, sub-domain, or path name for static resources to the main application, and restrict the valid path of cookies such that they will not be exchanged when they are not needed.
+
+For example:
+
+
+Set-Cookie: somePreferenceInformation=purple; path=/myapp/
+
+
+Application data served from /myapp will receive cookie information.
+
+Static data served from /static will not receive unneeded cookie information.
+
+
+3.4.11 Keep DOM Size Reasonable
+
+
+
+3.4.11.1 What it means
+
+
+The in-memory size of the Document Object Model (DOM) may be limited on mobile devices. Large / complex pages may exceed this limit and cause unpredictable errors.
+
+
+3.4.11.2 How to do it
+
+
+Limit the amount of information in the DOM at a single time using pagination or other appropriate techniques.
+
+
+3.5 User Experience
+
+
+Given the additional complexities of interacting with an application on a mobile device, special consideration should be given to the overall user experience. User experience is influenced by a
+number of factors, including: latency, interaction method, and data consistency.
+
+
+3.5.1 Optimize For Application Start-up Time
+
+
+
+3.5.1.1 What it means
+
+
+User experience is strongly influenced by the initial start-up time of an application.
+
+Offline Web application technologies like HTML5 AppCache [HTML5-OFFLINE] bring Web applications into parity with native applications in terms of their start-up time and their ability to be used even
+where network coverage is intermittent. The following steps should be considered to minimize the start time of a Web application.
+
+
+3.5.1.2 How to do it
+
+
+Consider the following techniques to help minimize application start time:
+
+* Use Offline Technology: Offline Web technologies (for example, AppCache) allow the resources of a Web application (its HTML, JavaScript, and CSS files) to be specified and stored locally so that
+  the application can start without requiring a round-trip to the server.
+* Consider Partitioning Large Scripts: In complex Web applications, JavaScript parsing can contribute a significant portion of start time. If some functionality is rarely used it should be moved
+  into separate scripts that can be loaded on demand, lowering the amount of core code that needs to be parsed at start-up.
+* Use Local Storage: Where appropriate, store a snapshot of the last application state so it can be displayed immediately on start-up without requiring a server roundtrip.
+* Minimize Number of Local Storage Queries: The number of local storage queries required to generate the initial view is a significant contribution to start-up latency. Try to minimize the number
+  of local storage queries required before the first view can be displayed.
+
+
+
+
+3.5.2 Minimize Perceived Latency
+
+
+
+3.5.2.1 What it means
+
+
+Lowering perceived latency is an important factor in improving the overall usability of a Web application.
+
+
+3.5.2.2 How to do it
+
+
+A number of techniques can be used to lower perceived latency:
+
+* Enable Incremental Rendering: Place JavaScript at the bottom of the page (since browsers rendering halts while parsing JavaScript) and configure the page so that any useful information that
+  might be available is viewable while the main content of the application is still loading.
+* Keep the User Informed of Activity: Use spinners progress bars to keep the user informed during network and device API accesses so that they do not think the application is halted.
+* Avoid Page Reloads: To reflect changes in state or show different views within an application, update pages dynamically (by manipulating the DOM) rather than reloading them.
+* Preload Probable Next Views: Preload data for frequently traversed paths in the application so it can be displayed more quickly when the user requests it.
+
+
+3.5.3 Design for Multiple Interaction Methods
+
+
+
+3.5.3.1 What it means
+
+
+Interaction methods vary across devices. Three main interaction methods should be considered when designing the UI:
+
+* Focus Based: The browser focus "jumps" from element to element;
+* Pointer Based: Key-based navigation controls a pointer that can cover any part of the screen;
+* Touch Based: Events are related directly to a finger or stylus touch position on the screen.
+
+The optimum configuration of UI elements varies depending on the interaction method used by the device. Ideally, the UI should be adapted based on a knowledge of the interaction methods supported by
+the target device. If this is not possible, then the UI should be designed to provide a good experience for each of these different interaction methods.
+
+Additionally note that (as always) new interaction methods are likely to emerge in the future, particularly in the fields of voice and assistive technology. For additional, non-mobile specific,
+guidelines on accessibility and designing for assistive technologies, see Web Content Accessibility Guidelines (WCAG) 2.0 [WCAG20].
+
+
+3.5.3.2 How to do it
+
+
+Particularly where navigation of content requires multiple links (i.e. back/forward in a carousel) the following factors should be considered:
+
+Focus Based:
+
+* The current focus of the page is easily determined because the focus element will be highlighted;
+* Focus area will jump automatically from one selectable element to another (e.g. from link to link) without affecting usability even when widely spaced.
+
+Pointer Based:
+
+* Selectable elements that are associated with each other need to be close as moving the pointer can be slow;
+* Selectable elements need to be large enough to be easily selected -- since the pointer often moves in steps of between 5 - 10 pixels;
+* Selectable elements should have rollovers to make it clear when the pointer has entered their active area.
+
+Touch Based:
+
+* Selectable elements may be (but don't have to be) widely spaced since the user can select them directly;
+* Selectable elements must be large enough to be easily selected (e.g. list items should have a screen height of at least around 1cm);
+* No elements are in focus until they are selected so extra information cannot be passed to the user (e.g. rollovers will not work).
+
+
+3.5.4 Preserve Focus on Dynamic Page Updates
+
+
+
+3.5.4.1 What it means
+
+
+The JavaScript focus method can be used to move the focus to the part of a page that has changed. However, if unexpected, this can confuse or irritate the user, especially if returning to the
+previous focus is not easy.
+
+
+3.5.4.2 How to do it
+
+
+Use the JavaScript focus method only if it is essential to the use of the application, and does not inhibit user control/interaction.
+
+
+3.5.5 Use Fragment IDs to Drive Application View
+
+
+3.5.5.1 What it means
+
+Web applications can switch views without a full page reload by showing and hiding sections of content. However, this means that the browser <back> button doesn't work by default, and it is not
+possible to link directly to specific views within an application. Usability is enhanced by enabling both of these features:
+
+* Enabling deep links (e.g. to the content of a specific email) means the user can bookmark this view and return to it quickly;
+* Enabling the browser history provides a natural method to navigate application views that is natively supported by the browser.
+
+3.5.5.2 How to do it
+
+Assign a URI with a distinguishing fragment identifier (e.g. http://myapp.example.org/myapp#view). Use JavaScript to interrogate the browser location in order to determine which view to display.
+
+For further discussion on this topic see: Unique URLs pattern [AJAX-UNIQUE] on the Ajax Design Patterns Web site.
+Note that showing and hiding content in this way can have adverse affects on accessibility if not carefully handled. See WAI-ARIA [ARIA] for more information on writing accessible rich Web
+applications.
+
+3.5.6 Make Telephone Numbers "Click-to-Call"
+
+
+
+3.5.6.1 What it means
+
+
+Standardized URI schemes have been defined for some common device functions, e.g. making phone calls, sending an SMS, and managing address books. These URI schemes, if supported, can enable users to
+easily use these functions from Web applications.
+
+
+3.5.6.2 How to do it
+
+
+The most broadly supported scheme is tel: as described in RFC3966 [RFC3966]. Code such as the following can be used to enable "Click-to-Call":
+
+<a href="tel:[PHONE-NUMBER]">[PHONE-NUMBER]</a>
+
+Note that [PHONE-NUMBER] should always be entered using the full international prefix (e.g. +1-201-555-0111) to ensure that it works outside of its home country.
+
+Similarly RFC5724 [RFC5724] can be used to send a GSM SMS (text message) as follows:
+
+<a href="sms:[PHONE-NUMBER]?body=[MESSAGE]">[PHONE-NUMBER]</a>
+
+Note that at the time of writing support for this RFC is limited and device compatibility should be verified before deployment.
+
+
+3.5.7 Ensure Paragraph Text Flows
+
+
+3.5.7.1 What it means
+
+On small screens it is important that paragraph text flows both so that it doesn't require horizontal scrolling and so that it will re-flow if the view orientation is changed. See BP1 [MEASURES] for
+more details.
+
+3.5.7.2 How to do it
+
+Do not use absolute or pixel measures. Use percentage and RELATIVE measures for containers so that text can re-flow automatically.
+
+
+3.5.8 Ensure Consistency Of State Between Devices
+
+
+3.5.8.1 What it means
+
+This recommendation builds on the recommendation in BP1 (5.5.1 Thematic Consistency) and expands it to consider the application preferences, personalization data, and state that form part of the
+overall experience on a mobile Web application.
+
+User credentials valid on one device should be valid on other devices. User preferences captured on one device should be accessible on other devices. Data updated on one device should be viewable
+consistently on other devices.
+
+An important example of this is offering a consistent experience where data entered on a desktop is available on a mobile and vice versa.
+
+3.5.8.2 How to do it
+
+For any application data that is not exclusively relevant to the current device, favor storing it on the server so it can be shared by other devices. See 3.1 Application Data for more details.
+
+
+
+3.5.9 Consider Mobile Specific Technologies for Initiating Web Applications
+
+
+
+3.5.9.1 What it means
+
+
+Network-initiated content delivery ("push") methods allow notifications and updates to be sent to the user even when they are outside of the application context.
+
+
+3.5.9.2 How to do it
+
+
+Push method support may be disclosed through a User Agent Profile [UAPROF] document if published by the device vendor, or through a device classification repository.
+
+If supported by the user agent, options for Push methods include:
+
+* OMA Push: a widely supported enabler providing methods for user-confirmed and automatic content push, directed to mobile browsers and other user-agents. See OMA Push specifications [OMA-PUSH]
+  for more details;
+* SMS;
+* QR Codes;
+* Alternative vendor-specific initiatives.
+
+
+3.5.10 Use Meta Viewport Element To Identify Desired Screen Size
+
+
+
+3.5.10.1 What it means
+
+
+Certain classes of browser attempt to display desktop pages on a small screen by automatically zooming the display. This can be problematic for applications that have already been optimized for a
+small screen. The viewport meta tag tells the device at what scale to render the page.
+
+
+3.5.10.2 How to do it
+
+
+A typical viewport setting looks like this:
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/> ,
+
+and is inserted into the <head> element of the HTML document. This setting informs the browser to always render the page at 100% (e.g. no browser based scaling) and is appropriate for pages
+specifically designed for the target screen-size.
+
+
+
+3.6 Handling Variation in the Delivery Context
+
+
+Variations in the Delivery Context (such as different device capabilities) is a prominent feature of the mobile Web. Web applications should adapt to known or discoverable properties of the Delivery
+Context by adjusting the content, navigation or page flow, with a view to offering a good user experience on as broad a range of devices as possible.
+
+
+3.6.1 Prefer Server-Side Detection Where Possible
+
+
+
+3.6.1.1 What it means
+
+
+Where possible, use the evidence available on the server to determine the properties of the Delivery Context, and adapt the responses to the client before transfer, thus improving the user
+experience and avoiding transfer of unnecessary or incompatible data.
+
+
+3.6.1.2 How to do it
+
+
+In its most basic form, the minimum evidence from the requesting device is the HTTP request header fields. Typically, the following header fields provide evidence of device capabilities:
+
+* Accept: this list of MIME types can aid in the selection or creation of alternative content representations to suit the requesting device. This field is not always reliable however, and its
+  value often includes "*/*", suggesting that clients can accept every MIME type.
+* User-Agent: as a generally unique (albeit opaque) string it can be used as a key into a device description repository [DDR]. The set of properties recorded in these repositories varies from
+  implementation to implementation. The W3C DDR Simple API defines a common interface and a means of expressing the vocabulary of properties for such repositories.
+* X-Wap-Profile: this is a reference to the User Agent Profile [UAPROF] for the requesting device. In practice, the referenced profile is not always guaranteed to be available, valid or
+  up-to-date, so the value of this field is sometimes used with a DDR where corrections to the profiles are stored. Some devices may send an additional field X-Wap-Profile-Diff advertising temporary
+  or permanent variations of a specific device with respect to its standard profile.
+
+
+3.6.2 Use Client-Side Capability Detection Where Necessary
+
+
+
+3.6.2.1 What it means
+
+
+Where it is not possible to determine certain properties of the Delivery Context from the server, this information may be available at the client. Once obtained at the client, the information can be
+used directly to adapt the presentation, or it can used to request alternative, adapted content from the server.
+
+
+3.6.2.2 How to do it
+
+
+There are a few client-side solutions available to the developer:
+
+JavaScript: this is the most common solution. A script determines the device / browser properties and manipulates the content and behaviour of the application accordingly. This can be done in two
+ways:
+
+1. By encapsulating the differing behaviors in the control logic of the application (e.g. if (some_api_exists) { ...). Typically the Delivery Context information is gathered at the start of the
+   session, though dynamic information (e.g. current screen orientation) should be refreshed during the session.
+2. By passing the gathered information back to the server and requesting alternative content (e.g. either by dynamically adding a new <script> element to the DOM or by an XHR request).
+
+CSS Media Types: CSS Media Types allow different stylesheets to be associated with different media types (e.g. print, screen, mobile) and are traditionally used to repurpose content for these
+destinations. Since the list of recognized media types is limited, however, and devices are notoriously idiosyncratic in their interpretation of types, it is in general not a helpful technology in
+this context. See Media Types [CSSMT] for more details.
+
+CSS Media Queries: Media queries are an extension to the "media-types" paradigm that allow developers to apply specific style rules based on the device display characteristics (e.g. screen width,
+orientation, or resolution). At the time of writing this specification is not fully supported, but can provide a useful way to modify the page layout (for example to re-flow sections of text) in a
+more maintainable, declarative way than is possible with script. See Media Queries [CSSMQ] for more details.
+
+
+3.6.3 Use Device Classification to Simplify Content Adaptation
+
+
+
+3.6.3.1 What it means
+
+
+If a large number of devices are being targeted, or if the application is sensitive to the permutations of a large number of configuration properties, the number of application variants required
+might quickly become unmanageable.
+
+To combat this, classify target devices and build a single application variant for each class. This allows you to exploit device capabilities with a manageable code base.
+
+
+3.6.3.2 How to do it
+
+
+Identify the target devices for the application and assign these to device classes of varying capability. Focus on application variants that work in each class rather than building device-specific
+exceptions for every variation in device configuration.
+
+Device classes should be defined on an application by application basis, so that the variants can be tailored accordingly.
+
+Example 1: Possible definition of application classes based on rendering and device API capabilities:
+
+Class 1: Basic XHTML support, no or very basic scripting. No XHR support. (Even if these kind of devices are not being explicitly supported, it is often advisable to support a non-XHR version in
+case JavaScript has been disabled on the device).
+
+Class 2: Full AJAX and JavaScript support.
+
+Class 3: Advanced device APIs, for example: access to location API, device PIM data, or application cache.
+
+Example 2: Possible definition of application classes based on supported user-interaction modes:
+
+Class 1: Pointer Based.
+
+Class 2: Touch Based.
+
+
+3.6.4 Support a non-JavaScript Variant if Appropriate
+
+
+
+3.6.4.1 What it means
+
+
+Scripted and XHR based applications are not supported on all browsers. If broadest reach is a primary concern then consider providing a variant of the application that uses synchronous FORM posts in
+place of XHR requests. This Best Practice is related (albeit with a differing focus) to BP 1 [ OBJECTS_OR_SCRIPT].
+
+
+3.6.4.2 How to do it
+
+
+Essentially this BP states that it is favorable to support "Class 1" devices as defined in the first example above if appropriate. Doing this will ensure that the application can be used across as
+broad a range of devices as possible. Furthermore, in some cases a non-JavaScript version can be useful for simple operations in low-bandwidth situations.
+
+In some cases, however, a particular application simply has no non-JavaScript counterpart (e.g. a Web based game, an Instant Messaging client) in which case the server should return a response with
+human readable content explaining the situation in more detail.
+
+Ideally, content should be adapted before transfer by checking whether or not the device supports JavaScript using a DDR or local index. However, in some cases (e.g. if the device has disabled
+JavaScript) JavaScript may still be sent to a device that can't process it. To cover this case, a <noscript> element should always be included and contain a suitably informative message.
+
+
+3.6.5 Offer Users a Choice of Interfaces
+
+
+
+3.6.5.1 What it means
+
+
+Not only is device characteristic detection imperfect, it cannot always account for the differing use cases of an application. Therefore automatic detection is not sufficient as the only mechanism
+for determining which version is appropriate.
+
+
+3.6.5.2 How to do it
+
+
+Where multiple versions of an application exist (e.g. to support the various device classifications) always offer the user the opportunity to change the selection.
+
+Always attempt to default to the most appropriate UI on first use.
+
+Always remember the user's preference for future visits in a cookie or local data store.
+
+
+3.7 Further Considerations
+
+
+The Mobile Web Best Practices Working Group would like to draw the attention of Web application developers on the following considerations. These considerations should not be viewed as best
+practices, because they are not prevalent in the development community at the time of writing. They are published as advisory notes.
+
+
+3.7.1 Consider Use of Canvas Element or SVG For Dynamic Graphics
+
+
+
+3.7.1.1 What it means
+
+
+Canvas and SVG provide alternative options for incorporating graphics in a Web application. Support for these technologies varies across devices so in many cases the choice of which technology to
+use will depend on the target devices for a given application.
+
+The canvas element specifies a display region where JavaScript can be used to draw simple graphics. In contrast, SVG is an XML language for defining vector graphic elements that are added to a DOM
+which can be modified using JavaScript.
+
+SVG is well-suited for graphics that must be scalable and whose components need to be modified (e.g. panning and zooming a map) whereas canvas is better suited where a static bitmap is sufficient
+(e.g. drawing a scatter-chart or creating visual effects).
+
+If speed is important, canvas may be more effective. However since Canvas generates a flat bitmap it is not inherently accessible and so should not be used as the sole means of conveying information.
+
+
+3.7.1.2 How to do it
+
+
+See the Canvas Element in the HTML5 specification [HTML5, section 4.8.10] for information on how to use the Canvas element.
+
+See W3C Scalable Vector Graphics (SVG) home page [SVG] for information on how to use SVG.
+
+
+3.7.2 Inform the User About Automatic Network Access
+
+
+
+3.7.2.1 What it means
+
+
+Network traffic on a mobile device depletes the battery and may incur expense -- so it is important to inform the user when accessing the network. Whenever an application makes asynchronous XHR data
+requests, whether in response to a user action or automatically, this should be indicated in an appropriate manner so that the user remains informed and in control.
+
+
+3.7.2.2 How to do it
+
+
+Applications should disclose how they use network resources. A simple icon indicating background activity is usually sufficient and does not interrupt the flow of the application. If extensive
+background network activity is required the user should be informed when they first visit the site, when they first sign-in, or in associated help pages.
+
+The kinds of detailed information that could be disclosed in associated help pages or terms of service are:
+
+* how often the application will interact with the Internet - e.g. every 5 minutes, hourly, daily;
+* for how long the automatic behavior will continue;
+* how heavy the overall usage is expected to be or the type of service plan recommended.
+
+
+3.7.3 Provide Sufficient Means to Control Automatic Network Access
+
+
+
+3.7.3.1 What it means
+
+
+If an application makes automatic network requests (e.g. to poll the server for updates or to automatically store an updated client state) a means to control this activity should be provided.
+
+
+3.7.3.2 How to do it
+
+
+All applications that access the network automatically should provide a means for the user to disable that activity. When automatic network activity is disabled, periodically prompt the user to make
+network requests.
+
+Consider allowing the user to adjust the polling schedule and to control which activities are allowed to initiate network requests.
+
+
+Appendix 1: Best Practice Dependent Device Properties
+
+
+The following device properties included in the DDR Core Vocabulary [DDR-VOCAB] are of particular value in supporting best practices recommended in this document. They should be available in any DDR
+supporting the W3C's DDR Core Vocabulary:
+
+* Display Width, Display Height, Display Color Depth
+* Input Devices
+* Markup Support
+* Stylesheet Support
+* Image Format Support
+* Input Mode Support
+* Cookie Support
+* Script Support
+
+
+Appendix 2: References
+
+
+
+2.1 MWI References
+
+
+MWBP
+
+Mobile Web Best Practices 1.0, Jo Rabin, Editor, W3C Recommendation, 29 July 2008 (see http://www.w3.org/TR/mobile-bp/)
+
+
+2.2 Device Independence
+
+
+DCODI
+        Delivery Context Overview for Device Independence, , R. Gimson, R. Lewis, S. Sathish, Editors, W3C Working Group Note, 20 March 2006 (See http://www.w3.org/TR/di-dco/)
+DIGLOSS
+        Glossary of Terms for Device Independence, R. Lewis, Editor, W3C Working Draft (work in progress), 18 January 2005 (See http://www.w3.org/TR/2005/WD-di-gloss-20050118/)
+DIP
+        Device Independence Principles, R. Gimson, Editor, W3C Working Group Note, 1 September 2003 (See http://www.w3.org/TR/2003/NOTE-di-princ-20030901/)
+
+2.3 Web, Protocols and Languages
+
+
+CSS
+        Cascading Style Sheets (CSS1) Level 1 Specification, Håkon Wium Lie, Bert Bos, Editors, W3C Recommendation, 11 January 1999, revised 11 April 2008 (See
+        http://www.w3.org/TR/2008/REC-CSS1-20080411/)
+CSS2
+        Cascading Style Sheets, level 2 CSS2 Specification, Bert Bos, Håkon Wium Lie, Chris Lilley, Ian Jacobs, Editors, W3C Recommendation, 12 May 1998, revised 11 April 2008 (See
+        http://www.w3.org/TR/2008/REC-CSS2-20080411/)
+HTTP1.0
+        Hypertext Transfer Protocol -- HTTP/1.0 Request for Comments: 1945, T. Berners-Lee, R. Fielding, H. Frystyk, May 1996 (See http://www.w3.org/Protocols/rfc1945/rfc1945)
+HTTP1.1
+        Hypertext Transfer Protocol -- HTTP/1.1 Request for Comments: 2616, R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, T. Berners-Lee, June 1999 (See
+        http://www.w3.org/Protocols/rfc2616/rfc2616.html)
+XML
+        Extensible Markup Language (XML) 1.0 (Fifth Edition), Tim Bray, Jean Paoli, C. M. Sperberg-McQueen, Eve Maler, François Yergeau, Editors, W3C Recommendation, 26 November 2008 (See
+        http://www.w3.org/TR/2008/REC-xml-20081126/)
+
+2.4 Other References
+
+
+AJAX-UNIQUE
+        Unique URLs pattern on Ajax Design Patterns Web site (See http://ajaxpatterns.org/Unique_URLs)
+ARIA
+        Accessible Rich Internet Applications (WAI-ARIA) 1.0, James Craig et al, W3C Working Draft, 16 September 2010 (See http://www.w3.org/TR/wai-aria/)
+BONDI
+        OMTP Reference Implementation (see http://bondi.omtp.org/)
+CSSMQ
+        Media Queries, Håkon Wium Lie, Tantek elik, Daniel Glazman, Anne van Kesteren, W3C Candidate Recommendation, 27 July 2010 (see http://www.w3.org/TR/css3-mediaqueries/)
+CSSMT
+        Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification, Bert Bos et al, W3C Candidate Recommendation, 08 September 2009 (see http://www.w3.org/TR/CSS21/media.html)
+DAP
+        W3C Device APIs Working Group (see http://www.w3.org/2009/dap/)
+DDR
+        Device Description Repository Simple API, Jo Rabin et al, W3C Recommendation, 05 December 2008 (see http://www.w3.org/TR/DDR-Simple-API/)
+DDR-VOCAB
+        Device Description Repository Core Vocabulary, Jo Rabin et al, W3C Working Group Note, 14 April 2008 (see http://www.w3.org/TR/ddr-core-vocabulary/)
+EXI
+        Efficient XML Interchange, W3C Candidate Recommendation, John Schneider and Takuki Kamiya, 08 December 2009 (see http://www.w3.org/TR/exi/)
+HTML5
+        HTML5, Ian Hickson and David Hyatt, W3C Working Draft, 19 October 2010 (see http://www.w3.org/TR/html5/)
+HTML5-OFFLINE
+        HTML5, Ian Hickson and David Hyatt, W3C Working Draft, 19 October 2010 (see http://www.w3.org/TR/html5/offline.html#offline)
+JSCOMP
+        The JavaScript CompressorRater (see http://compressorrater.thruhere.net)
+JSON-PARSE
+        Implementation of a secure JSON parser in JavaScript (see https://github.com/douglascrockford/JSON-js/raw/master/json_parse.js)
+OFFLINE
+        Offline Web Applications, Anne Van Kesteren and Ian Hickson, W3C Working Group Note, 30 May 2008 (see http://www.w3.org/TR/offline-webapps/)
+OMA-PUSH
+        OMA Push (see http://www.openmobilealliance.org/Technical/wapindex.aspx)
+OPERA
+        Opera Web Widget API (see http://dev.opera.com/libraries/widgetobject/)
+OWASP
+        Open Web Application Security Project (see http://www.owasp.org/index.php/Main_Page)
+RFC2397
+        The "data" URL scheme, L.Masinter. IETF, August 1998 (See http://www.ietf.org/rfc/rfc2397.txt)
+RFC3966
+        The tel URI for Telephone Numbers, H. Schulzrinne. IETF, December 2004 (See http://www.ietf.org/rfc/rfc3966.txt)
+RFC4627
+        The application/json Media Type for JavaScript Object Notation (JSON), D. Crockford, July 2006 (see http://www.ietf.org/rfc/rfc4627)
+RFC5724
+        URI Scheme for Global System for Mobile Communications (GSM) Short Message Service (SMS), E. Wilde and A. Vaha-Sipila. IETF, January 2010 (See http://www.ietf.org/rfc/rfc5724.txt)
+SVG
+        W3C Scalable Vector Graphics (SVG) home page (see http://www.w3.org/Graphics/SVG/)
+UAPROF
+        Open Mobile Alliance OMA-TS-UAProf-V2_0-20060206-A User Agent Profile Approved Version 2.0 06 Feb 2006 (See
+        http://www.openmobilealliance.org/technical/release_program/docs/UAProf/V2_0-20060206-A/OMA-TS-UAProf-V2_0-20060206-A.pdf)
+WCAG20
+        Web Content Accessibility Guidelines 2.0, B. Caldwell, M. Cooper, L. Guarino Reid, G. Vanderheiden et al, W3C Recommendation 11 December 2008 (see http://www.w3.org/TR/WCAG20/)
+WEBAPPS
+        W3C WebApps Working Group (see http://www.w3.org/2008/webapps/)
+WIDGETS
+        Widget Packaging and Configuration, Marcos Cáceres, W3C Working Draft, 5 October 2010 (see http://www.w3.org/TR/widgets/)
+WTAI
+        WAP Forum wap-268-wtai-20010908-a Wireless Telephony Application Interface Specification (See
+        http://www.openmobilealliance.org/tech/affiliates/LicenseAgreement.asp?DocName=/wap/wap-268-wtai-20010908-a.pdf)
+XHTML-Basic
+        XHTML Basic 1.1 - Second Edition, Shane McCarron, Masayasu Ishikawa, Editors, W3C Recommendation, 23 November 2010 (See http://www.w3.org/TR/2010/REC-xhtml-basic-20101123/)
+
+
+Appendix 3: Acknowledgments
+
+
+The editors would like to thank members of the BPWG for contributions of various kinds. The editors would also like to thank contributors to the public list, and contributors of Last Call comments
+whose comments have been taken into account in the creation of this document.
+
+The editors acknowledge significant written contributions from:
+
+* Daniel Appelquist, Vodafone
+
+* Jo Rabin, mTLD Mobile Top Level Domain (dotMobi)
+
+* Phil Archer, W3C
+
+* Jeff Sonstein, Rochester Institute of Technology
+
+* François Daoust, W3C
+
+* Scott Hughes, Vodafone
+

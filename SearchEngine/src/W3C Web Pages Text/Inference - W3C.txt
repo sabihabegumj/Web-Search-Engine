@@ -1,0 +1,218 @@
+Inference - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Semantic Web
+
+
+* Vertical Applications
+* Inference
+* Query
+* Ontologies
+* Data
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Semantic&#xA0;Web » 
+* Inference
+
+
+
+
+Inference
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;inference &#x2022;
+* what&#xA0;&#xA0;inferece&#xA0;is used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+
+What is Inference?
+
+
+Broadly speaking, inference on the Semantic Web can be characterized by discovering new relationships. On the Semantic Web, data is modeled as a set of (named) relationships between resources.
+&#x201C;Inference&#x201D; means that automatic procedures can generate new relationships based on the data and based on some additional information in the form of a vocabulary, e.g., a set of rules.
+Whether the new relationships are explicitly added to the set of data, or are returned at query time, is an implementation issue.
+
+On the Semantic Web, the source of such extra information can be defined via vocabularies or rule sets. Both of these approaches draw upon knowledge representation techniques. In general, ontologies
+concentrate on classification methods, putting an emphasis on defining 'classes', 'subclasses', on how individual resources can be associated to such classes, and characterizing the relationships
+among classes and their instances. Rules, on the other hand, concentrate on defining a general mechanism on discovering and generating new relationships based on existing ones, much like logic
+programs, like Prolog, do. In the family of Semantic Web related W3C Recommendations RDFS, OWL, or SKOS are the tools of choice to define ontologies, whereas RIF has been developed to cover rule
+based approaches.
+
+
+What Inference is Used For?
+
+
+Inference on the Semantic Web is one of the tools of choice to improve the quality of data integration on the Web, by discovering new relationships, automatically analysing the content of the data,
+or managing knowledge on the Web in general. Inference based techniques are also important in discovering possible inconsistencies in the (integrated) data.
+
+
+Examples
+
+
+A simple example may help. The data set to be considered may include the relationship (Flipper isA Dolphin). An ontology may declare that &#x201C;every Dolphin is also a Mammal&#x201D;. That means
+that a Semantic Web program understanding the notion of &#x201C;X is also Y&#x201D; can add the statement (Flipper isA Mammal) to the set of relationships, although that was not part of the original
+data. One can also say that the new relationship was &#x201C;discovered&#x201D;. Another example is to express that fact that &#x201C;if two persons have the same name, home page, and email address,
+then they are identical&#x201D;. In this case, the &#x201C;identity&#x201D; of two resources can be discovered via inferencing.
+
+Usage and techniques of ontologies and rules largely overlap. Very broadly speaking, ontologies optimize for taxonomic reasoning problems, and rule based systems optimize for reasoning problems
+within the data. The difference is largely a matter of style, and criteria like available expertise, ease of adapting to existing data, tooling support, maturity and costs, etc., should be
+considered as far more important when trying to choose.
+
+
+Learn More
+
+
+The Semantic Web community maintains a list of books on a W3C Wiki page. Some of those books are introductory in nature while others are conference proceedings or textbook that address more advanced
+topics. Details of recent and upcoming Semantic Web related talks, given by the W3C Staff, the staff of the W3C Offices, and members of the W3C Working Groups are available separately; the slides
+are usually publicly available. The W3C also maintains a collection of Semantic Web Case Studies and Use Cases that show how Semantic Web technologies, including inference, is used in practice.
+Finally, the Semantic Web FAQ may also be of help in understanding the various concepts.
+
+
+
+
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* RIF Rule Interchange Format
+* OWL Web Ontology Language
+* RDF
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Government Linked Data Working Group
+* Linked Data Platform (LDP) Working Group
+* RDF Working Group
+* RDFa Working Group
+* Semantic Web Interest Group
+
+
+
+
+
+
+Current Status
+
+
+* RIF Rule Interchange Format
+* OWL Web Ontology Language
+* RDF
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+Validators
+
+
+* RDF
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

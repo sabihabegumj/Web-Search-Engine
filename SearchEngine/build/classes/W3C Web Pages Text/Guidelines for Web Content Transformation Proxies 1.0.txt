@@ -1,0 +1,1410 @@
+Guidelines for Web Content Transformation Proxies 1.0
+
+
+
+
+
+
+Guidelines for Web Content Transformation Proxies 1.0
+
+
+
+W3C Working Group Note 26 October 2010
+
+
+This version:
+        http://www.w3.org/TR/2010/NOTE-ct-guidelines-20101026/
+Latest version:
+        http://www.w3.org/TR/ct-guidelines/
+Previous version:
+        http://www.w3.org/TR/2010/CR-ct-guidelines-20100617/
+Editor:
+        Jo Rabin, Invited Expert (and before at mTLD Top Level Domain, dotMobi)
+
+Copyright © 2010 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+This document provides guidance to Content Transformation proxies as to whether and how to transform Web content.
+
+Content Transformation proxies alter requests sent by user agents to servers and responses returned by servers so that the appearance, structure or control flow of Web applications are modified.
+Content Transformation proxies are mostly used to convert Web sites designed for desktop computers to a form suitable for mobile devices.
+
+Based on current practice and standards, this document specifies mechanisms with which Content Transformation proxies should make their presence known to other parties, present the outcome of
+alterations performed on HTTP traffic, and react to indications set by clients or servers to constrain these alterations.
+
+The objective is to reduce undesirable effects on Web applications, especially mobile-ready ones, and to limit the diversity in the modes of operation of Content Transformation proxies, while at the
+same time allowing proxies to alter content that would otherwise not display successfully on mobile devices.
+
+Important considerations regarding the impact on security are highlighted.
+
+
+
+
+Status of this Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This document was developed by the Mobile Web Best Practices Working Group as part of the Mobile Web Initiative.
+
+This document was expected to become a W3C Recommendation and was published as a W3C Candidate Recommendation on 17 June 2010. As of October 2010, the Mobile Web Best Practices Working Group
+acknowledges the lack of existing implementations. Nevertheless, it also believes that the guidelines establish a framework acceptable by all parties involved.
+
+The Mobile Web Best Practices Working Group eventually resolved to discontinue the work on this document and to publish it as a Working Group Note. The Working Group hopes that this Note may serve
+as a basis for discussion and negotiation among players.
+
+Other than changes to this section, the document has not changed since its publication as a W3C Candidate Recommendation. In particular, the use of normative language has been kept as-is.
+
+Comments on this document may be sent to the Working Group's public email list public-bpwg-comments@w3.org (with public archive).
+
+The public public-content-transformation-conformance@w3.org mailing-list (with public archive) that had been created to gather implementation feedback may still be used for that purpose. The Working
+Group also invites people willing to contribute to the test case repository to let themselves known on the public-bpwg-comments@w3.org public mailing-list, noting however that no further work is
+anticipated on that topic within the group as of October 2010. Please check the test case repository for up-to-date information.
+
+Publication as a Working Group Note does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the
+group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the
+information in accordance with section 6 of the W3C Patent Policy.
+
+
+
+
+Table of Contents
+
+
+1 Introduction (Non-Normative)
+    1.1 Purpose
+    1.2 Audience
+    1.3 Scope
+    1.4 Principles
+        1.4.1 IAB Considerations
+        1.4.2 Priority of Intention
+2 Terminology (Normative)
+    2.1 Types of Proxy
+    2.2 Types of Transformation
+    2.3 User Interaction
+3 Conformance (Normative)
+    3.1 Classes of Product
+    3.2 Normative and Informative Parts
+    3.3 Normative Language for Conformance Requirements
+    3.4 Transformation Deployment Conformance
+4 Behavior of Components (Normative)
+    4.1 Proxy Forwarding of Request
+        4.1.1 Applicable HTTP Methods
+        4.1.2 no-transform directive in Request
+        4.1.3 Treatment of Requesters that are not Web browsers
+        4.1.4 Serving Cached Responses
+        4.1.5 Alteration of HTTP Header Field Values
+            4.1.5.1 Content Tasting
+            4.1.5.2 Avoiding "Request Unacceptable" Responses
+            4.1.5.3 User Selection of Restructured Experience
+            4.1.5.4 Sequence of Requests
+            4.1.5.5 Original Header Fields
+        4.1.6 Additional HTTP Header Fields
+            4.1.6.1 Proxy Treatment of Via Header Field
+    4.2 Proxy Forwarding of Response to User Agent
+        4.2.1 User Preferences
+        4.2.2 Receipt of Cache-Control: no-transform
+        4.2.3 Use of Cache-Control: no-transform
+        4.2.4 Server Rejection of HTTP Request
+        4.2.5 Receipt of Vary HTTP Header Field
+        4.2.6 Link to "handheld" Representation
+        4.2.7 WML Content
+        4.2.8 Proxy Decision to Transform
+            4.2.8.1 Alteration of Response
+            4.2.8.2 Link Rewriting
+            4.2.8.3 HTTPS Link Rewriting
+5 Testing (Normative)
+
+
+
+Appendices
+
+
+A References
+B Conformance Statement
+C Internet Content Types associated with Mobile Content
+D Internet Content Types associated with Data Content
+E DOCTYPEs Associated with Mobile Content
+F URI Patterns Associated with Mobile Web Sites
+G Summary of User Preference Handling
+H Example Transformation Interactions (Non-Normative)
+    H.1 Basic Content Tasting by Proxy
+    H.2 Optimization based on Previous Server Interaction
+    H.3 Optimization based on Previous Server Interaction, Server has Changed its Operation
+    H.4 Server Response Indicating that this Representation is Intended for the Target Device
+    H.5 Server Response Indicating that another Representation is Intended for the Target Device
+I Informative Guidance for Origin Servers (Non-Normative)
+    I.1 Server Response to Proxy
+        I.1.1 Use of HTTP 406 Status
+        I.1.2 Use of HTTP 403 Status
+        I.1.3 Server Origination of Cache-Control: no-transform
+        I.1.4 Varying Representations
+            I.1.4.1 Use of Vary HTTP Header Field
+            I.1.4.2 Indication of Intended Presentation Media Type of Representation
+J Applicability to Transforming Solutions which are Out of Scope (Non-Normative)
+K Scope for Future Work (Non-Normative)
+    K.1 POWDER
+    K.2 link HTTP Header Field
+    K.3 Sources of Device Information
+    K.4 Inter Proxy Communication
+    K.5 Explicit Consent
+    K.6 Amendment to and Refinement of HTTP
+L Acknowledgments (Non-Normative)
+
+
+
+========================================================================================================================================================================================================
+
+
+
+
+1 Introduction (Non-Normative)
+
+
+
+
+1.1 Purpose
+
+
+Within this document Content Transformation refers to the manipulation of requests to, and responses from, an origin server. This manipulation is carried out by proxies in order to provide a better
+user experience of content that would otherwise result in an unsatisfactory experience on the device making the request.
+
+The W3C Mobile Web Best Practices Working Group neither approves nor disapproves of Content Transformation, but recognizes that is being deployed widely across mobile data access networks. The
+deployments are widely divergent to each other, with many non-standard HTTP implications, and no well-understood means either of identifying the presence of such transforming proxies, nor of
+controlling their actions. This document establishes a framework to allow that to happen.
+
+The overall objective of this document is to provide a means, as far as is practical, for users to be provided with at least a "functional user experience" [Device Independence Glossary] of the Web,
+when mobile, taking into account the fact that an increasing number of content providers create experiences specially tailored to the mobile context which they do not wish to be altered by third
+parties. Equally it takes into account the fact that there remain a very large number of Web sites that do not provide a functional user experience when perceived on many mobile devices.
+
+It is stressed that this document is unlikely to be the last word on this topic. As noted below (1.3 Scope) it is out of scope of this document to provide a comprehensive solution to control of
+transforming proxies, though such a solution would appear to be needed. The document is an attempt to improve a situation at a point in time where there appears to be disregard of the provisions of
+HTTP - and is primarily a reminder and an encouragement to follow those provisions more closely.
+
+
+
+
+1.2 Audience
+
+
+The audience for this document is creators of Content Transformation proxies and purchasers and operators of such proxies. The document also contains non-normative guidance for content providers
+whose services may be accessed by means of such proxies.
+
+
+
+
+1.3 Scope
+
+
+The recommendations in this document refer only to "Web browsing" - i.e. access by user agents that are intended primarily for interaction by users with HTML Web pages (Web browsers) using HTTP.
+Clients that interact with proxies using mechanisms other than HTTP (and that typically involve the download of a special client) are out of scope, and are considered to be a distributed user agent.
+Proxies which are operated in the control of or under the direction of the operator of an origin server are similarly considered to be a distributed origin server and hence out of scope.
+
+The W3C Mobile Web Best Practices Working Group (BPWG) is not chartered to create new technology - its role is to advise on best practice for use of existing technology. In satisfying Content
+Transformation requirements, existing HTTP header fields, directives and behaviors must be respected, and as far as is practical, no extensions to [RFC 2616 HTTP] are to be used.
+
+The recommendations in this document refer to interactions of a proxy and do not refer to any presumed aspects of the internal operation of the proxy. For this reason, the document does not discuss
+use of "allow" and "disallow" lists (though it does discuss behavior that is induced by the implementation of such lists). In addition it does not discuss details of how transformation is carried
+out except if this is reflected in interoperability. For this reason, it does not discuss the insertion or insertion of headers and footers or any other specific behaviors (though it does discuss
+the need for essential user interaction of some form).
+
+Moral, legal and other similar questions are not in scope of this document. The BPWG does not have authority or expertise to comment one way or another about setting precedent or authorising any
+particular behavior or its absence.
+
+
+
+
+1.4 Principles
+
+
+
+
+1.4.1 IAB Considerations
+
+
+The BPWG made reference to Internet Architecture Board (IAB) work on "Open Pluggable Edge Services" [RFC 3238 OPES] for various principles that underlie behavior of proxies. In this work the IAB
+expressed its concerns about privacy, control, monitoring, and accountability of such services.
+
+
+
+
+1.4.2 Priority of Intention
+
+
+The Web allows users considerable flexibility in respect of the representation of content. At the same time, Content Providers may have a preferred manner in which they wish their content to be
+represented. Content Transformation must reconcile these contrasting factors. In creating this Recommendation the BPWG has determined that Content Transformation proxies should respect Content
+Providers intentions, where they are expressed, but may allow users to choose other representations, except where Content Providers specifically prohibit this.
+
+The BPWG recognizes that there is neither a systematic vocabulary for Content Provider Intentions, nor a systematic means of expression of such intentions. There is scope for further work in this
+area (see K Scope for Future Work).
+
+
+
+
+
+
+2 Terminology (Normative)
+
+
+
+
+2.1 Types of Proxy
+
+
+Alteration of HTTP requests and responses is not prohibited by HTTP other than in the circumstances referred to in [RFC 2616 HTTP] Section 13.5.2 and Section 14.9.5.
+
+HTTP defines two types of proxy: transparent proxies and non-transparent proxies. As discussed in [RFC 2616 HTTP] Section 1.3, Terminology:
+
+"A transparent proxy is a proxy that does not modify the request or response beyond what is required for proxy authentication and identification. A non-transparent proxy is a proxy that modifies the
+request or response in order to provide some added service to the user agent, such as group annotation services, media type transformation, protocol reduction, or anonymity filtering. Except where
+either transparent or non-transparent behavior is explicitly stated, the HTTP proxy requirements apply to both types of proxies."
+
+This document elaborates the behavior of non-transparent proxies, when used for Content Transformation in the context discussed in [CT Landscape].
+
+
+
+
+2.2 Types of Transformation
+
+
+Transforming proxies can carry out a wide variety of operations. In this document we categorize these operations as follows (noting that these are general concepts that we do not formalize further):
+
+1. Alteration of Requests
+
+   Transforming proxies process requests in a number of ways, especially replacement of various request header fields to avoid HTTP 406 Status responses (if a server can not provide content that is
+   compatible with the original HTTP request header fields) and at user request.
+
+2. Alteration of Responses
+
+   There are three classes of operation on responses:
+
+   1. Restructuring content
+
+      Restructuring content is a process whereby the original layout is altered so that content is added or removed or where the spatial or navigational relationship of parts of content is altered,
+      e.g. linearization (i.e. reordering presentation elements, especially tables, so that they fit on a narrow display and can be traversed without horizontal scrolling) or pagination (i.e.
+      splitting a document too large to be stored in or transmitted to the terminal in one piece, so that it can be nevertheless accessed by browsing through a succession of smaller interlinked
+      documents). It also includes rewriting URIs so that subsequent requests are routed via the proxy handling the response.
+
+   2. Recoding content
+
+      Recoding content is a process whereby the layout of the content remains the same, but details of its encoding may be altered. Examples include re-encoding HTML as XHTML, correcting invalid
+      markup in HTML, conversion of images between formats (but not, for example, reducing animations to static images).
+
+   3. Optimizing content
+
+      Optimizing content includes removing redundant white space, re-compressing images (without loss of fidelity) and compressing for transfer.
+
+
+
+
+
+
+2.3 User Interaction
+
+
+At various points in this document there is reference to "notifying the user", "informing the user" - in general making the user aware that a situation exists or interacting with the user to solicit
+a choice of options. The expectation is that such user interaction is conducted in a way that allows the user to perceive and interact with such information or choices in the same way as they
+interact with the Web sites that they are visiting.
+
+
+
+
+
+3 Conformance (Normative)
+
+
+
+
+3.1 Classes of Product
+
+
+The Content Transformation Guidelines specification has one class of products:
+
+Transformation Deployment
+
+        A Transformation Deployment is the provision of non-transparent components in the path of HTTP requests and responses. Provisions that are applicable to a Transformation Deployment are
+        identified in this document by use of the term "transforming proxy" or "proxy" in the singular or plural.
+
+
+
+
+3.2 Normative and Informative Parts
+
+
+Normative parts of this document are identified by the use of "(Normative)" following the section name. Informative parts are identified by use of "(Non-Normative)" following the section name.
+
+
+
+
+3.3 Normative Language for Conformance Requirements
+
+
+The key words must, must not, required, shall, shall not, should, should not, recommended, not recommended, may, and optional in this Recommendation have the meaning defined in [RFC 2119].
+
+
+
+
+3.4 Transformation Deployment Conformance
+
+
+A Transformation Deployment conforms to these guidelines if it follows the statements in 3.4 Transformation Deployment Conformance, 4.1 Proxy Forwarding of Request, 4.2 Proxy Forwarding of Response
+to User Agent and 5 Testing (Normative).
+
+A Transformation Deployment that wishes to claim conformance must make available a conformance statement B Conformance Statement that specifies the reasons for non-compliance with any clauses
+containing the key words "should" and "should not", "recommended" and "not recommended".
+
+Conformance statements must be sent to public-content-transformation-conformance@w3.org. Public archive of this list may be found at
+http://lists.w3.org/Archives/Public/public-content-transformation-conformance/.
+
+
+
+
+
+4 Behavior of Components (Normative)
+
+
+
+
+4.1 Proxy Forwarding of Request
+
+
+
+
+4.1.1 Applicable HTTP Methods
+
+
+User agents sometimes issue HTTP HEAD requests in order to determine if a resource is of a type and/or size that they are capable of handling. A transforming proxy may convert a HEAD request into a
+GET request (in order to determine the characteristics of a transformed response that it would return if the user agent subsequently issued a GET request for the same resource).
+
+If the HTTP method is altered from HEAD to GET, proxies should (providing such action is in accordance with normal HTTP caching rules) cache the response so that a second GET request for the same
+content is not required (see also 4.1.4 Serving Cached Responses).
+
+Other than to convert between HEAD and GET proxies must not alter request methods.
+
+
+
+
+4.1.2 no-transform directive in Request
+
+
+If the request contains a Cache-Control: no-transform directive, proxies must not alter the request other than to comply with transparent HTTP behavior defined in [RFC 2616 HTTP] sections section
+14.9.5 and section 13.5.2 and to add header fields as described in 4.1.6 Additional HTTP Header Fields below.
+
+
+Note:
+
+An example of the use of Cache-Control: no-transform is the issuing of asynchronous HTTP requests, perhaps by means of XMLHttpRequest [XHR], which may include such a directive in order to prevent
+transformation of both the request and the response.
+
+
+
+
+
+4.1.3 Treatment of Requesters that are not Web browsers
+
+
+Before altering aspects of HTTP requests and responses proxies need to take account of the fact that HTTP is used as a transport mechanism for many applications other than "Traditional Browsing".
+Increasingly browser based applications involve exchanges of data using XMLHttpRequest (see 4.2.8 Proxy Decision to Transform) and alteration of such exchanges is likely to cause misoperation.
+
+
+
+
+4.1.4 Serving Cached Responses
+
+
+Aside from the usual caching procedures defined in [RFC 2616 HTTP], in some circumstances, proxies may paginate responses and where this is the case a request may be for a subsequent page of a
+previously requested resource. In this case proxies may for the sake of consistency of representation serve stale data but when doing so should notify the user that this is the case and must provide
+a simple means of retrieving a fresh copy.
+
+
+
+
+4.1.5 Alteration of HTTP Header Field Values
+
+
+Other than the modifications required by [RFC 2616 HTTP] proxies should not modify the values of header fields other than the User-Agent, Accept, Accept-Charset, Accept-Encoding, and Accept-Language
+header fields and must not delete header fields (see 4.1.5.5 Original Header Fields).
+
+Other than to comply with transparent HTTP operation, proxies should not modify any request header fields unless one of the following applies:
+
+1. the user would be prohibited from accessing content as a result of the server responding that the request is "unacceptable" (see 4.2.4 Server Rejection of HTTP Request);
+
+2. the user has specifically requested a restructured desktop experience (see 4.1.5.3 User Selection of Restructured Experience);
+
+3. the request is part of a sequence of requests comprising either included resources or linked resources on the same Web site (see 4.1.5.4 Sequence of Requests).
+
+
+These circumstances are detailed in the following sections.
+
+
+Note:
+
+It is emphasized that requests must not be altered in the presence of Cache-Control: no-transform as described under 4.1.2 no-transform directive in Request.
+
+
+
+Note:
+
+In this section, the concept of "Web site" is used (rather than "origin server") as some origin servers host many different Web sites. Since the concept of "Web site" is not strictly defined,
+proxies should use heuristics including comparisons of domain name to assess whether resources form part of the same "Web site".
+
+
+
+Note:
+
+The URI referred to in the request plays no part in determining whether or not to alter HTTP request header field values. In particular the patterns mentioned in 4.2.8 Proxy Decision to Transform
+are not material.
+
+
+
+
+4.1.5.1 Content Tasting
+
+
+While complying with this section (4.1.5 Alteration of HTTP Header Field Values) and section 4.2.5 Receipt of Vary HTTP Header Field proxies should avoid making repeated requests for the same
+resource.
+
+
+Note:
+
+While HTTP does not prohibit repetition of GET requests, repeated requests place an unnecessary load on the network and server.
+
+
+
+
+
+4.1.5.2 Avoiding "Request Unacceptable" Responses
+
+
+A proxy may reissue a request with altered HTTP header field values if a previous request with unaltered values resulted in the origin server rejecting the request as "unacceptable" (see 4.2.4
+Server Rejection of HTTP Request). A proxy may apply heuristics of various kinds to assess, in advance of sending unaltered header field values, whether the request is likely to cause a "request
+unacceptable" response. If it determines that this is likely then it may alter header field values without sending unaltered values in advance, providing that it subsequently assesses the response
+as described under 4.2.5 Receipt of Vary HTTP Header Field below, and is prepared to reissue the request with unaltered header fields, and alter its subsequent behavior in respect of the Web site so
+that unaltered header fields are sent.
+
+A proxy must not reissue a POST request as it is unsafe (see [RFC 2616 HTTP] Section 9.1.1).
+
+
+
+
+4.1.5.3 User Selection of Restructured Experience
+
+
+Proxies must assume that by default users will wish to receive a representation prepared by the Web site.
+
+Proxies may offer users an option to choose to view a restructured experience even when a Web site offers a choice of user experience. If a user has made such a choice then proxies may alter header
+field values when requesting resources in order to reflect that choice, but must, on receipt of an indication from a Web site that it offers alternative representations (see I.1.4.2 Indication of
+Intended Presentation Media Type of Representation), inform the user of that and allow them to select an alternative representation.
+
+Proxies must assess whether a user's expressed preference for a restructured representation is still valid if a Web site changes its choice of representations (see 4.2.5 Receipt of Vary HTTP Header
+Field).
+
+
+
+
+4.1.5.4 Sequence of Requests
+
+
+When requesting resources that are included resources (e.g. style sheets, images), proxies should make the request for such resources with the same User-Agent header field as the request for the
+resource from which they are referenced.
+
+For the purpose of consistency of representation, proxies may request linked resources (e.g. those referenced using the a element) that form part of the same Web site as a previously requested
+resource with the same header fields as the resource from which they are referenced.
+
+When requesting linked resources that do not form part of the same Web site as the resource from which they are linked, proxies should not base their choice of header fields on a consistency of
+presentation premise.
+
+
+
+
+4.1.5.5 Original Header Fields
+
+
+When forwarding an HTTP request with altered HTTP header fields, in addition to complying with the rules of normal HTTP operation, proxies must include in the request additional fields of the form
+"X-Device-"<original header name> whose values are verbatim copies of the corresponding unaltered header field values, so that it is possible to reconstruct the original header fields. For example,
+if the User-Agent header field has been altered, an X-Device-User-Agent header field would be added with the value of the received User-Agent header field.
+
+Specifically the following mapping must be used:
+
+Original Replacement Ref
+User-Agent X-Device-User-Agent RFC2616 Section 14.43
+Accept X-Device-Accept RFC2616 Section 14.1
+Accept-Charset X-Device-Accept-Charset RFC2616 Section 14.2
+Accept-Encoding X-Device-Accept-Encoding RFC2616 Section 14.3
+Accept-Language X-Device-Accept-Language RFC2616 Section 14.4
+
+
+Note:
+
+The X-Device- prefixed header names listed in this section have been provisionally registered with IANA (see Provisional Message Header Field Names).
+
+
+
+Note:
+
+The X-Device- prefix was chosen primarily on the basis that this is an already existing convention. It is noted that the values encoded in such header fields may not ultimately derive from a device,
+they are merely received fields. The treatment of received X-Device header fields, which may happen where there are multiple transforming proxies, is undefined (see K Scope for Future Work).
+
+
+
+
+
+
+4.1.6 Additional HTTP Header Fields
+
+
+Irrespective of the presence of a no-transform directive:
+
+* proxies should add the IP address of the initiator of the request to the end of a comma separated list in an X-Forwarded-For HTTP header field;
+
+* proxies must (in accordance with RFC 2616) include a Via HTTP header field (see 4.1.6.1 Proxy Treatment of Via Header Field).
+
+
+
+
+4.1.6.1 Proxy Treatment of Via Header Field
+
+
+Proxies should indicate their ability to transform content by including a comment in the Via HTTP header field consisting of the URI "http://www.w3.org/ns/ct".
+
+When forwarding Via header fields, proxies should not alter them by removing comments from them.
+
+
+Note:
+
+According to [RFC 2616 HTTP] Section 14.45 Via header field comments "may be removed by any recipient prior to forwarding the message". However, the justification for removing such comments is based
+on memory limitations of early proxies. Most modern proxies do not suffer such limitations.
+
+
+
+
+
+
+
+4.2 Proxy Forwarding of Response to User Agent
+
+
+In the following, proxies must check for the presence of equivalent <meta http-equiv> elements in HTML content, if the relevant HTTP header field is not present.
+
+
+
+4.2.1 User Preferences
+
+
+Proxies must provide a means for users to express preferences for inhibiting content transformation even when content transformation has been chosen by the user as the default behavior. Those
+preferences must be maintained on a user by user and Web site by Web site basis.
+
+Proxies must solicit re-expression of preferences in respect of a server if the server starts to indicate that it offers varying responses as discussed under 4.2.5 Receipt of Vary HTTP Header Field.
+
+
+
+
+4.2.2 Receipt of Cache-Control: no-transform
+
+
+If the response includes a Cache-Control: no-transform directive then proxies must not alter it other than to comply with transparent HTTP behavior as described in [RFC 2616 HTTP] Section 13.5.2 and
+Section 14.9.5.
+
+
+
+
+4.2.3 Use of Cache-Control: no-transform
+
+
+Proxies may use Cache-Control: no-transform to inhibit transformation by further proxies.
+
+
+
+
+4.2.4 Server Rejection of HTTP Request
+
+
+Proxies may treat responses with an HTTP 200 Status as though they were responses with an HTTP 406 Status if it has determined that the content (e.g. "Your browser is not supported") is equivalent
+to a response with an HTTP 406 Status.
+
+
+
+
+4.2.5 Receipt of Vary HTTP Header Field
+
+
+A proxy may not be carrying out content tasting as described under 4.1.5.2 Avoiding "Request Unacceptable" Responses if it anticipates receiving a "request unacceptable" response. However, if it
+makes a request with altered header fields in these circumstances, and receives a response containing a Vary header field referring to one of the altered header fields then it should request the
+resource again with unaltered header fields. It should also update whatever heuristics it uses so that unaltered header fields are presented first in subsequent requests for this resource.
+
+
+
+
+4.2.6 Link to "handheld" Representation
+
+
+If the response is an HTML response and it contains a <link rel="alternate" media="handheld" /> element (and the user agent is determined as being "handheld"), a proxy should request and process the
+referenced resource, unless the resource referenced is the current representation.
+
+
+Note:
+
+In this document the term current representation means a "same document reference" as defined in [RFC 3986] Section 4.4, with the addition that if a Vary HTTP header field was present on the
+response then it is the same representation if the values of the HTTP header fields of the request have not been altered.
+
+
+
+
+
+4.2.7 WML Content
+
+
+If the content is WML proxies should act in a transparent manner.
+
+
+Note:
+
+This does not affect the operation of proxies that are also WAP Gateways.
+
+
+
+
+
+4.2.8 Proxy Decision to Transform
+
+
+In the absence of a Vary or no-transform directive (or a meta HTTP-Equiv element containing Cache-Control: no-transform) proxies should not transform content matching any of the following rules
+unless the user has specifically requested transformation:
+
+* the content is HTML and contains <link rel="alternate" media="handheld"/> with a reference to the current representation;
+
+* the DOCTYPE of the content (if it has one) indicates XHTML-MP, XHTML Basic, WML or iMode as listed in E DOCTYPEs Associated with Mobile Content;
+
+* the Content-Type has a value listed in C Internet Content Types associated with Mobile Content.
+
+* the URI of the response (following redirection or as indicated by the Content-Location HTTP header field) matches a pattern listed in F URI Patterns Associated with Mobile Web Sites;
+
+* the response contains a resource that is referenced as an included resource suitable for "handheld" in a resource that was itself handled transparently;
+
+* the Content-Type indicates that the content is "data" - some values are listed in D Internet Content Types associated with Data Content;
+
+* a claim of mobileOK Basic [mobileOK Basic Tests] conformance is indicated (see [mobileOK Scheme] for how such a claim may be indicated).
+
+
+Other factors that a proxy may take into account:
+
+* The Web site (see note) has previously shown that it is contextually aware, even if the present response does not indicate this;
+
+* the user agent has features (such as linearization or zoom, or is a desktop device using a mobile network for access) that allow it to present the content unaltered;
+
+* the response contains client side scripts that may misoperate if the resource is restructured;
+
+* the response is an HTML response and it includes <link> elements specifying alternatives according to presentation media type.
+
+
+
+
+4.2.8.1 Alteration of Response
+
+
+
+Note:
+
+Other than as noted in this section the nature of restructuring that is carried out, any character encoding alterations and what is omitted and what is inserted is, as discussed in 1.3 Scope, out of
+scope of this document.
+
+
+If a proxy alters the response then:
+
+1. It must add a Warning 214 Transformation Applied HTTP header field;
+
+2. The altered content should validate according to an appropriate published formal grammar and if XML must be well-formed;
+
+3. It should indicate to the user that the content has been transformed for mobile presentation and provide an option to view the original, unmodified content.
+
+
+
+
+
+4.2.8.2 Link Rewriting
+
+
+
+Note:
+
+In this document two URIs have the Same-Origin if the scheme component and the host and port subcomponents, as defined in [RFC 3986], all match. Section 6 of [RFC 3986] discusses URI comparison.
+
+
+Some proxy deployments have to "rewrite" links in content in order for the user agent to request the referenced resources through the proxy. In so doing, proxies make unrelated resources appear as
+though they have the same-origin and hence there is a danger of introducing security vulnerabilities.
+
+
+Note:
+
+This section (on link rewriting) refers also to insertion of links, frame flattening and any other techniques that introduces the "same-origin" issue.
+
+
+
+Note:
+
+Link rewriting is always used by CT Proxies that are accessed as an origin server initially, e.g. which provide mobile adapted web search and navigation to the web pages returned in the search
+results, or to which the browser is redirected through the CT Proxy for adaptation of a web page. Link rewriting may be used by CT Proxies acting as normal HTTP proxies (e.g. configured or
+transparent) for the browser, but may not be required since all browser requests flow through the CT Proxy.
+
+
+Proxies must not rewrite links when content transformation is prohibited.
+
+Proxies must preserve security between requests for domains that are not same-origin in respect of cookies and scripts.
+
+
+
+
+4.2.8.3 HTTPS Link Rewriting
+
+
+
+Note:
+
+For clarity it is emphasized that it is not possible for a transforming proxy to transform content accessed via an HTTPS link without breaking end-to-end security.
+
+Interception of HTTPS and the circumstances in which it might be permissible is not a "mobile" question, as such, but is highly pertinent to this document. The BPWG is aware that interception of
+HTTPS happens in many networks today. Interception of HTTPS is inherently problematic and may be unsafe. The BPWG would like to refer to protocol based "two party consent" mechanisms, but such
+mechanisms do not exist at the time of writing of this document.
+
+
+The practice of intercepting HTTPS links is strongly NOT RECOMMENDED.
+
+If a proxy rewrites HTTPS links, it must advise the user of the security implications of doing so and must provide the option to bypass it and to communicate with the server directly.
+
+Notwithstanding anything else in this document, proxies must not rewrite HTTPS links in the presence of a Cache-Control: no-transform directive.
+
+If a proxy rewrites HTTPS links, replacement links must have the scheme https.
+
+When forwarding requests originating from HTTPS links proxies must include a Via header field as discussed under 4.1.6.1 Proxy Treatment of Via Header Field.
+
+When forwarding responses from servers proxies must notify the user of invalid server certificates.
+
+
+
+
+
+
+
+5 Testing (Normative)
+
+
+Operators of content transformation proxies should make available an interface through which the functions of the proxy can be exercised. The operations possible through this interface must cover
+those necessary to settle the outcome of all conformance statements listed in section B.
+
+The interface must be reachable from terminals with browsing capabilities connected to the Web via a conventional Internet access environment at the tester's premises; accessing the interface may
+necessitate adjusting standard Web browsing configuration parameters -- such as specifying a proxy IP address and port on a desktop browser, or activating a WAP setting on a mobile browser.
+
+Such access must be granted under fair, reasonable and non-discriminatory conditions. In particular:
+
+* it is available to all, worldwide, whether or not they are W3C Members;
+
+* it does not impose any further conditions or restrictions on the use of any technology, intellectual property rights, or other restrictions on behaviour of the tester, but may include
+  reasonable, customary terms relating to operation or maintenance of the relationship between tester and proxy operator such as the following: choice of law and dispute resolution, confidentiality
+  of parameters to access the interface, disclaimer of liability.
+
+
+
+
+
+
+
+A References
+
+
+CT Landscape
+        Content Transformation Landscape 1.0, Jo Rabin, Andrew Swainston (eds), W3C Working Group Note 27 October 2009 (See http://www.w3.org/TR/2009/NOTE-ct-landscape-20091027/)
+RFC 2119
+        Key words for use in RFCs to Indicate Requirement Levels, , Request for Comments: 2119, S. Bradner, March 1997 (See http://www.ietf.org/rfc/rfc2119.txt)
+RFC 2616 HTTP
+        Hypertext Transfer Protocol -- HTTP/1.1 Request for Comments: 2616, R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, T. Berners-Lee, June 1999 (See
+        http://tools.ietf.org/html/rfc2616)
+RFC 3986
+        Uniform Resource Identifier (URI): Generic Syntax, Request for Comments: 3986, T. Berners-Lee, R. Fielding, L. Masinter, January 2005 (See http://tools.ietf.org/html/rfc3986)
+RFC 3238 OPES
+        IAB Architectural and Policy Considerations for Open Pluggable Edge Services, Request for Comments: 3238, S. Floyd, L. Daigle, January 2002 (See http://tools.ietf.org/html/rfc3238)
+Device Independence Glossary
+        W3C Glossary of Terms for Device Independence, Rhys Lewis (ed), W3C Working Draft 18 January 2005
+Best Practices
+        Mobile Web Best Practices 1.0 Basic Guidelines, Jo Rabin, Charles McCathieNevile (eds), W3C Recommendation, 29 July 2008 (See http://www.w3.org/TR/2008/REC-mobile-bp-20080729/)
+mobileOK Basic Tests
+        W3C mobileOK Basic Tests 1.0, Sean Owen, Jo Rabin (eds), W3C Recommendation, 08 December 2008 (See http://www.w3.org/TR/2008/REC-mobileOK-basic10-tests-20081208/)
+mobileOK Scheme
+        W3C mobileOK Scheme 1.0, Jo Rabin, Phil Archer (eds), W3C Note, 25 August 2009 (See http://www.w3.org/TR/2009/NOTE-mobileOK-20090825/)
+POWDER Resource Grouping
+        Protocol for Web Description Resources (POWDER): Grouping of Resources, Phil Archer, Andrea Perego, Kevin Smith (eds), W3C Recommendation, 1 September 2009 (See
+        http://www.w3.org/TR/2009/REC-powder-grouping-20090901/)
+XHR
+        XMLHttpRequest, Anne van Kesteren (ed), W3C Candidate Recommendation 3 August 2010 (See http://www.w3.org/TR/2010/CR-XMLHttpRequest-20100803/)
+XML
+        Extensible Markup Language (XML) 1.0 (Fifth Edition), T. Bray, J. Paoli, C. Sperberg-McQueen, E. Maler, F. Yergeau (eds), W3C Recommendation, 26 November 2008. (See
+        http://www.w3.org/TR/2008/REC-xml-20081126/)
+
+
+
+B Conformance Statement
+
+
+See http://www.w3.org/TR/2010/NOTE-ct-guidelines-20101026/ics
+
+
+
+
+C Internet Content Types associated with Mobile Content
+
+
+This list is not exhaustive and is likely to change.
+
+
+application/vnd.wap.xhtml+xml
+
+
+
+text/vnd.wap.wml
+
+
+
+application/vnd.wap.wmlc
+
+
+
+text/vnd.wap.wml+xml
+
+
+
+text/vnd.wap.wmlscript
+
+
+
+application/vnd.wap.wmlscriptc
+
+
+
+image/vnd.wap.wbmp
+
+
+
+application/vnd.wap.wbxml
+
+
+
+application/vnd.wap.multipart.mixed
+
+
+
+application/vnd.wap.multipart.related
+
+
+
+application/vnd.wap.multipart.alternative
+
+
+
+application/vnd.wap.multipart.form-data
+
+
+
+image/x-up-wpng
+
+
+
+image/x-up-bmp
+
+
+
+
+
+D Internet Content Types associated with Data Content
+
+
+This list is not exhaustive and is likely to change.
+
+
+application/json
+
+
+
+application/soap+xml
+
+
+
+application/soap+fastinfoset
+
+
+
+application/fastsoap
+
+
+
+application/fastinfoset
+
+
+
+
+
+E DOCTYPEs Associated with Mobile Content
+
+
+This list is not exhaustive and is likely to change.
+
+
+-//OMA//DTD XHTML Mobile 1.2//EN
+
+
+
+-//WAPFORUM//DTD XHTML Mobile 1.1//EN 
+
+
+
+-//WAPFORUM//DTD XHTML Mobile 1.0//EN
+
+
+
+-//W3C//DTD XHTML Basic 1.1//EN
+
+
+
+-//W3C//DTD XHTML Basic 1.0//EN
+
+
+
+-//OPENWAVE//DTD XHTML 1.0//EN
+
+
+
+-//OPENWAVE//DTD XHTML Mobile 1.0//EN
+
+
+
+-//i-mode group (ja)//DTD XHTML i-XHTML (Locale/Ver.=ja/1.0) 1.0//EN
+
+
+
+-//i-mode group (ja)//DTD XHTML i-XHTML (Locale/Ver.=ja/1.1) 1.0//EN
+
+
+
+-//i-mode group (ja)//DTD XHTML i-XHTML (Locale/Ver.=ja/2.0) 1.0//EN
+
+
+
+-//i-mode group (ja)//DTD XHTML i-XHTML (Locale/Ver.=ja/2.1) 1.0//EN
+
+
+
+-//i-mode group (ja)//DTD XHTML i-XHTML (Locale/Ver.=ja/2.2) 1.0//EN
+
+
+
+-//i-mode group (ja)//DTD XHTML i-XHTML (Locale/Ver.=ja/2.3) 1.0//EN
+
+
+
+-//W3C//DTD Compact HTML 1.0 Draft//EN
+
+
+
+-//BBSW//DTD Compact HTML 2.0//EN
+
+
+
+-//WAPFORUM//DTD WML 1.0//EN
+
+
+
+-//WAPFORUM//DTD WML 1.1//EN
+
+
+
+-//WAPFORUM//DTD WML 1.2//EN
+
+
+
+-//WAPFORUM//DTD WML 1.3//EN
+
+
+
+-//WAPFORUM//DTD WML 2.0//EN
+
+
+
+-//PHONE.COM//DTD WML 1.1//EN
+
+
+
+-//OPENWAVE.COM//DTD WML 1.3//EN
+
+
+
+
+
+F URI Patterns Associated with Mobile Web Sites
+
+
+Using the notation defined in [POWDER Resource Grouping]:
+
+
+<iriset>
+        <includehosts>mobi</includehosts>
+        </iriset>
+
+
+
+
+
+G Summary of User Preference Handling
+
+
+User expression of preferences is referred to in several sections in this document. Those sections are:
+
+1. 1.4.2 Priority of Intention
+
+2. 4.1.4 Serving Cached Responses
+
+3. 4.1.5.3 User Selection of Restructured Experience
+
+4. 4.2.1 User Preferences
+
+5. 4.2.2 Receipt of Cache-Control: no-transform
+
+6. 4.2.8 Proxy Decision to Transform
+
+7. 4.2.8.1 Alteration of Response
+
+8. 4.2.8.3 HTTPS Link Rewriting
+
+
+User preferences are also referred to non-normatively under I.1.4 Varying Representations.
+
+
+
+
+H Example Transformation Interactions (Non-Normative)
+
+
+
+Note:
+
+The following examples refer to requests with the GET method.
+
+
+
+
+H.1 Basic Content Tasting by Proxy
+
+
+
+Request resource with original header fields
+
+If the response is a 406 response:
+
+If the response contains Cache-Control: no-transform, forward it
+
+Otherwise request again with altered header fields
+
+If the response is a 200 response:
+
+If the response contains Vary: User-Agent, an appropriate link element or header field, or Cache-Control: no-transform, forward it
+
+Otherwise assess whether the 200 response is a form of "Request Unacceptable"
+
+If it is not, forward it
+
+If it is, request again with altered header fields
+
+
+
+
+
+H.2 Optimization based on Previous Server Interaction
+
+
+
+Proxy receives a request for resource P that it has not encountered before
+
+Proxy forwards this request
+
+Response is 200 OK containing the text "Unsupported browser. Please get a different one or use a CT proxy."
+
+Proxy determines that this equates to a 406 Status and requests the resource from the origin server again with altered header fields (emulating a well known desktop browser)
+
+Response is a desktop oriented representation of the resource
+
+Proxy transforms this response into content that the user agent can display well and forwards it
+
+Proxy receives a further request for the resource P
+
+Based on evidence from the previous interaction (e.g. that there was no Vary header field, that the response was not targeted at only the previous user in that there was no Cache-Control: private
+directive) the CT proxy forwards the request with altered header fields
+
+Response is a desktop oriented representation of the resource
+
+Proxy transforms this response into content that the user agent can display well and forwards it
+
+
+
+
+
+H.3 Optimization based on Previous Server Interaction, Server has Changed its Operation
+
+
+
+Proxy receives a request for resource P, that it has previously encountered as in H.2 Optimization based on Previous Server Interaction
+
+Proxy forwards request with altered header fields
+
+Response is 200 OK containing a Vary: User-Agent header field
+
+Proxy notices that behavior has changed and reissues the request with original header fields
+
+Response is 200 OK and proxy forwards it
+
+
+
+
+
+H.4 Server Response Indicating that this Representation is Intended for the Target Device
+
+
+
+Proxy receives a request for resource P
+
+Proxy forwards request with original header fields
+
+Response is 200 OK with Vary: User-Agent and <link type="alternate" media="handheld" href="P#id" /> where id is a document local reference
+
+Proxy forwards response as designed specifically for the requesting device
+
+
+
+
+
+H.5 Server Response Indicating that another Representation is Intended for the Target Device
+
+
+
+Proxy receives a request for resource P
+
+Proxy forwards request with original header fields
+
+Response is 200 OK with <link type="alternate" media="handheld" href="Q" /> and Q is not P
+
+Proxy requests Q with original header fields
+
+Response is 200 OK and proxy forwards it
+
+
+
+
+
+
+I Informative Guidance for Origin Servers (Non-Normative)
+
+
+Content providers may wish to follow these procedures in order to improve interoperability.
+
+
+
+I.1 Server Response to Proxy
+
+
+
+
+I.1.1 Use of HTTP 406 Status
+
+
+Servers should consider using an HTTP 406 Status (and not an HTTP 200 Status) if a request cannot be satisfied with content that meets the criteria specified by values of the HTTP request header
+fields. However, some browsers do not display the content of HTTP 406 Status responses.
+
+
+
+
+I.1.2 Use of HTTP 403 Status
+
+
+Servers should consider using an HTTP 403 Status if concerned that the security of a link assumed to be private has been compromised (for example this may be inferred by the presence of a Via HTTP
+header field in an HTTPS request).
+
+
+
+
+I.1.3 Server Origination of Cache-Control: no-transform
+
+
+Servers should consider including a Cache-Control: no-transform directive if one is received in the HTTP request, as it may be an indication that the client does not wish to receive a transformed
+response.
+
+Include a Cache-Control: no-transform directive if, for any reason, transformation of the response is prohibited.
+
+
+Note:
+
+Including a Cache-Control: no-transform directive can disrupt the behavior of WAP Gateways, because it can inhibit such proxies from converting WML to WMLC.
+
+Including such a directive may also disrupt the behavior of a proxy based accessibility solution.
+
+
+
+
+
+I.1.4 Varying Representations
+
+
+It is good practice to take account of user agent capabilities and formulate an appropriate experience according to those capabilities. It is good practice to provide a means for users to select
+among available representations, to default to the last selected representation and to provide a means of changing the selection.
+
+
+
+I.1.4.1 Use of Vary HTTP Header Field
+
+
+If a server varies its representation according to examination of received HTTP header fields then [RFC 2616 HTTP] describes how to use the Vary header field to indicate this.
+
+Servers that are aware of the presence of a transforming proxy, as identified by a Via HTTP Header field might alter their responses according to their knowledge of specific proxy behavior. When
+doing so it is good practice to make sure that the Internet content type for a response is correct for the actual content (e.g. a server should not choose Content-Type: application/vnd.wap.xhtml+xml
+because it suspects that proxies will not transform content of this type, if its content is not valid XHTML-MP).
+
+
+
+
+I.1.4.2 Indication of Intended Presentation Media Type of Representation
+
+
+If a server has distinct representations that vary according to the target presentation media type, it can inhibit transformation of the response by including a Cache-Control: no-transform directive
+(see I.1.3 Server Origination of Cache-Control: no-transform).
+
+In addition, in HTML content it can indicate the medium for which the representation is intended by including a link element identifying in its media attribute the target presentation media types of
+this representation and setting the href attribute to "Same-Document Reference" (see [RFC 3986] section 4.4) and in particular an empty href attribute is a "Same Document Reference".
+
+In addition it is good practice to include link elements identifying the target presentation media types of other available representations in a similar manner.
+
+If content for more than one presentation media type is served from the same URI, it is better not to use a link element identifying the presentation media types as the URI will appear to be a "same
+document reference", indicating to a client that this representation is suitable for all the named presentation media types. Instead, use a Vary HTTP header field indicating that the response varies
+according to the received User-Agent HTTP header field.
+
+
+Note:
+
+Some examples of the use of the link element are included above in H Example Transformation Interactions.
+
+
+
+
+
+
+
+
+J Applicability to Transforming Solutions which are Out of Scope (Non-Normative)
+
+
+There are a number of well-known examples of solutions that seem to their users as though they are using a browser, but because the client software communicates using proprietary protocols and
+techniques, it is the combination of the client and the network component that is regarded as the HTTP User Agent. The communication between the client and the network component is therefore out of
+scope of this document.
+
+Additionally, where some kind of administrative arrangement exists between a transforming proxy and an origin server for the purposes of transforming content on the origin server's behalf, this is
+also out of scope of this document.
+
+In both of the above cases, it is good practice to adhere to the provisions of this document in respect of providing information about the device and the original IP address.
+
+
+
+
+K Scope for Future Work (Non-Normative)
+
+
+
+
+K.1 POWDER
+
+
+The BPWG believes that POWDER will represent a powerful mechanism by which a server may express transformation preferences. Future work in this area may recommend the use of POWDER to provide a
+mechanism for origin servers to indicate more precisely which alternatives they have and what transformation they are willing to allow on them, and in addition to provide for Content Transformation
+proxies to indicate which services they are able to perform.
+
+
+
+
+K.2 link HTTP Header Field
+
+
+The BPWG believes that the link HTTP header field which was removed from HTTP/1.1, and which is under discussion for reintroduction, would represent a more general and flexible mechanism than use of
+the HTML link element, as discussed in this recommendation.
+
+
+
+
+K.3 Sources of Device Information
+
+
+The process of adapting content at the origin server, or transforming it in a proxy is likely to have a dependency on a repository of device descriptions. An origin server's willingness to allow a
+transforming proxy to transform content may depend on its evaluation of the trustworthiness of device description data that is being used. There is scope for enhancement of the trust relationship by
+some means of indicating this.
+
+
+
+
+K.4 Inter Proxy Communication
+
+
+There is scope for further work to define how multiple proxies may interoperate. A common case of multiple proxies is where a network provider transforming proxy and a search engine transforming
+proxy are both present.
+
+
+
+
+K.5 Explicit Consent
+
+
+Robust mechanisms are needed for indicating consent to or prohibition of transformation operations of various kinds, especially HTTPS link rewriting (see 4.2.8.3 HTTPS Link Rewriting).
+
+
+
+
+K.6 Amendment to and Refinement of HTTP
+
+
+The BPWG believes that amendments to HTTP are needed to improve the interoperability of transforming proxies. For example, HTTP does not provide a way to distinguish between prohibition of any kind
+of transformation and the prohibition only of restructuring (and not recoding or compression).
+
+At present HTTP does not provide a mechanism for communicating original header field values. The scheme based on X-Device prefixed fields described under 4.1.5 Alteration of HTTP Header Field Values
+records and clarifies an approach used to achieve this effect by some content transformation proxies. This scheme relies upon non-standard HTTP header fields which have been provisionally registered
+with IANA. While the mechanism defined in that section, based on current practice, applies to conforming transformation proxy deployments, it is possible that in future, in collaboration with the
+IETF, this approach will be reconsidered. This implies that the specified X-Device prefixed fields may, at some time, become deprecated in favor of new equivalent fields, or that an entirely
+different approach will be taken to representing such values.
+
+A number of mechanisms exist in HTTP which might be exploited given more precise definition of their operation - for example the OPTIONS method and the HTTP 300 (Multiple Choices) Status.
+
+
+
+
+
+L Acknowledgments (Non-Normative)
+
+
+The editor acknowledges contributions of various kinds from members of the Mobile Web Best Practices Working Group and earlier from the Content Transformation Task Force of that group.
+
+The editor acknowledges significant written contributions from:
+
+* François Daoust (Task Force Leader), W3C
+* Magnus Lönnroth, Ericsson (and previously at Drutt)
+* Bryan Sullivan, AT&T
+* Sean Patterson, Novarra
+* Aaron Kemp, Google
+* Rob Finean, Openwave
+* Heiko Gerlach, Vodafone
+* Martin Jones, Volantis
+* Tom Hume, W3C Invited Expert
+* Eduardo Casais, W3C Invited Expert
+
+
+

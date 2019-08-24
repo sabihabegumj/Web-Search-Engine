@@ -1,0 +1,462 @@
+Semantic Web - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Standards
+
+
+* Web Design and Applications
+* Web Architecture
+* Semantic Web
+* XML Technology
+* Web of Services
+* Web of Devices
+* Browsers and Authoring Tools
+* All Standards and Drafts
+* About W3C Standards
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Semantic Web
+
+
+
+
+Semantic Web
+
+
+* On this page &#x2192;
+* technology&#xA0;topics &#x2022;
+* news &#x2022;
+* upcoming&#xA0;events&#xA0;and&#xA0;talks
+
+
+
+
+In addition to the classic &#x201C;Web of documents&#x201D; W3C is helping to build a technology stack to support a &#x201C;Web of data,&#x201D; the sort of data you find in databases. The ultimate
+goal of the Web of data is to enable computers to do more useful work and to develop systems that can support trusted interactions over the network. The term &#x201C;Semantic Web&#x201D; refers to
+W3C&#x2019;s vision of the Web of linked data. Semantic Web technologies enable people to create data stores on the Web, build vocabularies, and write rules for handling data. Linked data are
+empowered by technologies such as RDF, SPARQL, OWL, and SKOS.
+
+
+
+
+
+
+
+
+
+
+The Semantic Web is a Web of data &#x2014; of dates and titles and part numbers and chemical properties and any other data one might conceive of. RDF provides the foundation for publishing and
+linking your data. Various technologies allow you to embed data in documents (RDFa, GRDDL) or expose what you have in SQL databases, or make it available as RDF files.
+
+
+
+
+
+
+
+At times it may be important or valuable to organize data. Using OWL (to build vocabularies, or &#x201C;ontologies&#x201D;) and SKOS (for designing knowledge organization systems) it is possible to
+enrich data with additional meaning, which allows more people (and more machines) to do more with the data.
+
+
+
+
+
+
+
+Query languages go hand-in-hand with databases. If the Semantic Web is viewed as a global database, then it is easy to understand why one would need a query language for that data. SPARQL is the
+query language for the Semantic Web.
+
+
+
+
+
+
+
+
+
+Near the top of the Semantic Web stack one finds inference &#x2014; reasoning over data through rules. W3C work on rules, primarily through RIF and OWL, is focused on translating between rule
+languages and exchanging rules among different systems.
+
+
+
+
+
+
+
+W3C is working with different industries &#x2014; for example in Health Care and Life Sciences, eGovernment, and Energy &#x2014; to improve collaboration, research and development, and innovation
+adoption through Semantic Web technology. For instance, by aiding decision-making in clinical research, Semantic Web technologies will bridge many forms of biological and medical information across
+institutions.
+
+
+
+
+
+
+
+News
+
+
+
+
+
+Announcing The Unicode Standard, Version 7.0
+
+
+17 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+
+
+
+
+Version 7.0 of the Unicode Standardis now available, adding 2,834 new characters. This latest version adds the new currency symbols for the Russian ruble and Azerbaijani manat, approximately 250
+emoji (pictographic symbols), many other symbols, and 23 new lesser-used and historic scripts, as well as character additions to many existing scripts. These additions extend support for written
+languages of North America, China, India, other Asian countries, and Africa. See the link above for full details.
+
+Most of the new emoji characters derive from characters in long-standing and widespread use in Wingdings and Webdings fonts.
+
+Major enhancements were made to the Indic script properties. New property values were added to enable a more algorithmic approach to rendering Indic scripts. These include properties for joining
+behavior, new classes for numbers, and a further division of the syllabic categories of viramas and rephas. With these enhancements, the default rendering for newly added Indic scripts can be
+significantly improved.
+
+Unicode character properties were extended to the new characters. The old characters have enhancements to Script and Alphabetic properties, and casing and line-breaking behavior. There were also
+nearly 3,000 new Cantonese pronunciation entries, as well as new or clarified stability policies for promoting interoperable implementations.
+
+Two other important Unicode specifications are maintained in synchrony with the Unicode Standard, and have updates for Version 7.0. These will be released at the same time:
+
+UTS #10, Unicode Collation Algorithm&#x2014; the standard for sorting Unicode text
+UTS #46, Unicode IDNA Compatibility Processing&#x2014; for processing of non-ASCII URLs (IDNs)
+
+
+
+
+
+
+Workshop report: Summary of the LD4LT group kickoff / LIDER roadmapping workshop
+
+
+11 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+The LIDER project has published a report on the first Linked Data for Language Technology event, which was held 21st March in alignment with the European Data Forum in Athens. Read the report.
+
+Industry stakeholders from many areas (localization, publishing, language technology applications etc.) and key researchers from linked data and language technology discussed promises and challenges
+around linguistic linked data. The report summarizes all presentations and includes an initial list of use cases and requirements for linguistic linked data. This and the overall outcome of the
+event will feed into work of the LD4LT group (see especially the LD4LT latest draft version of use cases), and the field of multilingual linked data in general.
+
+The LD4LT group is part of the MultilingualWeb community &#x2013; learn more about related projects.
+
+
+
+
+
+
+Last Call draft published for Encoding spec
+
+
+06 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+A Last Call Working Draft of Encodinghas been published.
+
+While encodings have been defined to some extent, implementations have not always implemented them in the same way, have not always used the same labels, and often differ in dealing with undefined
+and former proprietary areas of encodings. This specification attempts to fill those gaps so that new implementations do not have to reverse engineer encoding implementations of the market leaders
+and existing implementations can converge.
+
+The body of this spec is an exact copy of the WHATWG version as of the date of its publication, intended to provide a stable reference for other specifications. We are hoping for people to review
+the specification and send comments about any technical areas that need attention (see the Status section for details).
+
+Please send comments by 1 July 2014.
+
+
+
+
+
+
+One more week to FEISGILTT &#x2013; learn about and contribute to the future of Web and localization standards!
+
+
+28 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+On 4 June and as part of the Localization World conference in Dublin, the FEISGILTT event will again provide an opportunity to discuss latest developments around localization and multilingual Web
+technologies. The event is sponsored by the LIDER project.
+
+Highlights include updates about ITS 2.0 and XLIFF 2.0, and a session about usage scenarios for linguistic linked data in localization. Speakers include Kevin O&#x2019;Donnell (Microsoft), Bryan
+Schnabel (Tektronix), Yves Savourel (Enlaso) and many more.
+
+Register nowto meet the key players around standards that will influence today&#x2019;s and future business.
+
+
+
+
+
+
+Slides for the MultilingualWeb and LIDER workshops available
+
+
+15 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+
+
+
+
+The slides from the MultilingualWeb workshop (including several posters) and the LIDER roadmapping workshopare now available for download. Additional material (videos of the presentations, a
+workshop report and more) will follow in the next weeks &#x2013; stay tuned.
+
+
+
+
+
+
+MultilingualWeb workshop 7-8 May &#x2013; follow via live stream!
+
+
+06 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+
+
+
+
+The MultilingualWeb workshop on 7-8 May will be streamed live ! Follow the event online if you cannot make it to Madrid. For details about speakers and presentations see the workshop program . The
+workshop is supported by the LIDER project and sponsored by Verisign and Lionbridge.
+
+
+
+
+
+
+Program published for W3C MultilingualWeb Workshop in Madrid, 7-8 May
+
+
+11 April 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+
+
+
+
+See the program.The keynote speaker will be Alolita Sharma, Director of Language Engineering from the Wikimedia Foundation. She is followed by a strong line up in sessions entitled Developers,
+Creators, Localizers, Machines, and Users, including speakers from Microsoft, Wikimedia Foundation, the UN FAO, W3C, Yandex, SDL, Lionbridge, Asia Pacific TLD, Verisign, DFKI, and many more. On the
+afternoon of the second day we will hold Open Space breakout discussions. Abstracts and details about an additional poster session will be provided shortly.
+
+The program will also feature an LD4LT event on May 8-9, focusing on text analytics and the usefulness of Wikipedia and Dbpedia for multiilngual text and content analytics, and on language resources
+and aspects of converting selected types of language resources into RDF.
+
+Participation in both events is free. See the Call for Participation for details about how to register for the MultilingualWeb workshop. The LD4LT event requires a separate registrationand you have
+the opportunity to submit position statements about language resources and RDF.
+
+If you haven&#x2019;t registered yet, note that space is limited, so please be sure to register soon to ensure that you get a place.
+
+The MultilingualWeb workshops, funded by the European Commission and coordinated by the W3C, look at best practices and standards related to all aspects of creating, localizing and deploying the
+multilingual Web. The workshops are successful because they attract a wide range of participants, from fields such as localization, language technology, browser development, content authoring and
+tool development, etc., to create a holistic view of the interoperability needs of the multilingual Web.
+
+We look forward to seeing you in Madrid!
+
+
+
+
+
+
+Registration for Workshop on Linked Data, Language Technologies and Multilingual Content Analytics now open!
+
+
+04 April 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+
+
+
+
+Register now for the recently announced workshop on Linked Data, Language Technologies and Multilingual Content Analytics (8-9 May, Madrid). A preliminary agenda has been created and the
+registration formis available.
+
+If you are interested in contributing a position statement please indicate this in the dedicated field in the registration form. The workshop organizers will come back to you with questions to
+answer in the position statement. We then will select which statements are appropriate for presentations on 9 May, and inform you by 28 April.
+
+We are looking forward to see you in Madrid, both for this event and the MultilingualWeb workshop!
+
+
+
+
+
+
+Updated article: Choosing &amp; applying a character encoding
+
+
+01 April 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+This updatebrings the article in line with recent developments in HTML5, and reorganizes the material so that readers can find information more quickly. This led to the article being almost
+completely rewritten.
+
+The article addresses the question: Which character encoding should I use for my content, and how do I apply it to my content?
+
+German, Spanish, Brazilian Portuguese, Russian, Swedish and Ukrainian translators are asked to update their translation of this article within the next month, otherwise the translations will be
+removed per the translation policy, since the changes are substantive.
+
+
+
+
+
+
+Extend your stay for the upcoming MultilingualWeb workshop! Join the LIDER Workshop 8-9 May, to discuss Wikipedia, Multilingual Analytics and Linked Data for Language Resources
+
+
+26 March 2014
+
+from Internationalization Activity Blog &#xBB; w3cSemanticWeb
+
+
+
+
+
+
+
+Aligned with the MultilingualWeb workshop (7-8 May, Madrid), the LIDER project is organizing a roadmapping workshop 8-9 May . The 8 May afternoon session will provide a keynote by Seth Grimesand
+also focus on the topic of Wikipedia for multilingual Web content. Via several panels including contributions from key Wikipedia engineers, we will discuss cross lingual analytics and intelligent
+multilingual content handling in Wikipedia. On 9 May, a 1/2 day session will focus on aspects of migrating language resources into linked data.
+
+Mark your calendar now! A dedicated registration form including ways to contribute to the workshop agenda will be made available soon.
+
+
+
+
+
+
+
+
+
+
+
+Talks and Appearances
+
+
+None. See full list of W3C Talks and Appearances.
+
+
+
+
+
+
+
+
+
+None. See full list of W3C Events.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

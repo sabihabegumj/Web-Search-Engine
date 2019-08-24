@@ -1,0 +1,410 @@
+Device APIs Requirements
+
+
+
+
+
+
+Device APIs Requirements
+
+
+
+W3C Working Group Note 15 October 2009
+
+
+This Version:
+        http://www.w3.org/TR/2009/NOTE-dap-api-reqs-20091015/
+Latest Published Version:
+        http://www.w3.org/TR/dap-api-reqs/
+Latest Editor's Draft:
+        http://dev.w3.org/2009/dap/api-reqs/
+Previous version:
+        none
+Editors:
+        Robin Berjon, Vodafone
+        Daniel Coloma, Telefónica de España
+        Max Froumentin, Opera
+        Marcin Hanclik, Access
+        Jere Käpyaho, Nokia
+        이강찬 (Kangchan Lee), ETRI
+        Bryan Sullivan, AT&amp;T
+        Dzung Tran, Intel
+
+Copyright © 2009 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+
+Abstract
+
+These are the requirements intended to be met in the development of client-side APIs that enable the creation of Web Applications and Web Widgets that interact with devices services such as
+Calendar, Contacts, Camera, etc.
+
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the technical reports index at http://www.w3.org/TR/.
+
+This document was published by the Device APIs and Policy Working Group as a Working Group Note. If you wish to make comments regarding this document, please send them to public-device-apis@w3.org
+(subscribe, archives). All feedback is welcome.
+
+This is the first publication of this document and it reflects the current vision of the Working Group on the APIs it plans to develop. There are open issues listed in the body of the document on
+which feedback would be particularly appreciated. The group plans to update that document as these issues get resolved.
+
+Publication as a Working Group Note does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also
+includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the information in
+accordance with Patent Policy.
+
+
+
+
+Table of Contents
+
+
+* Introduction
+* Global Requirements
+* Application Configuration
+* Application Launcher
+* Calendar
+* 
+  o May be considered in future versions
+
+* Camera
+* Communications Log
+* Contacts
+* File System
+* Gallery
+* Messaging
+* System Information &amp; Events
+* Tasks
+* User Interface
+* Acknowledgements
+* References
+* 
+  o Normative references
+  o Informative references
+
+
+
+
+
+1. Introduction
+
+
+This section is non-normative.
+
+The requirements in this document are produced in a high-level, functionally oriented fashion in order to provide sufficient ground on which to build without going through the full landscape
+analysis process given that the APIs being produced concern domains in which industry experience is already solid.
+
+This document is not currently considered to be complete, but rather represents a snapshot of the DAP WG's thinking at the time of its publication.
+
+
+
+
+2. Global Requirements
+
+
+These requirements apply to all APIs produced by the DAP WG.
+
+* APIs must be made available in a consistent fashion, hanging off a single access point;
+* methods that may take a long time to complete must support asynchronous, cancellable operation.
+
+Should the APIs be made available on navigator, navigator.device, or straight off a window.device?
+
+
+
+
+3. Application Configuration
+
+
+Due to overlapping with Widgets: The widget Interface [WIDGETS-APIS] and with Web Storage [WEBSTORAGE], this deliverable has been dropped.
+
+
+
+
+4. Application Launcher
+
+
+The following requirements have been expressed.
+
+* A User Agent may provide means for non-web applications to register themselves as handlers for media types and URI schemes. (Note that this may be outside the scope of this API.)
+* It should be possible to launch an application for which no media type or protocol handler exists.
+* It should be possible to pass arguments to a launched application.
+* It should be possible to launch an application asynchronously.
+* It should be possible to launch an application synchronously.
+* For applications that run synchronously, it should be possible to catch the output streams (STDOUT/ERR etc.).
+
+The following requirements, while they could be considered to be functionally part of this API, are already addressed as part of the HTML5 [HTML5] Custom scheme and content handlers:
+
+* This interface must enable (web) applications to register themselves as handlers for a specific protocol.
+* A User Agent may provide default handlers for a specific protocol.
+* This interface must enable (web) applications to register themselves as handlers for a specific media type.
+* A User Agent may provide default handlers for a specific media type.
+
+
+
+
+5. Calendar
+
+
+This interface:
+
+* must enable listing multiple available calendars;
+* must expose some basic properties of calendars such as default time zone, name, etc.;
+* must enable creating, deleting, and updating calendars;
+* must enable creating, deleting, updating, and finding calendar events;
+* must expose calendar event properties with a 1:1 mapping to iCalendar [RFC5545] properties and values.
+
+
+The above suggests support for only VEVENT. However Andrew McMillan makes the following point:
+"Given that the differences between VEVENT & VTODO are trivial in comparison to the complexity of their common elements, and that VJOURNAL is entirely a subset of those, it seems to me there is very
+little to gain by removing VTODO and VJOURNAL from this specification. Removal might restrict clients from implementing some potentially useful functionality. The other supporting components of the
+specification like VALARM and VTIMEZONE seem to me so essential in any reasonable implementation of VEVENT that they don't even merit discussion."
+
+
+
+5.1 May be considered in future versions
+
+
+* iCalendar parsing and serialision;
+* hCalendar parsing and serialision;
+* calendar diffs;
+* direct CalDAV access.
+
+
+
+
+
+6. Camera
+
+
+This interface:
+
+* must enable capture of static images;
+* must enable capture of videos;
+* must enable listing the available cameras;
+* must enable listing the available formats and codecs, per camera;
+* must enable retrieval of the captured content;
+* must provide some metadata about the captured content (e.g. width, height, format, duration);
+* must enable choosing preferred aspects of the captured content (e.g. width, height, format, frame rate);
+* must enable displaying a viewfinder;
+* must support asynchronous, cancellable capture;
+* should enable displaying a viewfinder as part of the document (e.g. as a video element [HTML5]);
+* should enable control of the camera's capabilities (e.g. zoom, luminosity, night mode, focus mode).
+
+Given support for capturing video, we need to take sound capture into account. Once that's supported, is there any reason not to support capturing sound on its own? If we go there, isn't this a
+Capture API, with the ability to list mikes?
+
+
+If the user requests a given capture size which isn't available, do we refuse or do we fall back? If the latter (which is likely) what is the algorithm that is used to find the fallback? It could be
+(given a request for 1000x50):
+
+* the camera's preferred default
+* 500x100 (closest number of pixels)
+* 1000x700 (closest longest side)
+* 2000x100 (closest ratio)
+
+
+We could very easily get bogged down in specifying camera capabilities and format feature variants — how do we decide which ones are reasonably in?
+
+
+
+
+7. Communications Log
+
+
+This interface:
+
+* must be able to provide a list of incoming and outgoing communication events;
+* must be able to search for events by type (email, phone, SMS...) as well as by content;
+* must be able to expose relevant metadata about events (start and end time, to and from, etc.).
+
+
+
+
+8. Contacts
+
+
+This interface:
+
+* must enable listing all available address books on the device;
+* must enable listing all contacts in the address book(s);
+* must enable reading the details for a contact;
+* should enable creating a new contact;
+* should enable updating a contact;
+* should enable deleting a contact;
+* should enable filtering the list of contacts to search for a subset.
+
+Are there convincing use cases for supporting multiple address books in v1 (as opposed to just a default one, and maybe exposing more later)?
+
+Do we need support for groups in v1?
+
+
+
+
+9. File System
+
+
+This interface:
+
+* must integrate with the W3C File API [FILE-UPLOAD];
+* must enable listing items in a directory;
+* must enable creating a file or directory;
+* must enable deleting a file or directory;
+* must enable writing to a file;
+* must enable appending to a file;
+* must enable getting some metadata about a file (e.g. size, creation and update time, media type);
+* may enable setting some metadata on a file;
+* should enable copying files and directories;
+* should enable moving files and directories;
+* must handle text encoding conversion when reading and writing to file (at least UTF-8 and UTF-16 LE/BE);
+* should support binary access to file content;
+* must enable navigating a directory tree;
+* must reflect file system paths using a normalised separator (/) and in a consistent encoding;
+* may provide conversion between paths and file: URLs;
+* may support reading and writing in Base64 (or using data: URLs);
+* should support reading lines from a text document;
+* should support events for detecting the mounting/unmounting of a file system (e.g. to detect a memory card being plugged in);
+* must support listing the available file systems;
+* should provide access to a temporary storage location (a form of /tmp directory);
+* must provide some file system metadata (e.g. size, available space, quota).
+
+
+
+
+10. Gallery
+
+
+This interface:
+
+* must enable listing all available gallery sources, their names and types;
+* must enable finding content inside a gallery;
+* must enable adding, updating, and removing content from a gallery;
+* must expose metadata about the gallery's content items (copyright, author, media-dependent information, etc.).
+
+Exposing metadata is tricky, often giving a choice between creating an endless ontology or building an open-ended system that guarantees no interoperability.
+
+A lot of this functionality can be provided if the Gallery API is basically a way of accessing well-known parts of the file system, and if the File System API has a way of exposing sufficient
+metadata. This could make for a very simple API.
+
+
+
+
+11. Messaging
+
+
+This interface:
+
+* must support messages in one or several formats and transports supported by the platform (email, SMS, MMS...);
+* must allow creating and sending messages;
+* must support multiple accounts for each transport/format type;
+* must support setting various envelope fields corresponding to the message type (email, SMS...);
+* must support attaching files when the format allows it.
+
+
+
+
+12. System Information & Events
+
+
+This interface:
+
+* must enable listing available power sources (batteries, wall...);
+* must expose whether the device is running on battery or not;
+* must expose charge level per battery and globally;
+* must enable listing available network interfaces, their types (Wifi, 3G, LAN...), and signal strengths;
+* must list which of the available network interface are active, and provide events to be informed of their status;
+* must provide CPU information;
+* may provide CPU load information;
+* must enable listing storage areas, their types, writability, and available space;
+* must provide RAM information;
+* may provide RAM load information;
+* must enable listing displays, as well as their colour depth, resolution, etc.;
+* must enable listing input devices (mouse, keyboard, touch, keypad, voice, stylus...);
+* must enable listing audio output devices and their properties;
+* must enable listing audio input devices and their properties;
+* must enable listing video capture devices and their properties;
+* must enable listing picture capture devices and their properties;
+* must enable listing thermal sensors, alongside their names and measurements;
+* must enable listing ambient light sensors, alongside their names and measurements;
+* must enable listing proximity detectors, alongside their names and measurements;
+* must expose gyroscope and accelerometer capability and measurements;
+* must enable listing vibration capability;
+* must expose the availability of compass and geolocation capability.
+
+This mixes system information and sensors — should they be separate? Should we have some system information and a universal sensor API? How do we get interoperability out of that?
+
+
+
+
+13. Tasks
+
+
+This interface:
+
+* must enable listing multiple available task lists (projects);
+* must expose some basic properties of projects such as default name, priority, etc.;
+* must enable creating, deleting, and updating projects;
+* must enable creating, deleting, updating, and finding tasks;
+* must expose task properties with a 1:1 mapping to iCalendar [RFC5545] properties and values (VTODO).
+
+See the issues that are part of the Calendar API.
+
+
+
+
+14. User Interface
+
+
+This interface:
+
+* must support beeping;
+* must support vibrating;
+* must support manipulating the backlight(s);
+* must enable the creation, deletion, and update of native application menus, with arbitrary depth levels, and callbacks.
+
+
+
+
+A. Acknowledgements
+
+
+The editors would like to extend special thanks to Nokia, OMTP BONDI, and PhoneGap for providing the foundation of the working group's requirements discussion.
+
+
+
+
+B. References
+
+
+
+
+B.1 Normative references
+
+
+[FILE-UPLOAD]
+        Robin Berjon. File Upload. 18 October 2006. W3C Working Draft. (Work in progress.) URL: http://www.w3.org/TR/2006/WD-file-upload-20061018
+[RFC5545]
+        B. Desruisseaux. Internet Calendaring and Scheduling Core Object Specification (iCalendar). September 2009. Internet RFC 5545. URL: http://www.rfc-editor.org/rfc/rfc5545.txt
+
+
+
+B.2 Informative references
+
+
+[HTML5]
+        Ian Hickson; David Hyatt. HTML 5. 23 April 2009. W3C Working Draft. (Work in progress.) URL: http://www.w3.org/TR/2009/WD-html5-20090423/
+[WEBSTORAGE]
+        Ian Hickson. Web Storage. 10 September 2009. W3C Working Draft. (Work in progress.) URL: http://www.w3.org/TR/2009/WD-webstorage-20090910/
+[WIDGETS-APIS]
+        Marcos Caceres; Robin Berjon; Arve Bersvendsen. Widgets 1.0: APIs and Events. 18 August 2009. W3C Working Draft. (Work in progress.) URL: http://www.w3.org/TR/2009/WD-widgets-apis-20090818/
+
+

@@ -1,0 +1,250 @@
+CSS3 module: Presentation Levels
+
+
+
+
+
+
+CSS3 module: Presentation Levels
+
+
+
+W3C Working Draft 13 August 2003
+
+
+This version:
+        http://www.w3.org/TR/2003/WD-css3-preslev-20030813
+Latest version:
+        http://www.w3.org/TR/css3-preslev
+Editors:
+        Ian Hickson <ian @hixie.ch>
+        Håkon Wium Lie <howcome @opera.com>
+
+Copyright © 2003 W3C® (MIT, ERCIM, Keio), All Rights Reserved. W3C liability, trademark, document use and software licensing rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+Presentation levels are integer values attached to elements in a document. Elements that are below, at, or above a certain threshold can be styled differently. This feature has two compelling use
+cases. First, slide presentations with transition effects can be described. For example, list items can be progressively revealed by sliding in from the side. Second, outline views of documents,
+where only the headings to a certain level are visible, can be generated.
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This document is a working draft of the CSS working group, which is part of the style activity (see summary).
+
+The working group believes this draft describes useful functionality for presenting web documents. Comments on, and discussions of this draft can be sent on the (archived) public mailing list
+www-style@w3.org (see instructions). W3C Members can also send comments directly to the CSS working group.
+
+It is inappropriate to use W3C Working Drafts as reference material or to cite them as other than "work in progress". Its publication does not imply endorsement by the W3C membership or the CSS
+Working Group (members only).
+
+Patent disclosures relevant to CSS may be found on the Working Group's public patent disclosure page.
+
+
+Table of contents
+
+
+* The model
+* The 'presentation-level' property
+* Example 1: progressively revealing list items
+* Example 2: presenting outline views of a document
+* Presentation levels and the DOM
+
+
+1. The model
+
+
+Content reuse has been one of the main motivations for the development of style sheets. By associating documents with different style sheets, the same content can be presented in different ways. The
+introduction of presentation levels in CSS adds functionality which is very useful in two particular settings. First, slide presentations with transition effects can be described. For example, list
+items can be progressively revealed by sliding in from the side. Second, outline views of documents, where only the headings to a certain level are visible, can be generated.
+
+The model behind presentation levels is simple. Each element in the document is assigned an integer value which is referred to as the "element's presentation level" (EPL). The EPL can be set
+explicitly in a style sheet or calculated automatically based on the element's position in the document structure: it is specified by the computed value of the 'presentation-level' property. The
+User Agent maintains another integer value which is called the User Agent Presentation Value (UAPL). The UAPL starts at a UA-defined value, typically 0.
+
+All elements are in one of three presentation pseudo-classes: 'below-level', 'at-level', and 'above-level'. These pseudo-classes refer to whether the element's EPL was below, at, or above the UAPL
+the last time the UAPL changed. When an element's state is evaluated, the EPL is compared to the UAPL and pseudo-classes are assigned as follows: If the EPL is equal to 0, the element is always in
+the below-level state. If the EPL is lower than the UAPL value, it is set to the 'below-level' state, if the EPL is exactly that value it is set to 'at-level', and if the EPL is greater than that
+value it is set to 'above-level'.
+
+Here is an example of a style sheets using the presentation pseudo-classes:
+
+
+  :below-level { color: black }
+  :at-level { color: red }
+  :above-level { color: silver }
+
+
+This proposal does not describe the user interface of presentation levels. The user agent will need to provide a user interface for setting the UAPL. For example, in projection mode, a user agent
+may increase the UAPL every time the user hits the space bar. When the user moves to another page (for example by following a hyperlink), the user agent may set the UAPL to be the same as
+presentation level of the first element on the page. In outline mode, the user agent may provide a vertical slider on the side to increase/decrease the UAPL.
+
+
+2. The 'presentation-level' property
+
+
+Name: presentation-level
+Value: <integer> | same | increment
+Initial: 0
+Applies to: all elements
+Inherited: yes
+Percentages: N/A
+Media: all
+Computed value: integer
+
+This property sets the element's presentation level (EPL). The values have the following meanings:
+
+* An integer value sets the presentation level explicitly.
+* A value of 'increment' computes to a value one more than the previous (in document order) element's presentation level.
+* A value of 'same' computes to the same value as the previous element's (in document order) presentation level. For the root element, 'same' computes to zero.
+
+
+3. Example 1: progressively revealing list items
+
+
+Here is an example of how presentation levels can be used to progressively reveal list items while high-lighting the current one.
+
+
+                                                   EPL value
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>                                             0
+<STYLE>                                            0
+  html { color: black; background: white }
+  @media projection {
+    h1 { page-break-before: always }
+    li { presentation-level: increment }
+    :below-level { color: black }
+    :at-level { color: red }
+    :above-level { color: silver }
+  }
+</STYLE>
+<BODY>                                             0
+<H1>Strategies</H1>                                0
+<H2>Our strategy</H2>                              0
+<UL>                                               0
+  <LI>divide                                       1
+  <LI>conquer                                      2
+  <P>(in that order)                               2
+</UL>
+<H2>Their strategy</H2>                            0
+<UL>                                               0
+  <LI>obfuscate                                    1
+  <LI>propagate                                    2
+</UL>
+
+
+In the example above, the LI elements' EPL value is increased with one compared to the previous element. The other elements' EPL value is the same as the previous element due to the initial 'same'
+value of the 'presentation-level' property.
+
+
+4. Example 2: presenting outline views of a document
+
+
+Here is an example of how presentation levels can be used to present outline views of a document:
+
+
+                                                   EPL value
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>                                             0
+<STYLE>   
+   h1 { presentation-level: 0; }
+   h2 { presentation-level: 1; }
+   h3 { presentation-level: 2; }
+   body * { presentation-level: 3; }
+   :above-level { display: none; }
+</STYLE>
+<BODY>                                             0
+<H1>Strategies</H1>                                3
+<H2>Our strategy</H2>                              2
+<UL>                                               0
+<LI>divide                                         0
+<LI>conquer                                        0
+<P>(in that order)                                 0
+</UL>
+<H2>Their strategy</H2>                            2
+<UL>                                               0
+<LI>obfuscate                                      0
+<LI>propagate                                      0
+</UL>
+
+
+
+5. Presentation levels and the DOM
+
+
+An element's state is first evaluated when it is created. When the UAPL is changed, all elements in the document have their state reevaluated. A CSSNowBelowLevel event is then sent to all elements
+that changed to the 'below-level' state, a CSSNowAtLevel event is then sent to all elements that changed to the 'at-level' state, and a CSSNowAboveLevel event is then sent to all elements that
+changed to the 'above-level' state. Changing an element's 'presentation-level' property, e.g. through the DOM or using a dynamic pseudo-class, does not cause the element's state to be immediately
+reevaluated.
+
+These events have the following characteristics:
+
+* Bubbles: Yes
+* Cancelable: No
+* Context Info: detail (the UAPL)
+
+SMIL can be used with this event to declaratively key animations from user requests, based on the 'presentation-index' property.
+
+The events are defined as:
+
+
+   interface CSSNowBelowLevel : UIEvent { }
+   interface CSSNowAtLevel : UIEvent { }
+   interface CSSNowAboveLevel : UIEvent { }
+
+
+These three fragments together will cause a document to have three user-triggered list items, which will scroll in one at a time each time the user hits the space bar (or whatever mechanism the UA
+uses), with the current item colored white and the past items colored gray.
+
+Markup:
+
+
+    <ol>
+     <li> The Separation of Style and Structure </li>
+     <li> Declarative User Interaction </li>
+     <li> Potential for Animation </li>
+    </ol>
+
+
+Stylesheet:
+
+
+     ol { overflow: hidden; }
+     li { presentation-level: increment; margin-left: 100%; }
+     li:at-level { color: white; }
+     li:above-level { color: silver; }
+
+
+Script:
+
+
+    // When the element is shown, scroll it in from the right
+    // by animating the margin-left property from 100% to 0%
+    document.documentElement.addEventListener('CSSNowAtLevel', handler, false);
+
+    function handler(event) {
+      // animateFloat is a (fictional) library routine which takes
+      // five arguments:
+      //  a CSSValue to animate
+      //  the start value
+      //  the end value
+      //  the time over which to animate the property, in milliseconds
+      //  the units to animate it with
+      // it returns straight away and performs the animation in the
+      // background.
+      animateFloat(document.getOverrideStyle(event.target,
+                                  null).getPropertyCSSValue('margin-left'),
+                   100, 0, 1000, CSS_PERCENTAGE);
+    }
+
+

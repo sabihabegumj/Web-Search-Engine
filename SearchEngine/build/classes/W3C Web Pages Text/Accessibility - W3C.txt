@@ -1,0 +1,347 @@
+Accessibility - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Web Design and Applications
+
+
+* HTML &amp; CSS
+* JavaScript Web APIs
+* Graphics
+* Audio and Video
+* Accessibility
+* Internationalization
+* Mobile Web
+* Privacy
+* Math on the Web
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web&#xA0;Design&#xA0;and&#xA0;Applications » 
+* Accessibility
+
+
+
+
+Accessibility
+
+
+* On this page &#x2192;
+* why &#x2022;
+* what &#x2022;
+* how &#x2022;
+* wai &#x2022;
+* learn&#xA0;more &#x2022;
+* recent&#xA0;press&#xA0;releases &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+The power of the Web is in its universality.
+Access by everyone regardless of disability is an essential aspect.
+Tim Berners-Lee, W3C Director and inventor of the World Wide Web
+
+The Web is fundamentally designed to work for all people, whatever their hardware, software, language, culture, location, or physical or mental ability. When the Web meets this goal, it is
+accessible to people with a diverse range of hearing, movement, sight, and cognitive ability.
+
+Thus the impact of disability is radically changed on the Web because the Web removes barriers to communication and interaction that many people face in the physical world. However, when websites,
+web technologies, or web tools are badly designed, they can create barriers that exclude people from using the Web.
+
+The mission of the Web Accessibility Initiative (WAI) is to lead the Web to its full potential to be accessible, enabling people with disabilities to participate equally on the Web.
+
+See below for:
+
+* why: the case for web accessibility
+* what: examples of web accessibility
+* how: make your website and web tools accessible
+* Web Accessibility Initiative (WAI) at W3C
+* learn more
+
+
+Why: The Case for Web Accessibility
+
+
+It is essential that the Web be accessible in order to provide equal access and equal opportunity to people with diverse abilities. Indeed, the UN Convention on the Rights of Persons with
+Disabilities recognizes access to information and communications technologies, including the Web, as a basic human right.
+
+Accessibility supports social inclusion for people with disabilities as well as others, such as older people, people in rural areas, and people in developing countries.
+
+There is also a strong business case for accessibility. Accessibility overlaps with other best practices such as mobile web design, device independence, multi-modal interaction, usability, design
+for older users, and search engine optimization (SEO). Case studies show that accessible websites have better search results, reduced maintenance costs, and increased audience reach, among other
+benefits. Developing a Web Accessibility Business Case for Your Organization details the social, technical, financial, and legal benefits of web accessibility.
+
+
+What: Examples of Web Accessibility
+
+
+Properly designed websites and web tools can be used by people with disabilities. However, currently many sites and tools are developed with accessibility barriers that make it difficult or
+impossible for some people to use them. Below are just a few examples.
+
+
+Alternative Text for Images
+
+
+Alt text is the classic example. Images should include equivalent alternative text in the markup/code.
+
+If alt text isn't provided for images, the image information is inaccessible, for example, to people who cannot see and use a screen reader that reads aloud the information on a page, including the
+alt text for the visual image.
+
+When equivalent alt text is provided, the information is available to everyone to people who are blind, as well as to people who turned off images on their mobile phone to lower bandwidth charges,
+people in a rural area with low bandwidth who turned off images to speed download, and others. It's also available to technologies that cannot see the image, such as search engines.
+
+
+Keyboard Input
+
+
+Some people cannot use a mouse, including many older users with limited fine motor control. An accessible website does not rely on the mouse; it provides all functionality via a keyboard. Then
+people with disabilities can use assistive technologies that mimic the keyboard, such as speech input.
+
+
+Transcripts for Podcasts
+
+
+Just as images aren't available to people who can't see, audio files aren't available to people who can't hear. Providing a text transcript makes the audio information accessible to people who are
+deaf or hard of hearing, as well as to search engines and other technologies that can't hear.
+
+It's easy and relatively inexpensive for website developers to provide transcripts for podcasts and audio files. There are also transcription services that create text transcripts in HTML format.
+
+
+How: Make Your Website and Web Tools Accessible
+
+
+Most of the basics of accessibility are even easier and less expensive than providing transcripts. However, the proper techniques are poorly integrated into some web tools, education, and
+development processes. If you are new to accessibility, it takes some time and effort to learn the common issues and solutions. A starting place is the Introduction to Web Accessibility.
+
+Some accessibility barriers are more complicated to avoid and the solutions take more development time and effort. W3C WAI provides extensive resources to help, such as Understanding WCAG 2.0: A
+guide to understanding and implementing Web Content Accessibility Guidelines 2.0.
+
+Using authoring tools that support accessibility makes it easier for website developers. Browsers also play a role in accessibility. Essential Components of Web Accessibility explains the
+relationships between the different components of web development and interaction.
+
+Accessibility is essential for developers and organizations that want to create high quality websites and web tools, and not exclude people from using their products and services.
+
+
+Web Accessibility Initiative (WAI) at W3C
+
+
+The W3C Web Accessibility Initiative (WAI) brings together people from industry, disability organizations, government, and research labs from around the world to develop guidelines and resources to
+help make the Web accessible to people with disabilities including auditory, cognitive, neurological, physical, speech, and visual disabilities.
+
+WAI's coverage of web accessibility includes 'web content' (websites and web applications), authoring tools (such as content management systems (CMS) and blog software), browsers and other 'user
+agents', and W3C technical specifications, including WAI-ARIA for accessible rich Internet applications.
+
+We invite individuals and organizations to participate in WAI by volunteering to implement, promote, and review guidelines; contributing to the WAI Interest Group; and participating in Working
+Groups.
+
+
+
+Learn More
+
+
+WAI provides a wide range of resources on different aspects of web accessibility standards, education, implementation, and policy, including:
+
+* Introduction to Web Accessibility
+* Essential Components of Web Accessibility
+* How People with Disabilities Use the Web
+* Improving the Accessibility of Your Web Site
+* Managing Accessibility
+* Evaluating Web Accessibility
+* Standards, guidelines, and techniques for making accessible
+  o websites: Web Content Accessibility Guidelines (WCAG)
+  o authoring tools: Authoring Tool Accessibility Guidelines (ATAG)
+  o browsers: User Agent Accessibility Guidelines (UAAG)
+  o web applications: Accessible Rich Internet Applications (WAI-ARIA)
+
+* Developing a Web Accessibility Business Case for Your Organization
+* WAI home page highlights
+* and more WAI Resources
+
+
+
+Recent W3C Press Releases and Member Testimonials
+
+
+* W3C's Accessible Rich Internet Applications (WAI-ARIA) 1.0 Expands Accessibility of the Open Web Platform
+
+  20 March 2014
+
+
+
+
+
+Recent Press
+
+
+18 June
+Knight Blog
+        &#x201D;
+31 March
+IT World
+        &#x201D;
+26 March
+Digital Journal
+        &#x201D;
+24 March
+IT World
+        &#x201D;
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* Accessibility (All)
+* Web Content Accessibility Guidelines (WCAG)
+* Accessible Rich Internet Applications (WAI-ARIA)
+* User Agent Accessibility Guidelines (UAAG)
+* Authoring Tool Accessibility Guidelines (ATAG)
+* Evaluation and Report Language (EARL)
+* IndieUI
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Authoring Tool Accessibility Guidelines Working Group
+* Education and Outreach Working Group
+* Evaluation and Repair Tools Working Group
+* Protocols and Formats Working Group
+* User Agent Accessibility Guidelines Working Group
+* Web Content Accessibility Guidelines Working Group
+* HTML Working Group
+* Independent User Interface (Indie UI) Working Group
+* Research and Development Working Group
+
+
+
+
+
+
+Current Status
+
+
+* Accessibility (All)
+* Web Content Accessibility Guidelines (WCAG)
+* Accessible Rich Internet Applications (WAI-ARIA)
+* User Agent Accessibility Guidelines (UAAG)
+* Authoring Tool Accessibility Guidelines (ATAG)
+* Evaluation and Report Language (EARL)
+* IndieUI
+
+
+
+
+Use It
+
+
+* How People with Disabilities Use the Web
+* Improving the Accessibility of Your Web Site
+* Managing Accessibility
+* Evaluating Web Accessibility
+* More resources&#x2026;
+
+
+
+
+
+
+Logos
+
+
+* WCAG 2
+
+
+
+
+
+Acknowledgements
+
+
+Editors: Shawn Lawton Henry and Liam McGee.
+Contributors: Shadi Abou-Zahra, Andrew Arch, Alan Chuter, Sylvie Duchateau, Jack Welsh, William Loughborough, Catherine Roy, Sharron Rush, Yeliz Yesilada, and other participants of the Education and
+Outreach Working Group (EOWG).
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

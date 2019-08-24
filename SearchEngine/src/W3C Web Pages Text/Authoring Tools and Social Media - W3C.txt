@@ -1,0 +1,211 @@
+Authoring Tools and Social Media - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Browsers and Authoring Tools
+
+
+* Authoring Tools
+* Browsers
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Browsers&#xA0;and&#xA0;Authoring&#xA0;Tools » 
+* Authoring Tools and Social Media
+
+
+
+
+Authoring Tools, Social Media
+
+
+* On this page &#x2192;
+* examples&#xA0;of&#xA0;authoring&#xA0;tools &#x2022;
+* examples&#xA0;of&#xA0;authoring&#xA0;tool&#xA0;issues &#x2022;
+* accessibility&#xA0;guidelines &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+
+Any software, or collection of software components, that authors can use to create or modify web content for use by other people, is an Authoring Tool. Authoring tools, at their best, should allow
+all of us to publish to a universal space of web content, read by people from all over the world, in many different languages, on many different computers, using many different input and output
+devices.
+
+
+
+Examples of authoring tools
+
+
+"Authoring tools" covers any software is used to write the web, from enterprise content management systems (CMSs) through to microblogging mobile apps, whether web-based, non-web-based or a
+combination. Examples include:
+
+* web page authoring tools (e.g., WYSIWYG HTML editors)
+* software for directly editing source code or markup
+* software for converting to web content technologies (e.g., "Save as HTML" features in office suites)
+* integrated development environments (e.g., for web application development)
+* software that generates web content on the basis of templates, scripts, command-line input or "wizard"-type processes
+* software for rapidly updating portions of web pages (e.g., blogging, wikis, online forums)
+* software for live collaboration over the web
+* software for updating social media profiles, microblogging, and photo and video sharing
+* software for generating/managing entire web sites (e.g., content management systems, courseware tools, content aggregators)
+* email clients that send messages in web content technologies
+* multimedia authoring tools
+* debugging tools for web content
+* software for creating mobile web applications
+* scripting libraries
+* web application frameworks, IDEs and SDKs
+
+
+Examples of authoring tool issues
+
+
+Authoring tools are an essential element in achieving a universal, accessible web. The ideal authoring tools produce accessible, robust web content, regardless of the technical knowledge of the
+content authors. They are also accessible in themselves.
+
+Example 1: A developer creates an interface for uploading images to an events page. Although she includes the option to add alternative text descriptions with the images, it's hard to find where to
+add them and her interface doesn't require or encourage it. As a result, most images on the pages don't have text alternatives, thus making it is impossible for many bots and for many users with
+disabilities to get meaning from the photos.
+
+Example 2: A developer is constructing a blogging interface for English/Welsh bilingual users. These are users who speak both English and Welsh, and articles and comments entered in one language are
+frequently replied to in the other. As comments are added, each page becomes a mixture of both languages. Unfortunately, the generated mark-up fails to apply an appropriate lang attribute – en for
+English, cy for Welsh – to each block of content on the page. As a result, many bots and users with disabilities find half of the content unreadable.
+
+Example 3: The owner of a popular blog wants to offer his most insightful, thoughtful comment contributors the opportunity to guest-author for a week around the theme of 'the right to self
+expression'. Recently, the most sparkling comment repartee is from a user with low vision and a dry wit, and she is duly invited to guest-author. The blog content is highly accessible, so she had
+always found adding a comment straightforward, increasing the text size and leading, and changing the colours, to suit her preference. The blog's back end authoring environment, however, has not
+been built with accessibility in mind. After a frustrating couple of hours, she gives up in disgust. A great opportunity is missed.
+
+
+Accessibility Guidelines for Authoring Tools
+
+
+W3C publishes guidelines for creating accessible authoring tools. ATAG2.0 is intended for the current and future generation of authoring tools.You can implement the latest draft of the Authoring
+Tool Accessibility Guidelines (ATAG 2.0) by following Implementing ATAG 2.0 - a guide to implementing and understanding the guidelines.
+
+You may also wish to consult the current formally approved, stable and referenceable technical recommendation for authoring tool accessibility is ATAG 1.0.
+
+
+
+
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* Authoring Tool Accessibility Guidelines (ATAG)
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Authoring Tool Accessibility Guidelines Working Group
+
+
+
+
+
+
+Current Status
+
+
+* Authoring Tool Accessibility Guidelines (ATAG)
+
+
+
+
+
+
+
+
+
+Acknowledgments
+
+
+Editor of introductory text: Liam McGee. Contributors: Shawn Lawton Henry and participants of the Education and Outreach Working Group (EOWG).
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

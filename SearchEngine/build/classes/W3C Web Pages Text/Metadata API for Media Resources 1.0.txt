@@ -1,0 +1,3267 @@
+Metadata API for Media Resources 1.0
+
+
+
+
+Metadata API for Media Resources 1.0
+
+
+
+W3C Recommendation 13 March 2014
+
+
+This version:
+        http://www.w3.org/TR/2014/REC-mediaont-api-1.0-20140313/
+Latest published version:
+        http://www.w3.org/TR/mediaont-api-1.0/
+Previous version:
+        http://www.w3.org/TR/2013/PR-mediaont-api-1.0-20131015/
+Editors:
+        Florian Stegmaier, University of Passau
+        Werner Bailer, JOANNEUM RESEARCH
+        Martin Höffernig, JOANNEUM RESEARCH
+        이원석(Wonsuk Lee), Samsung Electronics, Ltd.
+        Chris Poppe, Ghent University
+
+Please refer to the errata for this document, which may include some normative corrections.
+
+See also translations.
+
+Copyright © 2014 W3C® (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+
+Abstract
+
+
+This specification defines an API to access metadata information related to media resources on the Web. The overall purpose is to provide developers with a convenient access to metadata information
+stored in different metadata formats. The API provides means to access the set of metadata properties defined in the Ontology for Media Resources 1.0 specification. These properties are used as a
+pivot vocabulary in this API. The core of this specification is the definition of API interfaces for retrieving metadata information in synchronous and asynchronous modes. It also defines interfaces
+for structured return types along with the specification of the behavior of an API implementation.
+
+
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This document has been reviewed by W3C Members, by software developers, and by other W3C groups and interested parties, and is endorsed by the Director as a W3C Recommendation. It is a stable
+document and may be used as reference material or cited from another document. W3C's role in making the Recommendation is to draw attention to the specification and to promote its widespread
+deployment. This enhances the functionality and interoperability of the Web.
+
+This document has been produced by the Media Annotations Working Group, which is part of the W3C Video on the Web Activity. 
+
+The public is encouraged to send comments on this Recommendation to the public mailing list public-media-annotation@w3.org (public archive). Use "[REC Comment API]" in the subject line of your email.
+
+The Working Group has adopted a public test suite and has produced an implementation report for this Metadata API for Media Resources 1.0.
+
+No changes to this document have been made since the previous version.
+
+The Metadata API for Media Resources may be implemented in both client-only (built into a browser, as a plugin or as a JavaScript library) and client-server (server-side as a Web Service). The level
+of implementation of this API in these two scenario summarized in the implementation report allowed to exit Candidate Recommendation. Nevertheless this API is not expected to be implemented natively
+in the browser code.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the
+group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the
+information in accordance with section 6 of the W3C Patent Policy.
+
+
+
+
+Table of Contents
+
+
+* Introduction
+  o Formats in scope
+  o Formats out of scope
+  o Terminology
+
+* Conformance
+* Design consideration
+* API Description
+  o interface
+    - Methods
+    - Examples in Javascript
+
+  o interface
+    - Methods
+    - Callback interfaces
+      @ interface
+        # Methods
+
+      @ interface
+        # Methods
+
+
+    - Examples in Javascript
+
+  o interface
+    - Methods
+    - Examples in Javascript
+
+  o interface
+    - Attributes
+    - Example in JavaScript
+
+  o Properties
+    - Identification Properties
+      @ Identifier
+        # Attributes
+        # Example in JavaScript
+
+      @ Title
+        # Attributes
+        # Example in JavaScript
+
+      @ Language
+        # Attributes
+        # Example in JavaScript
+
+      @ Locator
+        # Attributes
+        # Example in JavaScript
+
+
+    - Creation Properties
+      @ Contributor
+        # Attributes
+        # Example in JavaScript
+
+      @ Creator
+        # Attributes
+        # Example in JavaScript
+
+      @ MADate
+        # Attributes
+        # Example in JavaScript
+
+      @ Location
+        # Attributes
+        # Example in JavaScript
+
+
+    - Content Properties
+      @ Description
+        # Attributes
+        # Example in Javascript
+
+      @ Keyword
+        # Attributes
+        # Example in Javascript
+
+      @ Genre
+        # Attributes
+        # Example in Javascript
+
+      @ Rating
+        # Attributes
+        # Example in Javascript
+
+
+    - Relational Properties
+      @ Relation
+        # Attributes
+        # Example in Javascript
+
+      @ Collection
+        # Attributes
+        # Example in Javascript
+
+
+    - Rights Properties
+      @ Copyright
+        # Attributes
+        # Example in Javascript
+
+      @ Policy
+        # Attributes
+        # Example in Javascript
+
+
+    - Distribution Properties
+      @ Publisher
+        # Attributes
+        # Example in Javascript
+
+      @ TargetAudience
+        # Attributes
+        # Example in Javascript
+
+
+    - Fragments Properties
+      @ Fragment
+        # Attributes
+        # Example in Javascript
+
+      @ NamedFragment
+        # Attributes
+        # Example in Javascript
+
+
+    - Technical Properties
+      @ FrameSize
+        # Attributes
+        # Example in Javascript
+
+      @ Compression
+        # Attributes
+        # Example in Javascript
+
+      @ Duration
+        # Attributes
+        # Example in Javascript
+
+      @ Format
+        # Attributes
+        # Example in Javascript
+
+      @ SamplingRate
+        # Attributes
+        # Example in Javascript
+
+      @ FrameRate
+        # Attributes
+        # Example in Javascript
+
+      @ AverageBitRate
+        # Attributes
+        # Example in Javascript
+
+      @ NumTracks
+        # Attributes
+        # Example in Javascript
+
+
+
+  o interface
+    - Attributes
+    - Examples in Javascript
+
+  o API Status Codes
+
+* Usage examples
+  o Usage as JavaScript API
+  o Usage as Web Service
+
+* Implementation Notes
+  o Multiple identifiers of media resources orfragements
+  o Missing fragment identifiers
+  o Interoperability of Implementations
+
+* Security Considerations
+* Web IDL description
+* Acknowledgements
+* References
+  o Normative references
+  o Informative references
+
+
+
+
+
+1. Introduction
+
+
+This specification defines an API to access metadata information related to media resources on the Web. The overall purpose is to provide developers with a convenient access to metadata information
+stored in different metadata formats. The core properties, defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY], will be used as a pivot vocabulary in this API. The
+description of relations between these core properties and the metadata formats in scope are documented in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY] in order to provide
+cross-community data integration. This API is described using the interface definition language Web IDL [WEBIDL]. The decision to use Web IDL, which offers bindings for ECMAScript and Java, is based
+on the Use Cases and Requirements for Ontology and Metadata API for Media Resources 1.0 [MEDIA-ANNOT-REQS].
+
+This API defines interfaces that enable users/applications to consume metadata in an interoperable manner. Interoperability between metadata formats is ensured by the use of the Ontology for Media
+Resources 1.0 specification [MEDIA-ONTOLOGY] as pivot metadata format. This API offers operations to request particular metadata information represented in a certain metadata format related to media
+resources on the Web. Further it specifies the actual representation of the core properties and the behaviour of this API.
+
+
+
+1.1 Formats in scope
+
+
+Refers to the formats in scope of the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY].
+
+
+
+
+1.2 Formats out of scope
+
+
+Refers to the Formats out of scope of the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY].
+
+
+
+
+1.3 Terminology
+
+
+In this document the terms "Ontology", "Media Resource", "Property", "Mapping" and "Property value types" are to be interpreted as defined in Section 2 of the Ontology for Media Resources 1.0
+specification [MEDIA-ONTOLOGY].
+
+
+
+
+
+2. Conformance
+
+
+In addition to sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
+
+The keywords must, must not, required, should, should not, recommended, may, and optional in this specification are to be interpreted as described in [RFC2119].
+
+
+
+
+3. Design consideration
+
+
+This section discusses different usage scenarios that led to design of the API. We consider two main scenarios, where this API be implemented and invoked:
+
+* in the User agent, or
+
+* as a client accessing a Web Service.
+
+
+In both client-only and client-server cases of the implementation, the media resources and/or the metadata sources are in many cases remote. The API is by default specified as an asynchronous API,
+i.e., the calls are not blocking, but results (or errors) are returned using a callback mechanism. In order to better support the Web Service case, a synchronous mode is also defined. The
+synchronous mode is optional.
+
+The two scenarios are shown in Figure 1.
+
+
+
+Figure 1: Two scenarios with different usage of this API.
+
+This specification only defines the Metadata API for Media Resources. Other components depicted in Figure 1 (e.g., access/extraction/storage of metadata) are not covered.
+
+Scenario 1: Client-only (User agent)
+        In the first scenario, this API is implemented in the user agent, i.e. built into a browser, as a plugin or as a JavaScript library. Here, there exist three possibilities to invoke the API:
+        by an external calling code, an internal calling code behaving like a client or it is attached as an extension to a user agent. Usually, such implementations are an example for asynchronous
+        processing. Besides the Metadata API for Media Resources 1.0, the user agent may include components for metadata access (and extraction) and mappings for a supported set of formats, e.g., as
+        defined in the property mapping table of the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]. Further, the metadata sources (the media resource and/or metadata document(s))
+        must be retrievable. The access (e.g., establish connection, retrieval) to the metadata sources is handled by the user agent.
+Scenario 2: Client-Server
+        In the second scenario, this API is implemented as a Web Service following the principles of server-side synchronous processing. Such an implementation would be typically used by a non-UI
+        client, such as an agent harvesting metadata. However, this API can be also accessed from a user agent, and used the same way as described in scenario 1 with the help of a client-side
+        library for accessing the Web Service. In the implementation of the Web Service, this scenario also allows supporting a media repository, e.g., content provider's archive database, movie
+        store. With the help of such a service the user agent can retrieve metadata sources, which might have a custom metadata format not supported by a user agent. In contrast to an integrated
+        component (see scenario 1), an implementation of this API in a web service can do more complex mappings on the fly than a component integrated in a user agent, and can be more flexible
+        (e.g., supporting additional formats).
+
+In both scenarios, the API serves as a mediator between a client application and the actual metadata sources. Interoperability is ensured by defining i) operations for accessing the metadata
+information, ii) a common object structure and iii) API behaviour (e.g., status codes). Following this, an implementation has to implement this stack of components:
+
+* An implementation of the Metadata API for Media Resources (as defined in this document), which provides the actual GETTER methods for the properties.
+
+* An implementation of the mappings from a specific source format to the core properties. Here, the Metadata API for Media Resources 1.0 should use the Ontology for Media Resources 1.0
+  specification [MEDIA-ONTOLOGY], where applicable.
+
+* A format specific API to access the metadata. This can be an API for retrieving a metadata document describing a media resource (e.g. an XML parser and a set of XPath statements) or an extractor
+  to read metadata embedded in the media resource (e.g. a library to read EXIF information from JPEG images). In order to define the context in which this API is applied, at least a unidirectional
+  reference from the media resource to the metadata document or vice versa is needed. If this is not the case such a reference needs to be provided by the web application (scenario 1), web service
+  (scenario 2) or media repository (scenario 2).
+
+
+This API provides access to metadata information stored in different metadata formats. As such, different instances of the same property can exist.
+
+
+
+
+4. API Description
+
+
+This API defines a number of interfaces using [WEBIDL]. These can be grouped in the following categories:
+
+* An interface defining the actual retrieval operations for metadata, called MediaResource, and provided in both synchronous and asynchronous versions (see Section 4.1, Section 4.2 and Section 4.3)
+
+* An interface defining the data structure of response objects/metadata annotations, called MediaAnnotation and its specializations (see Section 4.4 and Section 4.5)
+
+* An interface defining a data structure for metadata sources, called MetadataSource (see Section 4.6)
+
+
+Next, the different interfaces and exposed operations are discussed. Implementations of this API must support asynchronous mode of operation, may support the synchronous one and must support the
+interfaces defined in this document. Instead of exceptions, a status code indicating the state of processing (see Section 4.7) is returned (in the synchronous API) or provided via a callback
+function (in the asynchronous API) in case an error occurs.
+
+Then, the interfaces for the return types, i.e., MediaAnnotation and its specializations, and MetadataSource are defined.
+
+The IDL fragment in Appendix A of this specification must be interpreted as required for conforming IDL fragments, as described in the “Web IDL” specification. [WEBIDL]
+
+
+
+4.1 MediaResource interface
+
+
+The MediaResource interface is the core of this API and provides operations to access the metadata properties of a specific media resource. Here, a clear separation between asynchronous and
+synchronous mode of operation has been achieved by defining two implementing interfaces (derived from MediaResource), the AsyncMediaResource and the SyncMediaResource interface. Objects of these
+interfaces will be created by calling createMediaResource of the MediaResource interface. The actual connection to a specified metadata source will be created with the execution of the
+getMediaProperty operation of AsyncMediaResource or SyncMediaResource interface. The mediaResource argument identifies the media resource, for which the implementation of this API should try to find
+relevant metadata sources. Optionally, references to metadata sources can be passed using an array of objects, each implementing the MetadataSource interface (see Section 4.6).
+
+interface MediaResource {
+    short         getSupportedModes ();
+    MediaResource createMediaResource (DOMString mediaResource, optional MetadataSource[] metadataSources, optional short mode);
+};
+
+
+
+4.1.1 Methods
+
+
+createMediaResource
+        This operation instantiates an object of either AsyncMediaResource or SyncMediaResource interface. Further, it allows to set the specific media resource and metadata sources to which this
+        API is applied.
+        Parameter Type Nullable Optional Description
+        mediaResource DOMString ✘ ✘ This attribute must set the specific media resource that should be processed by the API.
+        metadataSources MetadataSource[] ✘ ✔ This attribute should specify additional metadata sources.
+        mode short ✘ ✔ This attribute should specify the desired mode of operation. 1 for asynchronous and 2 for synchronous mode should be used.
+        In the case the mode argument is omitted, and the implementation supports both modes, the asynchronous mode will be used.
+
+        No exceptions.
+
+        Return type: MediaResource
+
+getSupportedModes
+        This operation is called to identify the implemented mode. The return codes should be as follows: 1 for asynchronous, 2 for synchronous and 3 for both modes.
+        No parameters.
+
+        No exceptions.
+
+        Return type: short
+
+
+
+
+4.1.2 Examples in Javascript
+
+
+Example for getSupportedModes:
+
+ma = new MediaResource();
+var mode = ma.getSupportedModes();
+
+/** Resulting in:
+ * { "supportedModes" : 3 }
+ */
+
+Example for createMediaResource:
+
+metadataSources = new MetadataSource[2];
+metadataSources[0] = new MetadataSource(
+                         "http://www.w3.org/2008/WebVideo/Annotations/drafts/metadata_formats/DC_example1.xml","dc");
+metadataSources[1] = new MetadataSource(
+                         "http://www.w3.org/2008/WebVideo/Annotations/wiki/images/9/93/MAWG-Stockholm-20090626.JPG","exif");
+
+mediaResource = new MediaResource();
+
+if (mediaResource.getSupportedModes() == 1 || mediaResource.getSupportedModes() == 3) {
+    aSyncObject = mediaResource.createMediaResource(
+                         "http://www.w3.org/2008/WebVideo/Annotations/wiki/images/9/93/MAWG-Stockholm-20090626.JPG",
+                         metadataSources, 1);
+                             
+} else if (mediaResource.getSupportedModes() == 2 || mediaResource.getSupportedModes() == 3)  {
+    syncObject = mediaResource.createMediaResource(
+                         "http://www.w3.org/2008/WebVideo/Annotations/wiki/images/9/93/MAWG-Stockholm-20090626.JPG",
+                         metadataSources, 2);
+}
+
+
+
+
+
+4.2 AsyncMediaResource interface
+
+
+The AsyncMediaResource interface provides a number of operations that allow accessing the metadata of a media resource. This interface must be implemented.
+
+Next, we give the Web IDL description of the AsyncMediaResource interface and describe the different operations that are part of it.
+
+In this section the MediaAnnotations interface is used in the interface definitions. It serves as a container to hold general values about properties enabling an iteration over a set of different
+properties. Its definition can be found in Section 4.4
+
+interface AsyncMediaResource : MediaResource {
+    void getMediaProperty (DOMString[] propertyNames, PropertyCallback successCallback, ErrorCallback errorCallback,
+       optional DOMString fragment, optional DOMString sourceFormat, optional DOMString language);
+    void getOriginalMetadata (DOMString sourceFormat, MetadataCallback successCallback, ErrorCallback errorCallback);
+};
+
+
+
+4.2.1 Methods
+
+
+getMediaProperty
+        This operation allows retrieval of the value of a specific property, several or all properties in an asynchronous manner. The specific property is passed as an argument and a list of objects
+        is returned that hold the values according to the requested property. These objects implement the MediaAnnotation interface, described in Section 4.4. Depending on the requested property,
+        the returned objects implement a different subtypes (inheriting from the MediaAnnotation interface). For example, requesting "title" gives back an array of objects implementing the Title
+        interface, requesting "creator" results in objects implementing the Creator interface and so on. These interfaces are described in Section 4.5. An example can be found here.
+        Parameter Type Nullable Optional Description
+        propertyNames DOMString[] ✘ ✘ This argument identifies an array containing the properties for which the values need to be retrieved. For an empty array all properties carrying
+        values will be retrieved.
+        successCallback PropertyCallback ✘ ✘ This argument holds a callback object for asynchronous requests to the property. The successCallback object implements the PropertyCallback
+        interface and holds a handleEvent operation that needs to be called once all data for the requested property is gathered. This handleEvent operation needs to be called with a new
+        MediaAnnotation array.
+        errorCallback ErrorCallback ✘ ✘ This argument holds a callback object for failure of asynchronous requests to the property. The errorCallback object implements the ErrorCallback
+        interface and holds a handleEvent operation that needs to be called if an attempt fails. This handleEvent operation needs to be called with a new DOMString representing the status code of
+        the error (see Section 4.7 for details).
+        fragment DOMString ✘ ✔ This argument contains a URI identifying the specific media fragment for which the metadata is requested. The URI must conform to the URI for Media
+        Fragment [MEDIA-FRAGMENTS] specification. This parameter is optional.
+        sourceFormat DOMString ✘ ✔ This argument identifies a specific metadata format. It should use the metadata format identifiers defined in the Ontology for Media Resources 1.0
+        specification [MEDIA-ONTOLOGY]. If a metadata format is defined, only the metadata available in the specified metadata format are retrieved. This parameter is optional.
+        language DOMString ✘ ✔ This argument allows to identify the language of the metadata. Values for the metadata will only be returned if it is available in the specified language.
+        Recommended best practice is to use BCP 47 [BCP47]. This parameter is optional.
+
+        No exceptions.
+
+        Return type: void
+
+getOriginalMetadata
+        This operation allows retrieval of the original metadata according to the specified source format in an asynchronous manner. An example can be found here.
+        Parameter Type Nullable Optional Description
+        sourceFormat DOMString ✘ ✘ This argument identifies a specific metadata format. It should use the metadata format identifiers defined in the Ontology for Media Resources 1.0
+        specification [MEDIA-ONTOLOGY]. If a metadata format is defined, only the metadata available in the specified metadata format are retrieved.
+        successCallback MetadataCallback ✘ ✘ This argument holds a callback object for asynchronous requests for the original metadata. The successCallback object implements the
+        MetadataCallback interface and holds a handleEvent operation that needs to be called once all properties having values are listed. This handleEvent operation needs to be called with a new
+        DOMString array holding the original metadata.
+        errorCallback ErrorCallback ✘ ✘ This argument holds a callback object for failure of asynchronous requests for the original metadata. The errorCallback object implements the
+        ErrorCallback interface and holds a handleEvent operation that needs to be called if an attempt fails. This handleEvent operation needs to be called with a new DOMString representing the
+        status code of the error (see Section 4.7 for details).
+
+        No exceptions.
+
+        Return type: void
+
+
+
+
+4.2.2 Callback interfaces
+
+
+
+
+4.2.2.1 PropertyCallback interface
+
+
+The PropertyCallback interface holds a handleEvent operation that needs to be called once all data for the requested property has been gathered.
+
+interface PropertyCallback {
+    void handleEvent (MediaAnnotation[] mediaAnnotations);
+};
+
+
+
+4.2.2.1.1 Methods
+
+
+handleEvent
+        This operation is called when all data is gathered corresponding to a request for values of one or more properties.
+        Parameter Type Nullable Optional Description
+        mediaAnnotations MediaAnnotation[] ✘ ✘ This argument holds a list of objects with values according to the requested property. These objects implement the MediaAnnotation
+        interface, described in Section 4.4. Depending on the requested property, the returned objects implement a different subtypes (inheriting from the MediaAnnotation interface).
+
+        No exceptions.
+
+        Return type: void
+
+
+
+
+
+4.2.2.2 MetadataCallback interface
+
+
+The MetadataCallback interface holds a handleEvent operation that needs to be called once the requested metadata has been gathered.
+
+interface MetadataCallback {
+    void handleEvent (DOMString[] metadata);
+};
+
+
+
+4.2.2.2.1 Methods
+
+
+handleEvent
+        This operation is called when all data is gathered corresponding to a request for the original metadata.
+        Parameter Type Nullable Optional Description
+        metadata DOMString[] ✘ ✘ This argument holds a list of DOMStrings representing the original metadata. Note that, multiple metadata instances can exist (e.g., one Dublin Core and
+        one MPEG-7 document).
+
+        No exceptions.
+
+        Return type: void
+
+
+
+
+
+
+4.2.3 Examples in Javascript
+
+
+Example for asynchronous getMediaProperty:
+
+aSyncMediaResource = mediaResource.createMediaResource("http://www.imdb.com/title/tt0133152/", new Array(), 1);
+aSyncMediaResource.getMediaProperty(["title"], successCallback, errorCallback, "", "", "");
+                                
+function successCallback(MediaAnnotation[] mediaAnnotations) {
+    ...
+}
+
+/** Resulting in:
+ * [ { "Title" : {
+ *         "propertyName" : "title",
+ *         "value" : "Planet of the apes",
+ *         "language" : en-us",
+ *         ...
+ *         "statusCode" : 200
+ *         }
+ * },
+ * { "Title" : {
+ *         "propertyName" : "title",
+ *         "value" : "Monkey Planet",
+ *         "language" : en-us",
+ *         ...,
+ *         "statusCode" : 200
+ *         }
+ * },
+ * { ...
+ * } ]
+ */
+                
+function errorCallback(DOMString error) {
+    ...
+}
+
+/** Resulting in:
+ * { error: { "statusCode" : 200 } }
+ */
+
+Example for asynchronous getOriginalMetadata :
+
+aSyncMediaResource = mediaResource.createMediaResource(
+                         "http://www.w3.org/2008/WebVideo/Annotations/wiki/images/9/93/MAWG-Stockholm-20090626.JPG",
+                          new Array(), 1);
+aSyncMediaResource.getOriginalMetadata("dc", successCallback, errorCallback);
+
+function successCallback(DOMString[] metadata) {
+    ...
+}
+
+/** Resulting in:
+ * [ { "statusCode" : 200
+ * },
+ * {"originalMetadata" : "<metadata xmlns='http://example.org/myapp/'
+ *                                        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+ *                                        xsi:schemaLocation='http://example.org/myapp/ http://example.org/myapp/schema.xsd'
+ *                                        xmlns:dc='http://purl.org/dc/elements/1.1/'>
+ *                                          <dc:title>DC title</dc:title>
+ *                                  </metadata>"
+ * } ]
+ */
+
+                                                
+function errorCallback(DOMString error) {
+   ...
+}
+
+/** Resulting in:
+ * { error: { "statusCode" : 200 } }
+ */
+
+
+
+
+
+4.3 SyncMediaResource interface
+
+
+The SyncMediaResource interface provides a number of operations to access the metadata of a media resource. This interface may be implemented.
+
+Next, we give the Web IDL description of the SyncMediaResource interface for synchronous requests and describe the different operations that are part of it. The MediaResource defines a constructor
+that can be called to construct the object based on an identifier of the media resource and optionally some metadata sources.
+
+interface SyncMediaResource : MediaResource {
+    MediaAnnotation[] getMediaProperty (DOMString[] propertyNames, optional DOMString fragment,
+       optional DOMString sourceFormat, optional DOMString language);
+    DOMString[]       getOriginalMetadata (DOMString sourceFormat);
+};
+
+
+
+4.3.1 Methods
+
+
+getMediaProperty
+        This operation allows retrieval of the metadata of a specific property, several or all properties in a synchronous manner. The passed array holds the requested properties and an array of
+        objects is returned. If the array is empty, every property holding values will be requested and returned. The returned objects implement the MediaAnnotation interface (see Section 4.3).
+        Depending on the requested property, the returned objects implement different subtypes (inheriting from the MediaAnnotation interface). For example, requesting "title" gives back an array of
+        objects implementing the Title interface, requesting "creator" results in objects implementing the Creator interface and so on. These subtypes are described in Section 4.4. The operation
+        returns a MediaAnnotation array holding the requested properties. If an error occurs during retrieval, a MediaAnnotation object with the corresponding status code (e.g., 400, 404 or 415)
+        will be generated and inserted at the first position of the array. An example can be found here.
+
+        In this section the MediaAnnotations interface is used in the interface definitions. It serves as a container to hold general values about properties enabling an iteration over a set of
+        different properties. Its explanation can be found in Section 4.4
+
+        Parameter Type Nullable Optional Description
+        propertyNames DOMString[] ✘ ✘ This argument holds the requested properties as an array. If the array is empty, each property holding values will be returned.
+        fragment DOMString ✘ ✔ This argument contains a URI identifying the specific media fragment for which the metadata is requested. The URI must conform to the URI for Media
+        Fragment [MEDIA-FRAGMENTS] specification. This parameter is optional.
+        sourceFormat DOMString ✘ ✔ This argument identifies a specific metadata format. It should use the metadata format identifiers defined in the Ontology for Media Resources 1.0
+        specification [MEDIA-ONTOLOGY]. If a metadata format is defined, only the metadata available in the specified metadata format is retrieved. This parameter is optional.
+        language DOMString ✘ ✔ This argument allows to identify the language of the metadata. Values for the metadata will only be returned if it is available in the specified language.
+        Recommended best practice is to use BCP 47 [BCP47]. This parameter is optional.
+
+        No exceptions.
+
+        Return type: MediaAnnotation[]
+
+getOriginalMetadata
+        This operation allows retrieval of the original metadata according to the specified source format in a synchronous manner. The operation returns a DOMString array holding the status code of
+        the request at the first and the original metadata at the second position. An example can be found here.
+        Parameter Type Nullable Optional Description
+        sourceFormat DOMString ✘ ✘ This argument identifies a specific metadata format. It should use the metadata format identifiers defined in the Ontology for Media Resources 1.0
+        specification [MEDIA-ONTOLOGY]. If a metadata format is defined, only the metadata available in the specified metadata format is retrieved.
+
+        No exceptions.
+
+        Return type: DOMString[]
+
+
+
+
+4.3.2 Examples in Javascript
+
+
+The examples in this section use getMediaProperty() to get an object implementing the MediaAnnotation interface. The noErrorStatus function ensures that no error is present and the requested
+properties carry values.
+
+We give some JavaScript examples on how to use the synchronous MediaResource interface and it's operations.
+
+Example for synchronous getMediaProperty:
+
+syncMediaResource = mediaResource.createMediaResource("http://www.imdb.com/title/tt0133152/",
+                          new Array(), 2);
+title = syncMediaResource.getMediaProperty(["title"], "", "", "");
+
+if (noErrorStatus(title[0].statusCode) == true) {
+   ...
+}                                                
+
+/** Resulting in:
+ * [ { "Title" : {
+ *         "propertyName" : "title",
+ *         "value" : "Planet of the apes",
+ *         "language" : en-us",
+ *         ...,
+ *         "statusCode" : 200
+ *         }
+ * },
+ * { "Title" : {
+ *         "propertyName" : "title",
+ *         "value" : "Planet der Affen",
+ *         "language" : "de-de",
+ *         ...,
+ *         "statusCode" : 200
+ *         }
+ * },
+ * { ...
+ * } ]
+ */
+
+Example for synchronous getOriginalMetadata:
+
+syncMediaResource = mediaResource.createMediaResource("http://www.w3.org/2008/WebVideo/Annotations/wiki/images/9/93/MAWG-Stockholm-20090626.JPG",
+                         new Array(), 2);
+dcMetadata = syncMediaResource.getOriginalMetadata("DC");
+
+if (noErrorStatus(dcMetadata[0].statusCode) == true) {
+    ...
+}
+
+/** Resulting in:
+ * [ { "statusCode" : 200
+ * },
+ * {"originalMetadata" : "<metadata xmlns='http://example.org/myapp/'
+ *                                        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+ *                                        xsi:schemaLocation='http://example.org/myapp/ http://example.org/myapp/schema.xsd'
+ *                                        xmlns:dc='http://purl.org/dc/elements/1.1/'>
+ *                                          <dc:title>DC title</dc:title>
+ *                                  </metadata>"
+ * } ]
+ */
+
+
+
+
+
+4.4 MediaAnnotation interface
+
+
+MediaAnnotation interface is used as the return type of MediaResource.getMediaProperty operation. It is a container for holding general values about metadata properties.
+
+As several metadata properties are defined as complex types, specific derived types of MediaAnnotation have been defined, adding their specific attributes. However, MediaAnnotation can be used as a
+generic return type to access a printable string representation of the property (in the value attribute). It also includes a status code. In case of general errors, the first element of the returned
+MediaAnnotation array contains the global error code, otherwise the status can be given for each of the returned properties.
+
+The following design considerations have been used for specifying the derived interfaces for each of the metadata properties:
+
+* For each metadata property, an interface is derived from MediaAnnotation, adding typed attributes according to the specification in the ontology document.
+* This API must fill value with a printable string representation, it is recommended to follow these steps:
+  o use a name/label if present
+  o for a URI
+    - if a URI identifies a value known by this API, use the appropriate label
+    - dereference a URI to obtain a label, if possible
+    - return the URI
+
+  o create a string from the values of the set of attributes (e.g. numeric values)
+
+* This approach possibly duplicates a string that is found in another attribute in the value attribute. This is considered as an acceptable amount of redundancy for the benefit of having a generic
+  value field for all metadata properties that can be used regardless of the specific metadata property and data type of the attributes.
+* If an attribute has type URI|string, the interface shall have two attributes, one with "Link" and one with "Label" appended to the attribute name, representing the URI and string respectively
+* For consistency, this approach is also followed if the attribute has only either URI or string as type.
+* This approach allows for user extensions by deriving from MediaAnnotation or one of the derived interfaces for one of the metadata properties.
+
+interface MediaAnnotation {
+    attribute DOMString propertyName;
+    attribute DOMString value;
+    attribute DOMString language;
+    attribute DOMString sourceFormat;
+    attribute DOMString fragmentIdentifier;
+    attribute DOMString mappingType;
+    attribute short     statusCode;
+};
+
+
+
+4.4.1 Attributes
+
+
+fragmentIdentifier of type DOMString
+        This attribute should be an URI determining the fragment for which the metadata is relevant.
+        No exceptions.
+
+language of type DOMString
+        This attribute should hold the language of the metadata. The attribute is empty if language is not applicable for a specific property. Recommended best practice is to use BCP 47 [BCP47].
+        No exceptions.
+
+mappingType of type DOMString
+        This attribute specifies the kind of mapping as discussed in the semantic level mappings. The value of this attribute should be one of the mapping characteristics.
+        No exceptions.
+
+propertyName of type DOMString
+        The name of the property must be specified and should correspond to the property names defined in the Ontology for Media Resources 1.0 specification[MEDIA-ONTOLOGY].
+sourceFormat of type DOMString
+        This attribute allows to specify the metadata source from which the metadata was retrieved. It should use the metadata format identifiers defined in the Ontology for Media Resources 1.0
+        specification [MEDIA-ONTOLOGY].
+        No exceptions.
+
+statusCode of type short
+        This attribute must specify the status code for the associated property (e.g., 264 indicating a structured return value).
+        No exceptions.
+
+value of type DOMString
+        This attribute must be filled with an printable string representation.
+        No exceptions.
+
+
+
+
+4.4.2 Example in JavaScript
+
+
+The noErrorStatus function ensures that no error is present and the requested properties carry values. The MediaAnnotation interface will be never instantiated - only instances of the derived
+interfaces will be created. These must be filled at least with the parameters specified in the MediaAnnotation interface and may be filled with the specific attributes.
+
+mediaAnnotation = image.getMediaProperty(["title"], "", "", "");
+
+if (noErrorStatus(mediaAnnotation[0].statusCode) == true) {                    
+   ...
+}
+
+/** Resulting in:
+ * [ { "Title" : {
+ *         "propertyName" : "title",
+ *         "value" : "Gone with the Wind",
+ *         "language" : "en-us",
+ *         "sourceFormat" : "mpeg7",
+ *         "fragmentIdentifier" : "http://www.example.com/video.ogv#t=10,20",
+ *         "mappingType" : "Exact match",
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+
+
+
+
+
+4.5 Properties
+
+
+This section describes the different properties that can be requested through the MediaResource.getMediaProperty() operation. When invoking this operation, objects implementing the MediaAnnotation
+interface are returned that represent the specified property. All properties are represented with an interface inherited from the MediaAnnotation interface (following the design guidelines described
+above).
+
+Several of the following return type interfaces can hold the value of the property as both URI (i.e., a pointer to a controlled vocabulary) or as free text. The URI is preferred, and the respective
+attribute of the MediaAnnotation interface (or specialized type) shall be filled whenever possible (i.e., when the information is included in or can be constructed from the source metadata).
+
+In the following, for each property, a (synchronous) JavaScript example illustrates the usage of the property specific attributes. In any case, the general attributes of the MediaAnnotation
+interface could be also requested.
+
+
+
+4.5.1 Identification Properties
+
+
+
+
+4.5.1.1 Identifier
+
+
+When the MediaResource.getMediaProperty operation is invoked with "identifier" as a value of the propertyNames parameter, an object implementing the Identifier interface is returned representing the
+identifier property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY].
+
+interface Identifier : MediaAnnotation {
+    attribute DOMString identifierLink;
+};
+
+
+
+4.5.1.1.1 Attributes
+
+
+identifierLink of type DOMString
+        This attribute holds a URI identifying the media resource.
+        No exceptions.
+
+
+
+
+4.5.1.1.2 Example in JavaScript
+
+
+id = image.getMediaProperty(["identifier"]);
+                                     
+/** Resulting in:
+ * [ { "Identifier" : {
+ *         "propertyName" : "identifier",
+ *         "identifierLink" : "urn:uuid:36a87260-1102-11df-8a39-0800200c9a66",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.1.2 Title
+
+
+When the MediaResource.getMediaProperty operation is invoked with "title" as a value of the propertyNames parameter, an object implementing the Title interface is returned representing the title
+property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY].
+
+interface Title : MediaAnnotation {
+    attribute DOMString titleLabel;
+    attribute DOMString typeLink;
+    attribute DOMString typeLabel;
+};
+
+
+
+4.5.1.2.1 Attributes
+
+
+titleLabel of type DOMString
+        This attribute holds the title as a plain string.
+        No exceptions.
+
+typeLabel of type DOMString
+        This attribute holds the type of the title as a plain string.
+        No exceptions.
+
+typeLink of type DOMString
+        This attribute holds the type of the title as a URI.
+        No exceptions.
+
+
+
+
+4.5.1.2.2 Example in JavaScript
+
+
+title = song.getMediaProperty(["title"]);
+                    
+/** Resulting in:
+ * [ { "Title" : {
+ *         "propertyName" : "title",
+ *         "titleLabel" : "Artificial Horizon" ,
+ *         "typeLink" : "http://www.ebu.ch/metadata/cs/ebu_ObjectTypeCodeCS.xml#21",
+ *         "typeLabel" : "Album title",
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+4.5.1.3 Language
+
+
+When the MediaResource.getMediaProperty operation is invoked with "language" as a value of the propertyNames parameter, an object implementing the Language interface is returned representing the
+language property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY].
+
+interface Language : MediaAnnotation {
+    attribute DOMString languageLink;
+    attribute DOMString languageLabel;
+};
+
+
+
+4.5.1.3.1 Attributes
+
+
+languageLabel of type DOMString
+        This attribute represents the language of the media resource as a plain string, which can be filtered on in the getMediaProperty operation. Recommended best practice is to use BCP 47 [BCP47].
+        No exceptions.
+
+languageLink of type DOMString
+        This attribute represents the language of the media resource as a URI.
+        No exceptions.
+
+
+
+
+4.5.1.3.2 Example in JavaScript
+
+
+language = video.getMediaProperty(["language"]);
+        
+/** Resulting in:
+ * [ { "Language" : {
+ *         "propertyName" : "language",
+ *         "languageLabel" : "en-us",                    
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+4.5.1.4 Locator
+
+
+When the MediaResource.getMediaProperty operation is invoked with "locator" as a value of the propertyNames parameter, an object implementing the Locator interface is returned representing the
+locator property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY].
+
+interface Locator : MediaAnnotation {
+    attribute DOMString locatorLink;
+};
+
+
+
+4.5.1.4.1 Attributes
+
+
+locatorLink of type DOMString
+        This attribute specifies the location of the media resource by a URI.
+        No exceptions.
+
+
+
+
+4.5.1.4.2 Example in JavaScript
+
+
+locator = image.getMediaProperty(["locator"]);
+
+/** Resulting in:
+ * [ { "Locator" : {
+ *         "propertyName" : "locator",
+ *         "locatorLink" : "http://www.w3.org/2008/WebVideo/Annotations/wiki/images/9/93/MAWG-Stockholm-20090626.JPG",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+
+4.5.2 Creation Properties
+
+
+
+
+4.5.2.1 Contributor
+
+
+When the MediaResource.getMediaProperty operation is invoked with "contributor" as a value of the propertyNames parameter, an object implementing the Contributor interface is returned representing
+the contributor property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY].
+
+interface Contributor : MediaAnnotation {
+    attribute DOMString contributorLink;
+    attribute DOMString contributorLabel;
+    attribute DOMString roleLink;
+    attribute DOMString roleLabel;
+};
+
+
+
+4.5.2.1.1 Attributes
+
+
+contributorLabel of type DOMString
+        This attribute represents the contributor (i.e., the agent making the contribution) as a plain string
+        No exceptions.
+
+contributorLink of type DOMString
+        This attribute represents the contributor (i.e., the agent making the contribution) as a URI.
+        No exceptions.
+
+roleLabel of type DOMString
+        This attribute represents the role of the contributor as a plain string.
+        No exceptions.
+
+roleLink of type DOMString
+        This attribute represents the role of the contributor as URI.
+        No exceptions.
+
+
+
+
+4.5.2.1.2 Example in JavaScript
+
+
+contributor = video.getMediaProperty(["contributor"]);
+
+/** Resulting in:
+ * [ { "Contributor" : {
+ *         "propertyName" : "contributor",
+ *         "contributorLink" : "http://en.wikipedia.org/wiki/Tim_Burton",
+ *         "contributorLabel" : "Tim Burton",
+ *         "roleLink" : "http://www.imdb.com/name/nm0000318/",
+ *         "roleLabel" : "director",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.2.2 Creator
+
+
+When the MediaResource.getMediaProperty operation is invoked with "creator" as a value of the propertyNames parameter, an object implementing the Creator interface is returned representing the
+creator property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY].
+
+interface Creator : MediaAnnotation {
+    attribute DOMString creatorLink;
+    attribute DOMString creatorLabel;
+    attribute DOMString roleLink;
+    attribute DOMString roleLabel;
+};
+
+
+
+4.5.2.2.1 Attributes
+
+
+creatorLabel of type DOMString
+        This attribute represents the creator (i.e., the agent participating in the creation of the media resource) as a plain string.
+        No exceptions.
+
+creatorLink of type DOMString
+        This attribute represents the creator (i.e., the agent participating in the creation of the media resource) as a URI.
+        No exceptions.
+
+roleLabel of type DOMString
+        This attribute represents the role of the creator as a plain string.
+        No exceptions.
+
+roleLink of type DOMString
+        This attribute represents the role of the creator as URI.
+        No exceptions.
+
+
+
+
+4.5.2.2.2 Example in JavaScript
+
+
+creator = video.getMediaProperty(["creator"]);
+
+/** Resulting in:
+ * [ { "Creator" : {
+ *         "propertyName" : "creator",
+ *         "creatorLink" : "http://dbpedia.org/resource/William_Shakespeare",
+ *         "creatorLabel" : "William Shakespeare",
+ *         "roleLink" : "http://www.ebu.ch/metadata/cs/ebu_RoleCodeCS.xml#22.5",
+ *         "roleLabel" : "playwright",                    
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+4.5.2.3 MADate
+
+
+When the MediaResource.getMediaProperty operation is invoked with "date" as a value of the propertyNames parameter, an object implementing the Date interface is returned representing the date
+property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]). This property has been renamed from "Date" into "MADate" in order to avoid naming conflicts with other
+objects named "Date" in web applications.
+
+interface MADate : MediaAnnotation {
+    attribute DOMString date;
+    attribute DOMString typeLink;
+    attribute DOMString typeLabel;
+};
+
+
+
+4.5.2.3.1 Attributes
+
+
+date of type DOMString
+        This attribute represents a date related to the media resource. A date value must be represented using one of the specific date/time data types of XML Schema, depending on the available
+        precision: gYear gYearMonth, date, dateTime, or dateTimeStamp.
+        No exceptions.
+
+typeLabel of type DOMString
+        This attribute defines the category of date (e.g. creation date, broadcast date, release date, date recorded and date edited) as a plain string.
+        No exceptions.
+
+typeLink of type DOMString
+        This attribute defines the category of date (e.g. creation date, broadcast date, release date, date recorded and date edited) as a URI.
+        No exceptions.
+
+
+
+
+4.5.2.3.2 Example in JavaScript
+
+
+maDate = video.getMediaProperty(["date"]);
+
+/** Resulting in:
+ * [ { "MADate" : {
+ *         "propertyName" : "date",
+ *         "date": "2009-06-26T15:30:00",
+ *         "typeLink" : "urn:smpte:ul:06.0E.2B.34.01.01.01.02.07.02.01.10.02.03.00.00",
+ *         "typeLabel" : "modification date",
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+4.5.2.4 Location
+
+
+When the MediaResource.getMediaProperty operation is invoked with "location" as a value of the propertyNames parameter, an object implementing the Location interface is returned representing the
+location property (defined inthe Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Location : MediaAnnotation {
+    attribute DOMString locationLink;
+    attribute DOMString locationLabel;
+    attribute double    longitude;
+    attribute double    latitude;
+    attribute double    altitude;
+    attribute DOMString coordinateSystemLabel;
+    attribute DOMString coordinateSystemLink;
+};
+
+
+
+4.5.2.4.1 Attributes
+
+
+altitude of type double
+        This attribute holds the altitude of the location, w.r.t. the coordinate system specified by the coordiateSystem attribute.
+        No exceptions.
+
+coordinateSystemLabel of type DOMString
+        This attribute identifies the coordinate system used by its name.
+        No exceptions.
+
+coordinateSystemLink of type DOMString
+        This attribute identifies the coordinate system used by a URI.
+        No exceptions.
+
+latitude of type double
+        This attribute holds the latitude of the location, w.r.t. the coordinate system specified by the coordiateSystem attribute.
+        No exceptions.
+
+locationLabel of type DOMString
+        This attribute identifies the location by its name as a plain string.
+        No exceptions.
+
+locationLink of type DOMString
+        This attribute identifies the location as a URI.
+        No exceptions.
+
+longitude of type double
+        This attribute holds the longitude of the location, w.r.t. the coordinate system specified by the coordiateSystem attribute.
+        No exceptions.
+
+
+
+
+4.5.2.4.2 Example in JavaScript
+
+
+location = video.getMediaProperty(["location"]);
+
+/** Resulting in:
+ * [ { "Location" : {
+ *         "propertyName" : "location",
+ *         "locationLink" : "http://en.wikipedia.org/wiki/San_Jose,_California",
+ *         "locationLabel" : "San Jose",
+ *         "longitude" : 37.33986481118008,
+ *         "latitude" : -121.88507080078125,
+ *         "altitude" : 0,
+ *         "coordinateSystemLabel" : "WGS84",
+ *         "coordinateSystemLink" : "http://www.w3.org/2003/01/geo/wgs84_pos#Point",
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+
+4.5.3 Content Properties
+
+
+
+
+4.5.3.1 Description
+
+
+When the MediaResource.getMediaProperty operation is invoked with "description" as a value of the propertyNames parameter, an object implementing the Description interface is returned representing
+the description property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Description : MediaAnnotation {
+    attribute DOMString descriptionLabel;
+};
+
+
+
+4.5.3.1.1 Attributes
+
+
+descriptionLabel of type DOMString
+        This attribute contains a description of the content of the media resource.
+        No exceptions.
+
+
+
+
+4.5.3.1.2 Example in Javascript
+
+
+description = image.getMediaProperty(["description"]);
+
+/** Resulting in:
+ * [ { "Description" : {
+ *         "propertyName" : "description",
+ *         "descriptionLabel" : "Group picture of the W3C MAWG at the F2F meeting in Stockholm.",
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+4.5.3.2 Keyword
+
+
+When the MediaResource.getMediaProperty operation is invoked with "keyword" as a value of the propertyNames parameter, an object implementing the Keyword interface is returned representing the
+keyword property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Keyword : MediaAnnotation {
+    attribute DOMString keywordLabel;
+    attribute DOMString keywordLink;
+};
+
+
+
+4.5.3.2.1 Attributes
+
+
+keywordLabel of type DOMString
+        This attribute contains a keyword describing the content as a plain string.
+        No exceptions.
+
+keywordLink of type DOMString
+        This attribute contains a URI representing a keyword describing the content.
+        No exceptions.
+
+
+
+
+4.5.3.2.2 Example in Javascript
+
+
+keyword = image.getMediaProperty(["keyword"]);
+
+/** Resulting in:
+ * [ { "Keyword" : {
+ *         "propertyName" : "keyword",
+ *         "keywordLabel" : "meeting with people from outside the organisation",
+ *         "keywordLink" : "http://sw.opencyc.org/2008/06/10/concept/en/MeetingWithOrganizationalOutsiders",                    
+ *         "statusCode" : 200
+ *         }
+ * }, 
+ * { "Keyword" : {
+ *         "propertyName" : "keyword",
+ *         "keywordLabel" : "standardisation",
+ *         "keywordLink" : "http://purl.org/vocabularies/princeton/wn30/synset-standardization-noun-1",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.3.3 Genre
+
+
+When the MediaResource.getMediaProperty operation is invoked with "genre" as a value of the propertyNames parameter, an object implementing the Genre interface is returned representing the genre
+property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Genre : MediaAnnotation {
+    attribute DOMString genreLabel;
+    attribute DOMString genreLink;
+};
+
+
+
+4.5.3.3.1 Attributes
+
+
+genreLabel of type DOMString
+        This attribute represents the genre of the media resource as a plain string.
+        No exceptions.
+
+genreLink of type DOMString
+        This attribute represents the genre of the media resource as a URI.
+        No exceptions.
+
+
+
+
+4.5.3.3.2 Example in Javascript
+
+
+genre = image.getMediaProperty(["genre"]);
+
+/** Resulting in:
+ * [ { "Genre" : {
+ *         "propertyName" : "genre",
+ *         "genreLabel" : "Sports",
+ *         "genreLink" : "http://www.ebu.ch/metadata/cs/ebu_ContentGenreCS.xml#3.1.1.9"                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.3.4 Rating
+
+
+When the MediaResource.getMediaProperty operation is invoked with "rating" as a value of the propertyNames parameter, an object implementing the Rating interface is returned representing the rating
+property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Rating : MediaAnnotation {
+    attribute double    ratingValue;
+    attribute DOMString ratingSystemLabel;
+    attribute DOMString ratingSystemLink;
+    attribute double    minimum;
+    attribute double    maximum;
+};
+
+
+
+4.5.3.4.1 Attributes
+
+
+maximum of type double
+        This attribute specifies the maximum rating value in the rating system.
+        No exceptions.
+
+minimum of type double
+        This attribute specifies the minimum rating value in the rating system.
+        No exceptions.
+
+ratingSystemLabel of type DOMString
+        This attribute identifies the rating system by a plain string.
+        No exceptions.
+
+ratingSystemLink of type DOMString
+        This attribute identifies the rating system as a URI.
+        No exceptions.
+
+ratingValue of type double
+        This attribute contains the value of the rating.
+        No exceptions.
+
+
+
+
+4.5.3.4.2 Example in Javascript
+
+
+rating = image.getMediaProperty(["rating"]);
+
+/** Resulting in:
+ * [ { "Rating" : {
+ *         "propertyName" : "rating",
+ *         "ratingValue" : 10.0,
+ *         "ratingSystemLabel" : "John Doe",
+ *         "ratingSystemLink" : "http://individuals.example.com/JohnDoe",
+ *         "minimum" : 0,
+ *         "maximum" : 10.0,                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+
+4.5.4 Relational Properties
+
+
+
+
+4.5.4.1 Relation
+
+
+When the MediaResource.getMediaProperty operation is invoked with "relation" as a value of the propertyNames parameter, an object implementing the Relation interface is returned representing the
+relation property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Relation : MediaAnnotation {
+    attribute DOMString targetLink;
+    attribute DOMString targetLabel;
+    attribute DOMString typeLink;
+    attribute DOMString typeLabel;
+};
+
+
+
+4.5.4.1.1 Attributes
+
+
+targetLabel of type DOMString
+        This attribute identifies the related resource by a plain string.
+        No exceptions.
+
+targetLink of type DOMString
+        This attribute identifies the related resource by a URI.
+        No exceptions.
+
+typeLabel of type DOMString
+        This attribute specifies the type of relationship by a plain string.
+        No exceptions.
+
+typeLink of type DOMString
+        This attribute specifies the type of relationship by a URI.
+        No exceptions.
+
+
+
+
+4.5.4.1.2 Example in Javascript
+
+
+relation = image.getMediaProperty(["relation"]);
+
+/** Resulting in:
+ * [ { "Relation" : {
+ *         "propertyName" : "relation",
+ *         "targetLink" : "http://www.w3.org/2008/WebVideo/Annotations/wiki/Image:MAWG-Stockholm-20090626_thumb.JPG",
+ *         "targetLabel" : "Group picture of MAWG in Stockholm",
+ *         "typeLink" : "http://www.ebu.ch/metadata/cs/ebu_HowRelatedCS.xml#19",
+ *         "typeLabel" : "thumbnail",                    
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+4.5.4.2 Collection
+
+
+When the MediaResource.getMediaProperty operation is invoked with "collection" as a value of the propertyNames parameter, an object implementing the Collection interface is returned representing the
+collection property (defined inthe Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Collection : MediaAnnotation {
+    attribute DOMString collectionLink;
+    attribute DOMString collectionLabel;
+};
+
+
+
+4.5.4.2.1 Attributes
+
+
+collectionLabel of type DOMString
+        This attribute holds the name of the collection from which the media resource originates as a plain string.
+        No exceptions.
+
+collectionLink of type DOMString
+        This attribute holds the name of the collection from which the media resource originates as URI.
+        No exceptions.
+
+
+
+
+4.5.4.2.2 Example in Javascript
+
+
+collection = image.getMediaProperty(["collection"]);
+
+/** Resulting in:
+ * [ { "Collection" : {
+ *         "propertyName" : "collection",
+ *         "collectionLink" : "http://individuals.example.com/JohnDoe/myWorkPictures/",
+ *         "collectionLabel" : "My Work Pictures",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+
+4.5.5 Rights Properties
+
+
+
+
+4.5.5.1 Copyright
+
+
+When the MediaResource.getMediaProperty operation is invoked with "copyright" as a value of the propertyNames parameter, an object implementing the Copyright interface is returned representing the
+copyright property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Copyright : MediaAnnotation {
+    attribute DOMString copyrightLabel;
+    attribute DOMString holderLabel;
+    attribute DOMString holderLink;
+};
+
+
+
+4.5.5.1.1 Attributes
+
+
+copyrightLabel of type DOMString
+        This attribute contains the copyright statement as a plain string.
+        No exceptions.
+
+holderLabel of type DOMString
+        This attribute identifies the copyright holder by a plain string.
+        No exceptions.
+
+holderLink of type DOMString
+        This attribute identified the copyright holder by a URI.
+        No exceptions.
+
+
+
+
+4.5.5.1.2 Example in Javascript
+
+
+copyright = image.getMediaProperty(["copyright"]);
+
+/** Resulting in:
+ * [ { "Copyright" : {
+ *         "propertyName" : "copyright",
+ *         "copyrightLabel" : "All images in the collection are copyrighted by John Doe.",
+ *         "holderLabel" : "John Doe",
+ *         "holderLink" : "http://individuals.example.com/JohnDoe",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.5.2 Policy
+
+
+When the MediaResource.getMediaProperty operation is invoked with "policy" as a value of the propertyNames parameter, an object implementing the Policy interface is returned representing the policy
+property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Policy : MediaAnnotation {
+    attribute DOMString statementLink;
+    attribute DOMString statementLabel;
+    attribute DOMString typeLink;
+    attribute DOMString typeLabel;
+};
+
+
+
+4.5.5.2.1 Attributes
+
+
+statementLabel of type DOMString
+        This attribute contains a plain string of the policy statement.
+        No exceptions.
+
+statementLink of type DOMString
+        This attribute contains a URI of the policy statement.
+        No exceptions.
+
+typeLabel of type DOMString
+        This attribute identifies the type of the policy as a URI as a plain string.
+        No exceptions.
+
+typeLink of type DOMString
+        This attribute identifies the type of the policy as a URI.
+        No exceptions.
+
+
+
+
+4.5.5.2.2 Example in Javascript
+
+
+policy = image.getMediaProperty(["policy"]);
+
+/** Resulting in:
+ * [ { "Policy" : {
+ *         "propertyName" : "policy",
+ *         "statementLink" : "http://creativecommons.org/licenses/by/2.5/",
+ *         "statementLabel" : "Attribution 2.5 Generic (CC BY 2.5)",
+ *         "typeLabel" : "license",                    
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+
+4.5.6 Distribution Properties
+
+
+
+
+4.5.6.1 Publisher
+
+
+When the MediaResource.getMediaProperty operation is invoked with "publisher" as a value of the propertyNames parameter, an object implementing the Publisher interface is returned representing the
+publisher property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Publisher : MediaAnnotation {
+    attribute DOMString publisherLink;
+    attribute DOMString publisherLabel;
+};
+
+
+
+4.5.6.1.1 Attributes
+
+
+publisherLabel of type DOMString
+        This attribute represents the publisher as a plain string.
+        No exceptions.
+
+publisherLink of type DOMString
+        This attribute represents the publisher as a URI.
+        No exceptions.
+
+
+
+
+4.5.6.1.2 Example in Javascript
+
+
+publisher = image.getMediaProperty(["publisher"]);
+
+/** Resulting in:
+ * [ { "Publisher" : {
+ *         "propertyName" : "publisher",
+ *         "publisherLabel" : "ACME",
+ *         "publisherLink" : "http://company.example.com/ACME",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.6.2 TargetAudience
+
+
+When the MediaResource.getMediaProperty operation is invoked with "targetAudience" as a value of the propertyNames parameter, an object implementing the TargetAudience interface is returned
+representing the targetAudience property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface TargetAudience : MediaAnnotation {
+    attribute DOMString audienceLink;
+    attribute DOMString audienceLabel;
+    attribute DOMString classificationSystemLink;
+    attribute DOMString classificationSystemLabel;
+};
+
+
+
+4.5.6.2.1 Attributes
+
+
+audienceLabel of type DOMString
+        This attribute identifies the target audience by a plain string.
+        No exceptions.
+
+audienceLink of type DOMString
+        This attribute identifies the target audience by a URI.
+        No exceptions.
+
+classificationSystemLabel of type DOMString
+        This attribute specifies the classification system by a plain string.
+        No exceptions.
+
+classificationSystemLink of type DOMString
+        This attribute specifies the classification system by a URI.
+        No exceptions.
+
+
+
+
+4.5.6.2.2 Example in Javascript
+
+
+targetAudience = image.getMediaProperty(["targetAudience"]);
+
+/** Resulting in:
+ * [ { "TargetAudience" : {
+ *         "propertyName" : "targetAudience",
+ *         "audienceLink" : "http://www.mpaa.org/ratings/what-each-rating-means#NC-17",
+ *         "audienceLabel" : "No One 17 and Under Admitted",
+ *         "classificationSystemLink" : "http://www.mpaa.org/ratings",
+ *         "classificationSystemLabel" : "MPAA",                    
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+
+4.5.7 Fragments Properties
+
+
+
+
+4.5.7.1 Fragment
+
+
+When the MediaResource.getMediaProperty operation is invoked with "fragment" as a value of the propertyNames parameter, an object implementing the Fragment interface is returned representing the
+fragment property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Fragment : MediaAnnotation {
+    attribute DOMString identifier;
+    attribute DOMString roleLink;
+    attribute DOMString roleLabel;
+};
+
+
+
+4.5.7.1.1 Attributes
+
+
+identifier of type DOMString
+        This attribute identifies the fragment as Media Fragment URI (temporal, spatial or track).
+        No exceptions.
+
+roleLabel of type DOMString
+        This attribute identifies the role of the fragment as a plain string, which can be filtered on in the getMediaProperty operation.
+        No exceptions.
+
+roleLink of type DOMString
+        This attribute identifies the role of the fragment as a URI, which can be filtered on in the getMediaProperty operation.
+        No exceptions.
+
+
+
+
+4.5.7.1.2 Example in Javascript
+
+
+fragment = movie.getMediaProperty(["fragment"]);
+
+/** Resulting in:
+ * [ { "Fragment" : {
+ *         "propertyName" : "fragment",
+ *         "identifier" : "http://www.example.com/video.ogv#t=10,20",
+ *         "roleLabel" : "chapter",                    
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+4.5.7.2 NamedFragment
+
+
+When the MediaResource.getMediaProperty operation is invoked with "namedFragment" as a value of the propertyNames parameter, an object implementing the NamedFragment interface is returned
+representing the namedFragment property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface NamedFragment : MediaAnnotation {
+    attribute DOMString identifier;
+    attribute DOMString label;
+};
+
+
+
+4.5.7.2.1 Attributes
+
+
+identifier of type DOMString
+        This attribute identifies a named fragment by a Media Fragment URI.
+        No exceptions.
+
+label of type DOMString
+        This attribute contains a plain text label of a named media fragment, which can be used to contruct a Media Fragment URI fro a named fragment.
+        No exceptions.
+
+
+
+
+4.5.7.2.2 Example in Javascript
+
+
+namedFragment = movie.getMediaProperty(["namedFragment"]);
+
+/** Resulting in:
+ * [ { "NamedFragment" : {
+ *         "propertyName" : "namedFragment",
+ *         "identifier" : "http://www.example.com/video.ogv#t=30,35",
+ *         "label" : "kissScene",
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+
+4.5.8 Technical Properties
+
+
+
+
+4.5.8.1 FrameSize
+
+
+When the MediaResource.getMediaProperty operation is invoked with "frameSize" as a value of the propertyNames parameter, an object implementing the FrameSize interface is returned representing the
+frameSize property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface FrameSize : MediaAnnotation {
+    attribute double    width;
+    attribute double    height;
+    attribute DOMString unit;
+};
+
+
+
+4.5.8.1.1 Attributes
+
+
+height of type double
+        This attribute represents the height of the frame.
+        No exceptions.
+
+unit of type DOMString
+        This attribute represents the unit of the frame width/height. The default value is pixels.
+        No exceptions.
+
+width of type double
+        This attribute represents the width of the frame.
+        No exceptions.
+
+
+
+
+4.5.8.1.2 Example in Javascript
+
+
+frameSize = image.getMediaProperty(["frameSize"]);
+
+/** Resulting in:
+ * [ { "FrameSize" : {
+ *         "propertyName" : "framesize",
+ *         "width" : 3072,
+ *         "height" : 2304,
+ *         "unit" : "pixels",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.8.2 Compression
+
+
+When the MediaResource.getMediaProperty operation is invoked with "compression" as a value of the propertyNames parameter, an object implementing the Compression interface is returned representing
+the compression property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface FrameSize : MediaAnnotation {
+    attribute DOMString compressionLink;
+    attribute DOMString compressionLabel;
+};
+
+
+
+4.5.8.2.1 Attributes
+
+
+compressionLabel of type DOMString
+        This attribute specifies the compression type of the media resource as a plain string.
+        No exceptions.
+
+compressionLink of type DOMString
+        This attribute specifies the compression type of the media resource by a URI.
+        No exceptions.
+
+
+
+
+4.5.8.2.2 Example in Javascript
+
+
+compression = video.getMediaProperty(["compression"]);
+
+/** Resulting in:
+ * [ { "Compression" : {
+ *         "propertyName" : "compression",
+ *         "compressionLabel" : "H.264/AVC",
+ *         "compressionLink" : "urn:example-org:codingnames2010#ITU-H264",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.8.3 Duration
+
+
+When the MediaResource.getMediaProperty operation is invoked with "duration" as a value of the propertyNames parameter, an object implementing the Duration interface is returned representing the
+duration property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Duration : MediaAnnotation {
+    attribute double duration;
+};
+
+
+
+4.5.8.3.1 Attributes
+
+
+duration of type double
+        This attribute represents the duration of the media resource (in seconds) as an double value.
+        No exceptions.
+
+
+
+
+4.5.8.3.2 Example in Javascript
+
+
+duration = video.getMediaProperty(["duration"]);
+                    
+/** Resulting in:
+ * [ { "Duration" : {
+ *         "propertyName" : "duration",
+ *         "duration" : 3600,                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.8.4 Format
+
+
+When the MediaResource.getMediaProperty operation is invoked with "format" as a value of the propertyNames parameter, an object implementing the Format interface is returned representing the format
+property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface Format : MediaAnnotation {
+    attribute DOMString formatLink;
+    attribute DOMString formatLabel;
+};
+
+
+
+4.5.8.4.1 Attributes
+
+
+formatLabel of type DOMString
+        This attribute specifies the MIME type of the media resource.
+        No exceptions.
+
+formatLink of type DOMString
+        This attribute identifies the MIME type of the media resource by a URI.
+        No exceptions.
+
+
+
+
+4.5.8.4.2 Example in Javascript
+
+
+format = image.getMediaProperty(["format"]);
+
+/** Resulting in:
+ * [ { "Format" : {
+ *         "propertyName" : "format",
+ *         "formatLabel" : "image/jpeg",
+ *         "formatLink" : "http://dbpedia.org/resource/JPEG",                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.8.5 SamplingRate
+
+
+When the MediaResource.getMediaProperty operation is invoked with "samplingRate" as a value of the propertyNames parameter, an object implementing the SamplingRate interface is returned representing
+the samplingRate property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface SamplingRate : MediaAnnotation {
+    attribute double samplingRate;
+};
+
+
+
+4.5.8.5.1 Attributes
+
+
+samplingRate of type double
+        This attribute specifies the audio sampling rate (in Hz) as a double.
+        No exceptions.
+
+
+
+
+4.5.8.5.2 Example in Javascript
+
+
+samplingrate = audio.getMediaProperty(["samplingRate"]);
+
+/** Resulting in:
+ * [ { "SamplingRate" : {
+ *         "propertyName" : "samplingRate",
+ *         "samplingRate" : 44100,                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.8.6 FrameRate
+
+
+When the MediaResource.getMediaProperty operation is invoked with "frameRate" as a value of the propertyNames parameter, an object implementing the FrameRate interface is returned representing the
+frameRate property (defined inthe Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface FrameRate : MediaAnnotation {
+    attribute double frameRate;
+};
+
+
+
+4.5.8.6.1 Attributes
+
+
+frameRate of type double
+        This attribute specifies the framerate (in fps) as a double value.
+        No exceptions.
+
+
+
+
+4.5.8.6.2 Example in Javascript
+
+
+framerate = video.getMediaProperty(["frameRate"]);
+
+/** Resulting in:
+ * [ { "FrameRate" : {
+ *         "propertyName" : "frameRate",
+ *         "frameRate" : 30,                    
+ *         "statusCode" : 200
+ *         } 
+ * } ]
+ */
+
+
+
+
+
+4.5.8.7 AverageBitRate
+
+
+When the MediaResource.getMediaProperty operation is invoked with "averageBitRate" as a value of the propertyNames parameter, an object implementing the AverageBitRate interface is returned
+representing the averageBitRate property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface AverageBitRate : MediaAnnotation {
+    attribute double averageBitRate;
+};
+
+
+
+4.5.8.7.1 Attributes
+
+
+averageBitRate of type double
+        This attribute specifies the average bitrate (in kbps) as a double value.
+        No exceptions.
+
+
+
+
+4.5.8.7.2 Example in Javascript
+
+
+bitrate = video.getMediaProperty(["averageBitRate"]);
+
+/** Resulting in:
+ * [ { "AverageBitRate" : {
+ *         "propertyName" : "averageBitRate",
+ *         "averageBitRate" : 45.06,                    
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+4.5.8.8 NumTracks
+
+
+When the MediaResource.getMediaProperty operation is invoked with "numTracks" as a value of the propertyNames parameter, an object implementing the NumTracks interface is returned representing the
+numTracks property (defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+interface NumTracks : MediaAnnotation {
+    attribute short     number;
+    attribute DOMString typeString;
+};
+
+
+
+4.5.8.8.1 Attributes
+
+
+number of type short
+        This attribute specifies the number of tracks as an integer value.
+        No exceptions.
+
+typeString of type DOMString
+        This attribute specifies the type of the tracks that are counted as a plain string (e.g., audio, subtitle).
+        No exceptions.
+
+
+
+
+4.5.8.8.2 Example in Javascript
+
+
+numTracks = video.getMediaProperty(["numTracks"]);
+
+/** Resulting in:
+ * [ { "NumTracks" : {
+ *         "propertyName" : "numTracks",
+ *         "number" : 2,
+ *         "typeString" : "audio",                    
+ *         "statusCode" : 200
+ *         }
+ * } ]
+ */
+
+
+
+
+
+
+
+4.6 MetadataSource interface
+
+
+MetadataSource interface is used to identify other metadata sources.
+
+interface MetadataSource {
+    attribute DOMString metadataSource;
+    attribute DOMString sourceFormat;
+};
+
+
+
+4.6.1 Attributes
+
+
+metadataSource of type DOMString
+        An URI identifying the metadata source.
+        No exceptions.
+
+sourceFormat of type DOMString
+        The name of the actual metadata format. It should use the metadata format identifiers defined in the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY].
+        No exceptions.
+
+
+
+
+4.6.2 Examples in Javascript
+
+
+metadataSource = new MetadataSource("http://www.w3.org/2008/WebVideo/Annotations/drafts/metadata_formats/DC_example1.xml","dc");
+
+
+
+
+
+4.7 API Status Codes
+
+
+This section introduces a set of status codes for the defined API to indicate the system behavior. As described in section 4.4, the status code is returned as one of the attributes of the
+MediaAnnotation object returned by a method call to the API. These status codes are used on the API level, and applied to either client side or server side implementations.
+
+Numerical Code Textual Description Example
+200 OK property delivered correctly
+204 No Content property retrieved without content
+206 Partial Content only a subset of the available data stored in the result set
+400 Bad Request syntactical error
+404 Not Found the queries resource is not found
+415 Unsupported Media Type get duration call on an image data store
+462 Property not defined in Source Format location is not defined in MediaRSS
+500 Internal Server Error internal library (e.g., extractor) crashes
+562 Property not supported a subset of properties implemented
+
+
+
+
+
+5. Usage examples
+
+
+
+
+5.1 Usage as JavaScript API
+
+
+This part illustrates some examples how to use this API using JavaScript in actual implementations. Moreover, in these examples it is assumed that the implementation of this API knows where to find
+the metadata that corresponds to a specific media resource (if necessary the location of the metadata can be configured by the use of the MetadataSource interface). The implementation should provide
+the mappings of different metadata formats to the core properties of the Ontology for Media Resources 1.0 specification [MEDIA-ONTOLOGY]).
+
+Example 1: Return the name of the director of the movie "Apocalypse now".
+
+//search the video array for the one with title "Apocalypse now" 
+for (var i = 0; i < mediaResourceVideoArray.length; i++) { 
+
+    //request for the titles of the video, the variable "titles"
+    //will be filled with an array of MediaAnnotation objects. 
+    titles = mediaResourceVideoArray[i].getMediaProperty(["title"], "", "", ""); 
+    
+    //check if the request is finished correctly
+    if (noErrorStatus(titles[0].statusCode) == true) {
+
+        for (var j = 0; j < titles.length; j++) { 
+
+            //check if the title matches 
+            if (titles[j].titleLabel == "Apocalypse Now") {
+
+                //request for the director of the video, the variable "results" 
+                //will be filled with an array of MediaAnnotation objects. 
+                tempResults = mediaResourceVideoArray[i].getMediaProperty(["contributor"], "", "", "");
+
+                for (var k = 0; k < tempResults.length; k++) {
+                    if (tempResults[i].roleLabel == "director") {
+                        result = tempResults[i];
+                        break;
+                    }
+                }  
+            } 
+        } 
+    }
+}
+
+/** Resulting in:
+ * [ { "Contributor" : {
+ *         "propertyName" : "contributor",
+ *         "value" : "Francis Ford Coppola",
+ *         ...,                    
+ *         "statusCode" = 200
+ *         }
+ * } ]
+ */ 
+
+Example 2: Retrieve the title of the second song from the album "Joshua Tree" by U2.
+
+//get the id of the second song using the fragments property 
+tracks = albumMediaResource.getMediaProperty(["fragment"], "", "", "");
+trackIdentifier = tracks[1].identifier; 
+
+//use this identifier to get the mediaResource object that represents the track 
+mediaResource = new MediaResource(); 
+if (mediaResource.getSupportedModes() == 2 || mediaResource.getSupportedModes() == 3) {
+    syncMediaResource = mediaResource.createMediaResource(trackIdentifier, new Array(), 2);
+}
+
+//get the title of the track 
+title = syncMediaResource.getMediaProperty(["title"], "", "", "");
+
+/** Resulting in:
+ * [ { "Title" : {
+ *         "propertyName" : "title",
+ *         "value" : "I Still Haven't Found What I'm Looking For",
+ *         ...,                    
+ *         "statusCode" = 200          
+ *         } 
+ * } ]
+ */
+
+Example 3: Return the genre of the movie "Apocalypse Now".
+
+genre = movie.getMediaProperty(["genre"], "", "", "en-us"); 
+
+/** Resulting in: 
+ * [ { "Genre" : {
+ *         "propertyName" : "genre",
+ *         "value" : "Action",
+ *         ...,                    
+ *         "statusCode" = 200
+ *         }
+ * },
+ * { "Genre" : {
+ *         "propertyName" : "genre",
+ *         "value" : "Drama",
+ *         ...,                    
+ *         "statusCode" = 200
+ *         }
+ * },
+ * { ...
+ *  } ]
+ */
+
+
+
+
+5.2 Usage as Web Service
+
+
+This part illustrates how this API could be implemented using web services. Note that Web IDL currently does not provide bindings for web services. The given examples correspond to the examples
+given in Section 4.5 for each property.
+
+* Request: http://example.com/my-media-resource/?getOriginalMetadata=DC
+
+  o Response (JSON format):
+
+[ { "statusCode" : "200" },
+  {"originalMetadata" : "<?xml version='1.0'?><metadata
+                         xmlns='http://example.org/myapp/' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+                         xsi:schemaLocation='http://example.org/myapp/ http://example.org/myapp/schema.xsd'
+                         xmlns:dc='http://purl.org/dc/elements/1.1/'><dc:title>DC title</dc:title></metadata>"}
+]
+
+
+
+The following examples illustrate how to request values for the different properties.
+
+* Request: http://example.com/my-media-resource/?ma-query=identifier
+
+  o Response (JSON format):
+
+[ { "Identifier" : {
+        "propertyName" : "identifier",
+        "identifierLink" : "urn:uuid:36a87260-1102-11df-8a39-0800200c9a66",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=title
+
+  o Response (JSON format):
+
+[ { "Title" : {
+        "propertyName" : "title",
+        "value" : "Artificial Horizon",
+        "typeLink" : "http://www.ebu.ch/metadata/cs/ebu_ObjectTypeCodeCS.xml#21",
+        "typeLabel" : "Album title",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=language
+
+  o Response (JSON format):
+
+[ { "Language" : {
+        "propertyName" : "language",
+        "languageLabel" : "en-us",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=locator
+
+  o Response (JSON format):
+
+[ { "Locator" : {
+        "propertyName" : "locator",
+        "locatorLink" : "http://www.w3.org/2008/WebVideo/Annotations/wiki/images/9/93/MAWG-Stockholm-20090626.JPG",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=contributor
+
+  o Response (JSON format):
+
+[ { "Contributor" : {
+        "propertyName" : "contributor",
+        "contributorLink" : "http://en.wikipedia.org/wiki/Tim_Burton",
+        "contributorLabel" : "Tim Burton",
+        "roleLink" : "http://www.imdb.com/name/nm0000318/",
+        "roleLabel" : "director",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=creator
+
+  o Response (JSON format):
+
+[ { "Creator" : {
+        "propertyName" : "creator",
+        "creatorLink" : "http://dbpedia.org/resource/William_Shakespeare",
+        "creatorLabel" : "William Shakespeare",
+        "roleLink" : "http://www.ebu.ch/metadata/cs/ebu_RoleCodeCS.xml#22.5",
+        "roleLabel" : "playwright",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=date
+
+  o Response (JSON format):
+
+[ { "MADate" : {
+        "propertyName" : "date",
+        "date": "2009-06-26T15:30:00",
+        "typeLink" : "urn:smpte:ul:06.0E.2B.34.01.01.01.02.07.02.01.10.02.03.00.00",
+        "typeLabel" : "modification date",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=location
+
+  o Response (JSON format):
+
+[ { "Location" : {
+        "propertyName" : "location",
+        "locationLink" : "http://en.wikipedia.org/wiki/San_Jose,_California",
+        "locationLabel" : "San Jose",
+        "longitude" : 37.33986481118008,
+        "latitude" : -121.88507080078125,
+        "altitude" : 0,
+        "coordinateSystemLabel" : "WGS84",
+        "coordinateSystemLink" : "http://www.w3.org/2003/01/geo/wgs84_pos#Point",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=description
+
+  o Response (JSON format):
+
+[ { "Description" : {
+        "propertyName" : "description",
+        "descriptionLabel" : "Group picture of the W3C MAWG at the F2F meeting in Stockholm.",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=keyword
+
+  o Response (JSON format):
+
+[ { "Keyword" : {
+        "propertyName" : "keyword",
+        "keywordLabel" : "meeting with people from outside the organisation",
+        "keywordLink" : "http://sw.opencyc.org/2008/06/10/concept/en/MeetingWithOrganizationalOutsiders",
+        "statusCode" : 200
+        }
+},
+{ "Keyword" : {
+        "propertyName" : "keyword",
+        "keywordLabel" : "standardisation",
+        "keywordLink" : "http://purl.org/vocabularies/princeton/wn30/synset-standardization-noun-1",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=genre
+
+  o Response (JSON format):
+
+[ { "Genre" : {
+        "propertyName" : "genre",
+        "genreLabel" : "Sports",
+        "genreLink" : "http://www.ebu.ch/metadata/cs/ebu_ContentGenreCS.xml#3.1.1.9",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=rating
+
+  o Response (JSON format):
+
+[ { "Rating" : {
+        "propertyName" : "rating",
+        "ratingValue" : 10.0,
+        "ratingSystemLabel" : "John Doe",
+        "ratingSystemLink" : "http://individuals.example.com/JohnDoe",
+        "minimum" : 0,
+        "maximum" : 10.0,
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=relation
+
+  o Response (JSON format):
+
+[ { "Relation" : {
+        "propertyName" : "relation",
+        "targetLink" : "http://www.w3.org/2008/WebVideo/Annotations/wiki/Image:MAWG-Stockholm-20090626_thumb.JPG",
+        "targetLabel" : "Group picture of MAWG in Stockholm",
+        "typeLink" : "http://www.ebu.ch/metadata/cs/ebu_HowRelatedCS.xml#19",
+        "typeLabel" : "thumbnail",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=collection
+
+  o Response (JSON format):
+
+[ { "Collection" : {
+        "propertyName" : "collection",
+        "collectionLink" : "http://individuals.example.com/JohnDoe/myWorkPictures/",
+        "collectionLabel" : "My Work Pictures",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=copyright
+
+  o Response (JSON format):
+
+[ { "Copyright" : {
+        "propertyName" : "copyright",
+        "copyrightLabel" : "All images in the collection are copyrighted by John Doe.",
+        "holderLabel" : "John Doe",
+        "holderLink" : "http://individuals.example.com/JohnDoe",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=policy
+
+  o Response (JSON format):
+
+[ { "Policy" : {
+        "propertyName" : "policy",
+        "statementLink" : "http://creativecommons.org/licenses/by/2.5/",
+        "statementLabel" : "Attribution 2.5 Generic (CC BY 2.5)",
+        "typeLabel" : "license",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=publisher
+
+  o Response (JSON format):
+
+[ { "Publisher" : {
+        "propertyName" : "publisher",
+        "publisherLabel" : "ACME",
+        "publisherLink" : "http://company.example.com/ACME",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=targetAudience
+
+  o Response (JSON format):
+
+[ { "TargetAudience" : {
+        "propertyName" : "targetAudience",
+        "audienceLink" : "http://www.mpaa.org/ratings/what-each-rating-means#NC-17",
+        "audienceLabel" : "No One 17 and Under Admitted",
+        "classificationSystemLink" : "http://www.mpaa.org/ratings",
+        "classificationSystemLabel" : "MPAA",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=fragment
+
+  o Response (JSON format):
+
+[ { "Fragment" : {
+        "propertyName" : "fragment",
+        "identifier" : "http://www.example.com/video.ogv#t=10,20",
+        "roleLabel" : "chapter",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=namedFragment
+
+  o Response (JSON format):
+
+[ { "NamedFragment" : {
+        "propertyName" : "namedFragment",
+        "label" : "kissScene",
+        "identifier" : "http://www.example.com/video.ogv#t=30,35",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=frameSize
+
+  o Response (JSON format):
+
+[ { "FrameSize" : {
+        "propertyName" : "framesize",
+        "width" : 3072,
+        "height" : 2304,
+        "unit" : "pixels",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=compression
+
+  o Response (JSON format):
+
+[ { "Compression" : {
+        "propertyName" : "compression",
+        "compressionLabel" : "H.264/AVC",
+        "urn:example-org:codingnames2010#ITU-H264",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=duration
+
+  o Response (JSON format):
+
+[ { "Duration" : {
+        "propertyName" : "duration",
+        "duration" : 3600,
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=format
+
+  o Response (JSON format):
+
+[ { "Format" : {
+        "propertyName" : "format",
+        "formatLabel" : "image/jpeg",
+        "formatLink" : "http://dbpedia.org/resource/JPEG",
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=samplingRate
+
+  o Response (JSON format):
+
+[ { "SamplingRate" : {
+        "propertyName" : "samplingRate",
+        "samplingRate" : 44100,
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=frameRate
+
+  o Response (JSON format):
+
+[ { "FrameRate" : {
+        "propertyName" : "frameRate",
+        "frameRate" : 30,
+        "statusCode" : 200
+        }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=averageBitRate
+
+  o Response (JSON format):
+
+[ { "AverageBitRate" : {
+         "propertyName" : "averageBitRate",
+         "averageBitRate" : 45.06,
+         "statusCode" : 200
+         }
+} ]
+
+
+* Request: http://example.com/my-media-resource/?ma-query=numTracks
+
+  o Response (JSON format):
+
+[ { "NumTracks" : {
+         "propertyName" : "numTracks",
+         "number" : 2,
+         "typeString" : "audio",
+         "statusCode" : 200
+         }
+} ]
+
+
+
+
+
+
+
+6. Implementation Notes
+
+
+
+This section contains recommendations for implementators for handling missing or multiple identifiers of media resources/fragments as well as for interoperability of implementations.
+
+
+6.1 Multiple identifiers of media resources or fragments
+
+
+In some source formats, it could be possible to identify the resource or one of its fragments in multiple ways, e.g. by one or more identifiers, fragment name or temporal/spatial fragment URIs. For
+example, there could be a temporal media fragment, which can be addressed by the time range, that also has an assigned ID.
+
+In the RDF representation of the Ontology for Media Resources, this can be represented (as recommended in the guidelines) by using owl:sameAs. To ensure a similar behaviour in the API, an
+implementation should return all such identifiers in a response. If queries to properties of a fragment with multiple identifiers are made, the implementation should accept each of the alternative
+identifiers and return the same response for each of them.
+
+
+6.2 Missing fragment identifiers
+
+
+There are source formats, which may contain metadata about a fragment (e.g. a track) without specifying any kind of identifier for it. For the RDF representation this is not a problem, as blank
+nodes can be used. In an API implementation, a client requesting the list of fragments cannot query properties of a fragment in case there is no identifier.
+
+An implementation should generate an identifier for the fragment in such a case and should ensure that it is valid for a sufficiently long time so that the client can use it in subsequent queries to
+properties of fragments. The identifier is not guaranteed to remain permanently valid.
+
+This can be implemented in different ways, including the following:
+
+* In a session-aware environment (e.g., in the user agent, in a web service environment with session handling), the identifier could be bound to the session and remain valid at least for the
+  duration of the session.
+* In a stateless environment, the identifier could be the same for all clients and remain valid a defined time after it has been last used (i.e., part of a query or response).
+* The identifier could be defined to be unique and permanent. In that case the implementation has to manage the assignment of identifiers to metadata sources.
+
+
+6.3 Interoperability of Implementations
+
+
+The API can be implemented in two different modes. The asynchronous mode is mandatory while the synchrounous one is optional. In this context, interoperability between these modes would be a desired
+feature in order to provide both processing modes based on the implementation of one mode only.
+
+An implementation of the optional synchronous mode of the API (e.g. in a Web Service) is turned into the mandatory asynchronous communication by a wrapper. Therefore the required wrapper
+functionality is implemented in JavaScript using the Web Workers specification [WEBWORKERS] processing non-blocking scripts. A demo of the wrapper code can be downloaded from [MAWG-REPO]. First, the
+existing operations of the MediaResource interface are adapted in order to support the synchronous as well as asynchronous mode (mawg_api.js). Then, the implementation of the AsyncMediaResource
+interface wrapping the synchronous communication is added. Therefore, the two operations of the AsyncMediaResource interface (getMediaProperty and getOriginalMetadata) refer to the corresponding
+synchronous calls by Web Workers (media_property_worker.js, media_property_worker.js). Finally, the result of the synchronous communication is pushed forward to the synchronous operation by invoking
+a callback function.
+
+Wrapping an asynchronous implementation by an synchronous call is infeasible in JavaScript since threads cannot be suspended and interact with concurrent ones. Nonetheless, another programming
+language (e.g. Java), can be used to warp asynchronous API calls in web service calls.
+
+
+
+7. Security Considerations
+
+
+This specification defines a API to access metadata information related to media resources on the Web. These APIs will provide means for requesting metadata information, which can already be
+accessed in one or different formats, either as separate document or embedded in media resources. As such, this API introduces no additional security issue.
+
+One should nevertheless note that some metadata could be used to access personal information about someone without declaration of agreement. For example, temporal and geographic information about a
+media resource could indirectly provide information about its creator.
+
+There are related activities and technical documents in W3C working on this topics, such as Policy Requirements [POLICY-REQS] in DAP WG, ODRL 1.1 [ODRL11], P3P 1.1 [P3P11] and PLING Wiki
+[PLING-WIKI].
+
+
+
+
+A. Web IDL description
+
+
+Follow this link to download the WebIDL description as IDL file.
+
+interface MediaResource {
+    short getSupportedModes();
+    MediaResource createMediaResource(DOMString mediaResource,
+                optional MetadataSource[] metadataSources, optional short mode);
+};
+
+interface AsyncMediaResource : MediaResource {
+    void getMediaProperty(DOMString[] propertyNames, PropertyCallback successCallback, ErrorCallback errorCallback,
+                optional DOMString fragment, optional DOMString sourceFormat, optional DOMString language );
+    void getOriginalMetadata (DOMString sourceFormat, MetadataCallback successCallback, ErrorCallback errorCallback);
+};
+
+interface PropertyCallback {
+    void handleEvent (MediaAnnotation[] mediaAnnotations);
+};
+
+interface MetadataCallback {
+   void handleEvent (DOMString[] metadata);
+};
+
+interface ErrorCallback {
+   void handleEvent (DOMString errorStatus);
+};
+
+interface SyncMediaResource : MediaResource {
+    MediaAnnotation[] getMediaProperty(DOMString[] propertyNames,
+                   optional DOMString fragment, optional DOMString sourceFormat,
+                   optional DOMString language);
+    DOMString[] getOriginalMetadata (DOMString sourceFormat);
+};
+
+interface MetadataSource {
+   attribute DOMString metadataSource;
+   attribute DOMString sourceFormat;
+};
+
+interface MediaAnnotation {
+   attribute DOMString propertyName;
+   attribute DOMString value;
+   attribute DOMString language;
+   attribute DOMString sourceFormat;
+   attribute DOMString fragmentIdentifier;
+   attribute DOMString mappingType;
+   attribute short     statusCode;
+};
+
+interface Identifier : MediaAnnotation {
+   attribute DOMString identifierLink;
+};
+
+interface Title : MediaAnnotation {
+   attribute DOMString titleLabel;
+   attribute DOMString typeLink;
+   attribute DOMString typeLabel;
+};
+
+interface Language : MediaAnnotation {
+   attribute DOMString languageLink;
+   attribute DOMString languageLabel;
+};  
+
+interface Locator : MediaAnnotation {
+   attribute DOMString locatorLink;
+};
+
+interface Contributor : MediaAnnotation {
+   attribute DOMString contributorLink;
+   attribute DOMString contributorLabel;
+   attribute DOMString roleLink;
+   attribute DOMString roleLabel;
+};
+
+interface Creator : MediaAnnotation {
+   attribute DOMString creatorLink;
+   attribute DOMString creatorLabel;
+   attribute DOMString roleLink;
+   attribute DOMString roleLabel;
+};
+
+interface MADate : MediaAnnotation {
+   attribute DOMString date; 
+   attribute DOMString typeLink;
+   attribute DOMString typeLabel;
+};
+
+interface Location : MediaAnnotation {
+   attribute DOMString locationLink;
+   attribute DOMString locationLabel;
+   attribute double    longitude;
+   attribute double    latitude;
+   attribute double    altitude;
+   attribute DOMString coordinateSystemLabel;
+   attribute DOMString coordinateSystemLink;
+};
+
+interface Description : MediaAnnotation {
+   attribute DOMString descriptionLabel;
+};
+
+interface Keyword : MediaAnnotation {
+   attribute DOMString keywordLink;
+   attribute DOMString keywordLabel;
+};
+
+interface Genre : MediaAnnotation {
+   attribute DOMString genreLink;
+   attribute DOMString genreLabel;
+};
+
+interface Rating : MediaAnnotation {
+   attribute double ratingValue;
+   attribute DOMString ratingSystemLink;
+   attribute DOMString ratingSystemLabel;
+   attribute double    min;
+   attribute double    max; 
+};
+
+interface Relation : MediaAnnotation {
+   attribute DOMString targetLink;
+   attribute DOMString targetLabel;
+   attribute DOMString typeLink;
+   attribute DOMString typeLabel;
+};
+
+interface Collection : MediaAnnotation {
+    attribute DOMString collectionLink;
+    attribute DOMString collectionLabel;
+};
+
+interface Copyright : MediaAnnotation {
+   attribute DOMString copyrightLabel;
+   attribute DOMString holderLink;
+   attribute DOMString holderLabel;
+};
+
+interface Policy : MediaAnnotation {
+   attribute DOMString statementLink;
+   attribute DOMString statementLabel;
+   attribute DOMString typeLink;
+   attribute DOMString typeLabel;
+};
+
+interface Publisher : MediaAnnotation {
+   attribute DOMString publisherLink;
+   attribute DOMString publisherLabel;
+};
+
+interface TargetAudience : MediaAnnotation {
+   attribute DOMString audienceLink;
+   attribute DOMString audienceLabel;
+   attribute DOMString classificationSystemLink;
+   attribute DOMString classificationSystemLabel;
+};
+
+interface Fragment : MediaAnnotation {
+   attribute DOMString identifier;
+   attribute DOMString roleLink;
+   attribute DOMString roleLabel;
+};
+
+interface NamedFragment : MediaAnnotation {
+   attribute DOMString identifier;
+   attribute DOMString label;
+};
+
+interface FrameSize : MediaAnnotation {
+   attribute double width;
+   attribute double height;
+   attribute DOMString unit;
+};
+
+interface Compression : MediaAnnotation {
+    attribute DOMString compressionLink;
+    attribute DOMString compressionLabel;
+};
+
+interface Duration : MediaAnnotation {
+    attribute double duration;
+};
+
+interface Format : MediaAnnotation {
+    attribute DOMString formatLink;
+    attribute DOMString formatLabel;
+};
+
+interface SamplingRate : MediaAnnotation {
+    attribute double samplingRate;
+};
+
+interface FrameRate : MediaAnnotation {
+   attribute double frameRate;
+}; 
+
+interface AverageBitRate : MediaAnnotation {
+   attribute double averageBitRate;
+};
+
+interface NumTracks : MediaAnnotation {
+    attribute short  number;
+    attribute DOMString typeString;
+};   
+
+
+
+
+
+B. Acknowledgements
+
+
+This document is the work of the W3C Media Annotations Working Group.
+
+Members of the Working Group are (at the time of writing, and by alphabetical order): Werner Bailer (JOANNEUM RESEARCH), Tobias Bürger ((public) Invited expert), Eric Carlson (Apple, Inc.),
+Pierre-Antoine Champin (Université de Lyon), Ashish Chawla ((public) Invited expert), Jaime Delgado (Universitat Politècnica de Catalunya), Jean-Pierre Evain ((public) Invited expert), Martin
+Höffernig (JOANNEUM RESEARCH), Philip Jägenstedt (Opera Software), Ralf Klamma ((public) Invited expert), WonSuk Lee (Samsung Electronics Co., Ltd.), Véronique Malaisé (Vrije Universiteit), Erik
+Mannens (IBBT), Hui Miao (Samsung Electronics Co., Ltd.), Thierry Michel (W3C/ERCIM), Frank Nack (University of Amsterdam), Soohong Daniel Park (Samsung Electronics Co., Ltd.), Silvia Pfeiffer (W3C
+Invited Experts), Chris Poppe (IBBT), Victor Rodríguez (Universitat Politècnica de Catalunya), Felix Sasaki (Potsdam University of Applied Sciences), David Singer (Apple, Inc.), Florian Stegmaier
+((public) Invited expert), John Strassner ((public) Invited expert), Joakim Söderberg (ERICSSON), Mari Carmen Suárez-Figueroa ((public) Invited expert) Thai Wey Then (Apple, Inc.), Ruben Tous
+(Universitat Politècnica de Catalunya), Raphaël Troncy (EURECOM), Vassilis Tzouvaras (K-Space), Davy Van Deursen (IBBT).
+
+The people who have contributed to discussions on public-media-annotation@w3.org are also gratefully acknowledged.
+
+
+
+
+C. References
+
+
+
+
+C.1 Normative references
+
+
+[MEDIA-FRAGMENTS]
+        Raphael Troncy; Erik Mannens; Silvia Pfeiffer and Davy Van Deursen. Media Fragments URI 1.0. W3C Recommendation 25 September 2012. URL: http://www.w3.org/TR/2012/REC-media-frags-20120925/
+[MEDIA-ONTOLOGY]
+        WonSuk Lee; Werner Bailer; Tobias Bürger, et al. Media Fragments URI 1.0. W3C Recommendation 09 February 2012. URL: http://www.w3.org/TR/2012/REC-mediaont-10-20120209/
+[RFC2119]
+        S. Bradner. Key words for use in RFCs to Indicate Requirement Levels. March 1997. Internet RFC 2119. URL: http://www.ietf.org/rfc/rfc2119.txt
+[WEBIDL]
+        Cameron McCormack. Web IDL, 19 April 2012. W3C Candidate Recommendation. (Work in progress.) URL: http://www.w3.org/TR/2012/CR-WebIDL-20120419/
+
+
+
+C.2 Informative references
+
+
+[BCP47]
+        A. Phillips; M. Davis. Tags for Identifying Languages September 2009. IETF Best Current Practice. URL: http://tools.ietf.org/html/bcp47
+[MAWG-REPO]
+        MAWG code repository. URL: http://sourceforge.net/projects/mawg
+[MEDIA-ANNOT-REQS]
+        WonSuk Lee; Felix Sasaki; Tobias Bürger; Véronique Malaisé. Use Cases and Requirements for Ontology and Metadata API for Media Object 1.0.W3C Working Draft 21 January 2010. URL:
+        http://www.w3.org/TR/2010/WD-media-annot-reqs-20100121/
+[ODRL11]
+        Renato Iannella. Open Digital Rights Language (ODRL) Version 1.1. W3C Note. 19 September 2002. URL: http://www.w3.org/TR/odrl
+[P3P11]
+        Matthias Schunter; Rigo Wenning. The Platform for Privacy Preferences 1.1 (P3P1.1) Specification. 13 November 2006. W3C Note. URL: http://www.w3.org/TR/2006/NOTE-P3P11-20061113
+[PLING-WIKI]
+        Policy Languages Interest Group (PLING). PLING Wiki. URL: http://www.w3.org/Policy/pling/
+[POLICY-REQS]
+        Laura Arribas; Paddy Byers; Marcin Hanclik; Frederick Hirsch; David Rogers. Device API Access Control Use Cases and Requirements 17 March 2011. W3C Working Group Note. URL:
+        http://www.w3.org/TR/2011/NOTE-dap-policy-reqs-20110317/
+[WEBWORKERS]
+        Ian Hickson. Web Workers 01 May 2012. W3C Candidate Recommendation. URL: http://www.w3.org/TR/workers/
+
+
+
+

@@ -1,0 +1,179 @@
+Web and TV - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Web of Devices
+
+
+* Voice Browsing
+* Device Independence and Content Adaptation
+* Multimodal Access
+* Web and TV
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web&#xA0;of&#xA0;Devices » 
+* Web and TV
+
+
+
+
+Web and TV
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;web&#xA0;and&#xA0;tv &#x2022;
+* what&#xA0;are&#xA0;w3c's&#xA0;plans&#xA0;in&#xA0;2011 &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups &#x2022;
+* contact
+
+
+
+
+
+
+TV is a mature but rapidly-changing market. With the advent of IP-based devices, connected TVs are progressing at a fast pace and traditional TV broadcasting is quickly evolving into a more
+immersive experience where users can interact with rich applications that are at least partly based on Web technologies. There is strong growth in the deployment of devices that integrate regular
+Web technologies such as HTML, CSS, and SVG, coupled with various device APIs.
+
+
+What is Web and Television?
+
+
+There is huge potential for the future to create an interoperable platform where Web and TV benefit from each other. For instance, TV comes with quality of services requirements for video delivery
+that would benefit video delivery on the Web, e.g. through the introduction of HTTP adaptive streaming mechanisms. Similarly, exposing additional functionalities to the Web browser that are commonly
+found on TV such as trick mode replay (fast rewind, fast forward) or channel control would facilitate the integration of Web browsers within TV sets.
+
+Due to its central position as a home device, TV is the primary screen for many second-screen scenarios, whereby a second device (laptop, mobile phone) interacts with the TV set to enlarge the
+possibilities in terms of user interactions with the show that the user watches. This includes gaming, shopping, or synchronized browsing scenarios.
+
+See also previous work at W3C on Web and TV, between 1998 and 2002.
+
+
+Learn More
+
+
+The Web and TV Interest Group will discuss and document findings and useful material on his home page.
+
+The pages of the Web and TV Tokyo workshop and of the Web and TV Berlin workshop reference various proposals and discussions on potential Web and TV standardization needs.
+
+
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to Web and TV:
+
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Cascading Style Sheets (CSS) Working Group
+* Device APIs Working Group
+* Web and TV Interest Group
+
+
+
+
+Contacts
+
+
+Kazuyuki Ashimura <ashimura@w3.org>
+
+Daniel Davis <ddavis@w3.org>
+
+
+
+
+
+
+Current Status
+
+
+* Web and TV
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

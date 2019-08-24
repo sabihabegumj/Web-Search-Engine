@@ -1,0 +1,211 @@
+Components - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+XML Technology
+
+
+* Publishing
+* Processing
+* Components
+* Query
+* Transformation
+* Security
+* Schema
+* XML Essentials
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* XML&#xA0;Technology » 
+* Components
+
+
+
+
+Components
+
+
+* On this page &#x2192;
+* Overview of XML Components &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+Although the Extensible Markup Language (XML) itself has a very short specification for such an important format, there are a lot of specifications in and around XML that are considered very
+important.
+
+
+Overview of XML Components
+
+
+XML Base
+        Override the default URI of a document or any part of a document starting at a given element;
+Stylesheets in XML
+        Associate an XSLT transformation with an XML document, for example so that a Web browser will format it;
+XLink
+        A vocabulary for hypertext in XML;
+xml:id
+        Identify an XML attribute or element as containing a name that can be used as a unique identifier within a document;
+XInclude
+        Include all or part of other text or XML documents, or duplicate part of the current XML document;
+XPointer
+        This is a framework for different ways to point into XML documents, and is used by XLink;
+XForms
+        A more powerful cousin to HTML forms;
+XML Events, XHTML Modularization
+        Specifications primarily relating to the use of XML in Web browsers or other DOM-based systems;
+XML Fragments
+        Listed here only for completeness; this specification is not in widespread use.
+
+
+
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* XML Base
+* Stylesheets in XML
+* XLink
+* xml:id
+* XInclude
+* XPointer
+* XForms
+* XHTML Modularization
+* XML Events
+* XML Fragments
+
+
+These W3C Groups are working on some related specifications:
+
+
+* Forms Working Group
+* Internationalization Working Group
+* SVG Working Group
+* XML Core Working Group
+
+
+========================================================================================================================================================================================================
+
+Contact: Liam R. E. Quin <liam@w3.org>
+
+
+
+
+
+Current Status
+
+
+* XML Base
+* Stylesheets in XML
+* XLink
+* xml:id
+* XInclude
+* XPointer
+* XForms
+* XHTML Modularization
+* XML Events
+* XML Fragments
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2010 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

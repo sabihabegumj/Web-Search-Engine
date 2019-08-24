@@ -1,0 +1,227 @@
+Schema - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+XML Technology
+
+
+* Publishing
+* Processing
+* Components
+* Query
+* Transformation
+* Security
+* Schema
+* XML Essentials
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* XML&#xA0;Technology » 
+* Schema
+
+
+
+
+Schema
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;an XML Schema &#x2022;
+* what&#xA0;is&#xA0;an XML&#xA0;Schema&#xA0;used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+An XML Schema is a language for expressing constraints about XML documents.
+
+
+What is an XML Schema?
+
+
+An XML Schema is a language for expressing constraints about XML documents. There are several different schema languages in widespread use, but the main ones are Document Type Definitions (DTDs),
+Relax-NG, Schematron and W3C XSD (XML Schema Definitions). From this page you can find out more about DTDs and W3C XSD, since those are the primary schema languages defined at W3C.
+
+
+What is XML Schema Used For?
+
+
+A Schema can be used:
+
+* to provide a list of elements and attributes in a vocabulary;
+* to associate types, such as integer, string, etc., or more specifically such as hatsize, sock_colour, etc., with values found in documents;
+* to constrain where elements and attributes can appear, and what can appear inside those elements, such as saying that a chapter title occurs inside a chapter, and that a chapter must consist of
+  a chapter title followed by one or more paragraphs of text;
+* to provide documentation that is both human-readable and machine-processable;
+* to give a formal description of one or more documents.
+
+Information in schema documents is often used by XML-aware editing systems so that they can offer users the most likely elements to occur at any given location in a document.
+
+Checking a document against a Schema is known as validating against that schema; for a DTD, this is just validating, but for any other type of schema the type is mentioned, such as XSD Validation or
+Relax-NG validation.
+
+Validating against a schema is an important component of quality assurance.
+
+The Service Modeling Language (SML) provides a framework for relating multiple XSD documents to one or more documents in a single validation episode.
+
+Since XSD supports associating data types with element and attribute content, it is also used for data binding, that is, for software components that read and write XML representations of computer
+programming-language objects.
+
+
+Examples
+
+
+Document Type Definitions are defined in the XML Recommendation. They are very widely supported with a high degree of interoperability.
+
+W3C XML Schema Definitions are defined in the W3C XML Schema specification. This is in three parts, of which the first part, numbered zero, is an introductory document.
+
+
+
+
+Learn More
+
+
+...Explanation...
+
+
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* XML Schema
+* XML Design Techniques
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Internationalization Working Group
+* Protocols and Formats Working Group
+
+
+
+Contact
+
+
+Liam R. E. Quin <liam@w3.org>
+
+
+
+
+
+Current Status
+
+
+* XML Schema
+* XML Design Techniques
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+Validators
+
+
+* XML Schema
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2010 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

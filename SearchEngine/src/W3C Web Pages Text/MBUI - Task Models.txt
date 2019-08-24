@@ -1,0 +1,1111 @@
+MBUI - Task Models
+
+
+
+
+
+
+MBUI - Task Models
+
+
+
+W3C Working Group Note 08 April 2014
+
+
+This version:
+        http://www.w3.org/TR/2014/NOTE-task-models-20140408/
+Latest published version:
+        http://www.w3.org/TR/task-models/
+Previous version:
+        http://www.w3.org/TR/2013/WD-task-models-20131107/
+Editors:
+        Fabio Paternò, ISTI-CNR
+        Carmen Santoro, ISTI-CNR
+        Lucio Davide Spano, ISTI-CNR
+        Dave Raggett, W3C
+
+Copyright © 2013 W3C® (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+Task models are useful when designing and developing interactive systems. They describe the logical activities that have to be carried out in order to reach the user’s goals. This document covers
+the specification of Task Models, with a meta-model expressed in UML, and an XML Schema that can be used as the basis for interchange of Task Models between different user interface development
+tools.
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the W3C technical reports index at http://www.w3.org/TR/.
+
+This document defines a meta-model and XML serialization for task models for describing user interfaces. This is an update to the First Public Working Draft to conform to the policy for W3C
+namespace URIs, and to make minor changes to terminology.
+
+This document has been published as a Working Group Note to reflect the fact that the Model Based UI Working Group is no longer progressing it along the W3C Recommendation Track. A record of
+discussion relating to this specification can be found in the Model Based UI Working Group's email archive. The email list is public-mbui@w3.org.
+
+Publication as a Working Group Note does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the 5 February 2004 W3C Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the
+group; that page also includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the
+information in accordance with section 6 of the W3C Patent Policy.
+
+
+Table of Contents
+
+
+1. Introduction
+2. Specific requirements for task meta-model
+3. Meta-Model
+   1. Operators
+   2. Task Categories
+   3. Task Types
+   4. Additional Task Properties
+   5. Task Meta Model in UML
+   6. Examples
+
+4. XML Schema Definition
+   1. Description
+   2. Complete schema
+
+5. Operators by Languages
+6. References
+7. Acknowledgements
+
+
+Introduction
+
+
+Interactive systems cover a wide range of possibilities, e.g. the means for controlling a microwave oven, or Web applications where the user interface runs in a Web browser and is coupled via HTTP
+to back-end services in the network.
+
+Task models provide a goal-oriented description of interactive systems suitable for reviewing temporal relationships between tasks, and their decomposition into subtasks, but avoiding the need for
+the level of detail required for a full description of the user interface. This makes it easier to talk through a user interface design without getting distracted by the details.
+
+Each task describes an activity that has to be carried out to fulfil the user's goals. Tasks can be represented at various abstraction levels. When designers only want to specify requirements on how
+activities should be carried out, they just need to consider the main high-level tasks. On the other hand, when designers aim to provide more precise design indications, then the activities are
+represented at a finer granularity, for example, covering the temporal sequence of tasks to be carried out by the user or system, as well as any preconditions for each task.
+
+The purpose of this document is to define a standard for interchange of task models, based on the widely adopted ConcurTaskTrees (CTT) notation.
+
+CTT is a visual notation for describing task models. Here is an example for the task of reserving a hotel room:
+
+
+
+Figure 1. Example of a Task Model in the CTT Notation
+
+This specification defines a meta-model and XML schema for interchange of task models based on the CTT notation, but does not normatively define how such models should be visualized.
+
+
+Specific requirements for task meta-model
+
+
+In this section there are some requirements that have been specifically identified for task models.
+
+* Req1: Separation of static aspects from dynamic aspects
+* Req2: Separation of the hierarchical structure from other aspects
+* Req3: Possibility of relating task performance to the context of use (even if modelling the context of use is not in the scope of this document)
+* Req4: Provide an initial taxonomy of task types (optional usage)
+The requirements are not normative, and rather intended to give the reader a sense of the assumptions that underlay the notation.
+
+Meta-Model
+
+
+This section defines a normative meta-model for the task model notation. Tasks have a hierarchical structure and use the set of temporal operators to describe the relations between them, which are
+based on those used in CTT.
+
+
+Operators
+
+
+The operators include both N-ary operators and 1-ary operators. They are described in the following list:
+
+* Interleaving (T1 ||| T2 ||| … TN): The connected tasks can be performed concurrently, without any specific constraint.
+* Order independence (T1|=|T2 |=| … TN): the tasks can be performed in any order;
+* Synchronisation (T1|[]|T2 |[]| … TN): The tasks are concurrent and can exchange information among them;
+* Parallelism (T1||T2 || … TN): The tasks are performed in true paralllelism.
+* Choice (T1[]T2[] … TN): in this case it is possible to choose one task from a set of tasks and, once the choice has been made, the chosen task can be performed
+* Disabling (T1[>T2[> … TN): the left-hand task is deactivated once the right-hand task has started;
+* Suspend-Resume (T1 |> T2|> … TN): The right-hand task interrupts the left-hand task one. When it is finished, the left-hand task can be reactivated from the state it was before the
+  interruption.
+* Enabling (T1>>T2>> … TN): There are two cases:
+  o without information passing - when T1 completes it enables T2, when T2 completes it enables T3, and so forth through TN
+  o with information passing, as before, except information is passed from each completed task to the next task
+
+* Iteration (T*): the task is performed iteratively: when it terminates, its execution is started again from the beginning.
+* Optional ([T]): the task is optionally performed.
+
+A comparison of which operators are supported in different task modelling languages is given in Table 1.
+
+The temporal operators are all N-ary except iteration and optionality, which are both unary. The N-ary operator relationship is associated to 2..N subtasks to model that N-ary operators are
+associated to the decomposition of a task into its subtasks. The N-ary operators are associative and commutative except for disabling, suspend-resume, and enabling, which are associative but not
+commutative.
+
+It is also worth pointing out that the operators have different priorities. For N-ary operators the priority associated to each operator is expressed by the order in which it appears in the UML
+class diagram in Figure 2 (e.g. the choice is the operator which has the highest priority).
+
+Another key concept (inherited from the CTT notation) is task allocation: how each task is to be carried out is indicated by the related category and is explicitly represented using different
+subclasses for each category. There are four possibilities:
+
+
+Task Categories
+
+
+* user task — an internal cognitive activity, such as selecting a strategy to solve a problem
+* system task — performed by the application itself, such as generating the results of a query
+* interaction task — user actions that may result in immediate system feedback, such as editing a diagram
+* abstract task — a task that has subtasks belonging to different categories, and thus cannot be allocated uniquely using the previous three categories
+
+
+Task Types
+
+
+Designers can also classify tasks according to their semantics, i.e. by giving each task a type. It is important to note that each of the above categories has its own predefined set of task types,
+thus such sets of predefined task types are indicated separately in the class diagram, as defined below:
+
+System Tasks
+        Comparison — the system provides information that is useful for comparing pieces of information
+        GenerateAlerts — the system generates an alert
+        Feedback — the system provides feedback about some intensive computational activity
+        Grouping — the system provides pieces of information that are somehow grouped
+        Locate — the system provides information useful to locate something
+        Overview — the system provides an overview of some data
+Interaction Tasks
+        Single Selection — the user interacts with the system to select one piece of information
+        Multiple Selection — the user interacts with the system to select multiple pieces of information
+        Edit — the user interacts with the system to change some piece of information
+        Control — the user interacts with the system to trigger some functionality
+        Zooming — the user interacts with the system to change the level of detail presented, e.g. zooming on a map or photograph
+        Filtering — the user interacts with the system to filter how some data is visualised, e.g. to show some aspects and to hide others
+        DetailOnDemand — the user interacts with the system to ask for some detail on some item
+User Tasks
+        ProblemSolving — the user performs a cognitive activity to solve a problem
+        Comparing — the user performs a cognitive activity to compare pieces of information
+        Planning — the user performs some activity to plan what to do
+Abstract Tasks
+        Search Information — the user performs an iterative search for a piece of information
+
+Additional task types may be used for added flexibility. In order to model this, each task category has two attributes: predef_type, which contains the task type when it is included in the
+predefined set of tasks already identified; ext_type, which contains the task type in case a new task type has to be defined.
+
+
+Additional Task Properties
+
+
+It is possible to specify additional information associated with each task through a number of attributes. For instance, it is possible to specify the context of use that supports the task
+concerned, if there are tasks that are meaningful only for some contexts of use. Modelling the context of use is out of the scope of this document.
+
+In addition, for each task it is possible to specify the domain objects that are manipulated by the task, and whether they are read-only or can be updated.
+
+
+Task Meta Model in UML
+
+
+Figure 2 shows the class diagram representing the task meta-model. A task model is composed of a set of tasks; a subtask relation is defined among them, and N-ary operators are associated with the
+2..N subtasks of a task.
+
+
+
+Figure 2. Main Aspects of the Task Meta-model
+
+Each task can be associated with one or multiple domain objects that it can manipulate. In addition, each task has a number of properties/attributes: an identifier, the context of use (indicating
+what contexts are suitable for its performance), informal description, and so forth.
+
+Moreover, since the execution of a task is often subject to the availability of a given resource or depends on the value of a certain variable, in order to express such dependencies, the language
+contains the Precondition and Postcondition classes (pre-conditions indicate what must be true before the task is carried out, while post-conditions indicate what will be true after task execution).
+
+A precondition (which can occur or not as associated to a certain task, see related multiplicity 0..1 in Figure 2) is an instance of the ConditionGroup class. It returns a Boolean value, which is
+obtained by applying the logical operators to the operands. An operand is a ConditionLiteral, which can be used to represent values. It can be either a constant or a variable manipulated during the
+task execution. In the former case, the value is expressed by the value attribute of the ValueLiteral subclass, in the latter it is expressed by the DomainObjectLiteral class, which represents a
+reference to a domain object manipulated by the task itself. An operand can also be represented in turn by a ConditionGroup, in order to create complex Boolean expressions. The operators express the
+Boolean relation between the operands. An operator can be one of the following: and, or, xor, contains, stars, ends, greater than, greater than or equals to, less than, less than or equals to,
+equals to, not equals. This hierarchical structure of preconditions allows the representation of complex conditions.
+
+The same structure is also possible for specifying postconditions associated to the tasks.
+
+The following is the list of classes contained in Figure 2.
+
+* Class: Task
+  o Composition from: Task, to: Task, associated with N-aryOperator
+  o Association: Domain Object (cardinality: minimum zero, maximum unbounded)
+  o Association: ConditionGroup (name: precondition, cardinality minimum zero, maximum one)
+  o Association: ConditionGroup (name: postcondition, cardinality minimum zero, maximum one)
+  o Association: 1-aryOperator (cardinality minimum zero, maximum two)
+  o Attribute: Identifier (String)
+  o Attribute: Name (String)
+  o Attribute: Frequency (String)
+  o Attribute: ContextOfUse (String)
+  o Attribute: Description(String)
+
+* Class: User
+  o Superclass: Task
+  o Attribute: predef_type (Enum)
+  o Attribute: ext_type (String)
+
+* Class: Abstract
+  o Superclass: Task
+  o Attribute: predef_type (Enum)
+  o Attribute: ext_type (String)
+
+* Class: System
+  o Superclass: Task
+  o Attribute: predef_type (Enum)
+  o Attribute: ext_type (String)
+
+* Class: Interaction
+  o Superclass: Task
+  o Attribute: predef_type (Enum)
+  o Attribute: ext_type (String)
+
+* Class: DomainObject
+* Enumeration Class: N-aryOperator
+  o Association: Composition SubTask (cardinality role Task: minimum zero, maximum one ; cardinality role SubTask: minimum zero or two, maximum N)
+  o Constant: choice
+  o Constant: order_independence
+  o Constant: Interleaving
+  o Constant: parallelism
+  o Constant: synchronisation
+  o Constant: disabling
+  o Constant: suspend_resume
+  o Constant: enabling
+
+* Enumeration Class: 1-aryOperator
+  o Association: Task (cardinality: 1)
+  o Constant: optional
+  o Constant: iterative
+
+* Class: ConditionGroup
+  o Aggregation from: ConditionGroup to ConditionGroup: (name: operand)
+  o Aggregation from: ConditionLiteral to ConditionGroup: (name: operand)
+  o Association: LogicOperator (name: operator, cardinality: 1)
+  o Association: Task(name: precondition, cardinality: one)
+  o Association: Task(name: postcondition, cardinality: one)
+
+* Class: ConditionLiteral
+  o Aggregation from: ConditionLiteral to ConditionGroup: (name: operand)
+
+* Class: ValueLiteral
+  o Superclass: ConditionLiteral
+  o Attribute: value (String)
+
+* Class: DomainObjectLiteral
+  o Superclass: ConditionLiteral
+  o Attribute: domain_object (String)
+
+* Class: LogicOperator
+  o Association: ConditionGroup (name: operator, cardinality 1)
+
+
+
+Examples
+
+
+The example below (see Figure 3) has been taken from the SERENOA Project. It is about a case study on a car rental service, which the user can access in order to reserve a car. To this goal, users
+have to specify a number of characteristics they are searching for about the car, also providing some other information about themselves (name, surname, address, city..). Then, the user can submit
+the request and the service responds with the list of results.
+
+In the following, we will specify the task model as a nested list of tasks, where nesting is used to model the hierarchy between parent and children. In addition, for each task we will specify -in
+brackets beside its name- the relationship(s) in which the concerned task is involved.
+
+Please also note that in this example all the tasks are interactive apart two tasks -Access Service and Show results- which are application tasks: the first (Access service) models the system task
+access the service for doing the search with the parameters provided by the user; the second one is the system task that is in charge of showing the results to the user.
+
+
+
+Figure 3: A task model example modelled through CTT notation
+
+
+1) Make car reservation: this is the root task
+
+1.1) Enter info (Enter info Disabling Submit Request: any time during the execution of the task for entering information, the user can decide to submit the search request)
+
+1.1.1) Enter car info (Enter car info Interleaving Enter user info: the two tasks can be carried out in a concurrent way)
+
+1.1.1.1) Enter Category (Enter category Interleaving Enter Colour)
+
+1.1.1.2) Enter Colour (Enter category Interleaving Enter colour Interleaving Enter Model)
+
+1.1.1.3) Enter Model (Enter colour Interleaving Enter model Interleaving Enter Engine)
+
+1.1.1.4) Enter Engine (Enter Model Interleaving Enter engine Interleaving Enter Colour)
+
+1.1.2) Enter user info (Enter car info Interleaving Enter user info Interleaving Enter Other Info)
+
+1.1.2.1) Enter Name (Enter Name Interleaving Enter Surname)
+
+1.1.2.2) Enter Surname (Enter name Interleaving Enter surname Interleaving Enter Address)
+
+1.1.2.3 Enter Address (Enter surname Interleaving Enter address Interleaving Enter City)
+
+1.1.2.4) Enter City (Enter address Interleaving Enter city Interleaving Enter ZIP code)
+
+1.1.2.5) Enter ZIP code (Enter City Interleaving Enter ZIP code Interleaving Enter Country)
+
+1.1.2.6) Enter Country (Enter ZIP code Interleaving Enter country Interleaving Enter Gender)
+
+1.1.2.7) Enter Gender (Enter country Interleaving Enter gender Interleaving Enter Birthdate)
+
+1.1.2.8) Enter Birthdate (Enter gender Interleaving Enter birthdate Interleaving Enter email)
+
+1.1.2.9) Enter Email (Enter birthdate Interleaving Enter Email)
+
+1.1.3) Enter other info (Enter user info Interleaving Enter Other Info Interleaving Set Preference)
+
+1.1.3.1) Enter Comments (Enter comments Interleaving Enter Max Budget)
+
+1.1.3.2) Enter Max Budget (Enter comments Interleaving Enter Max Budget)
+
+1.1.4) Set Preferences (Enter Other Info Interleaving Set Preferences)
+
+1.2) Submit request (Enter info Disabling Submit Request Sequential Enabling with Info Access Service): The task called “Submit request” can disable at any moment the execution of the task for
+entering information. The execution of the submission of the request also implies that the parameters are passed to the system task that has to carry out the search).
+
+1.3) Access service (Submit Request Sequential Enabling withInfo Access Service Sequential Enabling with Info Show Results)
+
+1.4) Show results (Access Service Sequential Enabling with Info Show Results)
+
+
+
+XML Schema Definition
+
+
+
+Description
+
+
+The root element of the schema is the TaskModel having a complex type whose definition includes a group named “categoryGroup” (indicating the allocation of a task:
+user/system/interaction/abstract) and containing an attribute for specifying its identifier (taskModelID).
+
+The Task element contains all the sub elements and attributes for the specification of a task. Such element contains the following elements:
+
+* Description: a human-readable task description
+* Precondition: a structured precondition on the task execution
+* Postcondition: a structured postcondition on the task execution
+* UnaryOperatorGroup: the unary operators associated with the task (Iterative: if the task is iterative;Optional: if the task is optional)
+* N-aryOperatorGroup: the list of sub-tasks (if any), enclosed by a tag representing the n-ary operator that connects them
+* ContextOfUse: the suitable context for carrying out the task
+* DomainObject: the list of objects manipulated by the current task
+
+In addition, it contains the following attributes:
+
+* Identifier: a unique task identifier
+* Name: a human readable task name
+* Frequency: the task execution frequency
+
+The N-aryOperatorGroup definition contains a choice among elements representing a different n-ary temporal operator. Each one of these elements contains the definition of a sub-task list (SubTask
+type). Such list is represented by a group that defines the task category (User, System, Interaction, Abstract) and its type, according to the class hierarchy defined by the meta model.
+The possible task types have been indicated beforehand.
+
+The ConditionGroup complex type contains one of the following elements:
+
+* ConditionLiteral, which represents a literal value or object (represented as different elements)
+* ConditionGroup, which represents an expression of ConditionLiterals or ConditionGroups (also mixed), as a list of elements. It contains also the operator attribute that contains the boolean
+  operator for the expression.
+
+The possible values for the N-ary temporal operators are the following:
+
+* Choice
+* Interleaving
+* OrderIndependence
+* Synchronisation
+* Disabling
+* SuspendResume
+* Enabling
+* Parallelism
+
+The n-ary operators are repesented as tags that include the connected sub-tasks. For instance, a sequence of three interaction sub-tasks is represented with a “Enabling” tag that contains tree
+“Interaction” tags.
+
+
+Complete schema
+
+
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema xmlns="http://www.w3.org/2013/mbui-task-models"
+        elementFormDefault="qualified"
+        targetNamespace="http://www.w3.org/2013/mbui-task-models"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <xs:element name="TaskModel">
+                <xs:complexType>
+                        <xs:sequence>
+                                <xs:group ref="categoryGroup" minOccurs="1" maxOccurs="1"/>
+                        </xs:sequence>
+                        <xs:attribute name="taskModelID" type="xs:string"
+                                use="required" />
+                </xs:complexType>
+        </xs:element>
+
+        <xs:complexType name="Task">
+                <xs:sequence>
+                        <xs:element name="Description" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Precondition" type="ConditionGroup" minOccurs="0"/>
+                        <xs:element name="PostCondition" type="ConditionGroup" minOccurs="0"/>
+                        <xs:group ref="UnaryOperatorGroup" minOccurs="0" maxOccurs="1"/>
+                        <xs:group ref="N-aryOperatorGroup" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element minOccurs="0" maxOccurs="unbounded" name="ContextOfUse" type="xs:QName" />
+                        <xs:element minOccurs="0" maxOccurs="unbounded" name="DomainObject" type="xs:QName" />
+                </xs:sequence>
+                <xs:attribute name="Identifier" type="xs:string" use="required" />
+                <xs:attribute name="Name" type="xs:string" />
+                <xs:attribute name="Frequency" type="xs:string"/>
+        </xs:complexType>
+
+        <xs:complexType name="SubTask">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                        <xs:group ref="categoryGroup" minOccurs="2" maxOccurs="unbounded"/>
+                </xs:sequence>
+        </xs:complexType>
+
+        <xs:group name="UnaryOperatorGroup">
+                <xs:sequence>
+                        <xs:element name="Optional" type="UnaryOperator" />
+                        <xs:element name="Iterative" type="UnaryOperator"/>
+                </xs:sequence>
+        </xs:group>
+
+        <xs:group name="N-aryOperatorGroup">
+                <xs:choice>
+                        <xs:element name="Choice" type="SubTask"/>
+                        <xs:element name="Interleaving" type="SubTask"/>
+                        <xs:element name="OrderIndependence" type="SubTask"/>
+                        <xs:element name="Synchronization" type="SubTask"/>
+                        <xs:element name="Disabling" type="SubTask"/>
+                        <xs:element name="SuspendResume" type="SubTask"/>
+                        <xs:element name="Enabling" type="SubTask"/>
+                        <xs:element name="Parallelism" type="SubTask"/>
+                </xs:choice>
+        </xs:group>
+
+        <xs:group name="categoryGroup">
+                <xs:choice>
+                        <xs:element type="User" name="User"/>
+                        <xs:element type="System" name="System" />
+                        <xs:element type="Interaction" name="Interaction"/>
+                        <xs:element type="Abstract" name="Abstract"/>
+                </xs:choice>
+        </xs:group>
+
+        <xs:complexType name="UnaryOperator">
+                <xs:attribute name="value" type="xs:boolean" default="true"/>
+        </xs:complexType>
+
+        <xs:complexType name="User">
+                <xs:complexContent>
+                        <xs:extension base="Task">
+                                <xs:attribute name="predef_type" type="UserTypeEnum"/>
+                                <xs:attribute name="ext_type" type="xs:string"/>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>
+
+        <xs:complexType name="System">
+                <xs:complexContent>
+                        <xs:extension base="Task">
+                                <xs:attribute name="predef_type" type="SystemTypeEnum"/>
+                                <xs:attribute name="ext_type" type="xs:string"/>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>
+
+        <xs:complexType name="Interaction">
+                <xs:complexContent>
+                        <xs:extension base="Task">
+                                <xs:attribute name="predef_type" type="InteractionTypeEnum"/>
+                                <xs:attribute name="ext_type" type="xs:string"/>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>
+
+        <xs:complexType name="Abstract">
+                <xs:complexContent>
+                        <xs:extension base="Task">
+                                <xs:attribute name="predef_type" type="AbstractTypeEnum"/>
+                                <xs:attribute name="ext_type" type="xs:string"/>
+                        </xs:extension>
+                </xs:complexContent>
+        </xs:complexType>
+
+        <!-- structured precondition modeling -->
+
+        <xs:complexType name="ConditionGroup">
+                <xs:choice minOccurs="1" maxOccurs="unbounded">
+                        <xs:element name="ConditionGroup" type="ConditionGroup" />
+                        <xs:group ref="ConditionLiteral"/>
+                </xs:choice>
+                <xs:attribute name="operator" type="LogicOperator" />
+        </xs:complexType>
+
+        <xs:group name="ConditionLiteral">
+                <xs:choice>
+                        <xs:element name="ValueLiteral" type="ValueLiteral"/>
+                        <xs:element name="DomainObjectLiteral" type="DomainObjectLiteral"/>
+                </xs:choice>
+        </xs:group>
+
+        <xs:complexType name="ValueLiteral">
+                <xs:attribute use="required" name="value" type="xs:string"/>
+        </xs:complexType>
+
+        <xs:complexType name="DomainObjectLiteral">
+                <xs:attribute use="required" name="domain_object" type="xs:string"/>
+        </xs:complexType>
+
+        <!-- Simple types -->
+
+        <xs:simpleType name="UserTypeEnum">
+                <xs:restriction base="xs:NMTOKEN">
+                        <xs:enumeration value="ProblemSolving"/>
+                        <xs:enumeration value="Comparing"/>
+                        <xs:enumeration value="Planning" />
+                </xs:restriction>
+        </xs:simpleType>
+
+        <xs:simpleType name="SystemTypeEnum">
+                <xs:restriction base="xs:NMTOKEN">
+                        <xs:enumeration value="Comparison"/>
+                        <xs:enumeration value="GenerateAlerts"/>
+                        <xs:enumeration value="Feedback" />
+                        <xs:enumeration value="Grouping" />
+                        <xs:enumeration value="Locate" />
+                        <xs:enumeration value="Overview" />
+                </xs:restriction>
+        </xs:simpleType>
+
+        <xs:simpleType name="InteractionTypeEnum">
+                <xs:restriction base="xs:NMTOKEN">
+                        <xs:enumeration value="SingleSelection"/>
+                        <xs:enumeration value="MultipleSelection"/>
+                        <xs:enumeration value="Edit" />
+                        <xs:enumeration value="Control" />
+                        <xs:enumeration value="Zooming" />
+                        <xs:enumeration value="Filtering" />
+                        <xs:enumeration value="DetailOnDemand" />
+                </xs:restriction>
+        </xs:simpleType>
+
+        <xs:simpleType name="AbstractTypeEnum">
+                <xs:restriction base="xs:NMTOKEN">
+                        <xs:enumeration value="SearchInformation"/>
+                </xs:restriction>
+        </xs:simpleType>
+
+        <xs:simpleType name="LogicOperator">
+                <xs:restriction base="xs:string">
+                        <xs:enumeration value="and" id="and" />
+                        <xs:enumeration value="or" id="or" />
+                        <xs:enumeration value="xor" id="xor" />
+                        <xs:enumeration value="contains" id="contains" />
+                        <xs:enumeration value="starts" id="starts" />
+                        <xs:enumeration value="ends" id="ends" />
+                        <xs:enumeration value="gt" id="gt" />
+                        <xs:enumeration value="gteq" id="gteq" />
+                        <xs:enumeration value="lteq" id="lteq" />
+                        <xs:enumeration value="lt" id="lt" />
+                        <xs:enumeration value="eq" id="eq" />
+                        <xs:enumeration value="neq" id="neq" />
+                </xs:restriction>
+        </xs:simpleType>
+
+</xs:schema>
+
+
+
+Operators by Languages
+
+
+The following table shows which operators are supported by a range of task modelling languages:
+Table 1: operators used in different modelling languages
+ 
+
+Order Independence
+ 
+
+Choice
+ 
+
+Concurrency
+ 
+
+Suspend and Resume
+ 
+
+Deactivation
+ 
+
+Enabling
+
+
+AMBOSS
+[Mistrzyk2008]
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+CPM-GOMS
+
+[John1994]
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+CTT
+
+[Paterno1999]
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+
+
+DIANE+
+[Tarby1996]
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+GOMS
+
+[Card1983]
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+GTA
+
+[VanderVeer1996]
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+KMAD
+
+[Baron2006]
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+LOTOS
+
+[Eijk1989]
+ 
+
+No
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+Yes
+ 
+
+Yes
+
+
+MAD
+
+[Scapin1989]
+ 
+
+Yes
+ 
+
+No
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+TADEUS
+
+[Schlungbaum1998]
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+TaOSpec
+
+[Dittmar 2003]
+ 
+
+No
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+TKS
+
+[Johnson1988]
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+TaskMODL
+
+[Traettberg2002]
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+TOMBOLA
+
+[Uhr2001]
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+UAN
+
+[Hix1993]
+ 
+
+Yes
+ 
+
+No
+ 
+
+Yes
+ 
+
+No
+ 
+
+Yes
+ 
+
+Yes
+
+
+useML
+
+[Meixner2011]
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+Yes
+ 
+
+Yes
+
+
+VTMB
+
+[Biere1999]
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+XUAN
+
+[Gray1994]
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+Yes
+ 
+
+No
+ 
+
+No
+ 
+
+Yes
+
+
+
+References
+
+
+[Baron2006] Baron, M.; Lucquiaud, V.; Autard, D. et al.: K-MADe: un environement pour le noyau du modèle de description de l'activité. Proc. of the 18th French-speaking Conference on
+Human-Computer-Interaction, Montreal, Kanada, 2006
+
+[Biere1999] Biere, M.; Bomsdorf, B.; Szwillus, G.: Specification and Simulation of Task Models with VTMB. In: Proc. of the 17th Annual CHI Conference on Human Factors in Computing Systems, New York,
+1999
+
+[Card1983] Card, S. K.; Moran, T. P.; Newell, A.: The psychology of human-computer inter-action. Lawrence Erlbaum Associates, 1983
+
+[Dittmar 2003] Dittmar, A.; Forbrig, P.: Higher-Order Task Models. In: Proc. of the 10th Interna-tional Workshop on Interactive Systems: Design, Specification and Verification, 219-230, 2003
+
+[Eijk1989] Eijk, P.H.J. van, Vissers, C.A., e Díaz, M. The Formal description technique Lotos: results of the ESPRIT/SEDOS Project. North-Holland, 1989
+
+[Gray1994] Gray, P.; England, D.; McGowan, S.: XUAN: enhancing UAN to capture tempo-ral relationships among actions. In: Proc. of the Conference on People and Computers IX, 1994
+
+[Hix1993] Hix, D.; Hartson, R.: Developing user interfaces: ensuring usability through product & process. New York: John Wiley & Sons, 1993
+
+[John1994] John, B.; Kieras, D.: The GOMS familiy of analysis techniques: Tools for design and evaluation. Carnegie Mellon University School of Computer Science, Technical Report No. CMU-CS-94-181,
+1994
+
+[Johnson1988] Johnson, P.; Johnson, H.; Waddington, R. et al.: Task-Related Knowledge Structures: Analysis, Modeling and Application. In: Proc. of the 4th Conference of the British Computer Society
+on People and computers, 35-62, 1988
+
+[Meixner2011] Meixner, G.; Seißler, M.; Breiner, K.: Model-Driven Useware Engineering, In: Model-Driven Development of Advanced User Interfaces, Springer, 1-26, 2011
+
+[Mistrzyk2008] Mistrzyk, T.; Szwillus, G.: Modellierung sicherheitskritischer Kommunikation mit Aufgabenmodellen. In: i-com, 1, 39-42, 2008
+
+[Paterno1999] Paternò, F.: Model-based design and evaluation of interactive applications. London: Springer, 1999
+
+[Paterno2012] Paternò, F; Santoro, C.; Spano, L. D.; Improving Support for Visual Task Modelling, 2012
+
+[Scapin1989] Scapin, D.; Pierret-Golbreich, C.: Towards a method for task description: MAD. In: Proc. of the Conference Work with DisplayUnits, 27-34, 1989
+
+[Schlungbaum1998] Schlungbaum, E.: Knowledge-based Support of Task-based User Interface Design in TADEUS. Proc. of the 16th Annual CHI Conference on Human Factors in Computing Systems, 1998
+
+[Shneiderman 1996]: Shneiderman, B.:The Eyes Have It: A Task by Data Type Taxonomy for Information Visualizations. IEEE Symposium on Visual Languages, Boulder 1996, p336-343.
+
+[Tarby1996] Tarby, J. C.; Barthet, M. F.: The Diane+ method. In: Proc. of the 2nd Interna-tional Conference on Computer-Aided Design of User Interfaces, 95-120, 1996
+
+[Traettberg2002] Traettberg, H.: Model-based User Interface Design. PhD thesis, Norwegian University of Science and Technology, 2002
+
+[Uhr2001] Uhr, H.: Die Definition und Ausführung von benutzerspezifischen Webprozes-sen mit TOMBOLA. Konferenz der Gesellschaft für Informatik, 322-325, 2001
+
+[VanderVeer1996] Van der Veer, G.; Lenting, B.; Bergevoet, B.: GTA: Groupware task analysis - modeling complexity. Acta Psychologica, 91, 297-322, 1996
+
+
+Acknowledgements
+
+
+We acknowledge the following people who contributed to the preparation of this document: François Beuvens, Paolo Bottoni, Gaëlle Calvary, Joelle Coutaz, Gerrit Meixner, Vivian Motti.
+

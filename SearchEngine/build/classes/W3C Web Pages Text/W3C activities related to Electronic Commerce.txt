@@ -1,0 +1,228 @@
+W3C activities related to Electronic Commerce
+
+
+
+
+W3C and Electronic Commerce
+
+
+
+W3C Note 07 January 2000
+
+
+This version:
+        http://www.w3.org/TR/2000/NOTE-EC-related-activities-20000107
+Latest version:
+        http://www.w3.org/TR/EC-related-activities
+Editors:
+        Thierry MICHEL, W3C
+
+Copyright ©2000 W3C® (MIT, INRIA, Keio), All Rights Reserved. W3C liability, trademark, document use and software licensing rules apply.
+
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+This document describes the current W3C activities related to Electronic Commerce for the purpose of assessing the Consortium's future role in ecommerce-related work. It presents the work within the
+W3C Electronic Commerce Activity and across all W3C Activities which are directly related  to Electronic Commerce. We expect this paper to serve as the basis for a discussion of W3C's role in
+ecommerce arena and, in particular, the future of the Electronic Commerce Interest Group.
+
+Status of this document
+
+
+This document is a NOTE made available by the W3C for discussion only. Publication of this Note by W3C indicates no endorsement by W3C or the W3C Team, or any W3C Members. This Note may be updated,
+replaced or rendered obsolete by other W3C documents at any time. It is inappropriate to use W3C Notes as reference material or to cite them as other than "work in progress". This document has been
+produced as part of the W3C Electronic Commerce Activity.
+
+Members are welcome to send detailed comments on this document to the mailing list of the Electronic Commerce Interest Group (w3c-ecommerce-ig@w3.org and archives [Member restricted]). We cannot
+guarantee a personal response, but we will try when it is appropriate.
+Depending on the response from interested/affected W3C Working Groups and from the W3C Members at large, submitters' suggestions will be brought to the attention of the Electronic Commerce Interest
+Group for further work on Electronic Commerce issues.
+
+A list of current W3C technical reports and publications, including Working Drafts and Notes, can be found at http://www.w3.org/TR.
+
+Table of Contents
+
+
+1. Introduction
+2. W3C Activities related &nbsp;to Electronic Commerce
+3. Acknowledged Submissions to W3C related &nbsp;to Electronic Commerce
+4. Other resources related &nbsp;to Electronic Commerce
+5. Conclusion
+
+
+========================================================================================================================================================================================================
+
+
+1-Introduction
+
+
+An major factor in the evolution of the Web is Electronic Commerce: the ability to buy, sell, and advertise goods and services to customers and consumers. One concern in the development of
+Electronic Commerce on the Web is the trust that can be placed in the provenance, reliability, security and privacy of information available from or transferred over the internet. Another concern is
+the need for low friction commerce transactions allowing quality  and ease of use for consumers, a key factor the future of  Electronic Commerce. The potential for global electronic commerce is
+immense; much of this potential is and will be realized by the continued development of Web technologies. The World Wide Web Consortium, leading the web to its full potential, is therefore concerned
+with the evolution of Electronic Commerce on the Web. The role of W3C is to focus on core infrastructure technologies for Electronic Commerce and identify common infrastructure needed in this area.
+W3C is not committed for example in specifying banking systems nor schemas for specific Electronic Commerce applications.
+
+W3C, through the following activities is committed to key factors for success in the evolution of Electronic Commerce:
+
+* The Micropayment initiative specifies how to provide in a Web page all the information necessary to initialize a micropayment and transfer this information to the wallet for processing.
+* The W3C Metadata Activity provides a means to  make statements and create machine-readable statements.
+* The W3C Digital Signature Initiative provides a mechanism for signing documents and metadata in order to establish who made the statement.
+* The PICS Rules specification allows to establish rules that can be understood by machines and exchanged by users.
+* The Platform for Privacy Preferences Project (P3P) provides communication about data privacy practices between consumers and merchant sites on the Web as well as enhanced user control over the
+  use and disclosure of personal information.
+* The now-completed JEPI project created the Protocol Extension Protocol (PEP) to provide for negotiation on the Web for binding terms and conditions.
+* Major W3C common specifications for the Web in areas such as network protocols, graphical user interface, remain the basis of Electronic Commerce.
+
+
+2- W3C Activities related to Electronic Commerce
+
+
+Activities related to Electronic Commerce are widely spread across the all World Wide Web Consortium. The Electronic Commerce Activity is the core framework in this area, but other activities within
+W3C are also involved in  Electronic Commerce like in the Technology &amp; Society Domain which has addressed different issues on privacy, security, and content control that are major concerns in
+Electronic Commerce and for the web of trust. Therefore, technologies specified in  the Technology &amp; Society Domain, Architecture Domain and User interface Domain  are precious for the
+development and for the future of Electronic Commerce. The Consortium is committed in the following Electronic Commerce related topics:
+
+2.1- The Electronic Commerce Activity
+
+
+The Electronic Commerce Activity is of course dedicated to this area. It hosts an Electronic Commerce Interest Group serving as a forum to explore cooperation and exchange ideas. This  Interest
+Group has lead to the creation of Working Groups for the Micropayment Initiative and the Electronic Payment Initiative.
+
+2.1.a- The Electronic Commerce Interest Group
+
+
+The Electronic Commerce Interest Group is a forum designed to allow the members to evaluate potential Web technologies in the Electronic Commerce area and to share information with the Consortium
+staff and other members about:
+* Problems they have encountered (and proposed solutions)
+* Priorities (in addressing the problems)
+* Work underway in related areas
+* What role, if any, the Consortium should play
+
+The Electronic Commerce Interest Group has met three times in the last two years, in Brussels, Seattle, and Paris. There is an on-going email list (w3c-ecommerce-ig@w3.org and archives [Member
+restricted]) associated with the Interest Group which is from its beginning very quiet.
+
+2.1.b- Micropayments Initiative
+
+
+The Electronic Commerce Activity is currently involved in realizing the opportunities in Micropayments, and this has formed the main task of the Activity for the last 12 months. Micropayments are
+very small payments made over the Web for documents that you access. Micropayments cover transactions which are too small to be economical as credit card transactions, and can be as little as a
+fraction of a cent. Micropayments provide an alternative to subscription and advertising as a source of revenue. The Micropayments Initiative hosts two Working Groups:
+The Micropayment Markup Working Group [Member restricted]: The embedding of payment information in Web pages. This specification provides an extensible way to embed in a Web page all the information
+necessary to initialize a micropayment.
+The Micropayments API Working Group [Member restricted]: The API to start the wallet and transfer the information defined above to the wallet for processing.
+
+2.1.c- Electronic payment Initiative
+
+
+The Joint Electronic Payment Initiative (JEPI) was a primary initiative in the Electronic Commerce Activity. It has addressed a standardized way of automatable negotiating payment methods between
+browsers and servers on the Web.
+
+3.1- Metadata
+
+
+The Metadata Activity is the architectural underpinning of many of the Technology and Society activities. W3C's work on Digital Signatures, Privacy Protection, and Intellectual Property Rights
+Management are all based on the Resource Description Framework (RDF) work that is at the heart of the Metadata Activity. Recently, in the Electronic Commerce activity, the Common Markup for
+Micropayment Per-fee-links specification has suggested to use the RDF metadata technology for describing micropayments information.
+
+3.2- Security and Integrity
+
+
+One element of trust in Electronic Commerce  is the ability to reliably associate a statement with the person or organization who made it. While the underlying cryptographic technology to accomplish
+this is available and widely known, it has not yet been applied to a general-purpose system for creating machine readable statements. The Digital Signature Initiative (DSig) fills this important
+role by specifying how to sign statements expressed as metadata.
+Another element of trust is the ability to digitally sign Web resources and portions of protocol messages (anything referenciable by a URI) and procedures for computing and verifying such
+signatures. It is the mission of  the XML-Signature WG to develop an XML compliant syntax for such mechanism.
+
+3.3- Privacy
+
+
+Electronic Commerce involves the constant tension between the need for a merchant site to gain information about their costumers and the need for these individuals to control the release of this
+information to others. The Platform for Privacy Preferences (P3P) addresses the twin goals of meeting the data privacy expectations of consumers on the Web while assuring that the medium remains
+available and productive for Electronic Commerce. Following the principle of providing consumers notice of site privacy polices, and allowing users to express and act upon their privacy preferences
+in a flexible manner, one goal enhances the success of the other. In addition, P3P provides a mechanism developing standard, extensible data sets of personal information to be transferred between
+user agents and servers,
+
+3.4- Content Control
+
+
+The Platform for Internet Content Selection (PICS) was created as an alternative model to centralized government controls on indecent content. PICS encourages decentralized parental empowerment when
+addressing children's access to inappropriate material.
+PICS is a pair of protocols that allows labels to be applied to Internet content. These protocols empower any individual or organization to design and distribute labels reflecting their views about
+the content. PICS was spearheaded by the Consortium as a practical alternative to global governmental censorship of the Internet. In addition, the same technology facilitates searching the Web, and
+providing a foundation for establishing trust in information on the Web.
+
+3.5- Intellectual Property Rights
+
+
+The W3C is considering the issue of making it easier for users to comply with Intellectual Property Rights (IPR) policies. Combining payment and labeling technologies will make it simple for IP
+owners to express the terms and conditions related to their materials, and for users to comply with the stated policies. Business policies are extremely important to the development of the
+Electronic Commerce.
+
+3.6- XML schema
+
+
+Extensible Markup Language (XML) will play an increasingly important role in the exchange of a wide variety of data on the Web, especially in Business to Business Electronic Commerce and Electronic
+Data Interchange.
+In addition to the XML, the XML Schema Working Group  is addressing means for defining the structure, content and semantics of such XML documents. The XML Schema Requirements document specifies the
+purpose, basic usage scenarios, design principles, and base requirements for an XML schema language.
+
+3.7- Other technical common specifications
+
+
+Technical common specifications as standards are critical to the long term Electronic Commerce success on the Internet as they can allow products and services from different vendors to work
+together. They also encourage competition and reduce uncertainty in the global marketplace. W3C, as a global and neutral technology development forum, develops common specifications for the Web in
+areas such as network protocols, graphical user interface, allowing reliability, interoperability, ease of use and scalability in Electronic Commerce on the web.
+The Consortium is also working towards making information on the Web accessible to all kind of devices such as mobiles phones (Mobile Access) and television (TVWeb), therefore extending the access
+range for consumers to Electronic Commerce.
+
+4- Acknowledged Submissions to W3C related to Electronic Commerce
+
+
+W3C Member organizations may submit submissions to propose technology or other ideas for consideration by W3C. W3C has acknowledged Submissions from Members that are related to the Electronic
+Commerce area. These submissions were brought to the attention of the participants in the Electronic Commerce Interest Group for consideration. Related Working Group are invited to pick up these
+Submissions for discussion as requirements and design input.
+These documents are also made available to the public for consideration.
+* UCLP - The Universal Commerce Language and Protocol is an Extensible Markup Language (XML) application for metadata related to commercial products and companies and that can be used in
+  identifying and retrieving product data residing across the Internet.
+* ICE - The Information and Content Exchange Protocol proposes a protocol and data format to implement the shared business rules in the domain of syndicated content, on top of the Web
+  infrastructure of XML, HTTP, and URIs.
+* XFDL - The Extensible Forms Description Language describes an XML syntax to represent complex forms such as those found in business and government.
+* SDML- The Signed Document Markup Language describes how to structure a complete signed document, with the material being signed as part of the document. We expect that a web-based document
+  signature scheme would have to address external documents, also referenced by URI. SMDL was an important initial contribution to the XML Signature Working Group.
+
+
+5- Other resources related  to Electronic Commerce
+
+
+Following is a non exhaustive list of resources related  to Electronic Commerce:
+* Biztalk - A community of standards users, with the goal of driving the rapid, consistent adoption of XML to enable electronic commerce and application integration.
+* CommerceNet - CommerceNet is a non-profit membership organization meeting the evolving needs of companies doing electronic commerce. Since its founding in 1994, CommerceNet's mission has been to
+  promote and advance interoperable electronic commerce to support emerging communities of commerce.
+* ECML - The Electronic Commerce Modeling Language provides a simple set of guidelines for web merchants that will enable digital wallets from multiple vendors to automate the exchange of
+  information between users and merchants.
+* FSTC - The mission of the Financial Services Technology Consortium (FSTC) is to leverage the strength of US financial services organizations through joint research and development focused on
+  technology opportunities, adding business value, managing risk, and reducing costs.
+* IOTP - The Open Trading Protocol was developed by a number of organisations, working co-operatively to make widespread Internet trading a convenient and secure reality.
+* OASIS - A community resource designed to provide a credible source of accurate, timely information about the application of XML in industrial and commercial settings.
+* XML/EDI - Provides a standard framework to exchange different types of data -- for example, an invoice, healthcare claim, project status -- so that the information be it in a transaction,
+  exchanged via an Application Program Interface (API), web automation, database portal, catalog, a workflow document or message can be searched, decoded, manipulated, and displayed consistently and
+  correctly by first implementing EDI dictionaries and extending our vocabulary via on-line repositories to include our business language, rules and objects.
+
+
+6- Conclusion
+
+
+W3C work on Web technologies has an an important enabling impact on Electronic Commerce. Members requesting Submission Acknowledgment from W3C have obviously demonstrated their interest in the
+Electronic Commerce area. Though the Electronic commerce Activity is currently working on Micropayments, we have to envision the future of this activity. Based on reaction to this document, we will
+consider hosting a face-to-face meeting of the Electronic Commerce Interest Group shortly. Members are welcome to join the mailing list for the Electronic Commerce Interest Group. To do so, please
+send mail to w3c-ecommerce-ig-request@w3.org. Members are, as always, invited to suggest new Web technologies to explore and to demonstrated their motivation related to Electronic Commerce.
+
+
+========================================================================================================================================================================================================
+

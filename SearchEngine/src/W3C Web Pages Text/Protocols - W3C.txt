@@ -1,0 +1,208 @@
+Protocols - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Web Architecture
+
+
+* Protocol and Meta Format Considerations
+* Meta Formats
+* Protocols
+* Identifiers
+* Architecture Principles
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web&#xA0;Architecture » 
+* Protocols
+
+
+
+
+Protocols
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;topic &#x2022;
+* what&#xA0;is&#xA0;topic&#xA0;used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+This intro text is boilerplate for the beta release of w3.org. Our intent is to invite the community to develop this template and help provide useful content and links. For a more complete example,
+see the page for HTML &amp; CSS.
+
+
+What is Topic?
+
+
+...Explanation...
+
+
+What is Topic Used For?
+
+
+...Explanation...
+
+
+Examples
+
+
+...Explanation...
+
+
+Learn More
+
+
+...Explanation...
+
+
+
+
+
+Recent Press
+
+
+18 June
+Knight Blog
+        &#x201D;
+13 June
+Laboratory Equipment
+        &#x201D;
+2 May
+Clubic
+        &#x201D;
+17 April
+ExtremeTech
+        &#x201D;
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* HTTP
+* SOAP
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Evaluation and Repair Tools Working Group
+* Tracking Protection Working Group
+* Web Applications Working Group
+
+
+
+
+
+
+Current Status
+
+
+* HTTP
+* SOAP
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

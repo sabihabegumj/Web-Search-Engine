@@ -1,0 +1,482 @@
+Browsers and Authoring Tools - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Standards
+
+
+* Web Design and Applications
+* Web Architecture
+* Semantic Web
+* XML Technology
+* Web of Services
+* Web of Devices
+* Browsers and Authoring Tools
+* All Standards and Drafts
+* About W3C Standards
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Browsers and Authoring Tools
+
+
+
+
+Browsers and Authoring Tools
+
+
+* On this page &#x2192;
+* technology&#xA0;topics &#x2022;
+* news &#x2022;
+* upcoming&#xA0;events&#xA0;and&#xA0;talks
+
+
+
+
+The web's usefulness and growth depends on its universality. We should be able to publish regardless of the software we use, the computer we have, the language we speak, whether we are wired or
+wireless, regardless of our sensory or interaction modes. We should be able to access the web from any kind of hardware that can connect to the Internet &#x2013; stationary or mobile, small or
+large. W3C facilitates this listening and blending via international web standards. These standards ensure that all the crazy brilliance continues to improve a web that is open to us all.
+
+
+
+
+
+
+
+
+
+
+There are many types of tools that allow us to read the Web, including browsers, media players, publishing platforms, social networks, bots, aggregators, forums, and media-sharing sites.
+
+
+
+
+
+
+
+The Web is not a read-only medium. There are many types of tools for publishing content, including authoring tools and environments, content management systems (CMSs), social media profile pages and
+apps, blogging tools and sites, microblogging tools, social bookmarks, forums, and video and photo sharing and more.
+
+
+
+
+
+
+
+News
+
+
+
+
+
+Announcing The Unicode Standard, Version 7.0
+
+
+17 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+
+
+
+
+Version 7.0 of the Unicode Standardis now available, adding 2,834 new characters. This latest version adds the new currency symbols for the Russian ruble and Azerbaijani manat, approximately 250
+emoji (pictographic symbols), many other symbols, and 23 new lesser-used and historic scripts, as well as character additions to many existing scripts. These additions extend support for written
+languages of North America, China, India, other Asian countries, and Africa. See the link above for full details.
+
+Most of the new emoji characters derive from characters in long-standing and widespread use in Wingdings and Webdings fonts.
+
+Major enhancements were made to the Indic script properties. New property values were added to enable a more algorithmic approach to rendering Indic scripts. These include properties for joining
+behavior, new classes for numbers, and a further division of the syllabic categories of viramas and rephas. With these enhancements, the default rendering for newly added Indic scripts can be
+significantly improved.
+
+Unicode character properties were extended to the new characters. The old characters have enhancements to Script and Alphabetic properties, and casing and line-breaking behavior. There were also
+nearly 3,000 new Cantonese pronunciation entries, as well as new or clarified stability policies for promoting interoperable implementations.
+
+Two other important Unicode specifications are maintained in synchrony with the Unicode Standard, and have updates for Version 7.0. These will be released at the same time:
+
+UTS #10, Unicode Collation Algorithm&#x2014; the standard for sorting Unicode text
+UTS #46, Unicode IDNA Compatibility Processing&#x2014; for processing of non-ASCII URLs (IDNs)
+
+
+
+
+
+
+Last Call draft published for Encoding spec
+
+
+06 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+A Last Call Working Draft of Encodinghas been published.
+
+While encodings have been defined to some extent, implementations have not always implemented them in the same way, have not always used the same labels, and often differ in dealing with undefined
+and former proprietary areas of encodings. This specification attempts to fill those gaps so that new implementations do not have to reverse engineer encoding implementations of the market leaders
+and existing implementations can converge.
+
+The body of this spec is an exact copy of the WHATWG version as of the date of its publication, intended to provide a stable reference for other specifications. We are hoping for people to review
+the specification and send comments about any technical areas that need attention (see the Status section for details).
+
+Please send comments by 1 July 2014.
+
+
+
+
+
+
+One more week to FEISGILTT &#x2013; learn about and contribute to the future of Web and localization standards!
+
+
+28 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+On 4 June and as part of the Localization World conference in Dublin, the FEISGILTT event will again provide an opportunity to discuss latest developments around localization and multilingual Web
+technologies. The event is sponsored by the LIDER project.
+
+Highlights include updates about ITS 2.0 and XLIFF 2.0, and a session about usage scenarios for linguistic linked data in localization. Speakers include Kevin O&#x2019;Donnell (Microsoft), Bryan
+Schnabel (Tektronix), Yves Savourel (Enlaso) and many more.
+
+Register nowto meet the key players around standards that will influence today&#x2019;s and future business.
+
+
+
+
+
+
+Slides for the MultilingualWeb and LIDER workshops available
+
+
+15 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+
+
+
+
+The slides from the MultilingualWeb workshop (including several posters) and the LIDER roadmapping workshopare now available for download. Additional material (videos of the presentations, a
+workshop report and more) will follow in the next weeks &#x2013; stay tuned.
+
+
+
+
+
+
+MultilingualWeb workshop 7-8 May &#x2013; follow via live stream!
+
+
+06 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+
+
+
+
+The MultilingualWeb workshop on 7-8 May will be streamed live ! Follow the event online if you cannot make it to Madrid. For details about speakers and presentations see the workshop program . The
+workshop is supported by the LIDER project and sponsored by Verisign and Lionbridge.
+
+
+
+
+
+
+Program published for W3C MultilingualWeb Workshop in Madrid, 7-8 May
+
+
+11 April 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+
+
+
+
+See the program.The keynote speaker will be Alolita Sharma, Director of Language Engineering from the Wikimedia Foundation. She is followed by a strong line up in sessions entitled Developers,
+Creators, Localizers, Machines, and Users, including speakers from Microsoft, Wikimedia Foundation, the UN FAO, W3C, Yandex, SDL, Lionbridge, Asia Pacific TLD, Verisign, DFKI, and many more. On the
+afternoon of the second day we will hold Open Space breakout discussions. Abstracts and details about an additional poster session will be provided shortly.
+
+The program will also feature an LD4LT event on May 8-9, focusing on text analytics and the usefulness of Wikipedia and Dbpedia for multiilngual text and content analytics, and on language resources
+and aspects of converting selected types of language resources into RDF.
+
+Participation in both events is free. See the Call for Participation for details about how to register for the MultilingualWeb workshop. The LD4LT event requires a separate registrationand you have
+the opportunity to submit position statements about language resources and RDF.
+
+If you haven&#x2019;t registered yet, note that space is limited, so please be sure to register soon to ensure that you get a place.
+
+The MultilingualWeb workshops, funded by the European Commission and coordinated by the W3C, look at best practices and standards related to all aspects of creating, localizing and deploying the
+multilingual Web. The workshops are successful because they attract a wide range of participants, from fields such as localization, language technology, browser development, content authoring and
+tool development, etc., to create a holistic view of the interoperability needs of the multilingual Web.
+
+We look forward to seeing you in Madrid!
+
+
+
+
+
+
+Registration for Workshop on Linked Data, Language Technologies and Multilingual Content Analytics now open!
+
+
+04 April 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+
+
+
+
+Register now for the recently announced workshop on Linked Data, Language Technologies and Multilingual Content Analytics (8-9 May, Madrid). A preliminary agenda has been created and the
+registration formis available.
+
+If you are interested in contributing a position statement please indicate this in the dedicated field in the registration form. The workshop organizers will come back to you with questions to
+answer in the position statement. We then will select which statements are appropriate for presentations on 9 May, and inform you by 28 April.
+
+We are looking forward to see you in Madrid, both for this event and the MultilingualWeb workshop!
+
+
+
+
+
+
+CLDR Version 25 Released
+
+
+20 March 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+
+
+
+
+Unicode CLDR 25 has been released, providing an update to the key building blocks for software supporting the world&#x2019;s languages. This data is used by a wide spectrum of companies for their
+software internationalization and localization, adapting software to the conventions of different languages for such common software tasks.
+
+Unicode CLDR 25 focused primarily on improvements to the LDML structure and tools, and on consistency of data. There are many smaller data fixes, but there was no general data submission. Changes
+include the following:
+
+* New rules for plural ranges (1-2 liters) for 72 locales, plurals for 2 locales, and ordinals for 18 locales.
+* Better locale matching with fallbacks for languages, default languages for continents and subcontinents, and default scripts for more languages.
+* Two new locales: West Frisian (fy) and Uyghur (ug).
+* Two new metazones: Mexico_Pacific and Mexico_Northwest
+* Updated zh pinyin & zhuyin collations and translators for Unicode 6.3 kMandarin data
+* Updated keyboard layout data for OSX, Windows and others.
+
+This version contains data for 238 languages and 259 territories&#x2014;740 locales in all.
+
+Details are provided in http://cldr.unicode.org/index/downloads/cldr-25, along with a detailed Migration section.
+
+
+
+
+
+
+Speaker deadline for Madrid MultilingualWeb Workshop is Friday, March 14
+
+
+05 March 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+We would like to remind you that the deadline for speaker proposals for the 7th MultilingualWeb Workshop (May 7&#x2013;8, 2014, Madrid, Spain) is on Friday, March 14, at 23:59 UTC.
+
+Featuring a keynote by Alolita Sharma (Director of Engineering, Wikipedia) and breakout sessions on linked open data and other critical topics, this Workshop will focus on the advances and
+challenges faced in making the Web truly multilingual. It provides an outstanding and influential forum for thought leaders to share their ideas and gain critical feedback.
+
+While the organizers have already received many excellent submissions, there is still time to make a proposal, and we encourage interested parties to do so by the deadline. With roughly 200
+attendees anticipated for the Workshop from a wide variety of profiles, we are certain to have a large and diverse audience that can provide constructive and useful feedback, with stimulating
+discussion about all of the presentations.
+
+For more information and to register, please visit the Madrid Workshop Call for Participation.
+
+
+
+
+
+
+Alolita Sharma (Wikipedia) to deliver keynote at 7th Multilingual Web Workshop (May 7&#x2013;8, 2014, Madrid)
+
+
+24 February 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebUserAgents
+
+
+
+
+
+
+
+
+
+
+
+We are please to announce that Alolita Sharma, Director of Engineering for Internationalization and Localization at Wikipedia, will deliver the keynote at the 7th Multilingual Web Workshop,
+&#x201C;New Horizons for the Multilingual Web,&#x201D; in Madrid, Spain (7&#x2013;8 May 2014).
+
+With over 30 million articles in 286 languages as of January 1, 2014, Wikipedia has now become one of the largest providers of multilingual content in the world. Because of its user-generated and
+constantly changing content, many traditional processes for managing multilingual content on the web either do not work or do not scale well for Wikipedia. Alolita Sharma&#x2019;s keynote will
+highlight Wikipedia&#x2019;s diversity in multilingual user-generated content and the language technologies that Wikipedia has had to develop to support its unprecedented growth of content. She will
+also discuss the many challenges Wikipedia faces in providing language support for the mobile web.
+
+The Multilingual Web Workshop series brings together participants interested in the best practices, new technologies, and standards needed to help content creators, localizers, language tools
+developers, and others address the new opportunities and challenges of the multilingual Web. It will provide for networking across communities and building connections.
+
+Registration for the Workshop is free, and early registrationis recommended since space at the Workshop is limited.
+
+There is still opportunity for individuals to submit proposals to speak at the workshop. Ideal proposals will highlight emerging challenges or novel solutions for reaching out to a global,
+multilingual audience. The deadline for speaker proposals is March 14, but early submission is strongly encouraged. See the Call for Participationfor more details.
+
+This workshop is made possible by the generous support of the LIDER project, which will organize a roadmapping workshop on linked data and content analytics as one of the tracks at Multilingual Web
+Workshop.
+
+
+
+
+
+
+
+
+
+
+
+Talks and Appearances
+
+
+* 2014-09-25 (25 SEP)
+
+
+  Crafting User Experience for the Fastest Growing Web Demographic: Older Users
+
+  by Shawn Henry
+
+  WebVisions Chicago
+
+  Chicago, IL, USA
+
+
+
+See also the full list of W3C Talks and Appearances.
+
+
+
+
+
+
+
+
+
+None. See full list of W3C Events.
+
+
+
+
+
+
+
+Acknowledgments
+
+
+Editor of introductory text: Liam McGee. Contributors: Participants of the Education and Outreach Working Group (EOWG).
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

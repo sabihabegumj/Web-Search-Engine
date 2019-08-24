@@ -1,0 +1,62 @@
+HTML Templates
+
+
+
+
+
+
+HTML Templates
+
+
+
+W3C Working Group Note 18 March 2014
+
+
+This version
+        http://www.w3.org/TR/2014/NOTE-html-templates-20140318/
+Latest version
+        http://www.w3.org/TR/html-templates/
+Latest editor's draft
+        https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/templates/index.html
+Previous version
+        http://www.w3.org/TR/2013/WD-html-templates-20130214/
+Revision history
+        https://dvcs.w3.org/hg/webcomponents/log/tip/spec/templates/index.html
+Participate
+        Discuss on public-webapps@w3.org (Web Applications Working Group)
+        File bugs (w3.org's Bugzilla)
+Editors
+        Dimitri Glazkov, Google, <dglazkov@chromium.org>
+        Rafael Weinstein, Google, <rafaelw@chromium.org>
+        Tony Ross, Microsoft, <tross@microsoft.com>
+
+Copyright © 2014 W3C® (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+Abstract
+
+
+This specification describes a method for declaring inert DOM subtrees in HTML and manipulating them to instantiate document fragments with identical contents.
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the technical reports index at http://www.w3.org/TR/.
+
+Work on this document has been discontinued and it should not be referenced or used as a basis for implementation. The features previously specified in this document are now specified in HTML5.
+
+This document was published by the Web Applications Working Group as a Working Group Note. If you wish to make comments regarding this document, please send them to public-webapps@w3.org (subscribe,
+archives). All feedback is welcome.
+
+Publication as a Working Group Note does not imply endorsement by the W3C Membership. This is a draft document and may be updated, replaced or obsoleted by other documents at any time. It is
+inappropriate to cite this document as other than work in progress.
+
+This document was produced by a group operating under the Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also
+includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the information in
+accordance with Patent Policy.
+
+

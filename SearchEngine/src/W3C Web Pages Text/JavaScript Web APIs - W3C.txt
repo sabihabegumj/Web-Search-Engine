@@ -1,0 +1,283 @@
+JavaScript Web APIs - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Web Design and Applications
+
+
+* HTML &amp; CSS
+* JavaScript Web APIs
+* Graphics
+* Audio and Video
+* Accessibility
+* Internationalization
+* Mobile Web
+* Privacy
+* Math on the Web
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web&#xA0;Design&#xA0;and&#xA0;Applications » 
+* JavaScript Web APIs
+
+
+
+
+JavaScript Web APIs
+
+
+* On this page &#x2192;
+* what&#xA0;is&#xA0;scripting &#x2022;
+* what&#xA0;scripting&#xA0;interfaces&#xA0;are&#xA0;available &#x2022;
+* beyond&#xA0;scripting &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+While the most common scripting language ECMAscript (more widely known as JavaScript) is developed by Ecma, a great many of the APIs made available in browsers have been defined at W3C.
+
+
+What is scripting?
+
+
+A script is program code that doesn&#x2019;t need pre-processing (e.g. compiling) before being run. In the context of a Web browser, scripting usually refers to program code written in JavaScript
+that is executed by the browser when a page is downloaded, or in response to an event triggered by the user.
+
+Scripting can make Web pages more dynamic. For example, without reloading a new version of a page it may allow modifications to the content of that page, or allow content to be added to or sent from
+that page. The former has been called DHTML (Dynamic HTML), and the latter AJAX (Asynchronous JavaScript and XML).
+
+Beyond this, scripts increasingly allow developers to create a bridge between the browser and the platform it is running on, making it possible, for example, to create Web pages that incorporate
+information from the user&#x2019;s environment, such as current location, address book details, etc.
+
+This additional interactivity makes Web pages behave like a traditional software application. These Web pages are often called Web applications and can be made available either directly in the
+browser as a Web page, or can be packaged and distributed as Widgets.
+
+
+What scripting interfaces are available ?
+
+
+The most basic scripting interface developed at W3C is the DOM, the Document Object Model which allows programs and scripts to dynamically access and update the content, structure and style of
+documents. DOM specifications form the core of DHTML.
+
+Modifications of the content using the DOM by the user and by scripts trigger events that developers can make use of to build rich user interfaces.
+
+A number of more advanced interfaces are being standardized, for instance:
+
+* XMLHttpRequest makes it possible to load additional content from the Web without loading a new document, a core component of AJAX,
+* the Geolocation API makes the user&#x2019;s current location available to browser-based applications,
+* several APIs make the integration of Web applications with the local file system and storage seamless.
+
+WAI ARIA offers mechanisms to ensure that this additional interactivity remains usable independent of devices and disabilities. Additional considerations apply to the development of Web applications
+for mobile devices.
+
+
+Beyond scripting
+
+
+While scripting offers a great opportunity to develop new interfaces and experiment with new user interactions, over time a number of these additions benefit from a more declarative approach; for
+instance, instead of having each and every developer re-implement a calendar-interface that allows a user to pick a date, defining an input type (<input type='date' />) that does it automatically
+saves a lot of time and bugs, and creates a ground for further innovation.
+
+Beyond the set of declarative interfaces made available through HTML, several technologies have been developed to make these Declarative Web Applications possible.
+
+
+
+Recent W3C Press Releases and Member Testimonials
+
+
+* W3C Workshop Aims for Web Payment Interoperability
+
+  28 January 2014
+
+
+
+
+
+Recent Press
+
+
+2 June
+Developer Economics
+        &#x201D;
+24 March
+InfoWorld
+        &#x201D;
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* Accessible Rich Internet Applications (WAI-ARIA)
+* DOM
+* DOM events
+* Declarative Web Applications
+* Javascript APIs
+* Mobile Web Applications
+* WICD
+* Widgets
+* XBL
+* HTML
+* Web Components
+* Web Performance
+* Web Applications Manifest Formats
+
+
+These W3C Groups are working on the related specifications:
+
+
+* HTML Working Group
+* Web Applications Working Group
+* Audio Working Group
+* Browser Testing and Tools Working Group
+* Cascading Style Sheets (CSS) Working Group
+* Device APIs Working Group
+* Forms Working Group
+* Geolocation Working Group
+* Internationalization Working Group
+* Near Field Communications Working Group
+* Pointer Events Working Group
+* Protocols and Formats Working Group
+* RDF Working Group
+* RDFa Working Group
+* SVG Working Group
+* System Applications Working Group
+* Technical Architecture Group
+* Voice Browser Working Group
+* Web Cryptography Working Group
+* Web Notification Working Group
+* Web Performance Working Group
+* Web Real-Time Communications Working Group
+* Web and Mobile Interest Group
+
+
+========================================================================================================================================================================================================
+
+Contact: Dominique Haza&#xEB;l-Massieux <dom@w3.org>
+
+
+
+
+
+Current Status
+
+
+* Accessible Rich Internet Applications (WAI-ARIA)
+* DOM
+* DOM events
+* Declarative Web Applications
+* Javascript APIs
+* Mobile Web Applications
+* WICD
+* Widgets
+* XBL
+* HTML
+* Web Components
+* Web Performance
+* Web Applications Manifest Formats
+
+
+
+
+Use It
+
+
+* Tutorials
+
+
+
+
+Validators
+
+
+* Markup
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

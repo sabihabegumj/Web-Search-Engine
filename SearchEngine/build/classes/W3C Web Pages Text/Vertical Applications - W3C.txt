@@ -1,0 +1,201 @@
+Vertical Applications - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Semantic Web
+
+
+* Vertical Applications
+* Inference
+* Query
+* Ontologies
+* Data
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Semantic&#xA0;Web » 
+* Vertical Applications
+
+
+
+
+Vertical Applications
+
+
+* On this page &#x2192;
+* what&#xA0;are&#xA0;vertical applications &#x2022;
+* what&#xA0;vertical applications&#xA0;are used&#xA0;for &#x2022;
+* examples &#x2022;
+* learn&#xA0;more &#x2022;
+* current&#xA0;status&#xA0;of&#xA0;specifications and groups
+
+
+
+
+
+
+
+What are Vertical Applications?
+
+
+Vertical applications is the term used at W3C to denote particular, generic application areas, specific communities, etc, that explore how W3C technologies (e.g., Semantic Web technologies) can help
+their operations, improve their efficiencies, provide better user experiences, etc. Some of these application areas may decide to form some sort a group at W3C to cooperate with other W3C members to
+explore these possibilities further. Examples for such vertical applications that have contact with W3C on different levels are health care and life sciences, social spaces, digital libraries,
+financial services, oil & gas exploration, or e-Government.
+
+
+What are Vertical Applications Used For?
+
+
+Apart from the inherent advantages for a particular vertical application area to get a better familiarity with a particular W3C technology, these groups also provide valuable feedbacks on the
+technologies themselves. Vertical applications may bring forward specific and sometimes highly non-trivial use cases, requirements in terms of, say, the expressivity of vocabulary or query
+languages, efficiency considerations for inferences, etc. Work on the second generations of languages like OWL2 or SPARQL1.1, or the work on R2RML, has been greatly motivated by the feedbacks
+provided by these vertical applications.
+
+
+Examples
+
+
+A good example is the The Health Care and Life Science Interest Group. It has been set up, in 2005, to explore the usability of Semantic Web technologies in area like drug discovery, patient care
+management and reporting, publication of scientific knowledge, drug approval procedures, etc. The group has produced several demonstrations, publications, organized workshops and conferences, and
+has succeeded in turning this particular application area into one of the most active user communities of Semantic Web technologies. Most major drug research companies, university labs and research
+center working in the area, and specialized tool providers participated in this work. The feedbacks provided by this group was also significant for Semantic Web technologies; as an example the
+definition of some of the OWL2 Profiles was strongly influenced by the ontologies and vocabularies developed by this community.
+
+
+Learn More
+
+
+The Semantic Web community maintains a list of books on a W3C Wiki page. Some of those books are introductory in nature while others are conference proceedings or textbook that address more advanced
+topics. Details of recent and upcoming Semantic Web related talks, given by the W3C Staff, the staff of the W3C Offices, and members of the W3C Working Groups are available separately; the slides
+are usually publicly available. The W3C also maintains a collection of Semantic Web Case Studies and Use Cases that show how Semantic Web technologies, including different vertical application
+areas, is used in practice.
+
+
+
+
+
+
+Current Status of Specifications
+
+
+Learn more about the current status of specifications related to:
+
+
+* Health Care and Life Sciences (Semantic Web)
+* eGovernment
+
+
+These W3C Groups are working on the related specifications:
+
+
+* Government Linked Data Working Group
+* Semantic Web Health Care and Life Sciences Interest Group
+
+
+
+
+
+
+Current Status
+
+
+* Health Care and Life Sciences (Semantic Web)
+* eGovernment
+
+
+
+
+Use It
+
+
+* Tutorials
+* Business Case
+* Software
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Sponsor / Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+

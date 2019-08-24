@@ -1,0 +1,487 @@
+Role Attribute 1.0
+
+
+
+
+
+
+Role Attribute 1.0
+
+
+
+An attribute to support the role classification of elements
+
+
+
+W3C Recommendation 28 March 2013
+
+
+This version:
+        http://www.w3.org/TR/2013/REC-role-attribute-20130328/
+Latest published version:
+        http://www.w3.org/TR/role-attribute/
+Latest editor's draft:
+        http://www.w3.org/WAI/PF/role-attribute/
+Previous version:
+        http://www.w3.org/TR/2012/PR-role-attribute-20121213/
+Editor:
+        Shane McCarron, Applied Testing and Technology, Inc., shane@aptest.com
+Authors:
+        Ben Adida, Creative Commons
+        Mark Birbeck, webBackplane
+        Steven Pemberton, ®
+        T. V. Raman, Google, Inc.
+        Richard Schwerdtfeger, IBM Corporation
+
+Please refer to the errata for this document, which may include some normative corrections.
+
+See also translations.
+
+The English version of this specification is the only normative version. Non-normative translations may also be available.
+
+Copyright © 2006-2013 W3C® (MIT, ERCIM, Keio, Beihang), All Rights Reserved. W3C liability, trademark and document use rules apply.
+
+========================================================================================================================================================================================================
+
+
+
+Abstract
+
+
+The Role Attribute defined in this specification allows the author to annotate markup languages with machine-extractable semantic information about the purpose of an element. Use cases include
+accessibility, device adaptation, server-side processing, and complex data description. This attribute can be integrated into any markup language. In particular, schema implementations are provided
+to facilitate with languages based upon XHTML Modularization [XHTML-MODULARIZATION11-2e].
+
+The role attribute is necessary to support Accessible Rich Internet Applications (WAI-ARIA) [WAI-ARIA] to define roles in XML-based languages, when the languages do not define their own role
+attribute. Although this is the reason the Role Attribute is published by the Protocols and Formats Working Group, the attribute has more general use cases as well.
+
+
+Status of This Document
+
+
+This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this
+technical report can be found in the technical reports index at http://www.w3.org/TR/.
+
+This is the Role Attribute W3C Recommendation by the Protocols &amp; Formats Working Group of the Web Accessibility Initiative. This document has been reviewed by W3C Members, by software
+developers, and by other W3C groups and interested parties, and is endorsed by the Director as a W3C Recommendation. It is a stable document and may be used as reference material or cited from
+another document. W3C's role in making the Recommendation is to draw attention to the specification and to promote its widespread deployment. This enhances the functionality and interoperability of
+the Web.
+
+As a finalized document, this version of the Role Attribute is not likely to undergo further changes. The Protocols and Formats Working Group expects that any further enhancements to the Role
+Attribute would take place in a future version of Accessible Rich Internet Applications (WAI-ARIA), instead of in a future version of this specification. The Working Group does not plan to make
+formal responses to comments on the Role Attribute Recommendation, but will consider input for errata or other future work. Start with the instructions for commenting page to submit comments
+(preferred), or send email to public-pfwg-comments@w3.org (comment archive). A history of changes to Role Attribute 1.0 is available.
+
+This document was produced by a group operating under the Patent Policy. W3C maintains a public list of any patent disclosures made in connection with the deliverables of the group; that page also
+includes instructions for disclosing a patent. An individual who has actual knowledge of a patent which the individual believes contains Essential Claim(s) must disclose the information in
+accordance with Patent Policy.
+
+
+Table of Contents
+
+
+* Introduction
+* Conformance
+  o Document Conformance
+  o Host Language Conformance
+
+* The Role Attribute
+  o Extending the collection of roles
+
+* Using Role in conjunction with RDFa
+* XHTML Role Attribute Module
+  o DTD Implementation
+    - Qualified Names Module
+
+  o Schema Implementation
+    - Attributes Module
+
+
+* Acknowledgements
+  o Participants in the PFWG at the time of publication
+  o Other previously active PFWG participants and contributors
+  o Enabling funders
+
+* References
+  o Normative references
+  o Informative references
+
+
+
+1. Introduction
+
+
+This section is non-normative.
+
+This document defines an attribute designed be used to help improve the accessibility and semantic markup of documents. It has been developed in conjunction with the accessibility community and
+other groups to make it easier to describe the semantic meaning of document content.
+
+An important (though not exclusive) use case for the Role Attribute is to support [WAI-ARIA]. The Role Attribute meets the requirements of Role Attribute in WAI-ARIA, Section 7.1, enabling [XML10]
+languages that incorporate this attribute to use WAI-ARIA roles. At time of this publication, no XML-based languages are known to use WAI-ARIA, but this attribute is important to enable planned
+future support (such as in SVG). By contrast, support for WAI-ARIA in [HTML5] includes an attribute named "role". The use of that attribute within [HTML5] is consistent with the definition of the
+role attribute in this specification, although conforming use may be limited to the use of 'TERM's within the value of the attribute.
+
+
+2. Conformance
+
+
+As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
+
+The key words MUST, MUST NOT, REQUIRED, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this specification are to be interpreted as described in [RFC2119].
+
+
+2.1 Document Conformance
+
+
+The Role Attribute does not represent a stand-alone document type. It is intended to be integrated into other host languages such as SVG, HTML, or XHTML. A conforming Role Attribute document is a
+document that requires only the facilities described as mandatory in this specification and the facilities described as mandatory in its host language. Such a document must meet all the following
+criteria:
+
+1. The document MUST conform to the constraints expressed in its host language implementation.
+
+2. If the host language is an XML [XML10-4e] markup language and is in the XHTML Namespace http://www.w3.org/1999/xhtml), there are no additional requirements. If the host language is an XML
+   markup language and is not in the XHTML namespace, and the host language does not incorporate this attribute in 'no namespace', then the document MUST contain an XML namespace declaration for the
+   Role Attribute Module namespace [XML-NAMES11]. The namespace for Role Attribute Module is defined to be http://www.w3.org/1999/xhtml. An example start tag of a root element might look like:
+
+
+   Example 1
+
+
+<mylang xmlns="http://www.example.com/dtd/mylang" 
+        xmlns:xh="http://www.w3.org/1999/xhtml" xml:lang="en" >
+
+
+
+
+
+2.2 Host Language Conformance
+
+
+When the Role Attribute is included in a host language, all of the facilities required in this specification MUST be included in the host language. In addition, the attribute defined in this
+specification MUST be included in the content model of the host language.
+
+
+3. The Role Attribute
+
+
+This specification defines the role attribute. The role attribute takes as its value one or more whitespace separated TERMorCURIEorAbsIRIs, which is defined in [RDFA-CORE]. Each component of the
+value maps to an IRI that corresponds to a vocabulary term that SHOULD be defined using RDF.
+
+
+Note
+
+The datatype used for @role permits the use of a TERM, a CURIE (as defined in [RDFA-CORE]), or a full IRI. A TERM is an item from a vocabulary. The default vocabulary for use with @role is defined
+in [XHTML-VOCAB]. A host language MAY define a different default vocabulary.
+
+
+
+Note
+
+The specific vocabulary terms from the default vocabulary are not included in this document. They are defined in [XHTML-VOCAB] to ease maintenance. The terms are drawn from [WAI-ARIA] and from the
+original work on this document by the XHTML2 Working Group.
+
+
+The attribute describes the role(s) the current element plays in the context of the document. This can be used, for example, by applications and assistive technologies to determine the purpose of an
+element. This could allow a user to make informed decisions on which actions may be taken on an element and activate the selected action in a device independent way. It could also be used as a
+mechanism for annotating portions of a document in a domain specific way (e.g., a legal term taxonomy). Although the role attribute may be used to add semantics to an element, authors SHOULD use
+elements with inherent semantics, such as p, rather than layering semantics on semantically neutral elements, such as div role="paragraph".
+
+The following is an example of a good, appropriate use of the role attribute:
+
+
+Example 2
+
+<div role="main">
+  <h1>This is the main content of the page</h1>
+  <p>Here is some content that is the primary purpose of this web page.</p>
+</div>
+
+
+
+3.1 Extending the collection of roles
+
+
+It is possible to define additional role values. Vocabulary authors MUST define such additional role values in their own vocabulary. The URI associated with that vocabulary SHOULD resolve to a
+resource that allows for the machine and human discovery of the definition of the roles in the vocabulary.
+
+
+Note
+
+A good example of such a resource is the default vocabulary document at [XHTML-VOCAB]. This document uses a format compatible with the requirements of [RDFA-CORE] section 9 for machine-discoverable
+RDFa Initial Contexts.
+
+
+
+4. Using Role in conjunction with RDFa
+
+
+If a Host Language contains the @role attribute, then an RDFa processor processing a document written in that Host Language according to the rules of that Host Language MAY generate additional
+triples for role attributes. If these additional triples are being generated, then they MUST be generated as follows:
+
+* If @id is present, it is used to supply the subject by concatenating the document's 'base', a fragment separator '#', and the value of @id. Otherwise the subject is a unique newly created bnode.
+* The predicate is the term role in the vocabulary defined at http://www.w3.org/1999/xhtml/vocab.
+* Each value of @role is an object, forming an RDF triple with the subject and predicate defined above. An RDFa Processor MUST behave as if there is an in-scope vocabulary of
+  http://www.w3.org/1999/xhtml/vocab# for the value(s) of the @role attribute.
+
+
+Note
+
+Remember that @role values are defined using the datatype TERMorCURIEorAbsIRIs. An RDFa Processor will intepret these values using the rules for that that datatype as defined in [RDFA-CORE].
+
+
+
+A. XHTML Role Attribute Module
+
+
+
+A.1 DTD Implementation
+
+
+The DTD implementation of XHTML Role Attribute Module conforms to the requirements defined in [XHTML-MODULARIZATION11-2e]. Consequently, it provides a Qualified Names declaration module.
+
+
+A.1.1 Qualified Names Module
+
+
+Note that this module defines the parameter entity %xhtml-role-attrs.qname;. This entity is intended to be used in the attribute lists of elements in any host language that permits the use of the
+role attribute on elements in its own namespace. If a host language does not permit role in its namespace, then the host language driver should set a parameter entity %XHTML-ROLE.prefixed; to
+INCLUDE and a parameter entity %XHTML-ROLE.prefix; to a value that is the prefix for the XHTML Role Attribute Module attribute.
+
+
+
+<!-- ....................................................................... -->
+<!-- XHTML Role Qname Module  ............................................ -->
+<!-- file: xhtml-role-qname-1.mod
+
+     This is XHTML Role - the Role Attribute Module for XHTML.
+
+     Copyright 2006 W3C (MIT, ERCIM, Keio), All Rights Reserved.
+
+     This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+
+       PUBLIC "-//W3C//ENTITIES XHTML Role Attribute Qnames 1.0//EN"
+       SYSTEM "http://www.w3.org/MarkUp/DTD/xhtml-role-qname-1.mod"
+
+     Revisions:
+     (none)
+     ....................................................................... -->
+
+<!-- XHTML Role Attribute Qname (Qualified Name) Module
+
+     This module is contained in two parts, labeled Section 'A' and 'B':
+
+       Section A declares parameter entities to support namespace-
+       qualified names, namespace declarations, and name prefixing
+       for XHTML Role and extensions.
+
+       Section B declares parameter entities used to provide
+       namespace-qualified names for the XHTML role attribute:
+
+         %role.qname;   the xmlns-qualified name for @role
+         ...
+
+     XHTML Role extensions would create a module similar to this one.
+-->
+
+<!-- Section A: XHTML Role Attribute XML Namespace Framework ::::::::::::::: -->
+
+<!-- 1. Declare a %XHTML-ROLE.prefixed; conditional section keyword, used
+        to activate namespace prefixing. The default value should
+        inherit '%NS.prefixed;' from the DTD driver, so that unless
+        overridden, the default behavior follows the overall DTD
+        prefixing scheme.
+-->
+<!ENTITY % NS.prefixed "IGNORE" >
+<!ENTITY % XHTML-ROLE.prefixed "%NS.prefixed;" >
+
+<!-- 2. Declare a parameter entity (eg., %XHTML-ROLE.xmlns;) containing
+        the URI reference used to identify the XHTML Role Attribute namespace
+-->
+<!ENTITY % XHTML-ROLE.xmlns  "http://www.w3.org/1999/xhtml" >
+
+<!-- 3. Declare parameter entities (eg., %XML.prefix;) containing
+        the default namespace prefix string(s) to use when prefixing
+        is enabled. This may be overridden in the DTD driver or the
+        internal subset of an document instance. If no default prefix
+        is desired, this may be declared as an empty string.
+
+     NOTE: As specified in [XMLNAMES], the namespace prefix serves
+     as a proxy for the URI reference, and is not in itself significant.
+-->
+<!ENTITY % XHTML-ROLE.prefix  "" >
+
+<!-- 4. Declare parameter entities (eg., %XHTML-ROLE.pfx;) containing the
+        colonized prefix(es) (eg., '%XHTML-ROLE.prefix;:') used when
+        prefixing is active, an empty string when it is not.
+-->
+<![%XHTML-ROLE.prefixed;[
+<!ENTITY % XHTML-ROLE.pfx  "%XHTML-ROLE.prefix;:" >
+]]>
+<!ENTITY % XHTML-ROLE.pfx  "" >
+
+<!-- declare qualified name extensions here ............ -->
+<!ENTITY % xhtml-role-qname-extra.mod "" >
+%xhtml-role-qname-extra.mod;
+
+<!-- 5. The parameter entity %XHTML-ROLE.xmlns.extra.attrib; may be
+        redeclared to contain any non-XHTML Role Attribute namespace 
+        declaration attributes for namespaces embedded in XML. The default
+        is an empty string.  XLink should be included here if used
+        in the DTD.
+-->
+<!ENTITY % XHTML-ROLE.xmlns.extra.attrib "" >
+
+
+<!-- Section B: XML Qualified Names ::::::::::::::::::::::::::::: -->
+
+<!-- 6. This section declares parameter entities used to provide
+        namespace-qualified names for the XHTML role attribute.
+-->
+
+<!ENTITY % xhtml-role.role.qname  "%XHTML-ROLE.pfx;role" >
+
+
+<!-- The following defines a PE for use in the attribute sets of elements in
+     other namespaces that want to incorporate the XHTML role attribute. Note
+     that in this case the XHTML-ROLE.pfx should be defined. -->
+
+<!ENTITY % xhtml-role.attrs.qname
+   "%XHTML-ROLE.pfx;role             CDATA        #IMPLIED"
+    >
+
+<!-- end of xhtml-role-qname-1.mod -->
+	
+
+
+
+A.2 Schema Implementation
+
+
+The schema implementation of XHTML Role Attribute Module conforms to the requirements defined in [XHTML-MODULARIZATION11-2e]. It is included here as an example implementation.
+
+
+A.2.1 Attributes Module
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+ xmlns:xs="http://www.w3.org/2001/XMLSchema"
+ elementFormDefault="qualified"
+ xmlns:xh11d="http://www.w3.org/1999/xhtml/datatypes/"
+>
+    <xs:import namespace="http://www.w3.org/1999/xhtml/datatypes/" 
+               schemaLocation="xhtml-datatypes-1.xsd" />
+
+    <xs:annotation>
+        <xs:documentation>
+      This is the XML Schema attribute module for XHTML Role
+      $Id: Overview.html,v 1.7 2013-03-28 15:13:26 cooper Exp $
+    </xs:documentation>
+        <xs:documentation source="xhtml-copyright-1.xsd"/>
+        <xs:documentation source="http://www.w3.org/TR/role-attribute#A_role"/>
+    </xs:annotation>
+    <xs:attribute name="role" type="xh11d:TERMorURIorCURIEs"/>
+</xs:schema>
+
+
+
+
+B. Acknowledgements
+
+
+The following people contributed to the development of this document.
+
+
+B.1 Participants in the PFWG at the time of publication
+
+
+1. David Bolter (Mozilla)
+2. Sally Cain (Royal National Institute of Blind People (RNIB))
+3. Alex Qiang Chen (University of Manchester)
+4. Charles Chen (Google, Inc.)
+5. Michael Cooper (W3C/MIT)
+6. James Craig (Apple, Inc.)
+7. Steve Faulkner (Invited Expert, The Paciello Group)
+8. Geoff Freed (Invited Expert, NCAM)
+9. Kentarou Fukuda (IBM)
+10. Georgios Grigoriadis (SAP AG)
+11. Jon Gunderson (Invited Expert, UIUC)
+12. Markus Gylling (DAISY Consortium)
+13. Sean Hayes (Microsoft Corporation)
+14. Kenny Johar (Microsoft Corporation)
+15. Shilpi Kapoor (BarrierBreak Technologies)
+16. Matthew King (IBM Corporation)
+17. Diego La Monica (International Webmasters Association / HTML Writers Guild (IWA-HWG))
+18. Rajesh Lal (Nokia Corporation)
+19. Gez Lemon (International Webmasters Association / HTML Writers Guild (IWA-HWG))
+20. Anders Markussen (Opera Software)
+21. Shane McCarron (Invited Expert, ApTest)
+22. Charles McCathieNevile (Opera Software)
+23. Mary Jo Mueller (IBM Corporation)
+24. James Nurthen (Oracle Corporation)
+25. Joshue O Connor (Invited Expert, NCBI Centre for Inclusive Technology)
+26. Sarah Pulis (Media Access Australia)
+27. T.V. Raman (Google, Inc.)
+28. Janina Sajka (Invited Expert, The Linux Foundation)
+29. Joseph Scheuhammer (Invited Expert, Inclusive Design Research Centre, OCAD University)
+30. Stefan Schnabel (SAP AG)
+31. Richard Schwerdtfeger (IBM Corporation)
+32. Lisa Seeman (Invited Expert)
+33. Cynthia Shelly (Microsoft Corporation)
+34. Andi Snow-Weaver (IBM Corporation)
+35. Gregg Vanderheiden (Invited Expert, Trace Research and Development Center)
+36. Léonie Watson (Nomensa)
+37. Gottfried Zimmermann (Invited Expert, Access Technologies Group)
+
+
+B.2 Other previously active PFWG participants and contributors
+
+
+Jim Allan (TSB), Simon Bates, Chris Blouch (AOL), Judy Brewer (W3C/MIT), Ben Caldwell (Trace), Charles Chen (Google, Inc.), Christian Cohrs, Dimitar Denev (Frauenhofer Gesellschaft), Donald Evans
+(AOL), Kentarou Fukuda (IBM Corporation), Becky Gibson (IBM), Alfred S. Gilman, Andres Gonzalez (Adobe Systems Inc.), Georgios Grigoriadis (SAP AG), Jeff Grimes (Oracle), Barbara Hartel, John
+Hrvatin (Microsoft Corporation), Masahiko Kaneko (Microsoft Corporation), Earl Johnson (Sun), Jael Kurz, Diego La Monica (International Webmasters Association / HTML Writers Guild (IWA-HWG)), Aaron
+Leventhal (IBM Corporation), Alex Li (SAP), Thomas Logan (HiSoftware), William Loughborough, Linda Mao (Microsoft), Anders Markussen (Opera Software), Matthew May (Adobe Systems Inc.), Artur Ortega
+(Yahoo!, Inc.), Lisa Pappas (Society for Technical Communication (STC)), Dave Pawson (RNIB), Stephen Pemberton (CWI), David Poehlman, Simon Pieters (Opera Software), T.V. Raman (Google, Inc.),
+Gregory Rosmaita, Tony Ross (Microsoft Corporation), Martin Schaus (SAP AG), Marc Silbey (Microsoft Corporation), Henri Sivonen (Mozilla), Henny Swan (Opera Software), Vitaly Sourikov, Mike
+Squillace (IBM), Ryan Williams (Oracle), Tom Wlodkowski.
+
+
+B.3 Enabling funders
+
+
+This publication has been funded in part with Federal funds from the U.S. Department of Education, National Institute on Disability and Rehabilitation Research (NIDRR) under contract number
+ED-OSE-10-C-0067. The content of this publication does not necessarily reflect the views or policies of the U.S. Department of Education, nor does mention of trade names, commercial products, or
+organizations imply endorsement by the U.S. Government.
+
+
+C. References
+
+
+
+C.1 Normative references
+
+
+[RDFA-CORE]
+        Shane McCarron et al. RDFa Core 1.1: Syntax and processing rules for embedding RDF through attributes. 7 June 2012. W3C Recommendation. URL: http://www.w3.org/TR/2012/REC-rdfa-core-20120607/
+[RFC2119]
+        S. Bradner. Key words for use in RFCs to Indicate Requirement Levels. March 1997. Internet RFC 2119. URL: http://www.ietf.org/rfc/rfc2119.txt
+[XHTML-MODULARIZATION11-2e]
+        Shane McCarron. XHTML™ Modularization 1.1 Second Edition. 29 July 2010. W3C Recommendation. URL: http://www.w3.org/TR/2010/REC-xhtml-modularization-20100729
+[XHTML-VOCAB]
+        XHTML 2 Working Group. XHTML Vocabulary. URL: http://www.w3.org/1999/xhtml/vocab
+[XML10]
+        C. M. Sperberg-McQueen et al. Extensible Markup Language (XML) 1.0 (Fifth Edition). 26 November 2008. W3C Recommendation. URL: http://www.w3.org/TR/2008/REC-xml-20081126/
+[XML10-4e]
+        C. M. Sperberg-McQueen et al. Extensible Markup Language (XML) 1.0 (Fourth Edition). 16 August 2006. W3C Recommendation. URL: http://www.w3.org/TR/2006/REC-xml-20060816/
+
+C.2 Informative references
+
+
+[HTML5]
+        Robin Berjon et al. HTML5. 17 December 2012. W3C Candidate Recommendation. URL: http://www.w3.org/TR/html5/
+[WAI-ARIA]
+        James Craig; Michael Cooper et al. Accessible Rich Internet Applications (WAI-ARIA) 1.0. 24 February 2009. W3C Working Draft. URL: http://www.w3.org/TR/2009/WD-wai-aria-20090224
+[XML-NAMES11]
+        Andrew Layman et al. Namespaces in XML 1.1 (Second Edition). 16 August 2006. W3C Recommendation. URL: http://www.w3.org/TR/2006/REC-xml-names11-20060816

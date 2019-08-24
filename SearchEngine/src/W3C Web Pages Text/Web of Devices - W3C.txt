@@ -1,0 +1,566 @@
+Web of Devices - W3C
+
+
+
+
+
+W3C
+
+
+
+
+
+* Standards
+* Participate
+* Membership
+* About W3C
+* 
+
+
+
+
+
+
+
+
+Site Navigation
+
+
+
+Standards
+
+
+* Web Design and Applications
+* Web Architecture
+* Semantic Web
+* XML Technology
+* Web of Services
+* Web of Devices
+* Browsers and Authoring Tools
+* All Standards and Drafts
+* About W3C Standards
+
+
+
+
+
+
+* Skip
+* W3C » 
+* Standards » 
+* Web of Devices
+
+
+
+
+Web of Devices
+
+
+* On this page &#x2192;
+* technology&#xA0;topics &#x2022;
+* news &#x2022;
+* upcoming&#xA0;events&#xA0;and&#xA0;talks
+
+
+
+
+W3C is focusing on technologies to enable Web access anywhere, anytime, using any device. This includes Web access from mobile phones and other mobile devices as well as use of Web technology in
+consumer electronics, printers, interactive television, and even automobiles.
+
+
+
+
+
+
+
+
+
+
+W3C promotes &#x201C;One Web&#x201D; that is available on any device. W3C&#x2019;s Mobile Web Initiative helps ensure the best user experience on mobile devices, taking into account device
+capabilities, location, and other context information.
+
+
+
+
+
+
+
+The W3C Speech Interface Framework is a suite of specifications (e.g. VoiceXML) integrating Web technology and speech interaction. VoiceXML, PLS, SISR, SRGS, SCXML, and CCXML all contribute to the
+Speech Interface Framework.
+
+
+
+
+
+
+
+Devices come in many shapes, capabilities and sizes which define constraints on the content these devices can handle. Device descriptions, content transformation guidelines, device APIs and CC/PP
+help developers to optimize the user experience.
+
+
+
+
+
+
+
+
+
+Increasingly, interactions with devices doesn&#x2019;t only happen with a keyboard, but also through voice, touch and gestures. The W3C Multimodal architecture and its components (EMMA, InkML) allow
+developers to adapt applications to new interaction modes.
+
+
+
+
+
+
+
+With the advent of IP-based devices, connected TVs are progressing at a fast pace and traditional TV broadcasting is quickly evolving into a more immersive experience where users can interact with
+rich applications that are at least partly based on Web technologies. There is strong growth in the deployment of devices that integrate regular Web technologies such as HTML, CSS, and SVG, coupled
+with various device APIs.
+
+
+
+
+
+
+
+News
+
+
+
+
+
+Announcing The Unicode Standard, Version 7.0
+
+
+17 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebOfDevices
+
+
+
+
+
+
+
+Version 7.0 of the Unicode Standardis now available, adding 2,834 new characters. This latest version adds the new currency symbols for the Russian ruble and Azerbaijani manat, approximately 250
+emoji (pictographic symbols), many other symbols, and 23 new lesser-used and historic scripts, as well as character additions to many existing scripts. These additions extend support for written
+languages of North America, China, India, other Asian countries, and Africa. See the link above for full details.
+
+Most of the new emoji characters derive from characters in long-standing and widespread use in Wingdings and Webdings fonts.
+
+Major enhancements were made to the Indic script properties. New property values were added to enable a more algorithmic approach to rendering Indic scripts. These include properties for joining
+behavior, new classes for numbers, and a further division of the syllabic categories of viramas and rephas. With these enhancements, the default rendering for newly added Indic scripts can be
+significantly improved.
+
+Unicode character properties were extended to the new characters. The old characters have enhancements to Script and Alphabetic properties, and casing and line-breaking behavior. There were also
+nearly 3,000 new Cantonese pronunciation entries, as well as new or clarified stability policies for promoting interoperable implementations.
+
+Two other important Unicode specifications are maintained in synchrony with the Unicode Standard, and have updates for Version 7.0. These will be released at the same time:
+
+UTS #10, Unicode Collation Algorithm&#x2014; the standard for sorting Unicode text
+UTS #46, Unicode IDNA Compatibility Processing&#x2014; for processing of non-ASCII URLs (IDNs)
+
+
+
+
+
+
+Last Call draft published for Encoding spec
+
+
+06 June 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebOfDevices
+
+
+
+A Last Call Working Draft of Encodinghas been published.
+
+While encodings have been defined to some extent, implementations have not always implemented them in the same way, have not always used the same labels, and often differ in dealing with undefined
+and former proprietary areas of encodings. This specification attempts to fill those gaps so that new implementations do not have to reverse engineer encoding implementations of the market leaders
+and existing implementations can converge.
+
+The body of this spec is an exact copy of the WHATWG version as of the date of its publication, intended to provide a stable reference for other specifications. We are hoping for people to review
+the specification and send comments about any technical areas that need attention (see the Status section for details).
+
+Please send comments by 1 July 2014.
+
+
+
+
+
+
+One more week to FEISGILTT &#x2013; learn about and contribute to the future of Web and localization standards!
+
+
+28 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebOfDevices
+
+
+
+On 4 June and as part of the Localization World conference in Dublin, the FEISGILTT event will again provide an opportunity to discuss latest developments around localization and multilingual Web
+technologies. The event is sponsored by the LIDER project.
+
+Highlights include updates about ITS 2.0 and XLIFF 2.0, and a session about usage scenarios for linguistic linked data in localization. Speakers include Kevin O&#x2019;Donnell (Microsoft), Bryan
+Schnabel (Tektronix), Yves Savourel (Enlaso) and many more.
+
+Register nowto meet the key players around standards that will influence today&#x2019;s and future business.
+
+
+
+
+
+
+Slides for the MultilingualWeb and LIDER workshops available
+
+
+15 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebOfDevices
+
+
+
+
+
+
+
+The slides from the MultilingualWeb workshop (including several posters) and the LIDER roadmapping workshopare now available for download. Additional material (videos of the presentations, a
+workshop report and more) will follow in the next weeks &#x2013; stay tuned.
+
+
+
+
+
+
+This week: WebbyAwards celebrating Web25, WebCryptoAPI LC comments, EFF Do Not Track tool, etc.
+
+
+09 May 2014
+
+from Mobile Web @ W3C - W3C
+
+
+
+This is the 2-9 May 2014edition of a &#x201C;weekly digest of W3C news and trends&#x201D; that I prepare for the W3C Membership and public-w3c-digest mailing list (publicly archived). This digest
+aggregates information about W3C and W3C technology from online media &#x2014;a snapshot of how W3C and its work is perceived in online media.
+
+
+W3C and HTML5 related Twitter trends
+
+
+[What was tweeted frequently, or caught my attention. Most recentfirst (popularity is flagged with a figure &#x2014;number of times the same URIs or tweet was quoted/RTed.)]
+
+* ( 36) Segu-Info: W3C realiza un Penetration Test y solicita el cambio de contrase&#xF1;as de sus usuarios(W3C performs a Penetration Test and requests the change of user passwords)
+* ( 149) EFF: International Day Against DRM: Whatever Happened to the W3C?
+* ( 34) TheWebbyAwards: We&#x2019;re celebrating 25 years of the Web with @webfoundation and @w3c. Visit our 25 for 25 project: http://www.webat25.org/thewebbyawards/ #web25
+* ( 33) WebCryptoAPI Last Call: comments from Akamai&#x2019;s Principal Security Engineer Rich Salz
+* ( 51) W3C Web and Mobile Interest Group: Standards for Web Applications on Mobile: current state and roadmap &#x2013; April 2014
+* ( 228) SitePoint: Using Device Orientation in HTML5
+* ( 1.1K) EFF: Help EFF Test Privacy Badger, Our New Tool to Stop Creepy Online Tracking
+
+
+Open Web & net rights
+
+
+* webat25.org: UK&#x2019;s Southbank Centre Unveils Web We Want Festival in celebration of #web25(8 May 2014)
+* The Verge: Huge coalition led by Amazon, Microsoft, and others take a stand against FCC on net neutrality(7 May 2014)
+* Ars Technica: Mozilla offers FCC a net neutrality plan&#x2014;with a twist(5 May 2014)
+* Mozilla: Starting May 12th, 2014 &#x2013; Learn creative ways to teach web literacy, digital skills and open practices(1 May 2014)
+
+
+W3C in the Press (or blogs)
+
+
+18articles since the previous Digest. A selection follows. Find keywords on our Press clippings.
+
+* ZDNet(8 May): Should cloud services treat a million end-user devices equally?
+* Data Guidance (8 May): USA: W3C&#x2019;s &#x2018;huge milestone&#x2019; on DNT, moves to Last Call status
+* Huffington Post &#x2013; The World Post (6 May): We Need a Magna Carta for the Internet
+* IDG News (2 May): Yahoo drops &#x2018;Do Not Track&#x2019; policy in favor of &#x2018;personalized&#x2019; experience
+* Adweek (29 April): Ad Industry Will Soon Unveil a Do Not Track Browser Solution
+* MediaPost Daily Online Examiner (25 April): Web Standards Group Moves Forward With Do-Not-Track Effort
+* CIHAN (24 April): Brazil&#x2019;s internet move globally acclaimed
+
+
+
+
+
+
+MultilingualWeb workshop 7-8 May &#x2013; follow via live stream!
+
+
+06 May 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebOfDevices
+
+
+
+
+
+
+
+The MultilingualWeb workshop on 7-8 May will be streamed live ! Follow the event online if you cannot make it to Madrid. For details about speakers and presentations see the workshop program . The
+workshop is supported by the LIDER project and sponsored by Verisign and Lionbridge.
+
+
+
+
+
+
+Program published for W3C MultilingualWeb Workshop in Madrid, 7-8 May
+
+
+11 April 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebOfDevices
+
+
+
+
+
+
+
+See the program.The keynote speaker will be Alolita Sharma, Director of Language Engineering from the Wikimedia Foundation. She is followed by a strong line up in sessions entitled Developers,
+Creators, Localizers, Machines, and Users, including speakers from Microsoft, Wikimedia Foundation, the UN FAO, W3C, Yandex, SDL, Lionbridge, Asia Pacific TLD, Verisign, DFKI, and many more. On the
+afternoon of the second day we will hold Open Space breakout discussions. Abstracts and details about an additional poster session will be provided shortly.
+
+The program will also feature an LD4LT event on May 8-9, focusing on text analytics and the usefulness of Wikipedia and Dbpedia for multiilngual text and content analytics, and on language resources
+and aspects of converting selected types of language resources into RDF.
+
+Participation in both events is free. See the Call for Participation for details about how to register for the MultilingualWeb workshop. The LD4LT event requires a separate registrationand you have
+the opportunity to submit position statements about language resources and RDF.
+
+If you haven&#x2019;t registered yet, note that space is limited, so please be sure to register soon to ensure that you get a place.
+
+The MultilingualWeb workshops, funded by the European Commission and coordinated by the W3C, look at best practices and standards related to all aspects of creating, localizing and deploying the
+multilingual Web. The workshops are successful because they attract a wide range of participants, from fields such as localization, language technology, browser development, content authoring and
+tool development, etc., to create a holistic view of the interoperability needs of the multilingual Web.
+
+We look forward to seeing you in Madrid!
+
+
+
+
+
+
+This week: W3C Annotations Workshop, WebRTC Summit, Net Neutrality in Europe, etc.
+
+
+04 April 2014
+
+from Mobile Web @ W3C - W3C
+
+
+
+This is the 28 March &#x2013; 4 April 2014edition of a &#x201C;weekly digest of W3C news and trends&#x201D; that I prepare for the W3C Membership and public-w3c-digest mailing list (publicly
+archived). This digest aggregates information about W3C and W3C technology from online media &#x2014;a snapshot of how W3C and its work is perceived in online media.
+
+
+W3C and HTML5 related Twitter trends
+
+
+Nothing stood out particularly this week; I noted a few mentions of:
+
+* W3C Annotations Workshop
+* JATS-Con (where Liam Quin presented &#x201C; Publishing in Style with XML&#x201D;)
+* WebRTC Global Summit (where Dominique Haza&#xEB;l-Massieux keynoted &#x201C; WebRTC: Web, meet Communications&#x201D;)
+* W3C TAG face-to-face meeting and Extensible Web Summit(held today)
+
+
+Net Neutrality & Open Web
+
+
+* Forbes: The EU Outpaces The U.S. On Net Neutrality, 4 April 2014
+* Gigaom: European Parliament passes strong net neutrality law, along with major roaming reforms, 3 April 2014
+* Chris Marsden: Commissioner Kroes can Skype her grandchildren&#x2019;s mobiles in retirement?, 3 April 2014
+
+
+W3C in the Press (or blogs)
+
+
+6articles this week. A selection follows. Read more and find keywords on our Press clippings.
+
+* IT World(3 April), Web developers less concerned about browser-compatibility, more concerned with HTML5
+* Computer World(2 April), Ad tracking: Is anything being done?
+* IT World(31 March), Accessible technology professionals will soon be able to get certified
+* Microfinance Monitor(29 March), How www (World Wide Web) was born at CERN 25 years ago?
+
+
+
+
+
+
+Speaker deadline for Madrid MultilingualWeb Workshop is Friday, March 14
+
+
+05 March 2014
+
+from Internationalization Activity Blog &#xBB; w3cWebOfDevices
+
+
+
+We would like to remind you that the deadline for speaker proposals for the 7th MultilingualWeb Workshop (May 7&#x2013;8, 2014, Madrid, Spain) is on Friday, March 14, at 23:59 UTC.
+
+Featuring a keynote by Alolita Sharma (Director of Engineering, Wikipedia) and breakout sessions on linked open data and other critical topics, this Workshop will focus on the advances and
+challenges faced in making the Web truly multilingual. It provides an outstanding and influential forum for thought leaders to share their ideas and gain critical feedback.
+
+While the organizers have already received many excellent submissions, there is still time to make a proposal, and we encourage interested parties to do so by the deadline. With roughly 200
+attendees anticipated for the Workshop from a wide variety of profiles, we are certain to have a large and diverse audience that can provide constructive and useful feedback, with stimulating
+discussion about all of the presentations.
+
+For more information and to register, please visit the Madrid Workshop Call for Participation.
+
+
+
+
+
+
+This week at W3C: Open Data promotion in Japan, RDF is 15 and RDF 1.1 became a Rec, Microsoft to implement WebDriver, etc.
+
+
+28 February 2014
+
+from Mobile Web @ W3C - W3C
+
+
+
+This is the 21-28 February 2014edition of a &#x201C;weekly digest of W3C news and trends&#x201D; that I prepare for the W3C Membership and public-w3c-digest mailing list (publicly archived). This
+digest aggregates information about W3C and W3C technology from online media &#x2014;a snapshot of how W3C and its work is perceived in online media.
+
+
+W3C and HTML5 buzz in Twitter
+
+
+[What was tweeted frequently, or caught my attention. Most recentfirst (popularity is flagged with a figure &#x2014;number of times the same URIs or tweet was quoted/RTed.)]
+
+* (111) ITmedia Japan: Sabae City leads Open Data promotion in 24 Japanese cities, and first member of local government to join W3C.
+* (48) Browser testing & tools WG meeting: Microsoft to ship a WebDriver implementation from IE 11+
+* (50) Spec: RDF 1.1 is a W3C Recommendation
+* (29) MWC14: #HTML5 ? We are a believer[picture of W3C booth]
+* (200) MWC14: Mozilla signs a deal to make the world&#x2019;s cheapest smartphone: $25 Firefox OS devicewith 3.5&#x201D; screen and HTML5 apps
+* (33) MWC14: W3C at Mobile World Congress&#x2013; Booth 8.1G15
+* (14)Celebration: 15th anniversary of RDF
+* (148) Mozilla: Wanted: Awesome HTML5 app ports for Firefox OS &amp; the Open Web&lt;/a
+
+
+Net Neutrality & Open Web
+
+
+* Knight Foundation: Toward a stronger Internet, 27 February 2014
+* Gigaom: Europe&#x2019;s net neutrality law gets breathing space as industry committee delays vote, 25 February 2014
+* Gigaom: Marc Andreessen says more net neutrality laws are not the answer, 24 February 2014
+* Reuters: Netflix to pay Comcast for faster speeds, 24 February 2014
+
+
+W3C in the Press (or blogs)
+
+
+10articles this week. Find keywords on our Press clippings.
+
+* CircleID(26 February), Papers Now Available Publicly for W3C/IAB &#x201C;Strengthening the Internet&#x201D; Workshop
+* Heise online(26 February), W3C aktualisiert Metadatenformat RDF(W3C updated RDF metadata format)
+* The Telegraph(25 February), 25 years of the World Wide Web: 25 Web superstars
+* Genbeta(25 February), &#xBF;Qu&#xE9; ha sido de HTML5?(What has become of HTML5?)
+* The Register(25 February), Evil or benign? &#x2018;Trusted proxy&#x2019; draft debate rages on
+* Faro de Vigo(25 February), MWC14: Gallegos en la meca sundial de la tecnolog&#xED;a(MWC14: Galician in the world mecca of technology)
+* ZDNet(24 February), Servo: Inside Mozilla&#x2019;s mission to reinvent the web browser for the multi-core age
+* phoneArena.com(23 February), Mozilla signs a deal to make the world&#x2019;s cheapest smartphone: Firefox OS device with 3.5&#x201D; screen and HTML5 apps
+* La Stampa(21 February), Il future della governance di Internet post Datagate: il Brasile d&#xE0; l&#x2019;esempio(The future of Internet governance after Datagate: Brazil leads the way)
+
+
+
+
+
+
+
+
+
+
+
+Talks and Appearances
+
+
+None. See full list of W3C Talks and Appearances.
+
+
+
+
+
+
+
+
+
+* 2014-06-25 (25 JUN) &#x2013; 2014-06-26 (26 JUN)
+
+
+  Workshop on the Web of Things
+
+  Berlin, Germany
+
+  Hosted by Siemens
+
+
+  Participants in this workshop will examine the potential for open standards as a basis for services, either between devices, at the network edge, e.g. in home hubs, or in the cloud. They will
+  discuss the use of web protocols and scripting languages for implementing services, the need for APIs for implementing drivers for specific IoT technologies, a shared approach to describing
+  services as a basis for interoperability, and the underlying use of HTTP/COAP, Web Sockets, and EXI/JSON for RESTful services.
+
+
+
+
+See full list of W3C Events.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Footer Navigation
+
+
+
+
+Navigation
+
+
+* Home
+* Standards
+* Participate
+* Membership
+* About W3C
+
+
+
+
+Contact W3C
+
+
+* Contact
+* Help and FAQ
+* Donate
+* Site Map
+* Feedback
+
+
+
+
+W3C Updates
+
+
+* 
+
+
+Copyright © 2013 W3C ® (MIT, ERCIM, Keio, Beihang) Usage policies apply.
+
+
+
+<![CDATA[ //
+
